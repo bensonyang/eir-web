@@ -34,7 +34,8 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>eirweb</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/app/*</url-pattern>
     </servlet-mapping>
-
+	<!-- 静态资源 http://127.0.0.1:8080/eirweb/static/js/jquery.min.js -->
+	<!-- 应用程序 http://127.0.0.1:8080/eirweb/app/hello -->
 </web-app>

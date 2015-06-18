@@ -7,7 +7,7 @@
 </head>
 <body>
 	<b>${app}</b>
-	<script src="/eir/static/js/jquery.min.js"></script>
+	<script src="/eirweb/static/js/jquery.min.js"></script>
     <script>
     	$(document).ready(function() {
      		alert("welcome you!");
