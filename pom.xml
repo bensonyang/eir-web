@@ -7,13 +7,13 @@
   
   <properties>
     <servlet.version>2.4</servlet.version>
-  	<spring.version>3.1.1.RELEASE</spring.version>
+  	<spring.version>4.1.6.RELEASE</spring.version>
   	<ibatis.version>2.3.4.726</ibatis.version>
-  	<project.encoding>UTF-8</project.encoding> 
+  	<project.encoding>UTF-8</project.encoding>
   	
   	<env>qa</env>
   </properties>
-  
+
   <dependencies>
     <!-- test -->
     <dependency>
@@ -29,7 +29,13 @@
 	    <scope>test</scope>
 	</dependency>
 	<!-- end of test -->
-	
+
+	  <dependency>
+		  <groupId>org.freemarker</groupId>
+		  <artifactId>freemarker</artifactId>
+		  <version>2.3.22</version>
+	  </dependency>
+
 	<!-- javax servlet -->
 	<dependency>
 		<groupId>javax.servlet</groupId>
@@ -43,7 +49,7 @@
 		</exclusions>
 		<scope>provided</scope>
 	</dependency>
-	
+
 	<dependency>
 		<groupId>javax.servlet</groupId>
 		<artifactId>servlet-api</artifactId>
@@ -51,14 +57,14 @@
 		<scope>provided</scope>
 	</dependency>
 	<!-- end of javax servlet -->
-	
+
 	<!-- jstl view -->
 	<dependency>
 		<groupId>taglibs</groupId>
 		<artifactId>standard</artifactId>
 		<version>1.1.2</version>
 	</dependency>
-	
+
 	<dependency>
 		<groupId>javax.servlet</groupId>
 		<artifactId>jstl</artifactId>
@@ -82,12 +88,6 @@
 		<artifactId>slf4j-log4j12</artifactId>
 		<version>1.5.11</version>
 	</dependency>
-	
-	<dependency>
-         <groupId>commons-logging</groupId>
-         <artifactId>commons-logging</artifactId>
-         <version>1.1.1</version>
-    </dependency>
 
 	<dependency>
 	    <groupId>log4j</groupId>
@@ -97,69 +97,24 @@
 	<!-- end of logging -->
 
 	<!-- begining of spring framework -->
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-core</artifactId>
-		<version>${spring.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-beans</artifactId>
-		<version>${spring.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-context</artifactId>
-		<version>${spring.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-context-support</artifactId>
-		<version>${spring.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-web</artifactId>
-		<version>${spring.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-webmvc</artifactId>
-		<version>${spring.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-test</artifactId>
-		<version>${spring.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-aop</artifactId>
-		<version>${spring.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-orm</artifactId>
-		<version>${spring.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-jdbc</artifactId>
-		<version>${spring.version}</version>
-	</dependency>
-	<dependency>
-		<groupId>org.springframework</groupId>
-		<artifactId>spring-jms</artifactId>
-		<version>${spring.version}</version>
-	</dependency>
+	  <dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-webmvc</artifactId>
+		  <version>${spring.version}</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-context-support</artifactId>
+		  <version>${spring.version}</version>
+	  </dependency>
 	<!-- end of spring framework -->
-	
+
 	<dependency>
 		<groupId>org.apache.ibatis</groupId>
 		<artifactId>ibatis-sqlmap</artifactId>
 		<version>${ibatis.version}</version>
 	</dependency>
-	
+
 	<!-- begining of db -->
 	<dependency>
 		<groupId>com.h2database</groupId>
@@ -172,7 +127,7 @@
 		<artifactId>mysql-connector-java</artifactId>
 		<version>5.1.17</version>
 	</dependency>
-	<!-- end of db -->	
+	<!-- end of db -->
   </dependencies>
     
 <build>

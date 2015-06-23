@@ -16,6 +16,6 @@ public class HelloSeaController {
 	@RequestMapping("/hellosea")
     public String helloWorld(Model model) {
         model.addAttribute("message", "Hello World!");
-        return "helloWorld";
+        return "home";
     }
 }
