@@ -1,11 +1,11 @@
 package com.morningsidevc.service;
 
-import com.morningsidevc.dao.DescBeanMapper;
+import com.morningsidevc.vo.DescBean;
 
 /**
  * @author float.lu
  */
 public interface DescService {
 
-    void save(DescBeanMapper descBean);
+    void save(DescBean descBean);
 }

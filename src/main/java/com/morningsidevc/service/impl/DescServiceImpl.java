@@ -2,6 +2,7 @@ package com.morningsidevc.service.impl;
 
 import com.morningsidevc.dao.DescBeanMapper;
 import com.morningsidevc.service.DescService;
+import com.morningsidevc.vo.DescBean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -16,7 +17,7 @@ public class DescServiceImpl implements DescService {
     private DescBeanMapper descDao;
 
     @Override
-    public void save(DescBeanMapper descBean) {
-
+    public void save(DescBean descBean) {
+        descDao.insert(descBean);
     }
 }
