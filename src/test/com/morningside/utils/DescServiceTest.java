@@ -21,7 +21,7 @@ public class DescServiceTest {
     @Test
     public void save(){
         DescBean desc = new DescBean();
-        desc.setDesc("desc");
+        desc.setName("desc");
         descMapper.insert(desc);
 
     }

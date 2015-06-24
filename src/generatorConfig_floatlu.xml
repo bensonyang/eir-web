@@ -9,6 +9,10 @@
     <context id="aisSnsTables" targetRuntime="MyBatis3">
         <plugin type="com.morningsidevc.utils.PaginationPlugin" />
 
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
         <jdbcConnection
                 driverClass="com.mysql.jdbc.Driver"
                 connectionURL="jdbc:mysql://localhost:3306/mydb?useUnicode=true"
@@ -41,7 +45,9 @@
         </javaClientGenerator>
 
         <!-- 想要生成的数据库表,自动化工具会根据该表的结构生成相应的vo对象 -->
-        <table tableName="desc" domainObjectName="DescBean"></table>
+        <table tableName="myDesc" domainObjectName="DescBean">
+            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
     </context>
 
 </generatorConfiguration>
