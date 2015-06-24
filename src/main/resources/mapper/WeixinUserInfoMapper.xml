@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morningsidevc.dao.WeixinUserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.morningsidevc.vo.WeixinUserInfo" >
+    <id column="Id" property="id" jdbcType="INTEGER" />
+    <result column="UserId" property="userid" jdbcType="INTEGER" />
+    <result column="OpenId" property="openid" jdbcType="VARCHAR" />
+    <result column="AvatarUrl" property="avatarurl" jdbcType="VARCHAR" />
+    <result column="WeixinUserName" property="weixinusername" jdbcType="VARCHAR" />
+    <result column="Gender" property="gender" jdbcType="TINYINT" />
+    <result column="Province" property="province" jdbcType="VARCHAR" />
+    <result column="City" property="city" jdbcType="VARCHAR" />
+    <result column="Country" property="country" jdbcType="VARCHAR" />
+    <result column="Privilege" property="privilege" jdbcType="VARCHAR" />
+    <result column="UnionId" property="unionid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    Id, UserId, OpenId, AvatarUrl, WeixinUserName, Gender, Province, City, Country, Privilege, 
+    UnionId
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.vo.WeixinUserInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from WeixinUserInfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from WeixinUserInfo
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from WeixinUserInfo
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.morningsidevc.vo.WeixinUserInfoExample" >
+    delete from WeixinUserInfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.morningsidevc.vo.WeixinUserInfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into WeixinUserInfo (Id, UserId, OpenId, 
+      AvatarUrl, WeixinUserName, Gender, 
+      Province, City, Country, 
+      Privilege, UnionId)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, 
+      #{avatarurl,jdbcType=VARCHAR}, #{weixinusername,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, 
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{privilege,jdbcType=VARCHAR}, #{unionid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.morningsidevc.vo.WeixinUserInfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into WeixinUserInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      Id,
+      <if test="userid != null" >
+        UserId,
+      </if>
+      <if test="openid != null" >
+        OpenId,
+      </if>
+      <if test="avatarurl != null" >
+        AvatarUrl,
+      </if>
+      <if test="weixinusername != null" >
+        WeixinUserName,
+      </if>
+      <if test="gender != null" >
+        Gender,
+      </if>
+      <if test="province != null" >
+        Province,
+      </if>
+      <if test="city != null" >
+        City,
+      </if>
+      <if test="country != null" >
+        Country,
+      </if>
+      <if test="privilege != null" >
+        Privilege,
+      </if>
+      <if test="unionid != null" >
+        UnionId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=INTEGER},
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarurl != null" >
+        #{avatarurl,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinusername != null" >
+        #{weixinusername,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="privilege != null" >
+        #{privilege,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null" >
+        #{unionid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.morningsidevc.vo.WeixinUserInfoExample" resultType="java.lang.Integer" >
+    select count(*) from WeixinUserInfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update WeixinUserInfo
+    <set >
+      <if test="record.id != null" >
+        Id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null" >
+        UserId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.openid != null" >
+        OpenId = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatarurl != null" >
+        AvatarUrl = #{record.avatarurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixinusername != null" >
+        WeixinUserName = #{record.weixinusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        Gender = #{record.gender,jdbcType=TINYINT},
+      </if>
+      <if test="record.province != null" >
+        Province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        City = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        Country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privilege != null" >
+        Privilege = #{record.privilege,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unionid != null" >
+        UnionId = #{record.unionid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update WeixinUserInfo
+    set Id = #{record.id,jdbcType=INTEGER},
+      UserId = #{record.userid,jdbcType=INTEGER},
+      OpenId = #{record.openid,jdbcType=VARCHAR},
+      AvatarUrl = #{record.avatarurl,jdbcType=VARCHAR},
+      WeixinUserName = #{record.weixinusername,jdbcType=VARCHAR},
+      Gender = #{record.gender,jdbcType=TINYINT},
+      Province = #{record.province,jdbcType=VARCHAR},
+      City = #{record.city,jdbcType=VARCHAR},
+      Country = #{record.country,jdbcType=VARCHAR},
+      Privilege = #{record.privilege,jdbcType=VARCHAR},
+      UnionId = #{record.unionid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.vo.WeixinUserInfo" >
+    update WeixinUserInfo
+    <set >
+      <if test="userid != null" >
+        UserId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null" >
+        OpenId = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarurl != null" >
+        AvatarUrl = #{avatarurl,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinusername != null" >
+        WeixinUserName = #{weixinusername,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        Gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="province != null" >
+        Province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        City = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        Country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="privilege != null" >
+        Privilege = #{privilege,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null" >
+        UnionId = #{unionid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.vo.WeixinUserInfo" >
+    update WeixinUserInfo
+    set UserId = #{userid,jdbcType=INTEGER},
+      OpenId = #{openid,jdbcType=VARCHAR},
+      AvatarUrl = #{avatarurl,jdbcType=VARCHAR},
+      WeixinUserName = #{weixinusername,jdbcType=VARCHAR},
+      Gender = #{gender,jdbcType=TINYINT},
+      Province = #{province,jdbcType=VARCHAR},
+      City = #{city,jdbcType=VARCHAR},
+      Country = #{country,jdbcType=VARCHAR},
+      Privilege = #{privilege,jdbcType=VARCHAR},
+      UnionId = #{unionid,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

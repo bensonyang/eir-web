@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morningsidevc.dao.FeedInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.morningsidevc.vo.FeedInfo" >
+    <id column="FeedId" property="feedid" jdbcType="INTEGER" />
+    <result column="MsgId" property="msgid" jdbcType="INTEGER" />
+    <result column="MsgType" property="msgtype" jdbcType="TINYINT" />
+    <result column="UserId" property="userid" jdbcType="INTEGER" />
+    <result column="Status" property="status" jdbcType="TINYINT" />
+    <result column="LikeCount" property="likecount" jdbcType="INTEGER" />
+    <result column="CommentCount" property="commentcount" jdbcType="INTEGER" />
+    <result column="Tag" property="tag" jdbcType="VARCHAR" />
+    <result column="AddTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="LastTime" property="lasttime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    FeedId, MsgId, MsgType, UserId, Status, LikeCount, CommentCount, Tag, AddTime, LastTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.vo.FeedInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from FeedInfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from FeedInfo
+    where FeedId = #{feedid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from FeedInfo
+    where FeedId = #{feedid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.morningsidevc.vo.FeedInfoExample" >
+    delete from FeedInfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.morningsidevc.vo.FeedInfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="feedid" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into FeedInfo (FeedId, MsgId, MsgType, 
+      UserId, Status, LikeCount, 
+      CommentCount, Tag, AddTime, 
+      LastTime)
+    values (#{feedid,jdbcType=INTEGER}, #{msgid,jdbcType=INTEGER}, #{msgtype,jdbcType=TINYINT}, 
+      #{userid,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{likecount,jdbcType=INTEGER}, 
+      #{commentcount,jdbcType=INTEGER}, #{tag,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}, 
+      #{lasttime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.morningsidevc.vo.FeedInfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="feedid" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into FeedInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      FeedId,
+      <if test="msgid != null" >
+        MsgId,
+      </if>
+      <if test="msgtype != null" >
+        MsgType,
+      </if>
+      <if test="userid != null" >
+        UserId,
+      </if>
+      <if test="status != null" >
+        Status,
+      </if>
+      <if test="likecount != null" >
+        LikeCount,
+      </if>
+      <if test="commentcount != null" >
+        CommentCount,
+      </if>
+      <if test="tag != null" >
+        Tag,
+      </if>
+      <if test="addtime != null" >
+        AddTime,
+      </if>
+      <if test="lasttime != null" >
+        LastTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{feedid,jdbcType=INTEGER},
+      <if test="msgid != null" >
+        #{msgid,jdbcType=INTEGER},
+      </if>
+      <if test="msgtype != null" >
+        #{msgtype,jdbcType=TINYINT},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="likecount != null" >
+        #{likecount,jdbcType=INTEGER},
+      </if>
+      <if test="commentcount != null" >
+        #{commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null" >
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lasttime != null" >
+        #{lasttime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.morningsidevc.vo.FeedInfoExample" resultType="java.lang.Integer" >
+    select count(*) from FeedInfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update FeedInfo
+    <set >
+      <if test="record.feedid != null" >
+        FeedId = #{record.feedid,jdbcType=INTEGER},
+      </if>
+      <if test="record.msgid != null" >
+        MsgId = #{record.msgid,jdbcType=INTEGER},
+      </if>
+      <if test="record.msgtype != null" >
+        MsgType = #{record.msgtype,jdbcType=TINYINT},
+      </if>
+      <if test="record.userid != null" >
+        UserId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        Status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.likecount != null" >
+        LikeCount = #{record.likecount,jdbcType=INTEGER},
+      </if>
+      <if test="record.commentcount != null" >
+        CommentCount = #{record.commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.tag != null" >
+        Tag = #{record.tag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addtime != null" >
+        AddTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lasttime != null" >
+        LastTime = #{record.lasttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update FeedInfo
+    set FeedId = #{record.feedid,jdbcType=INTEGER},
+      MsgId = #{record.msgid,jdbcType=INTEGER},
+      MsgType = #{record.msgtype,jdbcType=TINYINT},
+      UserId = #{record.userid,jdbcType=INTEGER},
+      Status = #{record.status,jdbcType=TINYINT},
+      LikeCount = #{record.likecount,jdbcType=INTEGER},
+      CommentCount = #{record.commentcount,jdbcType=INTEGER},
+      Tag = #{record.tag,jdbcType=VARCHAR},
+      AddTime = #{record.addtime,jdbcType=TIMESTAMP},
+      LastTime = #{record.lasttime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.vo.FeedInfo" >
+    update FeedInfo
+    <set >
+      <if test="msgid != null" >
+        MsgId = #{msgid,jdbcType=INTEGER},
+      </if>
+      <if test="msgtype != null" >
+        MsgType = #{msgtype,jdbcType=TINYINT},
+      </if>
+      <if test="userid != null" >
+        UserId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        Status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="likecount != null" >
+        LikeCount = #{likecount,jdbcType=INTEGER},
+      </if>
+      <if test="commentcount != null" >
+        CommentCount = #{commentcount,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null" >
+        Tag = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        AddTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lasttime != null" >
+        LastTime = #{lasttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where FeedId = #{feedid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.vo.FeedInfo" >
+    update FeedInfo
+    set MsgId = #{msgid,jdbcType=INTEGER},
+      MsgType = #{msgtype,jdbcType=TINYINT},
+      UserId = #{userid,jdbcType=INTEGER},
+      Status = #{status,jdbcType=TINYINT},
+      LikeCount = #{likecount,jdbcType=INTEGER},
+      CommentCount = #{commentcount,jdbcType=INTEGER},
+      Tag = #{tag,jdbcType=VARCHAR},
+      AddTime = #{addtime,jdbcType=TIMESTAMP},
+      LastTime = #{lasttime,jdbcType=TIMESTAMP}
+    where FeedId = #{feedid,jdbcType=INTEGER}
+  </update>
+</mapper>

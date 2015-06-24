@@ -15,7 +15,7 @@
 
         <jdbcConnection
                 driverClass="com.mysql.jdbc.Driver"
-                connectionURL="jdbc:mysql://localhost:3306/mydb?useUnicode=true"
+                connectionURL="jdbc:mysql://localhost:3306/EIR?useUnicode=true"
                 userId="root"
                 password="">
         </jdbcConnection>
@@ -45,8 +45,29 @@
         </javaClientGenerator>
 
         <!-- 想要生成的数据库表,自动化工具会根据该表的结构生成相应的vo对象 -->
-        <table tableName="myDesc" domainObjectName="DescBean">
+     <!--   <table tableName="myDesc" domainObjectName="DescBean">
             <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>-->
+        <table tableName="UserInfo" domainObjectName="UserInfo">
+            <generatedKey column="UserId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
+        <table tableName="WeixinUserInfo" domainObjectName="WeixinUserInfo">
+            <generatedKey column="Id" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
+        <table tableName="FeedInfo" domainObjectName="FeedInfo">
+            <generatedKey column="FeedId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
+        <table tableName="WeiboMsg" domainObjectName="WeiboMsg">
+            <generatedKey column="MsgId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
+        <table tableName="WebPageMsg" domainObjectName="WebPageMsg">
+            <generatedKey column="MsgId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
+        <table tableName="FeedCommentMsg" domainObjectName="FeedCommentMsg">
+            <generatedKey column="CommentId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
+        <table tableName="FeedLikeMsg" domainObjectName="FeedLikeMsg">
+            <generatedKey column="LikeId" sqlStatement="SELECT LAST_INSERT_ID()"/>
         </table>
     </context>
 

@@ -48,4 +48,26 @@
               <property name="mapperInterface" value="com.morningsidevc.dao.DescBeanMapper"></property>
        </bean>
 
+       <bean id="userInfoMapper" parent="baseMapper">
+              <property name="mapperInterface" value="com.morningsidevc.dao.UserInfoMapper"></property>
+       </bean>
+       <bean id="weixinUserInfoMapper" parent="baseMapper">
+              <property name="mapperInterface" value="com.morningsidevc.dao.WeixinUserInfoMapper"></property>
+       </bean>
+       <bean id="feedInfoMapper" parent="baseMapper">
+              <property name="mapperInterface" value="com.morningsidevc.dao.FeedInfoMapper"></property>
+       </bean>
+       <bean id="weiboMsg" parent="baseMapper">
+              <property name="mapperInterface" value="com.morningsidevc.dao.WeiboMsgMapper"></property>
+       </bean>
+       <bean id="webPageMsg" parent="baseMapper">
+              <property name="mapperInterface" value="com.morningsidevc.dao.WebPageMsgMapper"></property>
+       </bean>
+       <bean id="feedCommentMsg" parent="baseMapper">
+              <property name="mapperInterface" value="com.morningsidevc.dao.FeedCommentMsgMapper"></property>
+       </bean>
+       <bean id="feedLikeMsg" parent="baseMapper">
+              <property name="mapperInterface" value="com.morningsidevc.dao.FeedLikeMsgMapper"></property>
+       </bean>
+
 </beans>
