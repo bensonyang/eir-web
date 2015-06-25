@@ -1,8 +1,9 @@
 package com.morningsidevc.web.controller;
 
-import com.morningsidevc.service.impl.DescServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.morningsidevc.service.DescService;
 
 import javax.annotation.Resource;
 
@@ -13,7 +14,7 @@ import javax.annotation.Resource;
 public class HomeController {
 
     @Resource
-    private DescServiceImpl descService;
+    private DescService descService;
 
     @RequestMapping("/home")
     public String home() {
