@@ -20,4 +20,9 @@ public class DescServiceImpl implements DescService {
     public void save(DescBean descBean) {
         descDao.insert(descBean);
     }
+
+	@Override
+	public DescBean load(Integer id) {
+		return descDao.selectByPrimaryKey(id);
+	}
 }

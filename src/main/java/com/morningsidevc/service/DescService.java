@@ -8,4 +8,6 @@ import com.morningsidevc.vo.DescBean;
 public interface DescService {
 
     void save(DescBean descBean);
+    
+    DescBean load(Integer id);
 }
