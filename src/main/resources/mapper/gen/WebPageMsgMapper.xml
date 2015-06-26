@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.morningsidevc.dao.DescBeanMapper" >
-  <resultMap id="BaseResultMap" type="com.morningsidevc.vo.DescBean" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+<mapper namespace="com.morningsidevc.dao.gen.WebPageMsgMapper" >
+  <resultMap id="BaseResultMap" type="com.morningsidevc.vo.WebPageMsg" >
+    <id column="MsgId" property="msgid" jdbcType="INTEGER" />
+    <result column="Title" property="title" jdbcType="VARCHAR" />
+    <result column="Description" property="description" jdbcType="VARCHAR" />
+    <result column="WebPageUrl" property="webpageurl" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -64,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name
+    MsgId, Title, Description, WebPageUrl
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.vo.DescBeanExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.vo.WebPageMsgExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from myDesc
+    from WebPageMsg
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -83,58 +85,78 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from myDesc
-    where id = #{id,jdbcType=INTEGER}
+    from WebPageMsg
+    where MsgId = #{msgid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from myDesc
-    where id = #{id,jdbcType=INTEGER}
+    delete from WebPageMsg
+    where MsgId = #{msgid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.morningsidevc.vo.DescBeanExample" >
-    delete from myDesc
+  <delete id="deleteByExample" parameterType="com.morningsidevc.vo.WebPageMsgExample" >
+    delete from WebPageMsg
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.morningsidevc.vo.DescBean" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
+  <insert id="insert" parameterType="com.morningsidevc.vo.WebPageMsg" >
+    <selectKey resultType="java.lang.Integer" keyProperty="msgid" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into myDesc (id, name)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
+    insert into WebPageMsg (MsgId, Title, Description, 
+      WebPageUrl)
+    values (#{msgid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{webpageurl,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.morningsidevc.vo.DescBean" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
+  <insert id="insertSelective" parameterType="com.morningsidevc.vo.WebPageMsg" >
+    <selectKey resultType="java.lang.Integer" keyProperty="msgid" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into myDesc
+    insert into WebPageMsg
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      id,
-      <if test="name != null" >
-        name,
+      MsgId,
+      <if test="title != null" >
+        Title,
+      </if>
+      <if test="description != null" >
+        Description,
+      </if>
+      <if test="webpageurl != null" >
+        WebPageUrl,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      #{id,jdbcType=INTEGER},
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      #{msgid,jdbcType=INTEGER},
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="webpageurl != null" >
+        #{webpageurl,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.morningsidevc.vo.DescBeanExample" resultType="java.lang.Integer" >
-    select count(*) from myDesc
+  <select id="countByExample" parameterType="com.morningsidevc.vo.WebPageMsgExample" resultType="java.lang.Integer" >
+    select count(*) from WebPageMsg
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update myDesc
+    update WebPageMsg
     <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
+      <if test="record.msgid != null" >
+        MsgId = #{record.msgid,jdbcType=INTEGER},
       </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.title != null" >
+        Title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        Description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.webpageurl != null" >
+        WebPageUrl = #{record.webpageurl,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -142,25 +164,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update myDesc
-    set id = #{record.id,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR}
+    update WebPageMsg
+    set MsgId = #{record.msgid,jdbcType=INTEGER},
+      Title = #{record.title,jdbcType=VARCHAR},
+      Description = #{record.description,jdbcType=VARCHAR},
+      WebPageUrl = #{record.webpageurl,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.vo.DescBean" >
-    update myDesc
+  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.vo.WebPageMsg" >
+    update WebPageMsg
     <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="title != null" >
+        Title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        Description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="webpageurl != null" >
+        WebPageUrl = #{webpageurl,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where MsgId = #{msgid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.vo.DescBean" >
-    update myDesc
-    set name = #{name,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.vo.WebPageMsg" >
+    update WebPageMsg
+    set Title = #{title,jdbcType=VARCHAR},
+      Description = #{description,jdbcType=VARCHAR},
+      WebPageUrl = #{webpageurl,jdbcType=VARCHAR}
+    where MsgId = #{msgid,jdbcType=INTEGER}
   </update>
 </mapper>

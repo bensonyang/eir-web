@@ -1,6 +1,6 @@
 package com.morningside.utils;
 
-import com.morningsidevc.dao.DescBeanMapper;
+import com.morningsidevc.dao.gen.DescBeanMapper;
 import com.morningsidevc.vo.DescBean;
 import org.junit.Test;
 import org.junit.runner.RunWith;

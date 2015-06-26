@@ -36,7 +36,7 @@
        <!--sqlSessionFactory-->
        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
               <!--<property name="configLocation" value="classpath:mapper/UserMapper.xml"></property> -->
-              <property name="mapperLocations" value="classpath*:mapper/*.xml"></property>
+              <property name="mapperLocations" value="classpath*:mapper/**/*.xml"></property>
               <property name="dataSource" ref="dataSource" />
        </bean>
        <!--MapperFactoryBean-->
@@ -45,29 +45,29 @@
        </bean>
 
        <bean id="descDao" parent="baseMapper">
-              <property name="mapperInterface" value="com.morningsidevc.dao.DescBeanMapper"></property>
+              <property name="mapperInterface" value="com.morningsidevc.dao.gen.DescBeanMapper"></property>
        </bean>
 
        <bean id="userInfoMapper" parent="baseMapper">
-              <property name="mapperInterface" value="com.morningsidevc.dao.UserInfoMapper"></property>
+              <property name="mapperInterface" value="com.morningsidevc.dao.gen.UserInfoMapper"></property>
        </bean>
        <bean id="weixinUserInfoMapper" parent="baseMapper">
-              <property name="mapperInterface" value="com.morningsidevc.dao.WeixinUserInfoMapper"></property>
+              <property name="mapperInterface" value="com.morningsidevc.dao.gen.WeixinUserInfoMapper"></property>
        </bean>
        <bean id="feedInfoMapper" parent="baseMapper">
-              <property name="mapperInterface" value="com.morningsidevc.dao.FeedInfoMapper"></property>
+              <property name="mapperInterface" value="com.morningsidevc.dao.gen.FeedInfoMapper"></property>
        </bean>
        <bean id="weiboMsg" parent="baseMapper">
-              <property name="mapperInterface" value="com.morningsidevc.dao.WeiboMsgMapper"></property>
+              <property name="mapperInterface" value="com.morningsidevc.dao.gen.WeiboMsgMapper"></property>
        </bean>
        <bean id="webPageMsg" parent="baseMapper">
-              <property name="mapperInterface" value="com.morningsidevc.dao.WebPageMsgMapper"></property>
+              <property name="mapperInterface" value="com.morningsidevc.dao.gen.WebPageMsgMapper"></property>
        </bean>
        <bean id="feedCommentMsg" parent="baseMapper">
-              <property name="mapperInterface" value="com.morningsidevc.dao.FeedCommentMsgMapper"></property>
+              <property name="mapperInterface" value="com.morningsidevc.dao.gen.FeedCommentMsgMapper"></property>
        </bean>
        <bean id="feedLikeMsg" parent="baseMapper">
-              <property name="mapperInterface" value="com.morningsidevc.dao.FeedLikeMsgMapper"></property>
+              <property name="mapperInterface" value="com.morningsidevc.dao.gen.FeedLikeMsgMapper"></property>
        </bean>
 
 </beans>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.morningsidevc.dao.WeiboMsgMapper" >
-  <resultMap id="BaseResultMap" type="com.morningsidevc.vo.WeiboMsg" >
-    <id column="MsgId" property="msgid" jdbcType="INTEGER" />
-    <result column="Content" property="content" jdbcType="VARCHAR" />
+<mapper namespace="com.morningsidevc.dao.gen.DescBeanMapper" >
+  <resultMap id="BaseResultMap" type="com.morningsidevc.vo.DescBean" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -64,15 +64,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    MsgId, Content
+    id, name
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.vo.WeiboMsgExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.vo.DescBeanExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from WeiboMsg
+    from myDesc
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -83,58 +83,58 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from WeiboMsg
-    where MsgId = #{msgid,jdbcType=INTEGER}
+    from myDesc
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from WeiboMsg
-    where MsgId = #{msgid,jdbcType=INTEGER}
+    delete from myDesc
+    where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.morningsidevc.vo.WeiboMsgExample" >
-    delete from WeiboMsg
+  <delete id="deleteByExample" parameterType="com.morningsidevc.vo.DescBeanExample" >
+    delete from myDesc
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.morningsidevc.vo.WeiboMsg" >
-    <selectKey resultType="java.lang.Integer" keyProperty="msgid" order="BEFORE" >
+  <insert id="insert" parameterType="com.morningsidevc.vo.DescBean" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into WeiboMsg (MsgId, Content)
-    values (#{msgid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR})
+    insert into myDesc (id, name)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.morningsidevc.vo.WeiboMsg" >
-    <selectKey resultType="java.lang.Integer" keyProperty="msgid" order="BEFORE" >
+  <insert id="insertSelective" parameterType="com.morningsidevc.vo.DescBean" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into WeiboMsg
+    insert into myDesc
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      MsgId,
-      <if test="content != null" >
-        Content,
+      id,
+      <if test="name != null" >
+        name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      #{msgid,jdbcType=INTEGER},
-      <if test="content != null" >
-        #{content,jdbcType=VARCHAR},
+      #{id,jdbcType=INTEGER},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.morningsidevc.vo.WeiboMsgExample" resultType="java.lang.Integer" >
-    select count(*) from WeiboMsg
+  <select id="countByExample" parameterType="com.morningsidevc.vo.DescBeanExample" resultType="java.lang.Integer" >
+    select count(*) from myDesc
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update WeiboMsg
+    update myDesc
     <set >
-      <if test="record.msgid != null" >
-        MsgId = #{record.msgid,jdbcType=INTEGER},
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.content != null" >
-        Content = #{record.content,jdbcType=VARCHAR},
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -142,25 +142,25 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update WeiboMsg
-    set MsgId = #{record.msgid,jdbcType=INTEGER},
-      Content = #{record.content,jdbcType=VARCHAR}
+    update myDesc
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.vo.WeiboMsg" >
-    update WeiboMsg
+  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.vo.DescBean" >
+    update myDesc
     <set >
-      <if test="content != null" >
-        Content = #{content,jdbcType=VARCHAR},
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
       </if>
     </set>
-    where MsgId = #{msgid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.vo.WeiboMsg" >
-    update WeiboMsg
-    set Content = #{content,jdbcType=VARCHAR}
-    where MsgId = #{msgid,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.vo.DescBean" >
+    update myDesc
+    set name = #{name,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.morningsidevc.dao.FeedCommentMsgMapper" >
+<mapper namespace="com.morningsidevc.dao.gen.FeedCommentMsgMapper" >
   <resultMap id="BaseResultMap" type="com.morningsidevc.vo.FeedCommentMsg" >
     <id column="CommentId" property="commentid" jdbcType="INTEGER" />
     <result column="FeedId" property="feedid" jdbcType="INTEGER" />

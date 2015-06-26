@@ -1,4 +1,4 @@
-package com.morningsidevc.dao;
+package com.morningsidevc.dao.gen;
 
 import com.morningsidevc.vo.WebPageMsg;
 import com.morningsidevc.vo.WebPageMsgExample;

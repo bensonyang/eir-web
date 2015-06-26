@@ -1,7 +1,7 @@
 package com.morningside.mapper;
 
 import com.morningside.utils.BaseTest;
-import com.morningsidevc.dao.UserInfoMapper;
+import com.morningsidevc.dao.gen.UserInfoMapper;
 import com.morningsidevc.vo.UserInfo;
 import org.junit.Test;
 

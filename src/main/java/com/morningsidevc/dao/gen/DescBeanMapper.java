@@ -1,4 +1,4 @@
-package com.morningsidevc.dao;
+package com.morningsidevc.dao.gen;
 
 import com.morningsidevc.vo.DescBean;
 import com.morningsidevc.vo.DescBeanExample;

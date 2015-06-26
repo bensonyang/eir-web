@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.morningsidevc.dao.FeedLikeMsgMapper" >
-  <resultMap id="BaseResultMap" type="com.morningsidevc.vo.FeedLikeMsg" >
-    <id column="LikeId" property="likeid" jdbcType="INTEGER" />
-    <result column="FeedId" property="feedid" jdbcType="INTEGER" />
-    <result column="FeedUserId" property="feeduserid" jdbcType="INTEGER" />
-    <result column="UserId" property="userid" jdbcType="INTEGER" />
-    <result column="AddTime" property="addtime" jdbcType="TIMESTAMP" />
+<mapper namespace="com.morningsidevc.dao.gen.WeiboMsgMapper" >
+  <resultMap id="BaseResultMap" type="com.morningsidevc.vo.WeiboMsg" >
+    <id column="MsgId" property="msgid" jdbcType="INTEGER" />
+    <result column="Content" property="content" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,15 +64,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    LikeId, FeedId, FeedUserId, UserId, AddTime
+    MsgId, Content
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.vo.FeedLikeMsgExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.vo.WeiboMsgExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from FeedLikeMsg
+    from WeiboMsg
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,87 +83,58 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from FeedLikeMsg
-    where LikeId = #{likeid,jdbcType=INTEGER}
+    from WeiboMsg
+    where MsgId = #{msgid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from FeedLikeMsg
-    where LikeId = #{likeid,jdbcType=INTEGER}
+    delete from WeiboMsg
+    where MsgId = #{msgid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.morningsidevc.vo.FeedLikeMsgExample" >
-    delete from FeedLikeMsg
+  <delete id="deleteByExample" parameterType="com.morningsidevc.vo.WeiboMsgExample" >
+    delete from WeiboMsg
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.morningsidevc.vo.FeedLikeMsg" >
-    <selectKey resultType="java.lang.Integer" keyProperty="likeid" order="BEFORE" >
+  <insert id="insert" parameterType="com.morningsidevc.vo.WeiboMsg" >
+    <selectKey resultType="java.lang.Integer" keyProperty="msgid" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into FeedLikeMsg (LikeId, FeedId, FeedUserId, 
-      UserId, AddTime)
-    values (#{likeid,jdbcType=INTEGER}, #{feedid,jdbcType=INTEGER}, #{feeduserid,jdbcType=INTEGER}, 
-      #{userid,jdbcType=INTEGER}, #{addtime,jdbcType=TIMESTAMP})
+    insert into WeiboMsg (MsgId, Content)
+    values (#{msgid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.morningsidevc.vo.FeedLikeMsg" >
-    <selectKey resultType="java.lang.Integer" keyProperty="likeid" order="BEFORE" >
+  <insert id="insertSelective" parameterType="com.morningsidevc.vo.WeiboMsg" >
+    <selectKey resultType="java.lang.Integer" keyProperty="msgid" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into FeedLikeMsg
+    insert into WeiboMsg
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      LikeId,
-      <if test="feedid != null" >
-        FeedId,
-      </if>
-      <if test="feeduserid != null" >
-        FeedUserId,
-      </if>
-      <if test="userid != null" >
-        UserId,
-      </if>
-      <if test="addtime != null" >
-        AddTime,
+      MsgId,
+      <if test="content != null" >
+        Content,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      #{likeid,jdbcType=INTEGER},
-      <if test="feedid != null" >
-        #{feedid,jdbcType=INTEGER},
-      </if>
-      <if test="feeduserid != null" >
-        #{feeduserid,jdbcType=INTEGER},
-      </if>
-      <if test="userid != null" >
-        #{userid,jdbcType=INTEGER},
-      </if>
-      <if test="addtime != null" >
-        #{addtime,jdbcType=TIMESTAMP},
+      #{msgid,jdbcType=INTEGER},
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.morningsidevc.vo.FeedLikeMsgExample" resultType="java.lang.Integer" >
-    select count(*) from FeedLikeMsg
+  <select id="countByExample" parameterType="com.morningsidevc.vo.WeiboMsgExample" resultType="java.lang.Integer" >
+    select count(*) from WeiboMsg
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update FeedLikeMsg
+    update WeiboMsg
     <set >
-      <if test="record.likeid != null" >
-        LikeId = #{record.likeid,jdbcType=INTEGER},
+      <if test="record.msgid != null" >
+        MsgId = #{record.msgid,jdbcType=INTEGER},
       </if>
-      <if test="record.feedid != null" >
-        FeedId = #{record.feedid,jdbcType=INTEGER},
-      </if>
-      <if test="record.feeduserid != null" >
-        FeedUserId = #{record.feeduserid,jdbcType=INTEGER},
-      </if>
-      <if test="record.userid != null" >
-        UserId = #{record.userid,jdbcType=INTEGER},
-      </if>
-      <if test="record.addtime != null" >
-        AddTime = #{record.addtime,jdbcType=TIMESTAMP},
+      <if test="record.content != null" >
+        Content = #{record.content,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -174,40 +142,25 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update FeedLikeMsg
-    set LikeId = #{record.likeid,jdbcType=INTEGER},
-      FeedId = #{record.feedid,jdbcType=INTEGER},
-      FeedUserId = #{record.feeduserid,jdbcType=INTEGER},
-      UserId = #{record.userid,jdbcType=INTEGER},
-      AddTime = #{record.addtime,jdbcType=TIMESTAMP}
+    update WeiboMsg
+    set MsgId = #{record.msgid,jdbcType=INTEGER},
+      Content = #{record.content,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.vo.FeedLikeMsg" >
-    update FeedLikeMsg
+  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.vo.WeiboMsg" >
+    update WeiboMsg
     <set >
-      <if test="feedid != null" >
-        FeedId = #{feedid,jdbcType=INTEGER},
-      </if>
-      <if test="feeduserid != null" >
-        FeedUserId = #{feeduserid,jdbcType=INTEGER},
-      </if>
-      <if test="userid != null" >
-        UserId = #{userid,jdbcType=INTEGER},
-      </if>
-      <if test="addtime != null" >
-        AddTime = #{addtime,jdbcType=TIMESTAMP},
+      <if test="content != null" >
+        Content = #{content,jdbcType=VARCHAR},
       </if>
     </set>
-    where LikeId = #{likeid,jdbcType=INTEGER}
+    where MsgId = #{msgid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.vo.FeedLikeMsg" >
-    update FeedLikeMsg
-    set FeedId = #{feedid,jdbcType=INTEGER},
-      FeedUserId = #{feeduserid,jdbcType=INTEGER},
-      UserId = #{userid,jdbcType=INTEGER},
-      AddTime = #{addtime,jdbcType=TIMESTAMP}
-    where LikeId = #{likeid,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.vo.WeiboMsg" >
+    update WeiboMsg
+    set Content = #{content,jdbcType=VARCHAR}
+    where MsgId = #{msgid,jdbcType=INTEGER}
   </update>
 </mapper>
