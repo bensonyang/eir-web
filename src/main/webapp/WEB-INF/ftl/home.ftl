@@ -175,7 +175,7 @@
                             <img src="/static/images/pic1.jpeg">
                         </div>
                         <div class="eir-profile-name-group">
-                            <span class="eir-name">Cheng</span>
+                            <span class="eir-name">${descBean.name}</span>
                             <span class="eir-summary">Huhaha CEO</span>
                         </div>
                         <div class="eir-clear-both"></div>
