@@ -1,6 +1,6 @@
 package com.morningsidevc.dao;
 
-import com.morningsidevc.vo.UserInfo;
+import com.morningsidevc.po.gen.UserInfo;
 
 /**
  * @author float.lu

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.morningsidevc.dao.gen.FeedLikeMsgMapper" >
-  <resultMap id="BaseResultMap" type="com.morningsidevc.po.gen.FeedLikeMsg" >
-    <id column="LikeId" property="likeid" jdbcType="INTEGER" />
-    <result column="FeedId" property="feedid" jdbcType="INTEGER" />
-    <result column="FeedUserId" property="feeduserid" jdbcType="INTEGER" />
-    <result column="UserId" property="userid" jdbcType="INTEGER" />
-    <result column="AddTime" property="addtime" jdbcType="TIMESTAMP" />
+<mapper namespace="com.morningsidevc.dao.gen.UserFeedCounterMapper" >
+  <resultMap id="BaseResultMap" type="com.morningsidevc.po.gen.UserFeedCounter" >
+    <id column="UserId" property="userid" jdbcType="INTEGER" />
+    <result column="FeedSum" property="feedsum" jdbcType="INTEGER" />
+    <result column="FeedCommentSum" property="feedcommentsum" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,15 +65,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    LikeId, FeedId, FeedUserId, UserId, AddTime
+    UserId, FeedSum, FeedCommentSum
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.po.gen.FeedLikeMsgExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.po.gen.UserFeedCounterExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from FeedLikeMsg
+    from UserFeedCounter
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,87 +84,67 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from FeedLikeMsg
-    where LikeId = #{likeid,jdbcType=INTEGER}
+    from UserFeedCounter
+    where UserId = #{userid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from FeedLikeMsg
-    where LikeId = #{likeid,jdbcType=INTEGER}
+    delete from UserFeedCounter
+    where UserId = #{userid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.morningsidevc.po.gen.FeedLikeMsgExample" >
-    delete from FeedLikeMsg
+  <delete id="deleteByExample" parameterType="com.morningsidevc.po.gen.UserFeedCounterExample" >
+    delete from UserFeedCounter
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.morningsidevc.po.gen.FeedLikeMsg" >
-    <selectKey resultType="java.lang.Integer" keyProperty="likeid" order="BEFORE" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into FeedLikeMsg (LikeId, FeedId, FeedUserId, 
-      UserId, AddTime)
-    values (#{likeid,jdbcType=INTEGER}, #{feedid,jdbcType=INTEGER}, #{feeduserid,jdbcType=INTEGER}, 
-      #{userid,jdbcType=INTEGER}, #{addtime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.morningsidevc.po.gen.UserFeedCounter" >
+    insert into UserFeedCounter (UserId, FeedSum, FeedCommentSum
+      )
+    values (#{userid,jdbcType=INTEGER}, #{feedsum,jdbcType=INTEGER}, #{feedcommentsum,jdbcType=INTEGER}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.FeedLikeMsg" >
-    <selectKey resultType="java.lang.Integer" keyProperty="likeid" order="BEFORE" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into FeedLikeMsg
+  <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.UserFeedCounter" >
+    insert into UserFeedCounter
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      LikeId,
-      <if test="feedid != null" >
-        FeedId,
-      </if>
-      <if test="feeduserid != null" >
-        FeedUserId,
-      </if>
       <if test="userid != null" >
         UserId,
       </if>
-      <if test="addtime != null" >
-        AddTime,
+      <if test="feedsum != null" >
+        FeedSum,
+      </if>
+      <if test="feedcommentsum != null" >
+        FeedCommentSum,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      #{likeid,jdbcType=INTEGER},
-      <if test="feedid != null" >
-        #{feedid,jdbcType=INTEGER},
-      </if>
-      <if test="feeduserid != null" >
-        #{feeduserid,jdbcType=INTEGER},
-      </if>
       <if test="userid != null" >
         #{userid,jdbcType=INTEGER},
       </if>
-      <if test="addtime != null" >
-        #{addtime,jdbcType=TIMESTAMP},
+      <if test="feedsum != null" >
+        #{feedsum,jdbcType=INTEGER},
+      </if>
+      <if test="feedcommentsum != null" >
+        #{feedcommentsum,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.morningsidevc.po.gen.FeedLikeMsgExample" resultType="java.lang.Integer" >
-    select count(*) from FeedLikeMsg
+  <select id="countByExample" parameterType="com.morningsidevc.po.gen.UserFeedCounterExample" resultType="java.lang.Integer" >
+    select count(*) from UserFeedCounter
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update FeedLikeMsg
+    update UserFeedCounter
     <set >
-      <if test="record.likeid != null" >
-        LikeId = #{record.likeid,jdbcType=INTEGER},
-      </if>
-      <if test="record.feedid != null" >
-        FeedId = #{record.feedid,jdbcType=INTEGER},
-      </if>
-      <if test="record.feeduserid != null" >
-        FeedUserId = #{record.feeduserid,jdbcType=INTEGER},
-      </if>
       <if test="record.userid != null" >
         UserId = #{record.userid,jdbcType=INTEGER},
       </if>
-      <if test="record.addtime != null" >
-        AddTime = #{record.addtime,jdbcType=TIMESTAMP},
+      <if test="record.feedsum != null" >
+        FeedSum = #{record.feedsum,jdbcType=INTEGER},
+      </if>
+      <if test="record.feedcommentsum != null" >
+        FeedCommentSum = #{record.feedcommentsum,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -174,40 +152,30 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update FeedLikeMsg
-    set LikeId = #{record.likeid,jdbcType=INTEGER},
-      FeedId = #{record.feedid,jdbcType=INTEGER},
-      FeedUserId = #{record.feeduserid,jdbcType=INTEGER},
-      UserId = #{record.userid,jdbcType=INTEGER},
-      AddTime = #{record.addtime,jdbcType=TIMESTAMP}
+    update UserFeedCounter
+    set UserId = #{record.userid,jdbcType=INTEGER},
+      FeedSum = #{record.feedsum,jdbcType=INTEGER},
+      FeedCommentSum = #{record.feedcommentsum,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.po.gen.FeedLikeMsg" >
-    update FeedLikeMsg
+  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.po.gen.UserFeedCounter" >
+    update UserFeedCounter
     <set >
-      <if test="feedid != null" >
-        FeedId = #{feedid,jdbcType=INTEGER},
+      <if test="feedsum != null" >
+        FeedSum = #{feedsum,jdbcType=INTEGER},
       </if>
-      <if test="feeduserid != null" >
-        FeedUserId = #{feeduserid,jdbcType=INTEGER},
-      </if>
-      <if test="userid != null" >
-        UserId = #{userid,jdbcType=INTEGER},
-      </if>
-      <if test="addtime != null" >
-        AddTime = #{addtime,jdbcType=TIMESTAMP},
+      <if test="feedcommentsum != null" >
+        FeedCommentSum = #{feedcommentsum,jdbcType=INTEGER},
       </if>
     </set>
-    where LikeId = #{likeid,jdbcType=INTEGER}
+    where UserId = #{userid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.po.gen.FeedLikeMsg" >
-    update FeedLikeMsg
-    set FeedId = #{feedid,jdbcType=INTEGER},
-      FeedUserId = #{feeduserid,jdbcType=INTEGER},
-      UserId = #{userid,jdbcType=INTEGER},
-      AddTime = #{addtime,jdbcType=TIMESTAMP}
-    where LikeId = #{likeid,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.po.gen.UserFeedCounter" >
+    update UserFeedCounter
+    set FeedSum = #{feedsum,jdbcType=INTEGER},
+      FeedCommentSum = #{feedcommentsum,jdbcType=INTEGER}
+    where UserId = #{userid,jdbcType=INTEGER}
   </update>
 </mapper>
