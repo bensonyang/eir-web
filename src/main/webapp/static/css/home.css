@@ -235,6 +235,9 @@ a {
 .eir-profile .eir-profile-name-group span {
   display: block;
 }
+.eir-profile .eir-profile-name-group .eir-name:hover {
+  font-weight: bold;
+}
 .eir-profile .eir-feed-count-and-comments {
   padding: 5px 0px;
 }
@@ -254,9 +257,14 @@ a {
   line-height: 45px;
   font-size: 14px;
 }
-.eir-profile .eir-feed-count-and-comments eir {
+.eir-profile .eir-feed-count-and-comments span {
   color: #ffb717;
   font-size: 30px;
+}
+.eir-profile .eir-feed-count-and-comments span:hover {
+  color: #ffb717;
+  font-size: 30px;
+  font-weight: bold;
 }
 .eir-profile .eir-feed-count-and-comments .d {
   float: left;
@@ -336,6 +344,9 @@ a {
   font-weight: 500;
   line-height: 1.1;
   padding: 3px;
+}
+.eir-feed .eir-feed-name:hover {
+  font-weight: bold;
 }
 .eir-feed .eir-feed-summary {
   font-size: 12px;
@@ -453,6 +464,9 @@ a {
   font-weight: 500;
   line-height: 1.1;
   padding: 3px;
+}
+.eir-feed:hover .eir-feed-name:hover {
+  font-weight: bold;
 }
 .eir-feed:hover .eir-feed-summary {
   font-size: 12px;
