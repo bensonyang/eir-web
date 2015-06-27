@@ -6,6 +6,7 @@
     <meta name="description" content="">
     <!--<meta name="viewport" content="width=device-width">-->
     <meta content="initial-scale = 1.0, minimum-scale = 1.0, maximum-scale = 1.0, user-scalable = yes" name="viewport">
+    <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" href="/static/components/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="/static/components/awesome/css/font-awesome.min.css" />
     <!--[if IE 7]>
@@ -41,24 +42,26 @@
                 <div class="row">
                     <div class="row eir-options">
                         <div class="col-md-4">
-                            <i class="icon-comment icon-grey"><a>写说说</a></i>
-                            <i class="icon-link icon-grey active"><a>推荐网页</a></i>
+                            <i class="icon-comment icon-grey active" id="write-feed"><a>写说说</a></i>
+                            <i class="icon-link icon-grey" id="recommend-link"><a>推荐网页</a></i>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <form>
                         <div class="form-group">
-                            <input type="text" class="eir-recommend-link">
-                            <a class="btn btn-default eir-noradius eir-input-link">输入网址</a>
+                            <div class="for-recommend-link eir-hide">
+                                <input type="text" class="eir-recommend-link">
+                                <a class="btn btn-default eir-noradius eir-input-link">输入网址</a>
+                            </div>
                             <textarea class="eir-form-control" rows="3"></textarea>
                             <div class="col-md-12 col-xs-12 eir-box1">
                                 <li class="icon-tags icon-grey">
                                     <label class="eir-label">标签</label>
                                 </li>
-                                <a class="btn btn-default eir-tag">互联网金融</a>
-                                <a class="btn btn-default eir-tag">O2O</a>
-                                <a class="btn btn-default eir-tag">智能生态</a>
+                                        <span class="tags">
+
+                                        </span>
                                 <a class="btn btn-default pull-right eir-comments-btn" type="submit">发表</a>
                             </div>
                         </div>
@@ -199,15 +202,47 @@
                         </div>
                     </div>
                 </div>
+                <div class="row eir-login text-center">
+                    <div class="eir-login-title">
+                        <span>用户登录</span>
+                    </div>
+                    <div class="eir-login-form">
+                        <form>
+                            <div class="input-prepend">
+                                <span class="add-on icon-grey"><i class="icon-envelope"></i></span>
+                                <input class="span2" type="text" placeholder="会员账号/微信号">
+                            </div>
+                            <div class="input-prepend">
+                                <span class="add-on icon-grey"><i class="icon-key"></i></span>
+                                <input class="span2" type="password" placeholder="密码">
+                            </div>
+                            <div class="input-prepend">
+                                <input class="btn btn-primary" value="登录">
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="row eir-mytags">
-                    <ul class="list-unstyled text-center">
-                        <li><label>互联网金融</label></li>
-                        <li><label>O2O</label></li>
-                        <li><label>互联网房地产</label></li>
-                        <li><label>智能生态</label></li>
-                        <li><label>互联网教育</label></li>
-                        <li><label>互联网医疗</label></li>
-                    </ul>
+                    <div class="eir-ul list-unstyled text-center">
+                        <div class="eir-li" data-index="0">
+                            <li><label>互联网金融</label></li>
+                        </div>
+                        <div class="eir-li" data-index="1">
+                            <li><label>O2O</label></li>
+                        </div>
+                        <div class="eir-li" data-index="2">
+                            <li><label>互联网房地产</label></li>
+                        </div>
+                        <div class="eir-li" data-index="3">
+                            <li><label>智能生态</label></li>
+                        </div>
+                        <div class="eir-li" data-index="4">
+                            <li><label>互联网教育</label></li>
+                        </div>
+                        <div class="eir-li" data-index="5">
+                            <li><label>互联网医疗</label></li>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -215,20 +250,29 @@
 </div>
 <div class="container-fluid eir-tags-pop eir-hide">
     <div class="row eir-mytags">
-        <ul class="list-unstyled text-center">
-            <li><label>互联网金融</label></li>
-            <li><label>O2O</label></li>
-            <li><label>互联网房地产</label></li>
-            <li><label>智能生态</label></li>
-            <li><label>互联网教育</label></li>
-            <li><label>互联网医疗</label></li>
-        </ul>
+        <div class="eir-ul list-unstyled text-center">
+            <div class="eir-li">
+                <li><label>互联网金融</label></li>
+            </div>
+            <div class="eir-li">
+                <li><label>O2O</label></li>
+            </div>
+            <div class="eir-li">
+                <li><label>互联网房地产</label></li>
+            </div>
+            <div class="eir-li">
+                <li><label>智能生态</label></li>
+            </div>
+            <div class="eir-li">
+                <li><label>互联网教育</label></li>
+            </div>
+            <div class="eir-li">
+                <li><label>互联网医疗</label></li>
+            </div>
+        </div>
     </div>
 </div>
-<script src="/static/components/jquery/jquery.min.js"></script>
-<script src="/static/components/bootstrap/js/tooltip.js"></script>
-<script src="/static/components/bootstrap/js/popover.js"></script>
-<script src="/static/js/home.js"></script>
+<script src="/static/js/require.js" defer async="true" data-main="/static/js/home"></script>
 </body>
 </html>
 
