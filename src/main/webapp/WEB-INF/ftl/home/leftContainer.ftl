@@ -130,4 +130,7 @@
             </div>
         </div>
     </div>
+    <div class="row feed-end">
+        加载ing...
+    </div>
 </div>
