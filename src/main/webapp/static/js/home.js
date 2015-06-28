@@ -1,10 +1,11 @@
 //require.js配置
 require.config({
-    baseUrl : "/static/components",
+    baseUrl : "/static/",
     paths:{
-        "jquery" : "jquery/jquery.min",
-        "tooltip" : "bootstrap/js/tooltip",
-        "popover" : "bootstrap/js/popover"
+        "jquery" : "components/jquery/jquery.min",
+        "tooltip" : "components/bootstrap/js/tooltip",
+        "popover" : "components/bootstrap/js/popover",
+        "API" : "js/API"
     },
     shim:{
         "jquery":{
@@ -16,13 +17,15 @@ require.config({
 });
 
 //模块入口
-require(["jquery","tooltip","popover"], function($){
+require(["API","jquery","tooltip","popover"], function(API, $){
 
-    //事件配置
-    $('.eir-nav-collapsed').click(popoverInit);
-    $('#write-feed').click(writeFeedClick);
-    $('#recommend-link').click(recommendLink);
-    $('.eir-mytags .eir-li').click(clickTag);
+    $(window).scroll(function(){
+        //如果要以顶部50像素，可将if()里面的条件改为: $(document).scrollTop() > 50
+        // 当滚动到最底部以上50像素时， 加载新内容
+        if (($(document).height() - $(this).scrollTop() - $(this).height()) < 50){
+            console.log('the end');
+        }
+    });
 
     //popover组件
     var popoverOps = {
@@ -39,32 +42,42 @@ require(["jquery","tooltip","popover"], function($){
     };
     $('[data-toggle="popover"]').popover(popoverOps)
 
-    function popoverInit(){
-        $('.eir-tags-pop').slideToggle();
-    }
 
-    function writeFeedClick(){
-        $(this).siblings().removeClass('active');
-        $(this).addClass('active');
-        $('.for-recommend-link').hide();
-    }
+    //################################事件处理器配置BEGIN#######################################
+    var HANDLERS = {
+        popoverInitHandler     :   function popoverInit(){
+            $('.eir-tags-pop').slideToggle();
+        },
+        writeFeedOnClickHandler  :   function writeFeedClick(){
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
+            $('.for-recommend-link').hide();
+        },
+        recommendLinkOnClickHandler   :   function recommendLink(){
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
+            $('.for-recommend-link').show();
+        },
+        clickTagHandler    :   function clickTag(){
+            $(this).find('li').toggleClass('icon-tag');
+            $(this).find('label').toggleClass('active');
+            var isExist = $('.tags').find('a[data-index=' + $(this).data('index') +']');
+            if(isExist.length == 0){
+                var html = '<a class="btn btn-default eir-tag" data-index='+ $(this).data('index') + '>' + $(this).find('label').text() + '</a>';
+                $(html).appendTo('.tags');
+            }else{
+                $(isExist).remove();
+            }
 
-    function recommendLink(){
-        $(this).siblings().removeClass('active');
-        $(this).addClass('active');
-        $('.for-recommend-link').show();
-    }
-
-    function clickTag(){
-        $(this).find('li').toggleClass('icon-tag');
-        $(this).find('label').toggleClass('active');
-        var isExist = $('.tags').find('a[data-index=' + $(this).data('index') +']');
-        if(isExist.length == 0){
-            var html = '<a class="btn btn-default eir-tag" data-index='+ $(this).data('index') + '>' + $(this).find('label').text() + '</a>';
-            $(html).appendTo('.tags');
-        }else{
-            $(isExist).remove();
         }
+    };
+    //################################事件处理器配置END#######################################
 
-    }
+
+    //################################事件配置BEGIN#######################################
+    $('.eir-nav-collapsed').click(HANDLERS.popoverInitHandler);
+    $('#write-feed').click(HANDLERS.writeFeedOnClickHandler);
+    $('#recommend-link').click(HANDLERS.recommendLinkOnClickHandler);
+    $('.eir-mytags .eir-li').click(HANDLERS.clickTagHandler);
+    //################################事件配置END#######################################
 });
