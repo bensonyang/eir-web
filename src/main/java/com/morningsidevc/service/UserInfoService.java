@@ -1,20 +1,11 @@
-/**
- * 
- */
 package com.morningsidevc.service;
 
-import com.morningsidevc.po.UserInfo;
+
+import com.morningsidevc.po.gen.UserInfo;
 
 /**
- * @author yangna
- *
+ * @author float.lu
  */
 public interface UserInfoService {
-	UserInfo loadUserInfo(Integer userId);
-	
-	void addUserInfo(UserInfo userInfo) throws Exception;
-	
-	// Integer getFeedCountByUserId(Integer userId);
-	
-	// Integer getCommentCountByUserId(Integer userId);
+    UserInfo load(int id);
 }

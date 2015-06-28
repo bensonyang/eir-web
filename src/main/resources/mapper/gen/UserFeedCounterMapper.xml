@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morningsidevc.dao.gen.UserFeedCounterMapper" >
+  <resultMap id="BaseResultMap" type="com.morningsidevc.po.gen.UserFeedCounter" >
+    <id column="UserId" property="userid" jdbcType="INTEGER" />
+    <result column="FeedSum" property="feedsum" jdbcType="INTEGER" />
+    <result column="FeedCommentSum" property="feedcommentsum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UserId, FeedSum, FeedCommentSum
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.po.gen.UserFeedCounterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UserFeedCounter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from UserFeedCounter
+    where UserId = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from UserFeedCounter
+    where UserId = #{userid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.morningsidevc.po.gen.UserFeedCounterExample" >
+    delete from UserFeedCounter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.morningsidevc.po.gen.UserFeedCounter" >
+    insert into UserFeedCounter (UserId, FeedSum, FeedCommentSum
+      )
+    values (#{userid,jdbcType=INTEGER}, #{feedsum,jdbcType=INTEGER}, #{feedcommentsum,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.UserFeedCounter" >
+    insert into UserFeedCounter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        UserId,
+      </if>
+      <if test="feedsum != null" >
+        FeedSum,
+      </if>
+      <if test="feedcommentsum != null" >
+        FeedCommentSum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="feedsum != null" >
+        #{feedsum,jdbcType=INTEGER},
+      </if>
+      <if test="feedcommentsum != null" >
+        #{feedcommentsum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.morningsidevc.po.gen.UserFeedCounterExample" resultType="java.lang.Integer" >
+    select count(*) from UserFeedCounter
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UserFeedCounter
+    <set >
+      <if test="record.userid != null" >
+        UserId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.feedsum != null" >
+        FeedSum = #{record.feedsum,jdbcType=INTEGER},
+      </if>
+      <if test="record.feedcommentsum != null" >
+        FeedCommentSum = #{record.feedcommentsum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UserFeedCounter
+    set UserId = #{record.userid,jdbcType=INTEGER},
+      FeedSum = #{record.feedsum,jdbcType=INTEGER},
+      FeedCommentSum = #{record.feedcommentsum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.po.gen.UserFeedCounter" >
+    update UserFeedCounter
+    <set >
+      <if test="feedsum != null" >
+        FeedSum = #{feedsum,jdbcType=INTEGER},
+      </if>
+      <if test="feedcommentsum != null" >
+        FeedCommentSum = #{feedcommentsum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where UserId = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.po.gen.UserFeedCounter" >
+    update UserFeedCounter
+    set FeedSum = #{feedsum,jdbcType=INTEGER},
+      FeedCommentSum = #{feedcommentsum,jdbcType=INTEGER}
+    where UserId = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>

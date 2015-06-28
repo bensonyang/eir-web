@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.morningsidevc.dao.gen.FeedLikeMsgMapper" >
-  <resultMap id="BaseResultMap" type="com.morningsidevc.vo.FeedLikeMsg" >
+  <resultMap id="BaseResultMap" type="com.morningsidevc.po.gen.FeedLikeMsg" >
     <id column="LikeId" property="likeid" jdbcType="INTEGER" />
     <result column="FeedId" property="feedid" jdbcType="INTEGER" />
     <result column="FeedUserId" property="feeduserid" jdbcType="INTEGER" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List" >
     LikeId, FeedId, FeedUserId, UserId, AddTime
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.vo.FeedLikeMsgExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.po.gen.FeedLikeMsgExample" >
     select
     <if test="distinct" >
       distinct
@@ -93,13 +93,13 @@
     delete from FeedLikeMsg
     where LikeId = #{likeid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.morningsidevc.vo.FeedLikeMsgExample" >
+  <delete id="deleteByExample" parameterType="com.morningsidevc.po.gen.FeedLikeMsgExample" >
     delete from FeedLikeMsg
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.morningsidevc.vo.FeedLikeMsg" >
+  <insert id="insert" parameterType="com.morningsidevc.po.gen.FeedLikeMsg" >
     <selectKey resultType="java.lang.Integer" keyProperty="likeid" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -108,7 +108,7 @@
     values (#{likeid,jdbcType=INTEGER}, #{feedid,jdbcType=INTEGER}, #{feeduserid,jdbcType=INTEGER}, 
       #{userid,jdbcType=INTEGER}, #{addtime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.morningsidevc.vo.FeedLikeMsg" >
+  <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.FeedLikeMsg" >
     <selectKey resultType="java.lang.Integer" keyProperty="likeid" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -144,7 +144,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.morningsidevc.vo.FeedLikeMsgExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.morningsidevc.po.gen.FeedLikeMsgExample" resultType="java.lang.Integer" >
     select count(*) from FeedLikeMsg
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -184,7 +184,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.vo.FeedLikeMsg" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.po.gen.FeedLikeMsg" >
     update FeedLikeMsg
     <set >
       <if test="feedid != null" >
@@ -202,7 +202,7 @@
     </set>
     where LikeId = #{likeid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.vo.FeedLikeMsg" >
+  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.po.gen.FeedLikeMsg" >
     update FeedLikeMsg
     set FeedId = #{feedid,jdbcType=INTEGER},
       FeedUserId = #{feeduserid,jdbcType=INTEGER},

@@ -1,38 +1,20 @@
-/**
- * 
- */
 package com.morningsidevc.service.impl;
+
+import com.morningsidevc.dao.gen.UserInfoMapper;
+import com.morningsidevc.po.gen.UserInfo;
+import com.morningsidevc.service.UserInfoService;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
-import org.springframework.stereotype.Component;
-
-import com.morningsidevc.dao.gen.UserInfoMapper;
-import com.morningsidevc.po.UserInfo;
-import com.morningsidevc.service.UserInfoService;
-
 /**
- * @author yangna
- *
+ * @author float.lu
  */
 @Component
 public class UserInfoServiceImpl implements UserInfoService {
-	
-	@Resource
-	private UserInfoMapper userInfoMapper;
-	
-	/* (non-Javadoc)
-	 * @see com.morningsidevc.service.UserInfoService#loadUserInfo(java.lang.Integer)
-	 */
-	@Override
-	public UserInfo loadUserInfo(Integer userId) {
-		return userInfoMapper.selectByPrimaryKey(userId);
-		
-	}
-
-	@Override
-	public void addUserInfo(UserInfo userInfo) throws Exception {
-		userInfoMapper.insert(userInfo);	
-	}
-
+    @Resource
+    private UserInfoMapper userInfoMapper;
+    public UserInfo load(int id) {
+        return userInfoMapper.selectByPrimaryKey(id);
+    }
 }

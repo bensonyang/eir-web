@@ -1,7 +1,7 @@
 package com.morningsidevc.dao.gen;
 
-import com.morningsidevc.po.UserInfo;
-import com.morningsidevc.po.UserInfoExample;
+import com.morningsidevc.po.gen.UserInfo;
+import com.morningsidevc.po.gen.UserInfoExample;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;

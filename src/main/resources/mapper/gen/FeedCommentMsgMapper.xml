@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.morningsidevc.dao.gen.FeedCommentMsgMapper" >
-  <resultMap id="BaseResultMap" type="com.morningsidevc.vo.FeedCommentMsg" >
+  <resultMap id="BaseResultMap" type="com.morningsidevc.po.gen.FeedCommentMsg" >
     <id column="CommentId" property="commentid" jdbcType="INTEGER" />
     <result column="FeedId" property="feedid" jdbcType="INTEGER" />
     <result column="FeedUserId" property="feeduserid" jdbcType="INTEGER" />
@@ -73,7 +73,7 @@
   <sql id="Base_Column_List" >
     CommentId, FeedId, FeedUserId, Content, UserId, ToUserId, Status, AddTime, LastTime
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.vo.FeedCommentMsgExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.po.gen.FeedCommentMsgExample" >
     select
     <if test="distinct" >
       distinct
@@ -97,13 +97,13 @@
     delete from FeedCommentMsg
     where CommentId = #{commentid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.morningsidevc.vo.FeedCommentMsgExample" >
+  <delete id="deleteByExample" parameterType="com.morningsidevc.po.gen.FeedCommentMsgExample" >
     delete from FeedCommentMsg
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.morningsidevc.vo.FeedCommentMsg" >
+  <insert id="insert" parameterType="com.morningsidevc.po.gen.FeedCommentMsg" >
     <selectKey resultType="java.lang.Integer" keyProperty="commentid" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -116,7 +116,7 @@
       #{status,jdbcType=TINYINT}, #{addtime,jdbcType=TIMESTAMP}, #{lasttime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.morningsidevc.vo.FeedCommentMsg" >
+  <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.FeedCommentMsg" >
     <selectKey resultType="java.lang.Integer" keyProperty="commentid" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -176,7 +176,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.morningsidevc.vo.FeedCommentMsgExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.morningsidevc.po.gen.FeedCommentMsgExample" resultType="java.lang.Integer" >
     select count(*) from FeedCommentMsg
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -232,7 +232,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.vo.FeedCommentMsg" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.po.gen.FeedCommentMsg" >
     update FeedCommentMsg
     <set >
       <if test="feedid != null" >
@@ -262,7 +262,7 @@
     </set>
     where CommentId = #{commentid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.vo.FeedCommentMsg" >
+  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.po.gen.FeedCommentMsg" >
     update FeedCommentMsg
     set FeedId = #{feedid,jdbcType=INTEGER},
       FeedUserId = #{feeduserid,jdbcType=INTEGER},

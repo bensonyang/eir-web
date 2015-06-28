@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.morningsidevc.dao.UserInfoDao" >
-    <resultMap id="BaseResultMap" type="com.morningsidevc.vo.UserInfo" >
+    <resultMap id="BaseResultMap" type="com.morningsidevc.po.gen.UserInfo" >
         <id column="UserId" property="userid" jdbcType="INTEGER" />
         <result column="UserName" property="username" jdbcType="VARCHAR" />
         <result column="UserPassword" property="userpassword" jdbcType="VARCHAR" />

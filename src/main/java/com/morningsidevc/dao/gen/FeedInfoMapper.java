@@ -1,7 +1,7 @@
 package com.morningsidevc.dao.gen;
 
-import com.morningsidevc.po.FeedInfo;
-import com.morningsidevc.po.FeedInfoExample;
+import com.morningsidevc.po.gen.FeedInfo;
+import com.morningsidevc.po.gen.FeedInfoExample;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;

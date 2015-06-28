@@ -1,14 +1,11 @@
 package com.morningsidevc.web.controller;
 
+import com.morningsidevc.po.gen.UserInfo;
+import com.morningsidevc.service.UserInfoService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.morningsidevc.po.DescBean;
-import com.morningsidevc.service.DescService;
 import com.morningsidevc.service.FeedInfoService;
 
 import javax.annotation.Resource;
@@ -18,13 +15,13 @@ import javax.annotation.Resource;
  */
 @Controller
 public class HomeController {
-
-    @Resource
-    private DescService descService;
     
     @Resource
     private FeedInfoService feedInfoService;
     
+	@Resource
+	private UserInfoService userInfoService;
+
     /* HTML */
     @RequestMapping(value = "/community", method = RequestMethod.GET)
     public ModelAndView community() {
@@ -35,17 +32,16 @@ public class HomeController {
      	
      	// TagList maybe ajax
      	
-     	// FeedList
-     	
+     	// FeedList     	
     	return mav;
     }
-	
+
     /* Ajax json */
 	@RequestMapping(value = "/community/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public DescBean load(@PathVariable Integer id) {
-		DescBean descBean = this.descService.load(id);
-    	return descBean;
+	public UserInfo load(@PathVariable Integer id) {
+		UserInfo userInfo = this.userInfoService.load(id);
+    	return userInfo;
 	}
-    
+
 }

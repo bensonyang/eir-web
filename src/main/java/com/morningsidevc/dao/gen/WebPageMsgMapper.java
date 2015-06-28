@@ -1,7 +1,7 @@
 package com.morningsidevc.dao.gen;
 
-import com.morningsidevc.po.WebPageMsg;
-import com.morningsidevc.po.WebPageMsgExample;
+import com.morningsidevc.po.gen.WebPageMsg;
+import com.morningsidevc.po.gen.WebPageMsgExample;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;

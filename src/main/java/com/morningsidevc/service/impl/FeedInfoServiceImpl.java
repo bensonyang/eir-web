@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import com.morningsidevc.dao.gen.FeedInfoMapper;
-import com.morningsidevc.po.FeedInfo;
+import com.morningsidevc.po.gen.FeedInfo;
 import com.morningsidevc.service.FeedInfoService;
 import com.morningsidevc.vo.Feed;
 import com.morningsidevc.vo.LinkFeed;

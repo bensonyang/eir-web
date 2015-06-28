@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 数据库驱动包 -->
+    <classPathEntry location="/Users/andy/.gradle/caches/modules-2/files-2.1/mysql/mysql-connector-java/5.1.34/46deba4adbdb4967367b013cbc67b7f7373da60a/mysql-connector-java-5.1.34.jar" />
+    <context id="aisSnsTables" targetRuntime="MyBatis3">
+        <plugin type="com.morningsidevc.utils.PaginationPlugin" />
+
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <jdbcConnection
+                driverClass="com.mysql.jdbc.Driver"
+                connectionURL="jdbc:mysql://localhost:3306/EIR?useUnicode=true"
+                userId="root"
+                password="">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- 生成po对象 -->
+        <javaModelGenerator targetPackage="com.morningsidevc.po.gen"
+                            targetProject="/Users/andy/eir/eir-web/src/main/java">
+            <property name="enableSubPackages" value="false" />
+            <property name="trimStrings" value="false" />
+        </javaModelGenerator>
+
+        <!-- 生成用于查询的Example对象 -->
+        <sqlMapGenerator targetPackage="mapper.gen" targetProject="/Users/andy/eir/eir-web/src/main/resources">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <!-- 生成DAO的类文件以及配置文件 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.morningsidevc.dao.gen"
+                             implementationPackage="com.morningsidevc.dao.impl"
+                             targetProject="/Users/andy/eir/eir-web/src/main/java">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+        <!-- 想要生成的数据库表,自动化工具会根据该表的结构生成相应的vo对象 -->
+        <!--   <table tableName="myDesc" domainObjectName="DescBean">
+               <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()"/>
+           </table>-->
+        <table tableName="UserInfo" domainObjectName="UserInfo">
+            <generatedKey column="UserId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
+        <table tableName="UserFeedCounter" domainObjectName="UserFeedCounter">
+        </table>
+        <table tableName="WeixinUserInfo" domainObjectName="WeixinUserInfo">
+            <generatedKey column="Id" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
+        <table tableName="FeedInfo" domainObjectName="FeedInfo">
+            <generatedKey column="FeedId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
+        <table tableName="WeiboMsg" domainObjectName="WeiboMsg">
+            <generatedKey column="MsgId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
+        <table tableName="WebPageMsg" domainObjectName="WebPageMsg">
+            <generatedKey column="MsgId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
+        <table tableName="FeedCommentMsg" domainObjectName="FeedCommentMsg">
+            <generatedKey column="CommentId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
+        <table tableName="FeedLikeMsg" domainObjectName="FeedLikeMsg">
+            <generatedKey column="LikeId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
+        <table tableName="TagInfo" domainObjectName="TagInfo">
+            <generatedKey column="TagId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
+    </context>
+
+</generatorConfiguration>

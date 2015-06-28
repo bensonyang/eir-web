@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.morningsidevc.dao.gen.UserInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.morningsidevc.vo.UserInfo" >
+  <resultMap id="BaseResultMap" type="com.morningsidevc.po.gen.UserInfo" >
     <id column="UserId" property="userid" jdbcType="INTEGER" />
     <result column="UserName" property="username" jdbcType="VARCHAR" />
     <result column="UserPassword" property="userpassword" jdbcType="VARCHAR" />
@@ -77,7 +77,7 @@
     UserId, UserName, UserPassword, NickName, RealName, Gender, JobTitle, Company, Description, 
     ProfileStatus, AddTime, LastTime
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.vo.UserInfoExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.po.gen.UserInfoExample" >
     select
     <if test="distinct" >
       distinct
@@ -101,13 +101,13 @@
     delete from UserInfo
     where UserId = #{userid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.morningsidevc.vo.UserInfoExample" >
+  <delete id="deleteByExample" parameterType="com.morningsidevc.po.gen.UserInfoExample" >
     delete from UserInfo
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.morningsidevc.vo.UserInfo" >
+  <insert id="insert" parameterType="com.morningsidevc.po.gen.UserInfo" >
     <selectKey resultType="java.lang.Integer" keyProperty="userid" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -122,7 +122,7 @@
       #{profilestatus,jdbcType=TINYINT}, #{addtime,jdbcType=TIMESTAMP}, #{lasttime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.morningsidevc.vo.UserInfo" >
+  <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.UserInfo" >
     <selectKey resultType="java.lang.Integer" keyProperty="userid" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -200,7 +200,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.morningsidevc.vo.UserInfoExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.morningsidevc.po.gen.UserInfoExample" resultType="java.lang.Integer" >
     select count(*) from UserInfo
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -268,7 +268,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.vo.UserInfo" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.po.gen.UserInfo" >
     update UserInfo
     <set >
       <if test="username != null" >
@@ -307,7 +307,7 @@
     </set>
     where UserId = #{userid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.vo.UserInfo" >
+  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.po.gen.UserInfo" >
     update UserInfo
     set UserName = #{username,jdbcType=VARCHAR},
       UserPassword = #{userpassword,jdbcType=VARCHAR},

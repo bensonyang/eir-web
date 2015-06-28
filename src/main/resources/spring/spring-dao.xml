@@ -44,12 +44,12 @@
               <property name="sqlSessionFactory" ref="sqlSessionFactory" />
        </bean>
 
-       <bean id="descBeanMapper" parent="baseMapper">
-              <property name="mapperInterface" value="com.morningsidevc.dao.gen.DescBeanMapper"></property>
-       </bean>
-
+       
        <bean id="userInfoMapper" parent="baseMapper">
               <property name="mapperInterface" value="com.morningsidevc.dao.gen.UserInfoMapper"></property>
+       </bean>
+       <bean id="serFeedCounterMapper" parent="baseMapper">
+              <property name="mapperInterface" value="com.morningsidevc.dao.gen.UserFeedCounterMapper"></property>
        </bean>
        <bean id="weixinUserInfoMapper" parent="baseMapper">
               <property name="mapperInterface" value="com.morningsidevc.dao.gen.WeixinUserInfoMapper"></property>
@@ -68,6 +68,13 @@
        </bean>
        <bean id="feedLikeMsg" parent="baseMapper">
               <property name="mapperInterface" value="com.morningsidevc.dao.gen.FeedLikeMsgMapper"></property>
+       </bean>
+       <bean id="tagInfoMapper" parent="baseMapper">
+              <property name="mapperInterface" value="com.morningsidevc.dao.gen.TagInfoMapper"></property>
+       </bean>
+
+       <bean id="userInfoDao" parent="baseMapper">
+              <property name="mapperInterface" value="com.morningsidevc.dao.UserInfoDao"></property>
        </bean>
 
 </beans>
