@@ -58,17 +58,42 @@ require(["API","jquery","tooltip","popover"], function(API, $){
             $(this).addClass('active');
             $('.for-recommend-link').show();
         },
-        clickTagHandler    :   function clickTag(){
-            $(this).find('li').toggleClass('icon-tag');
-            $(this).find('label').toggleClass('active');
-            var isExist = $('.tags').find('a[data-index=' + $(this).data('index') +']');
-            if(isExist.length == 0){
-                var html = '<a class="btn btn-default eir-tag" data-index='+ $(this).data('index') + '>' + $(this).find('label').text() + '</a>';
-                $(html).appendTo('.tags');
-            }else{
-                $(isExist).remove();
-            }
+        clickTagHandler    :   function clickTag(){//单选tag
+            $(this).siblings().find('li').removeClass('icon-tag');
+            $(this).siblings().find('label').removeClass('icon-tag');
+            $(this).find('li').addClass('icon-tag');
+            $(this).find('label').addClass('active');
+            $('.tags').find('a[data-index]').remove();
+            var html = '<a class="btn btn-default eir-tag" data-index='+ $(this).data('index') + '>' + $(this).find('label').text() + '</a>';
+            $(html).appendTo('.tags');
 
+        },
+        commentsOnClickHandler  :   function commentsOnClickHandler(){
+            var _content = $('.form-group .main-textarea').val();
+            var _tag = $('.form-group a[data-index]').data('index');
+            var _link = $('.form-group .eir-recommend-link').val();
+            var feedTypeId = $('.eir-options i.active').attr('id');
+            switch(feedTypeId){
+                case "write-feed":
+                    $.post(API.shuoFeed,{
+                        content:_content,
+                        tag:_tag
+                    },shuoFeedCallback);
+                    break;
+                case "recommend-link":
+                    $.post(API.linkFeed,{
+                        content:_content,
+                        tag:_tag,
+                        link:_link
+                    },linkFeedCallback);
+                    break;
+            }
+            function shuoFeedCallback(data){
+
+            }
+            function linkFeedCallback(data){
+
+            }
         }
     };
     //################################事件处理器配置END#######################################
@@ -79,5 +104,6 @@ require(["API","jquery","tooltip","popover"], function(API, $){
     $('#write-feed').click(HANDLERS.writeFeedOnClickHandler);
     $('#recommend-link').click(HANDLERS.recommendLinkOnClickHandler);
     $('.eir-mytags .eir-li').click(HANDLERS.clickTagHandler);
+    $('.eir-comments-btn').click(HANDLERS.commentsOnClickHandler);//发表说说
     //################################事件配置END#######################################
 });

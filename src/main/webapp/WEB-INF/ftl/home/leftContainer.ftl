@@ -14,7 +14,7 @@
                     <input type="text" class="eir-recommend-link">
                     <a class="btn btn-default eir-noradius eir-input-link">输入网址</a>
                 </div>
-                <textarea class="eir-form-control" rows="3"></textarea>
+                <textarea class="eir-form-control main-textarea" rows="3"></textarea>
                 <div class="col-md-12 col-xs-12 eir-box1">
                     <li class="icon-tags icon-grey">
                         <label class="eir-label">标签</label>
