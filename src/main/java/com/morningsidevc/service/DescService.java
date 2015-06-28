@@ -1,6 +1,6 @@
 package com.morningsidevc.service;
 
-import com.morningsidevc.vo.DescBean;
+import com.morningsidevc.po.DescBean;
 
 /**
  * @author float.lu

@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.morningsidevc.po.DescBean;
 import com.morningsidevc.service.DescService;
-import com.morningsidevc.vo.DescBean;
+import com.morningsidevc.service.FeedInfoService;
 
 import javax.annotation.Resource;
 
@@ -21,15 +22,21 @@ public class HomeController {
     @Resource
     private DescService descService;
     
+    @Resource
+    private FeedInfoService feedInfoService;
+    
     /* HTML */
     @RequestMapping(value = "/community", method = RequestMethod.GET)
     public ModelAndView community() {
     	ModelAndView mav = new ModelAndView();
+     	mav.setViewName("home");
     	
-    	DescBean descBean = this.descService.load(1);
-    	mav.addObject("descBean", descBean);
-    	mav.setViewName("home");
-    	
+     	// UserInfo retrieved from cookie and the number of feed and comment
+     	
+     	// TagList maybe ajax
+     	
+     	// FeedList
+     	
     	return mav;
     }
 	

@@ -1,7 +1,8 @@
 package com.morningsidevc.dao.gen;
 
-import com.morningsidevc.vo.FeedLikeMsg;
-import com.morningsidevc.vo.FeedLikeMsgExample;
+import com.morningsidevc.po.FeedLikeMsg;
+import com.morningsidevc.po.FeedLikeMsgExample;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,6 +1,7 @@
 package com.morningsidevc.dao;
 
-import com.morningsidevc.vo.UserInfo;
+import com.morningsidevc.dao.gen.UserInfoMapper;
+import com.morningsidevc.po.UserInfo;
 
 /**
  * @author float.lu

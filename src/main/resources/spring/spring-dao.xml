@@ -44,7 +44,7 @@
               <property name="sqlSessionFactory" ref="sqlSessionFactory" />
        </bean>
 
-       <bean id="descDao" parent="baseMapper">
+       <bean id="descBeanMapper" parent="baseMapper">
               <property name="mapperInterface" value="com.morningsidevc.dao.gen.DescBeanMapper"></property>
        </bean>
 

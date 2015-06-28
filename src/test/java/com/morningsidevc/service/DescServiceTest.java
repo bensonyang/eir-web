@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.morningsidevc.vo.DescBean;
+import com.morningsidevc.po.DescBean;
 
 /**
  * @author yangna
@@ -29,6 +29,12 @@ public class DescServiceTest extends AbstractJUnit4SpringContextTests {
 		DescBean descBean = new DescBean();
 		descBean.setName("World");
 		descService.save(descBean);
+	}
+	
+	@Test
+	public void loadTest() {
+		DescBean descBean = descService.load(1);
+		System.out.println(descBean);
 	}
 	
 }

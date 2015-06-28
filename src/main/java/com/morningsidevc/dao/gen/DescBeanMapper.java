@@ -1,7 +1,8 @@
 package com.morningsidevc.dao.gen;
 
-import com.morningsidevc.vo.DescBean;
-import com.morningsidevc.vo.DescBeanExample;
+import com.morningsidevc.po.DescBean;
+import com.morningsidevc.po.DescBeanExample;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,7 +1,8 @@
 package com.morningsidevc.dao.gen;
 
-import com.morningsidevc.vo.WeixinUserInfo;
-import com.morningsidevc.vo.WeixinUserInfoExample;
+import com.morningsidevc.po.WeixinUserInfo;
+import com.morningsidevc.po.WeixinUserInfoExample;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

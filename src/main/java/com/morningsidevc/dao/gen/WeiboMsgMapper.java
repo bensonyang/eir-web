@@ -1,7 +1,8 @@
 package com.morningsidevc.dao.gen;
 
-import com.morningsidevc.vo.WeiboMsg;
-import com.morningsidevc.vo.WeiboMsgExample;
+import com.morningsidevc.po.WeiboMsg;
+import com.morningsidevc.po.WeiboMsgExample;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
