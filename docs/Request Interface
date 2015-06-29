@@ -1,0 +1,108 @@
+主页:
+http://localhost:8080/community
+
+加载更多feed:
+http://localhost:8080/community/morefeed
+方法:GET
+参数:
+startOff:123
+Response:
+{
+    "code": 200,
+    "msg": [
+        {
+            "feedId": 124,
+            "feedType": 0,
+            "msgBody": {
+                "msgId": 666,
+                "content": "哈哈哈"
+            },
+            "author": {
+                "userId": 123456,
+                "realName": "Cheng",
+                "jobTiltle": "CEO",
+                "company": "huhaha",
+                "avatarUrl": "http: //***"
+            },
+            "addTime": "2015-6-15",
+            "commentCount": 0,
+            "likeCount": 0,
+            "tag": "O2O"
+        },
+        {
+            "feedId": 125,
+            "feedType": 1,
+            "msgBody": {
+                "msgId": 888,
+                "title": "哈哈哈",
+                "description": "哈哈哈",
+                "link": "http: //***"
+            },
+            "author": {
+                "userId": 123456,
+                "realName": "Cheng",
+                "jobTiltle": "CEO",
+                "company": "huhaha",
+                "avatarUrl": "http: //***"
+            },
+            "addTime": "2015-6-15",
+            "commentCount": 0,
+            "likeCount": 0,
+            "tag": "互联网金融"
+        }
+    ]
+}
+
+说说:
+Request: http://localhost:8080/community/shuofeed
+方法: POST
+参数:
+content:"在已经大幕拉开的暑期档，价格补贴的恶战会再次重燃，到
+年底究竟还能留下谁呢？"
+tag:"O2O"
+Response:
+{"code":200, "msg":{"feedId":123, "commentCount":0, "likeCount":0}}
+{"code":500, "msg":{"failed"}}
+
+推荐网页:
+http://localhost:8080/community/linkfeed
+方法:POST
+参数:
+link:"http://m.huxiu.com/article/118589/1.html"
+content:"神州租车，神了"
+tag:"互联网金融"
+Response:
+{"code":200, "msg":{"feedId":123,"title":"猫眼格瓦拉百度淘宝们怎么打?"},"description":"在已经大幕拉开的暑期档，价格补贴的恶战会再次重燃，到
+年底究竟还能留下谁呢？", "link":"http://m.huxiu.com/article/118589/1.html", "commentCount":0, "likeCount":0}
+{"code":500, "msg":{"failed"}}
+
+删除动态:
+Request: http://localhost:8080/community/deletefeed
+方法: POST
+参数:
+feedId:123
+Response:
+{"code":200, "msg":{"feedId":123, "myFeedCount":0, "myCommentCount":0}}
+{"code":500, "msg":{"failed"}}
+
+评论:
+http://localhost:8080/community/addcomment
+http://localhost:8080/community/deletecomment
+方法:POST
+参数：
+feedId:123
+content:"支持支持支持"
+Response:
+{"code":200, "msg":{"feedId":123, "commentCount":1}}
+
+点赞:
+http://localhost:8080/community/addlike
+http://localhost:8080/community/deletelike
+方法:POST
+参数：
+feedId:123
+Response:
+{"code":200, "msg":{"feedId":123, "likeCount":1}}
+
+
+
