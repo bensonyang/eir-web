@@ -3,8 +3,7 @@
 <mapper namespace="com.morningsidevc.dao.gen.UserInfoMapper" >
   <resultMap id="BaseResultMap" type="com.morningsidevc.po.gen.UserInfo" >
     <id column="UserId" property="userid" jdbcType="INTEGER" />
-    <result column="UserName" property="username" jdbcType="VARCHAR" />
-    <result column="UserPassword" property="userpassword" jdbcType="VARCHAR" />
+    <result column="MobileNum" property="mobilenum" jdbcType="VARCHAR" />
     <result column="NickName" property="nickname" jdbcType="VARCHAR" />
     <result column="RealName" property="realname" jdbcType="VARCHAR" />
     <result column="Gender" property="gender" jdbcType="TINYINT" />
@@ -74,8 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    UserId, UserName, UserPassword, NickName, RealName, Gender, JobTitle, Company, Description, 
-    ProfileStatus, AddTime, LastTime
+    UserId, MobileNum, NickName, RealName, Gender, JobTitle, Company, Description, ProfileStatus, 
+    AddTime, LastTime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.po.gen.UserInfoExample" >
     select
@@ -108,32 +107,23 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.morningsidevc.po.gen.UserInfo" >
-    <selectKey resultType="java.lang.Integer" keyProperty="userid" order="BEFORE" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into UserInfo (UserId, UserName, UserPassword, 
-      NickName, RealName, Gender, 
-      JobTitle, Company, Description, 
-      ProfileStatus, AddTime, LastTime
-      )
-    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, 
-      #{nickname,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, 
-      #{jobtitle,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{profilestatus,jdbcType=TINYINT}, #{addtime,jdbcType=TIMESTAMP}, #{lasttime,jdbcType=TIMESTAMP}
-      )
+    insert into UserInfo (UserId, MobileNum, NickName, 
+      RealName, Gender, JobTitle, 
+      Company, Description, ProfileStatus, 
+      AddTime, LastTime)
+    values (#{userid,jdbcType=INTEGER}, #{mobilenum,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
+      #{realname,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, #{jobtitle,jdbcType=VARCHAR}, 
+      #{company,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{profilestatus,jdbcType=TINYINT}, 
+      #{addtime,jdbcType=TIMESTAMP}, #{lasttime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.UserInfo" >
-    <selectKey resultType="java.lang.Integer" keyProperty="userid" order="BEFORE" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into UserInfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      UserId,
-      <if test="username != null" >
-        UserName,
+      <if test="userid != null" >
+        UserId,
       </if>
-      <if test="userpassword != null" >
-        UserPassword,
+      <if test="mobilenum != null" >
+        MobileNum,
       </if>
       <if test="nickname != null" >
         NickName,
@@ -164,12 +154,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      #{userid,jdbcType=INTEGER},
-      <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
       </if>
-      <if test="userpassword != null" >
-        #{userpassword,jdbcType=VARCHAR},
+      <if test="mobilenum != null" >
+        #{mobilenum,jdbcType=VARCHAR},
       </if>
       <if test="nickname != null" >
         #{nickname,jdbcType=VARCHAR},
@@ -212,11 +201,8 @@
       <if test="record.userid != null" >
         UserId = #{record.userid,jdbcType=INTEGER},
       </if>
-      <if test="record.username != null" >
-        UserName = #{record.username,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userpassword != null" >
-        UserPassword = #{record.userpassword,jdbcType=VARCHAR},
+      <if test="record.mobilenum != null" >
+        MobileNum = #{record.mobilenum,jdbcType=VARCHAR},
       </if>
       <if test="record.nickname != null" >
         NickName = #{record.nickname,jdbcType=VARCHAR},
@@ -253,8 +239,7 @@
   <update id="updateByExample" parameterType="map" >
     update UserInfo
     set UserId = #{record.userid,jdbcType=INTEGER},
-      UserName = #{record.username,jdbcType=VARCHAR},
-      UserPassword = #{record.userpassword,jdbcType=VARCHAR},
+      MobileNum = #{record.mobilenum,jdbcType=VARCHAR},
       NickName = #{record.nickname,jdbcType=VARCHAR},
       RealName = #{record.realname,jdbcType=VARCHAR},
       Gender = #{record.gender,jdbcType=TINYINT},
@@ -271,11 +256,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.po.gen.UserInfo" >
     update UserInfo
     <set >
-      <if test="username != null" >
-        UserName = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="userpassword != null" >
-        UserPassword = #{userpassword,jdbcType=VARCHAR},
+      <if test="mobilenum != null" >
+        MobileNum = #{mobilenum,jdbcType=VARCHAR},
       </if>
       <if test="nickname != null" >
         NickName = #{nickname,jdbcType=VARCHAR},
@@ -309,8 +291,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.morningsidevc.po.gen.UserInfo" >
     update UserInfo
-    set UserName = #{username,jdbcType=VARCHAR},
-      UserPassword = #{userpassword,jdbcType=VARCHAR},
+    set MobileNum = #{mobilenum,jdbcType=VARCHAR},
       NickName = #{nickname,jdbcType=VARCHAR},
       RealName = #{realname,jdbcType=VARCHAR},
       Gender = #{gender,jdbcType=TINYINT},

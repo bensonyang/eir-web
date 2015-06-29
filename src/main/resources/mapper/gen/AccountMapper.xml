@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.morningsidevc.dao.gen.UserFeedCounterMapper" >
-  <resultMap id="BaseResultMap" type="com.morningsidevc.po.gen.UserFeedCounter" >
+<mapper namespace="com.morningsidevc.dao.gen.AccountMapper" >
+  <resultMap id="BaseResultMap" type="com.morningsidevc.po.gen.Account" >
     <id column="UserId" property="userid" jdbcType="INTEGER" />
-    <result column="Sum" property="sum" jdbcType="INTEGER" />
-    <result column="CounterType" property="countertype" jdbcType="TINYINT" />
+    <result column="UserEmail" property="useremail" jdbcType="VARCHAR" />
+    <result column="UserPassword" property="userpassword" jdbcType="VARCHAR" />
+    <result column="Status" property="status" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    UserId, Sum, CounterType
+    UserId, UserEmail, UserPassword, Status
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.po.gen.UserFeedCounterExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.po.gen.AccountExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from UserFeedCounter
+    from Account
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -84,67 +85,78 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from UserFeedCounter
+    from Account
     where UserId = #{userid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from UserFeedCounter
+    delete from Account
     where UserId = #{userid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.morningsidevc.po.gen.UserFeedCounterExample" >
-    delete from UserFeedCounter
+  <delete id="deleteByExample" parameterType="com.morningsidevc.po.gen.AccountExample" >
+    delete from Account
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.morningsidevc.po.gen.UserFeedCounter" >
-    insert into UserFeedCounter (UserId, Sum, CounterType
-      )
-    values (#{userid,jdbcType=INTEGER}, #{sum,jdbcType=INTEGER}, #{countertype,jdbcType=TINYINT}
-      )
+  <insert id="insert" parameterType="com.morningsidevc.po.gen.Account" >
+    <selectKey resultType="java.lang.Integer" keyProperty="userid" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into Account (UserId, UserEmail, UserPassword, 
+      Status)
+    values (#{userid,jdbcType=INTEGER}, #{useremail,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.UserFeedCounter" >
-    insert into UserFeedCounter
+  <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.Account" >
+    <selectKey resultType="java.lang.Integer" keyProperty="userid" order="BEFORE" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into Account
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="userid != null" >
-        UserId,
+      UserId,
+      <if test="useremail != null" >
+        UserEmail,
       </if>
-      <if test="sum != null" >
-        Sum,
+      <if test="userpassword != null" >
+        UserPassword,
       </if>
-      <if test="countertype != null" >
-        CounterType,
+      <if test="status != null" >
+        Status,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="userid != null" >
-        #{userid,jdbcType=INTEGER},
+      #{userid,jdbcType=INTEGER},
+      <if test="useremail != null" >
+        #{useremail,jdbcType=VARCHAR},
       </if>
-      <if test="sum != null" >
-        #{sum,jdbcType=INTEGER},
+      <if test="userpassword != null" >
+        #{userpassword,jdbcType=VARCHAR},
       </if>
-      <if test="countertype != null" >
-        #{countertype,jdbcType=TINYINT},
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.morningsidevc.po.gen.UserFeedCounterExample" resultType="java.lang.Integer" >
-    select count(*) from UserFeedCounter
+  <select id="countByExample" parameterType="com.morningsidevc.po.gen.AccountExample" resultType="java.lang.Integer" >
+    select count(*) from Account
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update UserFeedCounter
+    update Account
     <set >
       <if test="record.userid != null" >
         UserId = #{record.userid,jdbcType=INTEGER},
       </if>
-      <if test="record.sum != null" >
-        Sum = #{record.sum,jdbcType=INTEGER},
+      <if test="record.useremail != null" >
+        UserEmail = #{record.useremail,jdbcType=VARCHAR},
       </if>
-      <if test="record.countertype != null" >
-        CounterType = #{record.countertype,jdbcType=TINYINT},
+      <if test="record.userpassword != null" >
+        UserPassword = #{record.userpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        Status = #{record.status,jdbcType=TINYINT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -152,30 +164,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update UserFeedCounter
+    update Account
     set UserId = #{record.userid,jdbcType=INTEGER},
-      Sum = #{record.sum,jdbcType=INTEGER},
-      CounterType = #{record.countertype,jdbcType=TINYINT}
+      UserEmail = #{record.useremail,jdbcType=VARCHAR},
+      UserPassword = #{record.userpassword,jdbcType=VARCHAR},
+      Status = #{record.status,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.po.gen.UserFeedCounter" >
-    update UserFeedCounter
+  <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.po.gen.Account" >
+    update Account
     <set >
-      <if test="sum != null" >
-        Sum = #{sum,jdbcType=INTEGER},
+      <if test="useremail != null" >
+        UserEmail = #{useremail,jdbcType=VARCHAR},
       </if>
-      <if test="countertype != null" >
-        CounterType = #{countertype,jdbcType=TINYINT},
+      <if test="userpassword != null" >
+        UserPassword = #{userpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        Status = #{status,jdbcType=TINYINT},
       </if>
     </set>
     where UserId = #{userid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.po.gen.UserFeedCounter" >
-    update UserFeedCounter
-    set Sum = #{sum,jdbcType=INTEGER},
-      CounterType = #{countertype,jdbcType=TINYINT}
+  <update id="updateByPrimaryKey" parameterType="com.morningsidevc.po.gen.Account" >
+    update Account
+    set UserEmail = #{useremail,jdbcType=VARCHAR},
+      UserPassword = #{userpassword,jdbcType=VARCHAR},
+      Status = #{status,jdbcType=TINYINT}
     where UserId = #{userid,jdbcType=INTEGER}
   </update>
 </mapper>

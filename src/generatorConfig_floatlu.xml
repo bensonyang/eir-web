@@ -48,8 +48,10 @@
         <!--   <table tableName="myDesc" domainObjectName="DescBean">
                <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()"/>
            </table>-->
-        <table tableName="UserInfo" domainObjectName="UserInfo">
+        <table tableName="Account" domainObjectName="Account">
             <generatedKey column="UserId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+        </table>
+        <table tableName="UserInfo" domainObjectName="UserInfo">
         </table>
         <table tableName="UserFeedCounter" domainObjectName="UserFeedCounter">
         </table>
