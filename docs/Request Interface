@@ -1,99 +1,199 @@
 主页:
 http://localhost:8080/community
-
-加载更多feed:
+########################1、获取Feed接口begin############################
+加载更多Feed:
 http://localhost:8080/community/morefeed
-方法:GET
+
 参数:
-startOff:123
-Response:
+lastIndex:2 //已经取多少条feed,下次从第lastIndex+1开始取
+pageSize:10 //当前页取多少条
+
+方法:GET/POST
+
+返回值:
 {
     "code": 200,
-    "msg": [
-        {
-            "feedId": 124,
-            "feedType": 0,
-            "msgBody": {
-                "msgId": 666,
-                "content": "哈哈哈"
-            },
-            "author": {
-                "userId": 123456,
-                "realName": "Cheng",
-                "jobTiltle": "CEO",
-                "company": "huhaha",
-                "avatarUrl": "http: //***"
-            },
-            "addTime": "2015-6-15",
-            "commentCount": 0,
-            "likeCount": 0,
-            "tag": "O2O"
-        },
-        {
-            "feedId": 125,
-            "feedType": 1,
-            "msgBody": {
-                "msgId": 888,
-                "title": "哈哈哈",
-                "description": "哈哈哈",
-                "link": "http: //***"
-            },
-            "author": {
-                "userId": 123456,
-                "realName": "Cheng",
-                "jobTiltle": "CEO",
-                "company": "huhaha",
-                "avatarUrl": "http: //***"
-            },
-            "addTime": "2015-6-15",
-            "commentCount": 0,
-            "likeCount": 0,
-            "tag": "互联网金融"
-        }
-    ]
-}
+    "msg":{
+        "lastFeedIndex":1,//当前页最后一个Feed索引
+        "totalFeedCount":111,//总Feed数
+        "feeds": [
+            {
+                "feedId": 123,//FeedId
+                "feedType": 0,//feed类型（0-短文,1-推荐网址）
+                "msgBody": {
+                    "msgId": 666,//消息ID,对应WeiboMsg/WebPageMsg表主键
+                    "title":"猫眼格瓦拉百度淘宝们怎么打?", //Feed标题
+                    "content": "在已经大幕拉开的暑期档，价格补贴的恶战会再次重燃，到 年底究竟还能留下谁呢?",//Feed内容
+                    "link": "http: //***"//推荐网址
+                },
+                "author": {
+                    "userId": 123456,//作者ID
+                    "realName": "Cheng",//作者名字
+                    "jobTiltle": "CEO",//作者职位
+                    "company": "huhaha",//作者公司
+                    "avatarUrl": "/images/pic1.jpeg"//作者头像
+                },
+                "comments":{
+                    "feedId":123,//隶属于FeedID
+                    "lastIndex":2,//当前获取评论最后一个条的索引，下次从lastIndex获取
+                    "totalCount":111,//当前Feed的评论总数
+                    "data":[
+                        {
+                            "commentId":1,//评论ID
+                            "userPic":"/images/pic1.jpeg",//作者头像图片
+                            "userId":1,//作者ID
+                            "userName":"float.lu",//作者名字
+                            "toUserPic":"/images/pic1.jpeg",//被@的作者图片
+                            "toUserId":123,//被@的作者
+                            "toUserName":"cheng",//被@的作者名字
+                            "content":"不错哟",//评论内容
+                            "commentTime":"2015-6-15"
+                        },
+                        {
+                            "commentId":1,//评论ID
+                            "userPic":"/images/pic1.jpeg",//作者头像图片
+                            "userId":123,//作者ID
+                            "userName":"cheng",//作者名字
+                            "toUserPic":"/images/pic1.jpeg",//被@的作者图片
+                            "toUserId":1,//被@的作者
+                            "toUserName":"cheng",//被@的作者名字
+                            "content":"不错哟",//评论内容
+                            "commentTime":"2015-6-16"
+                        }
+                    ]
+                },
+                "addTime": "2015-6-15",//Feed产生时间
+                "commentCount": 0,//评论总数
+                "likeCount": 0,//点赞总数
+                "tag": "O2O",//标签
+                "tagId":1,//标签ID
+                isLiked:"true"//是否已赞
+            }
+        ]
+    }
+########################2、添加说说Begin############################
 
 说说:
 Request: http://localhost:8080/community/shuofeed
+
 方法: POST
+
 参数:
-content:"在已经大幕拉开的暑期档，价格补贴的恶战会再次重燃，到
-年底究竟还能留下谁呢？"
+content:"在已经大幕拉开的暑期档，价格补贴的恶战会再次重燃，到年底究竟还能留下谁呢？"
+tagId:"123"
 tag:"O2O"
-Response:
-{"code":200, "msg":{"feedId":123, "commentCount":0, "likeCount":0}}
-{"code":500, "msg":{"failed"}}
+
+返回值:
+{
+        "code":200,
+        "msg":{
+            "feedId":123,
+            "commentCount":123,
+            "likeCount":123
+        }
+}
+
+{
+    "code":500,
+    "msg":"failed"
+}
+
+########################3、推荐网页Begin############################
 
 推荐网页:
 http://localhost:8080/community/linkfeed
+
 方法:POST
+
 参数:
 link:"http://m.huxiu.com/article/118589/1.html"
 content:"神州租车，神了"
+tagId:123
 tag:"互联网金融"
-Response:
-{"code":200, "msg":{"feedId":123,"title":"猫眼格瓦拉百度淘宝们怎么打?"},"description":"在已经大幕拉开的暑期档，价格补贴的恶战会再次重燃，到
-年底究竟还能留下谁呢？", "link":"http://m.huxiu.com/article/118589/1.html", "commentCount":0, "likeCount":0}
-{"code":500, "msg":{"failed"}}
+
+返回值:
+{
+    "code":200,
+    "msg":{
+        "feedId":123,
+        "title":"猫眼格瓦拉百度淘宝们怎么打?"
+    },
+    "description":"网页摘要",
+    "link":"http://m.huxiu.com/article/118589/1.html",
+    "commentCount":0,
+    "likeCount":0
+}
+
+{
+    "code":500,
+    "msg":"failed"
+}
+
+########################3、删除动态Begin############################
 
 删除动态:
 Request: http://localhost:8080/community/deletefeed
+
 方法: POST
+
 参数:
 feedId:123
-Response:
-{"code":200, "msg":{"feedId":123, "myFeedCount":0, "myCommentCount":0}}
-{"code":500, "msg":{"failed"}}
+
+返回值:
+{
+    "code":200,
+    "msg":{
+        "feedId":123
+    }
+}
+
+{
+    "code":500,
+    "msg":"failed"
+}
+
+########################4、评论Begin############################
 
 评论:
 http://localhost:8080/community/addcomment
 http://localhost:8080/community/deletecomment
 方法:POST
+
 参数：
 feedId:123
 content:"支持支持支持"
-Response:
-{"code":200, "msg":{"feedId":123, "commentCount":1}}
+toUserId:""//回复某个作者
+
+添加评论返回值:
+{
+    "code":200,
+    "msg":{
+        "commentId":1,
+        "userPic":"/images/pic1.jpeg",
+        "userId":1,
+        "userName":"float.lu",
+        "toUserPic":"/images/pic1.jpeg",
+        "toUserId":123,
+        "toUserName":"cheng",
+        "content":"不错哟",
+        "commentTime":"2015-6-15"
+    }
+}
+删除评论返回值：
+{
+    "code":200,
+    "msg":{
+        "commentId":1
+    }
+}
+
+错误:
+{
+    "code":500,
+    "msg":"failed"
+}
+
+########################5、点赞Begin############################
 
 点赞:
 http://localhost:8080/community/addlike
@@ -101,8 +201,13 @@ http://localhost:8080/community/deletelike
 方法:POST
 参数：
 feedId:123
-Response:
-{"code":200, "msg":{"feedId":123, "likeCount":1}}
+返回值:
+{
+    "code":200,
+    "msg":{
+        "feedId":123
+    }
+}
 
 
 
