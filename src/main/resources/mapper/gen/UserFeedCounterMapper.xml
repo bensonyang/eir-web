@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.morningsidevc.dao.gen.UserFeedCounterMapper" >
   <resultMap id="BaseResultMap" type="com.morningsidevc.po.gen.UserFeedCounter" >
-    <id column="UserId" property="userid" jdbcType="INTEGER" />
+    <id column="CounterId" property="counterid" jdbcType="INTEGER" />
+    <result column="UserId" property="userid" jdbcType="INTEGER" />
     <result column="Sum" property="sum" jdbcType="INTEGER" />
     <result column="CounterType" property="countertype" jdbcType="TINYINT" />
   </resultMap>
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    UserId, Sum, CounterType
+    CounterId, UserId, Sum, CounterType
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.po.gen.UserFeedCounterExample" >
     select
@@ -85,11 +86,11 @@
     select 
     <include refid="Base_Column_List" />
     from UserFeedCounter
-    where UserId = #{userid,jdbcType=INTEGER}
+    where CounterId = #{counterid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from UserFeedCounter
-    where UserId = #{userid,jdbcType=INTEGER}
+    where CounterId = #{counterid,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.morningsidevc.po.gen.UserFeedCounterExample" >
     delete from UserFeedCounter
@@ -98,14 +99,17 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.morningsidevc.po.gen.UserFeedCounter" >
-    insert into UserFeedCounter (UserId, Sum, CounterType
-      )
-    values (#{userid,jdbcType=INTEGER}, #{sum,jdbcType=INTEGER}, #{countertype,jdbcType=TINYINT}
-      )
+    insert into UserFeedCounter (CounterId, UserId, Sum, 
+      CounterType)
+    values (#{counterid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{sum,jdbcType=INTEGER}, 
+      #{countertype,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.UserFeedCounter" >
     insert into UserFeedCounter
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="counterid != null" >
+        CounterId,
+      </if>
       <if test="userid != null" >
         UserId,
       </if>
@@ -117,6 +121,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="counterid != null" >
+        #{counterid,jdbcType=INTEGER},
+      </if>
       <if test="userid != null" >
         #{userid,jdbcType=INTEGER},
       </if>
@@ -137,6 +144,9 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update UserFeedCounter
     <set >
+      <if test="record.counterid != null" >
+        CounterId = #{record.counterid,jdbcType=INTEGER},
+      </if>
       <if test="record.userid != null" >
         UserId = #{record.userid,jdbcType=INTEGER},
       </if>
@@ -153,7 +163,8 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update UserFeedCounter
-    set UserId = #{record.userid,jdbcType=INTEGER},
+    set CounterId = #{record.counterid,jdbcType=INTEGER},
+      UserId = #{record.userid,jdbcType=INTEGER},
       Sum = #{record.sum,jdbcType=INTEGER},
       CounterType = #{record.countertype,jdbcType=TINYINT}
     <if test="_parameter != null" >
@@ -163,6 +174,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.morningsidevc.po.gen.UserFeedCounter" >
     update UserFeedCounter
     <set >
+      <if test="userid != null" >
+        UserId = #{userid,jdbcType=INTEGER},
+      </if>
       <if test="sum != null" >
         Sum = #{sum,jdbcType=INTEGER},
       </if>
@@ -170,12 +184,13 @@
         CounterType = #{countertype,jdbcType=TINYINT},
       </if>
     </set>
-    where UserId = #{userid,jdbcType=INTEGER}
+    where CounterId = #{counterid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.morningsidevc.po.gen.UserFeedCounter" >
     update UserFeedCounter
-    set Sum = #{sum,jdbcType=INTEGER},
+    set UserId = #{userid,jdbcType=INTEGER},
+      Sum = #{sum,jdbcType=INTEGER},
       CounterType = #{countertype,jdbcType=TINYINT}
-    where UserId = #{userid,jdbcType=INTEGER}
+    where CounterId = #{counterid,jdbcType=INTEGER}
   </update>
 </mapper>
