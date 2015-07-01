@@ -10,7 +10,7 @@ public interface UserFeedCounterMapper {
 
     int deleteByExample(UserFeedCounterExample example);
 
-    int deleteByPrimaryKey(Integer userid);
+    int deleteByPrimaryKey(Integer counterid);
 
     int insert(UserFeedCounter record);
 
@@ -18,7 +18,7 @@ public interface UserFeedCounterMapper {
 
     List<UserFeedCounter> selectByExample(UserFeedCounterExample example);
 
-    UserFeedCounter selectByPrimaryKey(Integer userid);
+    UserFeedCounter selectByPrimaryKey(Integer counterid);
 
     int updateByExampleSelective(@Param("record") UserFeedCounter record, @Param("example") UserFeedCounterExample example);
 

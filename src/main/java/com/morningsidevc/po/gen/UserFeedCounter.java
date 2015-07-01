@@ -1,11 +1,21 @@
 package com.morningsidevc.po.gen;
 
 public class UserFeedCounter {
+    private Integer counterid;
+
     private Integer userid;
 
-    private Integer feedsum;
+    private Integer sum;
 
-    private Integer feedcommentsum;
+    private Byte countertype;
+
+    public Integer getCounterid() {
+        return counterid;
+    }
+
+    public void setCounterid(Integer counterid) {
+        this.counterid = counterid;
+    }
 
     public Integer getUserid() {
         return userid;
@@ -15,19 +25,19 @@ public class UserFeedCounter {
         this.userid = userid;
     }
 
-    public Integer getFeedsum() {
-        return feedsum;
+    public Integer getSum() {
+        return sum;
     }
 
-    public void setFeedsum(Integer feedsum) {
-        this.feedsum = feedsum;
+    public void setSum(Integer sum) {
+        this.sum = sum;
     }
 
-    public Integer getFeedcommentsum() {
-        return feedcommentsum;
+    public Byte getCountertype() {
+        return countertype;
     }
 
-    public void setFeedcommentsum(Integer feedcommentsum) {
-        this.feedcommentsum = feedcommentsum;
+    public void setCountertype(Byte countertype) {
+        this.countertype = countertype;
     }
 }

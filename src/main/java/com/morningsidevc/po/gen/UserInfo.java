@@ -5,9 +5,7 @@ import java.util.Date;
 public class UserInfo {
     private Integer userid;
 
-    private String username;
-
-    private String userpassword;
+    private String mobilenum;
 
     private String nickname;
 
@@ -35,20 +33,12 @@ public class UserInfo {
         this.userid = userid;
     }
 
-    public String getUsername() {
-        return username;
+    public String getMobilenum() {
+        return mobilenum;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUserpassword() {
-        return userpassword;
-    }
-
-    public void setUserpassword(String userpassword) {
-        this.userpassword = userpassword;
+    public void setMobilenum(String mobilenum) {
+        this.mobilenum = mobilenum;
     }
 
     public String getNickname() {

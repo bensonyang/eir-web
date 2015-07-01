@@ -124,6 +124,66 @@ public class UserFeedCounterExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
+        public Criteria andCounteridIsNull() {
+            addCriterion("CounterId is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCounteridIsNotNull() {
+            addCriterion("CounterId is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCounteridEqualTo(Integer value) {
+            addCriterion("CounterId =", value, "counterid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCounteridNotEqualTo(Integer value) {
+            addCriterion("CounterId <>", value, "counterid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCounteridGreaterThan(Integer value) {
+            addCriterion("CounterId >", value, "counterid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCounteridGreaterThanOrEqualTo(Integer value) {
+            addCriterion("CounterId >=", value, "counterid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCounteridLessThan(Integer value) {
+            addCriterion("CounterId <", value, "counterid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCounteridLessThanOrEqualTo(Integer value) {
+            addCriterion("CounterId <=", value, "counterid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCounteridIn(List<Integer> values) {
+            addCriterion("CounterId in", values, "counterid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCounteridNotIn(List<Integer> values) {
+            addCriterion("CounterId not in", values, "counterid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCounteridBetween(Integer value1, Integer value2) {
+            addCriterion("CounterId between", value1, value2, "counterid");
+            return (Criteria) this;
+        }
+
+        public Criteria andCounteridNotBetween(Integer value1, Integer value2) {
+            addCriterion("CounterId not between", value1, value2, "counterid");
+            return (Criteria) this;
+        }
+
         public Criteria andUseridIsNull() {
             addCriterion("UserId is null");
             return (Criteria) this;
@@ -184,123 +244,123 @@ public class UserFeedCounterExample {
             return (Criteria) this;
         }
 
-        public Criteria andFeedsumIsNull() {
-            addCriterion("FeedSum is null");
+        public Criteria andSumIsNull() {
+            addCriterion("Sum is null");
             return (Criteria) this;
         }
 
-        public Criteria andFeedsumIsNotNull() {
-            addCriterion("FeedSum is not null");
+        public Criteria andSumIsNotNull() {
+            addCriterion("Sum is not null");
             return (Criteria) this;
         }
 
-        public Criteria andFeedsumEqualTo(Integer value) {
-            addCriterion("FeedSum =", value, "feedsum");
+        public Criteria andSumEqualTo(Integer value) {
+            addCriterion("Sum =", value, "sum");
             return (Criteria) this;
         }
 
-        public Criteria andFeedsumNotEqualTo(Integer value) {
-            addCriterion("FeedSum <>", value, "feedsum");
+        public Criteria andSumNotEqualTo(Integer value) {
+            addCriterion("Sum <>", value, "sum");
             return (Criteria) this;
         }
 
-        public Criteria andFeedsumGreaterThan(Integer value) {
-            addCriterion("FeedSum >", value, "feedsum");
+        public Criteria andSumGreaterThan(Integer value) {
+            addCriterion("Sum >", value, "sum");
             return (Criteria) this;
         }
 
-        public Criteria andFeedsumGreaterThanOrEqualTo(Integer value) {
-            addCriterion("FeedSum >=", value, "feedsum");
+        public Criteria andSumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("Sum >=", value, "sum");
             return (Criteria) this;
         }
 
-        public Criteria andFeedsumLessThan(Integer value) {
-            addCriterion("FeedSum <", value, "feedsum");
+        public Criteria andSumLessThan(Integer value) {
+            addCriterion("Sum <", value, "sum");
             return (Criteria) this;
         }
 
-        public Criteria andFeedsumLessThanOrEqualTo(Integer value) {
-            addCriterion("FeedSum <=", value, "feedsum");
+        public Criteria andSumLessThanOrEqualTo(Integer value) {
+            addCriterion("Sum <=", value, "sum");
             return (Criteria) this;
         }
 
-        public Criteria andFeedsumIn(List<Integer> values) {
-            addCriterion("FeedSum in", values, "feedsum");
+        public Criteria andSumIn(List<Integer> values) {
+            addCriterion("Sum in", values, "sum");
             return (Criteria) this;
         }
 
-        public Criteria andFeedsumNotIn(List<Integer> values) {
-            addCriterion("FeedSum not in", values, "feedsum");
+        public Criteria andSumNotIn(List<Integer> values) {
+            addCriterion("Sum not in", values, "sum");
             return (Criteria) this;
         }
 
-        public Criteria andFeedsumBetween(Integer value1, Integer value2) {
-            addCriterion("FeedSum between", value1, value2, "feedsum");
+        public Criteria andSumBetween(Integer value1, Integer value2) {
+            addCriterion("Sum between", value1, value2, "sum");
             return (Criteria) this;
         }
 
-        public Criteria andFeedsumNotBetween(Integer value1, Integer value2) {
-            addCriterion("FeedSum not between", value1, value2, "feedsum");
+        public Criteria andSumNotBetween(Integer value1, Integer value2) {
+            addCriterion("Sum not between", value1, value2, "sum");
             return (Criteria) this;
         }
 
-        public Criteria andFeedcommentsumIsNull() {
-            addCriterion("FeedCommentSum is null");
+        public Criteria andCountertypeIsNull() {
+            addCriterion("CounterType is null");
             return (Criteria) this;
         }
 
-        public Criteria andFeedcommentsumIsNotNull() {
-            addCriterion("FeedCommentSum is not null");
+        public Criteria andCountertypeIsNotNull() {
+            addCriterion("CounterType is not null");
             return (Criteria) this;
         }
 
-        public Criteria andFeedcommentsumEqualTo(Integer value) {
-            addCriterion("FeedCommentSum =", value, "feedcommentsum");
+        public Criteria andCountertypeEqualTo(Byte value) {
+            addCriterion("CounterType =", value, "countertype");
             return (Criteria) this;
         }
 
-        public Criteria andFeedcommentsumNotEqualTo(Integer value) {
-            addCriterion("FeedCommentSum <>", value, "feedcommentsum");
+        public Criteria andCountertypeNotEqualTo(Byte value) {
+            addCriterion("CounterType <>", value, "countertype");
             return (Criteria) this;
         }
 
-        public Criteria andFeedcommentsumGreaterThan(Integer value) {
-            addCriterion("FeedCommentSum >", value, "feedcommentsum");
+        public Criteria andCountertypeGreaterThan(Byte value) {
+            addCriterion("CounterType >", value, "countertype");
             return (Criteria) this;
         }
 
-        public Criteria andFeedcommentsumGreaterThanOrEqualTo(Integer value) {
-            addCriterion("FeedCommentSum >=", value, "feedcommentsum");
+        public Criteria andCountertypeGreaterThanOrEqualTo(Byte value) {
+            addCriterion("CounterType >=", value, "countertype");
             return (Criteria) this;
         }
 
-        public Criteria andFeedcommentsumLessThan(Integer value) {
-            addCriterion("FeedCommentSum <", value, "feedcommentsum");
+        public Criteria andCountertypeLessThan(Byte value) {
+            addCriterion("CounterType <", value, "countertype");
             return (Criteria) this;
         }
 
-        public Criteria andFeedcommentsumLessThanOrEqualTo(Integer value) {
-            addCriterion("FeedCommentSum <=", value, "feedcommentsum");
+        public Criteria andCountertypeLessThanOrEqualTo(Byte value) {
+            addCriterion("CounterType <=", value, "countertype");
             return (Criteria) this;
         }
 
-        public Criteria andFeedcommentsumIn(List<Integer> values) {
-            addCriterion("FeedCommentSum in", values, "feedcommentsum");
+        public Criteria andCountertypeIn(List<Byte> values) {
+            addCriterion("CounterType in", values, "countertype");
             return (Criteria) this;
         }
 
-        public Criteria andFeedcommentsumNotIn(List<Integer> values) {
-            addCriterion("FeedCommentSum not in", values, "feedcommentsum");
+        public Criteria andCountertypeNotIn(List<Byte> values) {
+            addCriterion("CounterType not in", values, "countertype");
             return (Criteria) this;
         }
 
-        public Criteria andFeedcommentsumBetween(Integer value1, Integer value2) {
-            addCriterion("FeedCommentSum between", value1, value2, "feedcommentsum");
+        public Criteria andCountertypeBetween(Byte value1, Byte value2) {
+            addCriterion("CounterType between", value1, value2, "countertype");
             return (Criteria) this;
         }
 
-        public Criteria andFeedcommentsumNotBetween(Integer value1, Integer value2) {
-            addCriterion("FeedCommentSum not between", value1, value2, "feedcommentsum");
+        public Criteria andCountertypeNotBetween(Byte value1, Byte value2) {
+            addCriterion("CounterType not between", value1, value2, "countertype");
             return (Criteria) this;
         }
     }
