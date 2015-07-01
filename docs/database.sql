@@ -35,11 +35,12 @@ CREATE TABLE IF NOT EXISTS `EIR`.`UserInfo` (
 /* 用户计数器表 */
 DROP TABLE `EIR`.`UserFeedCounter`;
 CREATE TABLE IF NOT EXISTS `EIR`.`UserFeedCounter` (
+	`CounterId` int(11) NOT NULL AUTO_INCREMENT COMMENT '计数器ID',
 	`UserId` int(11) NOT NULL COMMENT '用户ID',
 	`Sum` int(11) NOT NULL COMMENT '计数器总值',
 	`CounterType` tinyint(3) NOT NULL COMMENT '计数器类型 0-动态 1-评论',
-	PRIMARY KEY (`UserId`),
-	INDEX `IX_UserFeedCounter_UserId_CounterType`(`UserId`, `CounterType`)
+	PRIMARY KEY (`CounterId`),
+	UNIQUE `UK_UserFeedCounter_UserId_CounterType`(`UserId`, `CounterType`)
 ) ENGINE=`InnoDB` DEFAULT CHARSET=utf8;
 
 /* 第三方平台用户表 */
