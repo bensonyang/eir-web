@@ -416,11 +416,19 @@ a {
 .eir-feed .eir-feed-comments-item-content .eir-feed-comments-item-content-name {
   font-size: 12px;
 }
+.eir-feed .eir-feed-comments-item-content .eir-feed-comments-item-content-name span {
+  display: inline-block;
+}
 .eir-feed .eir-feed-comments-item-content .eir-feed-comments-item-content-time {
   font-size: 12px;
 }
 .eir-feed .eir-feed-comments-item-content .eir-feed-comments-item-content-time d {
   color: #888888;
+}
+.eir-feed .eir-feed-item-container .eir-get-more-comments {
+  font-size: 12px;
+  text-align: center;
+  font-weight: normal;
 }
 .eir-feed:hover {
   margin-top: 20px;
@@ -536,11 +544,19 @@ a {
 .eir-feed:hover .eir-feed-comments-item-content .eir-feed-comments-item-content-name {
   font-size: 12px;
 }
+.eir-feed:hover .eir-feed-comments-item-content .eir-feed-comments-item-content-name span {
+  display: inline-block;
+}
 .eir-feed:hover .eir-feed-comments-item-content .eir-feed-comments-item-content-time {
   font-size: 12px;
 }
 .eir-feed:hover .eir-feed-comments-item-content .eir-feed-comments-item-content-time d {
   color: #888888;
+}
+.eir-feed:hover .eir-feed-item-container .eir-get-more-comments {
+  font-size: 12px;
+  text-align: center;
+  font-weight: normal;
 }
 .eir-feed:hover .eir-feed-content {
   background-color: #FFFFFF;
