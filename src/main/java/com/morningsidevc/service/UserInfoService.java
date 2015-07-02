@@ -2,10 +2,11 @@ package com.morningsidevc.service;
 
 
 import com.morningsidevc.po.gen.UserInfo;
+import com.morningsidevc.vo.User;
 
 /**
  * @author float.lu
  */
 public interface UserInfoService {
-    UserInfo load(int id);
+    User load(int id);
 }

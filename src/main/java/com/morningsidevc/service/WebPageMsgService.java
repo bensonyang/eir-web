@@ -1,5 +1,7 @@
 package com.morningsidevc.service;
 
-public interface WebPageMsgService {
+import com.morningsidevc.vo.WebPageMsgBody;
 
+public interface WebPageMsgService {
+	WebPageMsgBody loadMsgBody(Integer feedId);
 }

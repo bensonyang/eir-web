@@ -1,5 +1,7 @@
 package com.morningsidevc.service;
 
-public interface WeiboMsgService {
+import com.morningsidevc.vo.WeiboMsgBody;
 
+public interface WeiboMsgService {
+	WeiboMsgBody loadMsgBody(Integer feedId);
 }

@@ -12,7 +12,7 @@ import com.morningsidevc.vo.Feed;
  *
  */
 public interface FeedInfoService {
-	List<Feed> findFeeds();
+	List<Feed> findFeeds(int start, int pageSize);
 	
 	void addFeed(Integer userId, String content) throws Exception;
 	

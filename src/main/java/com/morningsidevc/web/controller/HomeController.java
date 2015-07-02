@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.morningsidevc.service.FeedInfoService;
+import com.morningsidevc.vo.User;
 
 import javax.annotation.Resource;
 
@@ -39,9 +40,9 @@ public class HomeController {
     /* Ajax json */
 	@RequestMapping(value = "/community/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public UserInfo load(@PathVariable Integer id) {
-		UserInfo userInfo = this.userInfoService.load(id);
-    	return userInfo;
+	public User load(@PathVariable Integer id) {
+		User user = this.userInfoService.load(id);
+    	return user;
 	}
 
 }

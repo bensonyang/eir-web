@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.morningsidevc.po.gen.UserInfo;
+import com.morningsidevc.vo.User;
 
 /**
  * @author yangna
@@ -27,7 +28,7 @@ public class UserInfoServiceTest extends AbstractJUnit4SpringContextTests {
 	
 	@Test
 	public void loadTest() {
-		UserInfo userInfo = userInfoService.load(1);
+		User userInfo = userInfoService.load(123);
 		System.out.println(userInfo);
 	}
 	

@@ -3,6 +3,7 @@
  */
 package com.morningsidevc.service.impl;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +13,19 @@ import org.springframework.stereotype.Component;
 
 import com.morningsidevc.dao.gen.FeedInfoMapper;
 import com.morningsidevc.po.gen.FeedInfo;
+import com.morningsidevc.po.gen.FeedInfoExample;
+import com.morningsidevc.service.FeedCommentService;
 import com.morningsidevc.service.FeedInfoService;
+import com.morningsidevc.service.UserInfoService;
+import com.morningsidevc.service.WebPageMsgService;
+import com.morningsidevc.service.WeiboMsgService;
+import com.morningsidevc.vo.Comment;
 import com.morningsidevc.vo.Feed;
 import com.morningsidevc.vo.LinkFeed;
+import com.morningsidevc.vo.WebPageMsgBody;
 import com.morningsidevc.vo.ShuoFeed;
+import com.morningsidevc.vo.User;
+import com.morningsidevc.vo.WeiboMsgBody;
 
 /**
  * @author yangna
@@ -26,6 +36,18 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	
 	@Resource
 	private FeedInfoMapper feedInfoMapper;
+	
+	@Resource
+	private FeedCommentService feedCommentService;
+	
+	@Resource
+	private UserInfoService userInfoService;
+	
+	@Resource
+	private WebPageMsgService webPageMsgService;
+	
+	@Resource
+	private WeiboMsgService weiboMsgService;
 	
 	/* (non-Javadoc)
 	 * @see com.morningsidevc.service.FeedInfoService#addFeed(java.lang.Integer, java.lang.String)
@@ -101,18 +123,65 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	}
 
 	@Override
-	public List<Feed> findFeeds() {
+	public List<Feed> findFeeds(int start, int pageSize) {
 		List<Feed> feedList = new ArrayList<Feed>();
 		
-		List<FeedInfo> feedInfoList = feedInfoMapper.selectByExample(null);
+		FeedInfoExample feedInfoExample = new FeedInfoExample();
+		feedInfoExample.setLimitStart(start+1);
+		feedInfoExample.setLimitEnd(start+pageSize);
+		feedInfoExample.setDistinct(true);
+		feedInfoExample.setOrderByClause("FeedId DESC");
+
+		List<FeedInfo> feedInfoList = feedInfoMapper.selectByExample(feedInfoExample);
 		
-		for (FeedInfo feedInfo : feedInfoList) {
-			Feed feed = feedInfo.getMsgtype()==0?(new ShuoFeed()):(new LinkFeed());
-			
-			feedList.add(feed);
+		if (feedInfoList!=null && feedInfoList.size()!=0) {
+			for (FeedInfo feedInfo : feedInfoList) {
+				User author = userInfoService.load(feedInfo.getUserid());
+				Comment comment = feedCommentService.loadLastestComment(feedInfo.getFeedid());
+				
+				if (feedInfo.getMsgtype()==0) {
+					ShuoFeed feed = new ShuoFeed();
+					this.convertFeed(feed, feedInfo);
+					WeiboMsgBody msgBody = this.weiboMsgService.loadMsgBody(feedInfo.getFeedid());
+					
+					feed.setAuthor(author);
+					feed.setMsgBody(msgBody);
+					feed.setComment(comment);
+					
+					feedList.add(feed);
+					
+				} else {
+					LinkFeed feed = new LinkFeed();
+					this.convertFeed(feed, feedInfo);
+					
+					WebPageMsgBody msgBody = this.webPageMsgService.loadMsgBody(feedInfo.getMsgid());
+					
+					feed.setAuthor(author);
+					feed.setMsgBody(msgBody);
+					feed.setComment(comment);
+					
+					feedList.add(feed);
+				}
+				
+				
+			}
+		} else {
+			return null;
 		}
 		
 		return feedList;
 	}
-
+	
+	private void convertFeed(Feed feed, FeedInfo feedInfo) {
+		feed.setFeedId(feedInfo.getFeedid());
+		feed.setFeedType((int)feedInfo.getMsgtype());
+		feed.setCommentCount(feedInfo.getCommentcount());
+		feed.setLikeCount(feedInfo.getLikecount());
+		feed.setTag(feedInfo.getTagname());
+		
+		if (feedInfo.getAddtime() != null) {
+			String date = DateFormat.getDateInstance().format(feedInfo.getAddtime());
+			feed.setAddTime(date);
+		}
+	}
 }
