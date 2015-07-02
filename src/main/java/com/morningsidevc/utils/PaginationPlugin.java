@@ -34,6 +34,14 @@ public class PaginationPlugin extends PluginAdapter{
         element.addElement(isNotNullElement);
         return super.sqlMapSelectByExampleWithBLOBsElementGenerated(element, introspectedTable);
     }
+    @Override
+    public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(XmlElement element, IntrospectedTable introspectedTable) {
+        XmlElement isNotNullElement = new XmlElement("if");
+        isNotNullElement.addAttribute(new Attribute("test", "limitStart != null and limitStart >= 0"));
+        isNotNullElement.addElement(new TextElement("limit #{limitStart}, #{limitEnd}"));
+        element.addElement(isNotNullElement);
+        return super.sqlMapSelectByExampleWithoutBLOBsElementGenerated(element, introspectedTable);
+    }
 
     @Override
     public boolean validate(List<String> warnings) {
