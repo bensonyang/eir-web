@@ -45,20 +45,8 @@ public abstract class EncryptionUtils {
 	 */
 	private static final String SPACE_INSTEAD = "~$#!^";
 	private static final String SPACE2_INSTEAD = "^#~$!";
-	private static final String JIFEN_KEY_START = "[FS+KC]";
-	private static final String JIFEN_KEY_END = "[/FS-KC]";
 	private static final String SPACE2 = String.valueOf((char) 0);
 	private static final String SPACELIST = " " + SPACE2;
-
-	/**
-	 * AES算法使用的KEY在Lion中的配置项名称
-	 */
-	private static final String LION_ENCRYPTION = "encryption.";
-	private static final String LION_DPER_KEY = LION_ENCRYPTION + "key_default";
-	private static final String LION_DPER_IV = LION_ENCRYPTION + "iv_default";
-	private static final String LION_ENCRYPT_KEY = LION_ENCRYPTION + "key_encrypt";
-	private static final String LION_ENCRYPT_IV = LION_ENCRYPTION + "iv_encrypt";
-	private static final String LION_KEY_JIFEN = LION_ENCRYPTION + "key_jifen";
 
 	/**
 	 * 加密普通文本(无法从.Net解密)

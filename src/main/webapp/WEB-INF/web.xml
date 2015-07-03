@@ -18,10 +18,22 @@
             <param-value>utf-8</param-value>
         </init-param>
     </filter>
+
+    <filter>
+        <filter-name>biz-context-filter</filter-name>
+        <filter-class>com.morningsidevc.filter.BizContextFilter</filter-class>
+    </filter>
     
     <filter-mapping>
         <filter-name>CharacterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>biz-context-filter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 
     <context-param>

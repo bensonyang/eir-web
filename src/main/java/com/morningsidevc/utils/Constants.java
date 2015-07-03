@@ -13,8 +13,8 @@ public class Constants {
 
     public static final String COOKIE_DOMAIN = ".huhaha.club";
 
-    public static final String ENCRYPT_KEY = "key_encrypt";
+    public static final String ENCRYPT_KEY = "p5Beh7g40m.df20k";
 
-    public static final String ENCRYPT_IV = "iv_encrypt";
+    public static final String ENCRYPT_IV = "nv926fjl,dv6yuia";
 
 }
