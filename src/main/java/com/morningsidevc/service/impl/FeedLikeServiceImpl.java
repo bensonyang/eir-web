@@ -52,7 +52,7 @@ public class FeedLikeServiceImpl implements FeedLikeService {
         FeedLikeMsg feedLikeMsg = new FeedLikeMsg();
         feedLikeMsg.setAddtime(new Date());
         feedLikeMsg.setFeedid(feedId);
-        feedLikeMsg.setFeeduserid(userId);
+        feedLikeMsg.setUserid(userId);
         feedLikeMsg.setFeeduserid(feedInfo.getUserid());
         return feedLikeMsgMapper.insert(feedLikeMsg);
     }
