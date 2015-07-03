@@ -14,6 +14,6 @@ public class FeedLikeServiceTest extends BaseTest {
 
     @Test
     public void like(){
-        feedLikeService.addlike();
+        feedLikeService.addlike(0);
     }
 }
