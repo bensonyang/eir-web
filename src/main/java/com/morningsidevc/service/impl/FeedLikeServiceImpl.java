@@ -32,7 +32,7 @@ public class FeedLikeServiceImpl implements FeedLikeService {
     private FeedInfoMapper feedInfoMapper;
 
     @Override
-    public Integer deletelike(Integer feedId) {
+    public Integer addlike(Integer feedId) {
         Integer userId = 0;
         FeedLikeMsgExample example = new FeedLikeMsgExample();
         example.createCriteria().andUseridEqualTo(userId).andFeedidEqualTo(feedId);
@@ -40,19 +40,18 @@ public class FeedLikeServiceImpl implements FeedLikeService {
     }
 
     @Override
-    public Integer addlike(Integer feedId) {
+    public Integer deletelike(Integer feedId, Integer currentUserId) {
         Assert.state(feedId != null);
         FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
         Assert.notNull(feedInfo);
-        Integer userId = 0;//TODO 获取当前登陆用户ID
-        FeedLikeMsg oldFeedLikeMsg = findSpecialFeedLikeMsg(feedId, userId);
+        FeedLikeMsg oldFeedLikeMsg = findSpecialFeedLikeMsg(feedId, currentUserId);
         if(oldFeedLikeMsg != null){
             return  oldFeedLikeMsg.getLikeid();
         }
         FeedLikeMsg feedLikeMsg = new FeedLikeMsg();
         feedLikeMsg.setAddtime(new Date());
         feedLikeMsg.setFeedid(feedId);
-        feedLikeMsg.setUserid(userId);
+        feedLikeMsg.setUserid(currentUserId);
         feedLikeMsg.setFeeduserid(feedInfo.getUserid());
         return feedLikeMsgMapper.insert(feedLikeMsg);
     }
@@ -69,5 +68,4 @@ public class FeedLikeServiceImpl implements FeedLikeService {
         }
         return feedLikeMsgs.get(0);
     }
-
 }
