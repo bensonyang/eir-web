@@ -44,7 +44,10 @@
               <property name="sqlSessionFactory" ref="sqlSessionFactory" />
        </bean>
 
-       
+
+       <bean id="accountMapper" parent="baseMapper">
+              <property name="mapperInterface" value="com.morningsidevc.dao.gen.AccountMapper"></property>
+       </bean>
        <bean id="userInfoMapper" parent="baseMapper">
               <property name="mapperInterface" value="com.morningsidevc.dao.gen.UserInfoMapper"></property>
        </bean>
