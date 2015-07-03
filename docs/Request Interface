@@ -164,6 +164,10 @@ feedId:123
 content:"支持支持支持"
 toUserId:""//回复某个作者
 
+删除评论参数:
+commentId
+feedId
+
 添加评论返回值:
 {
     "code":200,

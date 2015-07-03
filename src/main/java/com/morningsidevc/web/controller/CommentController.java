@@ -36,9 +36,29 @@ public class CommentController extends BaseController{
             response.setCode(200);
             response.setMsg(comment);
         }catch (Exception e){
-            response.setCode(200);
+            response.setCode(500);
             response.setMsg("服务器错误");
         }
         return response;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "deletecomment", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    public JsonResponse deleteComment(Integer commentId){
+        JsonResponse response = new JsonResponse();
+        try {
+            Assert.notNull(commentId);
+            Integer deleteCommentId = feedCommentService.deleteComment(commentId);
+            Assert.state(deleteCommentId != null && deleteCommentId > 0);
+            response.setCode(200);
+            response.setMsg(deleteCommentId);
+        }catch (Exception e){
+            response.setCode(500);
+            response.setMsg("服务器错误");
+        }
+        return response;
+    }
+
+
+
 }

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import com.morningsidevc.dao.gen.FeedCommentMsgMapper;
 import com.morningsidevc.service.FeedCommentService;
 import com.morningsidevc.vo.Comment;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -76,7 +77,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		}else{
 			UserFeedCounter counter = feedCounters.get(0);
 			counter.setSum(counter.getSum() + 1);
-			userFeedCounterMapper.insertSelective(counter);
+			userFeedCounterMapper.updateByPrimaryKeySelective(counter);
 		}
 		FeedCommentMsg feedCommentMsg = buildNewFeedCommentMsg(feedInfo, request, currentUserId);
 		Integer commentId = feedCommentMsgMapper.insert(feedCommentMsg);
@@ -91,6 +92,22 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		return comment;
 	}
 
+	@Override
+	public Integer deleteComment(Integer commentId) {
+		FeedCommentMsg feedCommentMsg = feedCommentMsgMapper.selectByPrimaryKey(commentId);
+		Assert.notNull(feedCommentMsg);
+		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedCommentMsg.getFeeduserid());
+		UserInfo feedUser = userInfoMapper.selectByPrimaryKey(feedInfo.getUserid());
+		UserFeedCounterExample example = new UserFeedCounterExample();
+		example.createCriteria().andUseridEqualTo(feedUser.getUserid())
+				.andCountertypeEqualTo(CounterType.COMMENT);
+		List<UserFeedCounter> counters = userFeedCounterMapper.selectByExample(example);
+		Assert.state(!CollectionUtils.isEmpty(counters));
+		UserFeedCounter userFeedCounter = counters.get(0);
+		userFeedCounter.setSum(userFeedCounter.getSum() - 1);
+		userFeedCounterMapper.updateByPrimaryKeySelective(userFeedCounter);
+		return feedCommentMsgMapper.deleteByPrimaryKey(commentId);
+	}
 
 	private FeedCommentMsg buildNewFeedCommentMsg(FeedInfo feedInfo,
 												  AddCommentRequest request, Integer currentUserId){

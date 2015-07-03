@@ -13,4 +13,12 @@ public interface FeedCommentService {
 	 * @return
 	 */
 	Comment addComment(AddCommentRequest request, Integer currentUserId);
+
+
+	/**
+	 * 删除评论接口
+	 * @param commentId
+	 * @return
+	 */
+	Integer deleteComment(Integer commentId);
 }
