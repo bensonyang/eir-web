@@ -1,7 +1,6 @@
 package com.morningsidevc.service;
 
 
-import com.morningsidevc.po.gen.UserInfo;
 import com.morningsidevc.vo.User;
 
 /**

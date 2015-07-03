@@ -22,12 +22,12 @@ public class WeiboMsgServiceImpl implements WeiboMsgService {
 	private WeiboMsgMapper weiboMsgMapper;
 
 	@Override
-	public WeiboMsgBody loadMsgBody(Integer feedId) {
-		if (feedId == null) {
+	public WeiboMsgBody loadMsgBody(Integer msgId) {
+		if (msgId == null) {
 			return null;
 		}
 		
-		WeiboMsg msg = weiboMsgMapper.selectByPrimaryKey(feedId);
+		WeiboMsg msg = weiboMsgMapper.selectByPrimaryKey(msgId);
 		WeiboMsgBody msgBody = new WeiboMsgBody();
 		
 		if (msg != null) {

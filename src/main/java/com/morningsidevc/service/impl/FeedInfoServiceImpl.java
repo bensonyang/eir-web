@@ -21,11 +21,8 @@ import com.morningsidevc.service.WebPageMsgService;
 import com.morningsidevc.service.WeiboMsgService;
 import com.morningsidevc.vo.Comment;
 import com.morningsidevc.vo.Feed;
-import com.morningsidevc.vo.LinkFeed;
-import com.morningsidevc.vo.WebPageMsgBody;
-import com.morningsidevc.vo.ShuoFeed;
+import com.morningsidevc.vo.MsgBody;
 import com.morningsidevc.vo.User;
-import com.morningsidevc.vo.WeiboMsgBody;
 
 /**
  * @author yangna
@@ -127,52 +124,43 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		List<Feed> feedList = new ArrayList<Feed>();
 		
 		FeedInfoExample feedInfoExample = new FeedInfoExample();
-		feedInfoExample.setLimitStart(start+1);
-		feedInfoExample.setLimitEnd(start+pageSize);
+		feedInfoExample.setLimitStart(start);
+		feedInfoExample.setLimitEnd(pageSize);
 		feedInfoExample.setDistinct(true);
 		feedInfoExample.setOrderByClause("FeedId DESC");
-
+		
 		List<FeedInfo> feedInfoList = feedInfoMapper.selectByExample(feedInfoExample);
 		
-		if (feedInfoList!=null && feedInfoList.size()!=0) {
+		if (feedInfoList != null && feedInfoList.size() != 0) {
 			for (FeedInfo feedInfo : feedInfoList) {
+				Feed feed = this.convertFeed(feedInfo);
+				
 				User author = userInfoService.load(feedInfo.getUserid());
 				Comment comment = feedCommentService.loadLastestComment(feedInfo.getFeedid());
-				
-				if (feedInfo.getMsgtype()==0) {
-					ShuoFeed feed = new ShuoFeed();
-					this.convertFeed(feed, feedInfo);
-					WeiboMsgBody msgBody = this.weiboMsgService.loadMsgBody(feedInfo.getFeedid());
-					
-					feed.setAuthor(author);
-					feed.setMsgBody(msgBody);
-					feed.setComment(comment);
-					
-					feedList.add(feed);
-					
-				} else {
-					LinkFeed feed = new LinkFeed();
-					this.convertFeed(feed, feedInfo);
-					
-					WebPageMsgBody msgBody = this.webPageMsgService.loadMsgBody(feedInfo.getMsgid());
-					
-					feed.setAuthor(author);
-					feed.setMsgBody(msgBody);
-					feed.setComment(comment);
-					
-					feedList.add(feed);
+				MsgBody msgBody = null;
+				if (feedInfo.getMsgtype() == 0) {
+					msgBody = this.weiboMsgService.loadMsgBody(feedInfo.getMsgid());
+				} else if (feedInfo.getMsgtype() == 1) {
+					msgBody = this.webPageMsgService.loadMsgBody(feedInfo.getMsgid());
 				}
 				
+				feed.setAuthor(author);
+				feed.setMsgBody(msgBody);
+				feed.setComment(comment);
 				
+				feedList.add(feed);
 			}
 		} else {
+			
 			return null;
 		}
 		
 		return feedList;
 	}
 	
-	private void convertFeed(Feed feed, FeedInfo feedInfo) {
+	private Feed convertFeed(FeedInfo feedInfo) {
+		Feed feed = new Feed();
+		
 		feed.setFeedId(feedInfo.getFeedid());
 		feed.setFeedType((int)feedInfo.getMsgtype());
 		feed.setCommentCount(feedInfo.getCommentcount());
@@ -183,5 +171,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			String date = DateFormat.getDateInstance().format(feedInfo.getAddtime());
 			feed.setAddTime(date);
 		}
+		
+		return feed;
 	}
 }

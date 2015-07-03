@@ -22,15 +22,16 @@ public class WebPageMsgServiceImpl implements WebPageMsgService {
 	private WebPageMsgMapper msgMapper;
 
 	@Override
-	public WebPageMsgBody loadMsgBody(Integer feedId) {
-		WebPageMsg msg = msgMapper.selectByPrimaryKey(feedId);
+	public WebPageMsgBody loadMsgBody(Integer msgId) {
+		WebPageMsg msg = msgMapper.selectByPrimaryKey(msgId);
 		WebPageMsgBody msgBody = new WebPageMsgBody();
 		
-		msgBody.setMsgId(msg.getMsgid());
-		msgBody.setTitle(msg.getTitle());
-		msgBody.setContent(msg.getDescription());
-		msgBody.setLink(msg.getWebpageurl());
-		
+		if (msgBody != null) {
+			msgBody.setMsgId(msg.getMsgid());
+			msgBody.setTitle(msg.getTitle());
+			msgBody.setContent(msg.getDescription());
+			msgBody.setLink(msg.getWebpageurl());
+		}
 		return msgBody;
 	}
 	

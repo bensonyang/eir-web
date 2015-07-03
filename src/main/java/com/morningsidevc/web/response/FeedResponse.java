@@ -17,7 +17,13 @@ public class FeedResponse {
 	private Integer totalFeedCount;
 	
 	private List<Feed> feeds;
-
+	
+	public FeedResponse() {
+		lastFeedIndex = -1;
+		totalFeedCount = 0;
+		feeds = null;
+	}
+	
 	public Integer getLastFeedIndex() {
 		return lastFeedIndex;
 	}
