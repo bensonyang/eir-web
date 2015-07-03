@@ -12,8 +12,9 @@ public interface FeedLikeService {
     /**
      * 取消点赞
      * @param feedId
+     * @param currentUserId
      * @return 被删除的feedId
      */
-    Integer deletelike(Integer feedId);
+    Integer deletelike(Integer feedId, Integer currentUserId);
 
 }

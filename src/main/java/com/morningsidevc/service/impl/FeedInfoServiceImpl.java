@@ -165,11 +165,15 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			Map<Integer, WebPageMsgBody> webPageMsg = this.webPageMsgService.findMsgBodys(webPageMsgIdList);
 			
 			for (Feed element : feedList) {
-				element.setAuthor(authors.get(element.getAuthorId()).clone());
-				element.setComment(comments.get(element.getFeedId()));
-				if (element.getFeedType() == 0) {
+				if (authors != null) {
+					element.setAuthor(authors.get(element.getAuthorId()).clone());
+				}
+				if (comments != null) {
+					element.setComment(comments.get(element.getFeedId()));
+				}
+				if (element.getFeedType() == 0 && weiboMsg != null) {
 					element.setMsgBody(weiboMsg.get(element.getMsgId()));
-				} else if (element.getFeedType() == 1) {
+				} else if (element.getFeedType() == 1 && webPageMsg != null) {
 					element.setMsgBody(webPageMsg.get(element.getMsgId()));
 				}
 			}

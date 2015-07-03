@@ -21,7 +21,7 @@ import javax.annotation.Resource;
  */
 @Controller
 @RequestMapping("community")
-public class LikeController {
+public class LikeController{
 
     @Resource
     FeedLikeService feedLikeService;
@@ -49,7 +49,7 @@ public class LikeController {
     public JsonResponse deleteLike(@RequestParam(value = "feedId", required = true) Integer feedId){
         JsonResponse response = new JsonResponse();
         try {
-            Integer ret = feedLikeService.deletelike(feedId);
+            Integer ret = feedLikeService.deletelike(feedId, 0);
             Assert.state(ret != null && ret > 0);
             FeedLikeResponse feedLikeResponse = new FeedLikeResponse();
             feedLikeResponse.setFeedId(feedId);

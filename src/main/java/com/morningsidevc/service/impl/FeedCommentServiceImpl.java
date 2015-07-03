@@ -6,18 +6,25 @@ package com.morningsidevc.service.impl;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.morningsidevc.dao.gen.FeedInfoMapper;
+import com.morningsidevc.dao.gen.UserFeedCounterMapper;
+import com.morningsidevc.dao.gen.UserInfoMapper;
+import com.morningsidevc.enums.CounterType;
+import com.morningsidevc.po.gen.*;
+import com.morningsidevc.web.request.AddCommentRequest;
 import org.springframework.stereotype.Component;
 
 import com.morningsidevc.dao.gen.FeedCommentMsgMapper;
-import com.morningsidevc.po.gen.FeedCommentMsg;
-import com.morningsidevc.po.gen.FeedCommentMsgExample;
 import com.morningsidevc.service.FeedCommentService;
 import com.morningsidevc.vo.Comment;
+import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 /**
  * @author yangna
@@ -27,6 +34,12 @@ import com.morningsidevc.vo.Comment;
 public class FeedCommentServiceImpl implements FeedCommentService {
 	@Resource
 	private FeedCommentMsgMapper feedCommentMsgMapper;
+	@Resource
+	private UserFeedCounterMapper userFeedCounterMapper;
+	@Resource
+	private FeedInfoMapper feedInfoMapper;
+	@Resource
+	private UserInfoMapper userInfoMapper;
 	
 	public Comment loadLastestComment(Integer feedId) {
 		Comment comment = new Comment();
@@ -93,5 +106,72 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		}
 		
 		return commentMap;
+	}
+	
+	public Comment addComment(AddCommentRequest request, Integer currentUserId) {
+		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(request.getFeedId());
+		UserInfo currentUser = userInfoMapper.selectByPrimaryKey(currentUserId);
+		UserInfo toUser = userInfoMapper.selectByPrimaryKey(feedInfo.getUserid());
+		UserFeedCounterExample example = new UserFeedCounterExample();
+		example.createCriteria().andUseridEqualTo(feedInfo.getUserid())
+				.andCountertypeEqualTo(CounterType.COMMENT);
+		List<UserFeedCounter> feedCounters = userFeedCounterMapper.selectByExample(example);
+		if(CollectionUtils.isEmpty(feedCounters)){
+			UserFeedCounter counter = new UserFeedCounter();
+			counter.setSum(1);//初始值
+			counter.setCountertype(CounterType.COMMENT);
+			counter.setUserid(feedInfo.getUserid());
+			userFeedCounterMapper.insertSelective(counter);
+		}else{
+			UserFeedCounter counter = feedCounters.get(0);
+			counter.setSum(counter.getSum() + 1);
+			userFeedCounterMapper.updateByPrimaryKeySelective(counter);
+		}
+		FeedCommentMsg feedCommentMsg = buildNewFeedCommentMsg(feedInfo, request, currentUserId);
+		Integer commentId = feedCommentMsgMapper.insert(feedCommentMsg);
+		Comment comment = new Comment();
+		comment.setContent(request.getContent());
+		comment.setCommentId(commentId);
+		comment.setToUserId(feedInfo.getUserid());
+		comment.setToUserName(toUser.getNickname());
+		comment.setUserId(currentUserId);
+		comment.setUserName(currentUser.getNickname());
+		
+		if (feedCommentMsg.getAddtime() != null) {
+			String date = DateFormat.getDateInstance().format(feedCommentMsg.getAddtime());
+			comment.setCommentTime(date);
+		}
+		
+		return comment;
+	}
+
+	@Override
+	public Integer deleteComment(Integer commentId) {
+		FeedCommentMsg feedCommentMsg = feedCommentMsgMapper.selectByPrimaryKey(commentId);
+		Assert.notNull(feedCommentMsg);
+		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedCommentMsg.getFeeduserid());
+		UserInfo feedUser = userInfoMapper.selectByPrimaryKey(feedInfo.getUserid());
+		UserFeedCounterExample example = new UserFeedCounterExample();
+		example.createCriteria().andUseridEqualTo(feedUser.getUserid())
+				.andCountertypeEqualTo(CounterType.COMMENT);
+		List<UserFeedCounter> counters = userFeedCounterMapper.selectByExample(example);
+		Assert.state(!CollectionUtils.isEmpty(counters));
+		UserFeedCounter userFeedCounter = counters.get(0);
+		userFeedCounter.setSum(userFeedCounter.getSum() - 1);
+		userFeedCounterMapper.updateByPrimaryKeySelective(userFeedCounter);
+		return feedCommentMsgMapper.deleteByPrimaryKey(commentId);
+	}
+
+	private FeedCommentMsg buildNewFeedCommentMsg(FeedInfo feedInfo,
+												  AddCommentRequest request, Integer currentUserId){
+		FeedCommentMsg feedCommentMsg = new FeedCommentMsg();
+		feedCommentMsg.setFeeduserid(feedInfo.getUserid());
+		feedCommentMsg.setUserid(currentUserId);
+		feedCommentMsg.setFeedid(request.getFeedId());
+		feedCommentMsg.setAddtime(new Date());
+		feedCommentMsg.setLasttime(new Date());
+		feedCommentMsg.setContent(request.getContent());
+		feedCommentMsg.setTouserid(request.getToUserId());
+		return feedCommentMsg;
 	}
 }
