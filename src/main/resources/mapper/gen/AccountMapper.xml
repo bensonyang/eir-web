@@ -105,9 +105,9 @@
     <selectKey resultType="java.lang.Integer" keyProperty="userid" order="BEFORE" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into Account (UserId, UserEmail, UserPassword, 
+    insert into Account (UserEmail, UserPassword,
       Status)
-    values (#{userid,jdbcType=INTEGER}, #{useremail,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, 
+    values (#{useremail,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR},
       #{status,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.Account" >
@@ -116,7 +116,6 @@
     </selectKey>
     insert into Account
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      UserId,
       <if test="useremail != null" >
         UserEmail,
       </if>
@@ -128,7 +127,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      #{userid,jdbcType=INTEGER},
       <if test="useremail != null" >
         #{useremail,jdbcType=VARCHAR},
       </if>
