@@ -1,7 +1,12 @@
 package com.morningsidevc.service.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.morningsidevc.dao.gen.UserInfoMapper;
 import com.morningsidevc.po.gen.UserInfo;
+import com.morningsidevc.po.gen.UserInfoExample;
 import com.morningsidevc.service.UserInfoService;
 import com.morningsidevc.vo.User;
 
@@ -32,4 +37,30 @@ public class UserInfoServiceImpl implements UserInfoService {
     	
         return user;
     }
+
+	@Override
+	public Map<Integer, User> findUsers(List<Integer> userIds) {
+		if (userIds == null || userIds.size() == 0) {
+			return null;
+		}
+		
+		Map<Integer, User> userMap = new HashMap<Integer, User>(); 
+		UserInfoExample example = new UserInfoExample();
+		example.or().andUseridIn(userIds);
+		
+		List<UserInfo> userInfoList = userInfoMapper.selectByExample(example);
+		if (userInfoList != null && userInfoList.size() != 0) {
+			for (UserInfo userInfo : userInfoList) {
+				User user = new User();
+				user.setUserId(userInfo.getUserid());
+	    		user.setRealName(userInfo.getRealname());
+	    		user.setJobTitle(userInfo.getJobtitle());
+	    		user.setCompany(userInfo.getCompany());
+				userMap.put(user.getUserId(), user);
+			}
+		} else {
+			return null;
+		}
+		return userMap;
+	}
 }

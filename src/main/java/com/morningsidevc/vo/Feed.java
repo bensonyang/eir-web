@@ -3,6 +3,8 @@
  */
 package com.morningsidevc.vo;
 
+import java.util.List;
+
 
 
 /**
@@ -17,9 +19,12 @@ public class Feed {
 	private Integer likeCount;
 	private String tag;
 	
+	private Integer authorId;
+	private Integer msgId;
+	
 	private User author;
 	private MsgBody msgBody;
-	private Comment comment;
+	private List<Comment> comment;
 	
 	public Integer getFeedId() {
 		return feedId;
@@ -69,10 +74,22 @@ public class Feed {
 	public void setMsgBody(MsgBody msgBody) {
 		this.msgBody = msgBody;
 	}
-	public Comment getComment() {
+	public Integer getAuthorId() {
+		return authorId;
+	}
+	public void setAuthorId(Integer authorId) {
+		this.authorId = authorId;
+	}
+	public Integer getMsgId() {
+		return msgId;
+	}
+	public void setMsgId(Integer msgId) {
+		this.msgId = msgId;
+	}
+	public List<Comment> getComment() {
 		return comment;
 	}
-	public void setComment(Comment comment) {
+	public void setComment(List<Comment> comment) {
 		this.comment = comment;
 	}
 	

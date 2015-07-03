@@ -3,8 +3,12 @@
  */
 package com.morningsidevc.service.impl;
 
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -19,6 +23,7 @@ import org.springframework.stereotype.Component;
 import com.morningsidevc.dao.gen.FeedCommentMsgMapper;
 import com.morningsidevc.service.FeedCommentService;
 import com.morningsidevc.vo.Comment;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -50,8 +55,12 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 			comment.setCommentId(result.getCommentid());
 			comment.setUserId(result.getUserid());
 			comment.setToUserId(result.getUserid());
-			comment.setCommentTime(result.getAddtime());
 			comment.setContent(result.getContent());
+			
+			if (result.getAddtime() != null) {
+				String date = DateFormat.getDateInstance().format(result.getAddtime());
+				comment.setCommentTime(date);
+			}
 			
 			return comment;
 		}
@@ -59,6 +68,46 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	}
 
 	@Override
+	public Map<Integer, List<Comment>> findComments(List<Integer> feedIds) {
+		if (feedIds == null || feedIds.size() == 0) {
+			return null;
+		}
+		
+		Map<Integer, List<Comment>> commentMap = new HashMap<Integer, List<Comment>>();
+		FeedCommentMsgExample example = new FeedCommentMsgExample();
+		example.setOrderByClause("AddTime DESC");
+		example.or().andFeedidIn(feedIds);
+		List<FeedCommentMsg> comments = feedCommentMsgMapper.selectByExample(example);
+		
+		if (comments != null && comments.size() != 0) {
+			for (FeedCommentMsg feedCommentMsg : comments) {
+				Comment comment = new Comment();
+				comment.setCommentId(feedCommentMsg.getCommentid());
+				comment.setUserId(feedCommentMsg.getUserid());
+				comment.setToUserId(feedCommentMsg.getUserid());
+				comment.setContent(feedCommentMsg.getContent());
+				
+				if (feedCommentMsg.getAddtime() != null) {
+					String date = DateFormat.getDateInstance().format(feedCommentMsg.getAddtime());
+					comment.setCommentTime(date);
+				}
+				
+				if (commentMap.containsKey(feedCommentMsg.getFeedid())) {
+					commentMap.get(feedCommentMsg.getFeedid()).add(comment);
+				} else {
+					List<Comment> commentList = new ArrayList<Comment>();
+					commentList.add(comment);
+					commentMap.put(feedCommentMsg.getFeedid(), commentList);
+				}
+				
+			}
+		} else {
+			return null;
+		}
+		
+		return commentMap;
+	}
+	
 	public Comment addComment(AddCommentRequest request, Integer currentUserId) {
 		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(request.getFeedId());
 		UserInfo currentUser = userInfoMapper.selectByPrimaryKey(currentUserId);
@@ -76,21 +125,42 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		}else{
 			UserFeedCounter counter = feedCounters.get(0);
 			counter.setSum(counter.getSum() + 1);
-			userFeedCounterMapper.insertSelective(counter);
+			userFeedCounterMapper.updateByPrimaryKeySelective(counter);
 		}
 		FeedCommentMsg feedCommentMsg = buildNewFeedCommentMsg(feedInfo, request, currentUserId);
 		Integer commentId = feedCommentMsgMapper.insert(feedCommentMsg);
 		Comment comment = new Comment();
 		comment.setContent(request.getContent());
 		comment.setCommentId(commentId);
-		comment.setCommentTime(feedCommentMsg.getAddtime());
 		comment.setToUserId(feedInfo.getUserid());
 		comment.setToUserName(toUser.getNickname());
 		comment.setUserId(currentUserId);
 		comment.setUserName(currentUser.getNickname());
+		
+		if (feedCommentMsg.getAddtime() != null) {
+			String date = DateFormat.getDateInstance().format(feedCommentMsg.getAddtime());
+			comment.setCommentTime(date);
+		}
+		
 		return comment;
 	}
 
+	@Override
+	public Integer deleteComment(Integer commentId) {
+		FeedCommentMsg feedCommentMsg = feedCommentMsgMapper.selectByPrimaryKey(commentId);
+		Assert.notNull(feedCommentMsg);
+		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedCommentMsg.getFeeduserid());
+		UserInfo feedUser = userInfoMapper.selectByPrimaryKey(feedInfo.getUserid());
+		UserFeedCounterExample example = new UserFeedCounterExample();
+		example.createCriteria().andUseridEqualTo(feedUser.getUserid())
+				.andCountertypeEqualTo(CounterType.COMMENT);
+		List<UserFeedCounter> counters = userFeedCounterMapper.selectByExample(example);
+		Assert.state(!CollectionUtils.isEmpty(counters));
+		UserFeedCounter userFeedCounter = counters.get(0);
+		userFeedCounter.setSum(userFeedCounter.getSum() - 1);
+		userFeedCounterMapper.updateByPrimaryKeySelective(userFeedCounter);
+		return feedCommentMsgMapper.deleteByPrimaryKey(commentId);
+	}
 
 	private FeedCommentMsg buildNewFeedCommentMsg(FeedInfo feedInfo,
 												  AddCommentRequest request, Integer currentUserId){

@@ -34,12 +34,11 @@ public class FeedController {
 	/* Ajax json */
 	@RequestMapping(value = "/community/morefeed", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public JsonResponse moreFeed(@RequestParam(value="lastIndex", required=false) Integer lastIndex,
+	public JsonResponse moreFeed(@RequestParam(value="startIndex", required=false) Integer startIndex,
 			@RequestParam(value="pageSize", required=false) Integer pageSize) {
 		// 设定起始Index
-		Integer startIndex = 0;
-		if (lastIndex != null && lastIndex >= 0) {
-			startIndex = lastIndex + 1;
+		if (startIndex == null || startIndex < 0) {
+			startIndex = 0;
 		}
 		
 		

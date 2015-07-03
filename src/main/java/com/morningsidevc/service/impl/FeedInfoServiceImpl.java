@@ -6,6 +6,7 @@ package com.morningsidevc.service.impl;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -23,6 +24,8 @@ import com.morningsidevc.vo.Comment;
 import com.morningsidevc.vo.Feed;
 import com.morningsidevc.vo.MsgBody;
 import com.morningsidevc.vo.User;
+import com.morningsidevc.vo.WebPageMsgBody;
+import com.morningsidevc.vo.WeiboMsgBody;
 
 /**
  * @author yangna
@@ -131,25 +134,51 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		
 		List<FeedInfo> feedInfoList = feedInfoMapper.selectByExample(feedInfoExample);
 		
+		List<Integer> userIdList = new ArrayList<Integer>();
+		List<Integer> feedIdList = new ArrayList<Integer>();
+		List<Integer> weiboMsgIdList = new ArrayList<Integer>();
+		List<Integer> webPageMsgIdList = new ArrayList<Integer>();
 		if (feedInfoList != null && feedInfoList.size() != 0) {
 			for (FeedInfo feedInfo : feedInfoList) {
-				Feed feed = this.convertFeed(feedInfo);
-				
-				User author = userInfoService.load(feedInfo.getUserid());
-				Comment comment = feedCommentService.loadLastestComment(feedInfo.getFeedid());
-				MsgBody msgBody = null;
-				if (feedInfo.getMsgtype() == 0) {
-					msgBody = this.weiboMsgService.loadMsgBody(feedInfo.getMsgid());
-				} else if (feedInfo.getMsgtype() == 1) {
-					msgBody = this.webPageMsgService.loadMsgBody(feedInfo.getMsgid());
+				if (!userIdList.contains(feedInfo.getUserid())) {
+					userIdList.add(feedInfo.getUserid());
 				}
 				
-				feed.setAuthor(author);
-				feed.setMsgBody(msgBody);
-				feed.setComment(comment);
+				if (!feedIdList.contains(feedInfo.getFeedid())) {
+					feedIdList.add(feedInfo.getFeedid());
+				}
+				
+				if (feedInfo.getMsgtype() == 0) {
+					weiboMsgIdList.add(feedInfo.getMsgid());
+				} else if (feedInfo.getMsgtype() == 1) {
+					webPageMsgIdList.add(feedInfo.getMsgid());
+				}
+				
+				Feed feed = this.convertFeed(feedInfo);
 				
 				feedList.add(feed);
 			}
+			
+			Map<Integer, User> authors = userInfoService.findUsers(userIdList);
+			Map<Integer, List<Comment>> comments = feedCommentService.findComments(feedIdList);
+			Map<Integer, WeiboMsgBody> weiboMsg = this.weiboMsgService.findMsgBodys(weiboMsgIdList);
+			Map<Integer, WebPageMsgBody> webPageMsg = this.webPageMsgService.findMsgBodys(webPageMsgIdList);
+			
+			for (Feed element : feedList) {
+				if (authors != null) {
+					element.setAuthor(authors.get(element.getAuthorId()).clone());
+				}
+				if (comments != null) {
+					element.setComment(comments.get(element.getFeedId()));
+				}
+				if (element.getFeedType() == 0 && weiboMsg != null) {
+					element.setMsgBody(weiboMsg.get(element.getMsgId()));
+				} else if (element.getFeedType() == 1 && webPageMsg != null) {
+					element.setMsgBody(webPageMsg.get(element.getMsgId()));
+				}
+			}
+
+			
 		} else {
 			
 			return null;
@@ -166,6 +195,8 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		feed.setCommentCount(feedInfo.getCommentcount());
 		feed.setLikeCount(feedInfo.getLikecount());
 		feed.setTag(feedInfo.getTagname());
+		feed.setAuthorId(feedInfo.getUserid());
+		feed.setMsgId(feedInfo.getMsgid());
 		
 		if (feedInfo.getAddtime() != null) {
 			String date = DateFormat.getDateInstance().format(feedInfo.getAddtime());
