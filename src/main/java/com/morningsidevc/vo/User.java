@@ -7,7 +7,7 @@ package com.morningsidevc.vo;
  * @author yangna
  *
  */
-public class User {
+public class User implements Cloneable{
 	private Integer userId;
 	private String realName;
 	private String jobTitle;
@@ -42,5 +42,16 @@ public class User {
 	}
 	public void setAvatarUrl(String avatarUrl) {
 		this.avatarUrl = avatarUrl;
+	}
+	
+	public User clone() {
+		User user = new User();
+		
+		user.setAvatarUrl(avatarUrl);
+		user.setCompany(company);
+		user.setJobTitle(jobTitle);
+		user.setRealName(realName);
+		user.setUserId(userId);
+		return user;
 	}
 }

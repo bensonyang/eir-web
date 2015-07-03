@@ -3,7 +3,11 @@
  */
 package com.morningsidevc.service.impl;
 
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -38,11 +42,56 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 			comment.setCommentId(result.getCommentid());
 			comment.setUserId(result.getUserid());
 			comment.setToUserId(result.getUserid());
-			comment.setCommentTime(result.getAddtime());
 			comment.setContent(result.getContent());
+			
+			if (result.getAddtime() != null) {
+				String date = DateFormat.getDateInstance().format(result.getAddtime());
+				comment.setCommentTime(date);
+			}
 			
 			return comment;
 		}
 		return null;
+	}
+
+	@Override
+	public Map<Integer, List<Comment>> findComments(List<Integer> feedIds) {
+		if (feedIds == null || feedIds.size() == 0) {
+			return null;
+		}
+		
+		Map<Integer, List<Comment>> commentMap = new HashMap<Integer, List<Comment>>();
+		FeedCommentMsgExample example = new FeedCommentMsgExample();
+		example.setOrderByClause("AddTime DESC");
+		example.or().andFeedidIn(feedIds);
+		List<FeedCommentMsg> comments = feedCommentMsgMapper.selectByExample(example);
+		
+		if (comments != null && comments.size() != 0) {
+			for (FeedCommentMsg feedCommentMsg : comments) {
+				Comment comment = new Comment();
+				comment.setCommentId(feedCommentMsg.getCommentid());
+				comment.setUserId(feedCommentMsg.getUserid());
+				comment.setToUserId(feedCommentMsg.getUserid());
+				comment.setContent(feedCommentMsg.getContent());
+				
+				if (feedCommentMsg.getAddtime() != null) {
+					String date = DateFormat.getDateInstance().format(feedCommentMsg.getAddtime());
+					comment.setCommentTime(date);
+				}
+				
+				if (commentMap.containsKey(feedCommentMsg.getFeedid())) {
+					commentMap.get(feedCommentMsg.getFeedid()).add(comment);
+				} else {
+					List<Comment> commentList = new ArrayList<Comment>();
+					commentList.add(comment);
+					commentMap.put(feedCommentMsg.getFeedid(), commentList);
+				}
+				
+			}
+		} else {
+			return null;
+		}
+		
+		return commentMap;
 	}
 }

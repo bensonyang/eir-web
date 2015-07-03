@@ -18,7 +18,7 @@ public class Comment {
 	private Integer toUserId;
 	private String toUserName;
 	private String content;
-	private Date commentTime;
+	private String commentTime;
 	public Integer getCommentId() {
 		return commentId;
 	}
@@ -67,10 +67,10 @@ public class Comment {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getCommentTime() {
+	public String getCommentTime() {
 		return commentTime;
 	}
-	public void setCommentTime(Date commentTime) {
+	public void setCommentTime(String commentTime) {
 		this.commentTime = commentTime;
 	}
 	
