@@ -3,7 +3,9 @@
  */
 package com.morningsidevc.service.impl;
 
+import com.morningsidevc.dao.gen.FeedInfoMapper;
 import com.morningsidevc.dao.gen.FeedLikeMsgMapper;
+import com.morningsidevc.po.gen.FeedInfo;
 import com.morningsidevc.po.gen.FeedLikeMsg;
 import com.morningsidevc.po.gen.FeedLikeMsgExample;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,8 @@ public class FeedLikeServiceImpl implements FeedLikeService {
 
     @Resource
     private FeedLikeMsgMapper feedLikeMsgMapper;
+    @Resource
+    private FeedInfoMapper feedInfoMapper;
 
     @Override
     public Integer deletelike(Integer feedId) {
@@ -36,8 +40,10 @@ public class FeedLikeServiceImpl implements FeedLikeService {
     }
 
     @Override
-    public Integer addlike(Integer feedId, Integer feedUserId) {
-        Assert.state(feedId != null && feedUserId != null);
+    public Integer addlike(Integer feedId) {
+        Assert.state(feedId != null);
+        FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
+        Assert.notNull(feedInfo);
         Integer userId = 0;//TODO 获取当前登陆用户ID
         FeedLikeMsg oldFeedLikeMsg = findSpecialFeedLikeMsg(feedId, userId);
         if(oldFeedLikeMsg != null){
@@ -47,7 +53,7 @@ public class FeedLikeServiceImpl implements FeedLikeService {
         feedLikeMsg.setAddtime(new Date());
         feedLikeMsg.setFeedid(feedId);
         feedLikeMsg.setFeeduserid(userId);
-        feedLikeMsg.setFeeduserid(feedUserId);
+        feedLikeMsg.setFeeduserid(feedInfo.getUserid());
         return feedLikeMsgMapper.insert(feedLikeMsg);
     }
 

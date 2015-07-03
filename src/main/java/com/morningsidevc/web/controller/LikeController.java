@@ -28,11 +28,10 @@ public class LikeController {
 
     @RequestMapping(value = "addlike", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public JsonResponse addLike(@RequestParam(value = "feedId", required = true)Integer feedId,
-                                @RequestParam(value = "feedUserId", required = true) Integer feedUserId){
+    public JsonResponse addLike(@RequestParam(value = "feedId", required = true)Integer feedId){
         JsonResponse response = new JsonResponse();
         try {
-            Integer likeId = feedLikeService.addlike(feedId, feedUserId);
+            Integer likeId = feedLikeService.addlike(feedId);
             Assert.state(likeId != null && likeId > 0);
             FeedLikeResponse feedLikeResponse = new FeedLikeResponse();
             feedLikeResponse.setFeedId(feedId);

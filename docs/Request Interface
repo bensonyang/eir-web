@@ -201,7 +201,6 @@ http://localhost:8080/community/deletelike
 方法:POST
 参数：
 feedId:123 //给某条Feed点赞
-feedUserId:123 //给某个用户点赞
 返回值:
 {
     "code":200,

@@ -5,10 +5,9 @@ public interface FeedLikeService {
     /**
      * 给某个用户的某条Feed点赞
      * @param feedId
-     * @param feedUserId
      * @return
      */
-    Integer addlike(Integer feedId, Integer feedUserId);
+    Integer addlike(Integer feedId);
 
     /**
      * 取消点赞
