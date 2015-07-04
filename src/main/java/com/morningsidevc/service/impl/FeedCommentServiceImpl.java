@@ -114,12 +114,12 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		UserInfo toUser = userInfoMapper.selectByPrimaryKey(feedInfo.getUserid());
 		UserFeedCounterExample example = new UserFeedCounterExample();
 		example.createCriteria().andUseridEqualTo(feedInfo.getUserid())
-				.andCountertypeEqualTo(CounterType.COMMENT);
+				.andCountertypeEqualTo(CounterType.CommentCounter.getValue());
 		List<UserFeedCounter> feedCounters = userFeedCounterMapper.selectByExample(example);
 		if(CollectionUtils.isEmpty(feedCounters)){
 			UserFeedCounter counter = new UserFeedCounter();
 			counter.setSum(1);//初始值
-			counter.setCountertype(CounterType.COMMENT);
+			counter.setCountertype(CounterType.CommentCounter.getValue());
 			counter.setUserid(feedInfo.getUserid());
 			userFeedCounterMapper.insertSelective(counter);
 		}else{
@@ -153,7 +153,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		UserInfo feedUser = userInfoMapper.selectByPrimaryKey(feedInfo.getUserid());
 		UserFeedCounterExample example = new UserFeedCounterExample();
 		example.createCriteria().andUseridEqualTo(feedUser.getUserid())
-				.andCountertypeEqualTo(CounterType.COMMENT);
+				.andCountertypeEqualTo(CounterType.CommentCounter.getValue());
 		List<UserFeedCounter> counters = userFeedCounterMapper.selectByExample(example);
 		Assert.state(!CollectionUtils.isEmpty(counters));
 		UserFeedCounter userFeedCounter = counters.get(0);

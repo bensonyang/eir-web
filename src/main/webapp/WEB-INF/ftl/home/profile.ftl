@@ -6,7 +6,7 @@
         </div>
         <div class="eir-profile-name-group">
             <span class="eir-name">${loginUser.realName}</span>
-            <span class="eir-summary">${loginUser.company}</span><span>${loginUser.jobTitle}</span>
+            <span class="eir-summary">${loginUser.company}&nbsp;&nbsp;${loginUser.jobTitle}</span>
         </div>
         <div class="eir-clear-both"></div>
         <div class="eir-line-hor">
@@ -16,17 +16,17 @@
                 <div class="d">发表数</div>
                                     <span>
                                         <#if counterMap??>
-                                        	${counterMap[0]}!0
+                                        	${counterMap['FeedCounter']!0}
                                         </#if>
                                     </span>
             </div>
             <div class="eir-line-ver">
             </div>
             <div class="eir-feed-comments-count">
-                <div class="d">点赞数</div>
+                <div class="d">评论数</div>
                                     <span>
                                         <#if counterMap??>
-                                        	${counterMap[1]}!0
+                                        	${counterMap['CommentCounter']!0}
                                         </#if>
                                     </span>
             </div>

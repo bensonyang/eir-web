@@ -10,5 +10,5 @@ import java.util.Map;
  *
  */
 public interface UserFeedCounterService {
-	Map<Integer, Integer> findUserCounter(Integer userId);
+	Map<String, Integer> findUserCounter(Integer userId);
 }

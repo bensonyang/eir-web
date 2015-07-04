@@ -54,7 +54,7 @@ public class HomeController extends BaseController {
      			mav.addObject("loginUser", user);
      		}
      		
-     		Map<Integer, Integer> userFeedCounterMap = userFeedCounterService.findUserCounter(userId);
+     		Map<String, Integer> userFeedCounterMap = userFeedCounterService.findUserCounter(userId);
      		if (!CollectionUtils.isEmpty(userFeedCounterMap)) {
      			mav.addObject("counterMap", userFeedCounterMap);
      		}

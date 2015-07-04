@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import com.morningsidevc.dao.gen.UserFeedCounterMapper;
+import com.morningsidevc.enums.CounterType;
 import com.morningsidevc.po.gen.UserFeedCounter;
 import com.morningsidevc.po.gen.UserFeedCounterExample;
 import com.morningsidevc.service.UserFeedCounterService;
@@ -31,9 +32,9 @@ public class UserFeedCounterServiceImpl implements UserFeedCounterService {
 	 * @see com.morningsidevc.service.UserFeedCounterService#findUserCounter(java.lang.Integer)
 	 */
 	@Override
-	public Map<Integer, Integer> findUserCounter(Integer userId) {
+	public Map<String, Integer> findUserCounter(Integer userId) {
 		
-		Map<Integer, Integer> counterMap = new HashMap<Integer, Integer>();
+		Map<String, Integer> counterMap = new HashMap<String, Integer>();
 		
 		UserFeedCounterExample example = new UserFeedCounterExample();
 		example.createCriteria().andUseridEqualTo(userId);
@@ -41,7 +42,7 @@ public class UserFeedCounterServiceImpl implements UserFeedCounterService {
 		
 		if (!CollectionUtils.isEmpty(counterList)) {
 			for (UserFeedCounter counter : counterList) {
-				counterMap.put((int)counter.getCountertype(), counter.getSum());
+				counterMap.put(CounterType.getName(counter.getCountertype()), counter.getSum());
 			}
 		}
 		return counterMap;
