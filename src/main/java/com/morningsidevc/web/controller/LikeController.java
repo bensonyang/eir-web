@@ -33,9 +33,11 @@ public class LikeController extends BaseController{
         try {
             Integer likeId = feedLikeService.addlike(feedId, getUserId());
             Assert.state(likeId != null && likeId > 0);
+            Integer likeCount = feedLikeService.countFeedCount(feedId, getUserId());
             FeedLikeResponse feedLikeResponse = new FeedLikeResponse();
             feedLikeResponse.setFeedId(feedId);
             feedLikeResponse.setLikeId(likeId);
+            feedLikeResponse.setLikeCount(likeCount);
             response.setCode(200);
             response.setMsg(feedLikeResponse);
         }catch (Exception e){
@@ -49,10 +51,12 @@ public class LikeController extends BaseController{
     public JsonResponse deleteLike(@RequestParam(value = "feedId", required = true) Integer feedId){
         JsonResponse response = new JsonResponse();
         try {
-            Integer ret = feedLikeService.deletelike(feedId);
+            Integer ret = feedLikeService.deletelike(feedId, getUserId());
             Assert.state(ret != null && ret > 0);
+            Integer likeCount = feedLikeService.countFeedCount(feedId, getUserId());
             FeedLikeResponse feedLikeResponse = new FeedLikeResponse();
             feedLikeResponse.setFeedId(feedId);
+            feedLikeResponse.setLikeCount(likeCount);
             response.setCode(200);
             response.setMsg(feedLikeResponse);
         }catch (Exception e){

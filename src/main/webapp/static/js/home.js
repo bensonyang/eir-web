@@ -176,10 +176,12 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                     var compiled =  _.template(templates.feedTemplate);
                     $('.feed-container').prepend(compiled(data.msg.feeds[0]));
                     $('div[data-feedId='+ data.msg.feeds[0].feedId +']').slideDown(500);
+                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//新内容绑定评论框聚焦事件
+                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up.unliked a').click(HANDLERS.likeFeedHandler);
+                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up.liked a').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
                 }else{
                     alert(data.msg);//TODO 优化弹框
                 }
-                $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
             }
             function linkFeedCallback(data){
 
@@ -194,26 +196,46 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
         },
         likeFeedHandler : function likeFeedHandler(){
             var _feedId = $(this).closest('.eir-feed').data('feedid');
+            var _a = $(this);
             $.ajax({
                 type:'POST',
                 url:API.addLike,
                 data:{feedId:_feedId},
                 success:function(data){
-
+                    if(data.code == 200){
+                        _a.text("已赞");
+                        _a.removeClass("unliked");
+                        _a.addClass("liked");
+                        _a.unbind("click");
+                        _a.click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
+                        _a.next().text(data.msg.likeCount);
+                    }else{
+                        alert("服务器错误");
+                    }
                 },
                 error:function(){
 
                 }
             });
         },
-        dellikeFeedHandler : function likeFeedHandler(){
+        dellikeFeedHandler : function dellikeFeedHandler(){
             var _feedId = $(this).closest('.eir-feed').data('feedid');
+            var _a = $(this);
             $.ajax({
                 type:'POST',
                 url:API.delLike,
                 data:{feedId:_feedId},
                 success:function(data){
-
+                    if(data.code == 200){
+                        _a.text("赞");
+                        _a.removeClass("liked");
+                        _a.addClass("unliked");
+                        _a.unbind("click");
+                        _a.click(HANDLERS.likeFeedHandler);
+                        _a.next().text(data.msg.likeCount);
+                    }else{
+                        alert("服务器错误");
+                    }
                 },
                 error:function(){
 

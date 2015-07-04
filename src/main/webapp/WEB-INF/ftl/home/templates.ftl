@@ -20,7 +20,7 @@
         <div class="row eir-feed-options">
             <li class="icon-comment icon-grey"><a>评论</a><span><%= commentCount %></span></li>
             <li class="icon-thumbs-up icon-grey unliked">
-                <% if(liked == 'true'){%>
+                <% if(liked){%>
                 <a class="liked">已赞</a>
                 <% }else{ %>
                 <a class="unliked">赞</a>
