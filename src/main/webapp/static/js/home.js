@@ -25,6 +25,7 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
     var _lastFeedIndex = undefined;
     var _pageSize = 5;
     var _canMore = true;
+    //加载更多的内容需要注册点击事件
     $(window).scroll(function(){
         if (($(document).height() - $(this).scrollTop() - $(this).height()) < 50){
             if(_canMore){
@@ -39,6 +40,8 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                         $('.feed-container').append(compiled(data));
                         $('div[data-feedId='+ data.feedId +']').slideDown(500);
                         $('div[data-feedId='+ data.feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
+                        $('div[data-feedId='+ data.feedId +'] .eir-feed-options .icon-thumbs-up.unliked a').click(HANDLERS.likeFeedHandler);
+                        $('div[data-feedId='+ data.feedId +'] .eir-feed-options .icon-thumbs-up.liked a').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
                     });
                     setTimeout(function(){
                        _canMore = true;
