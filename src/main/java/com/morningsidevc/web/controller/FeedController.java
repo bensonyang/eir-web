@@ -3,14 +3,19 @@
  */
 package com.morningsidevc.web.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Resource;
 
+import com.morningsidevc.enums.FeedType;
+import com.morningsidevc.enums.MsgType;
+import com.morningsidevc.po.gen.FeedInfo;
+import com.morningsidevc.service.UserInfoService;
+import com.morningsidevc.utils.DateTimeUtils;
+import com.morningsidevc.vo.User;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,12 +32,15 @@ import com.morningsidevc.web.response.JsonResponse;
  *
  */
 @Controller
-public class FeedController {
+@RequestMapping("community")
+public class FeedController extends BaseController{
 	@Resource
     private FeedInfoService feedInfoService;
+	@Resource
+	private UserInfoService userInfoService;
 
 	/* Ajax json */
-	@RequestMapping(value = "/community/morefeed", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "morefeed", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public JsonResponse moreFeed(@RequestParam(value="startIndex", required=false) Integer startIndex,
 			@RequestParam(value="pageSize", required=false) Integer pageSize) {
@@ -60,6 +68,38 @@ public class FeedController {
 		jsonResponse.setCode(200);
 		jsonResponse.setMsg(feedResponse);
     	return jsonResponse;
+	}
+
+
+	@RequestMapping(value = "shuofeed", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public JsonResponse addShuoFeed(String tagName, String content){
+		JsonResponse response = new JsonResponse();
+		try{
+			Assert.state(StringUtils.isNotBlank(tagName) && StringUtils.isNotBlank(content));
+			FeedInfo feedInfo = feedInfoService.addFeed(getUserId(), content, tagName);
+			Assert.notNull(feedInfo);
+			FeedResponse feedResponse = new FeedResponse();
+			Feed feed = new Feed();
+			feed.setAddTime(DateTimeUtils.date2SmartFormat(feedInfo.getAddtime()));
+			feed.setFeedId(feedInfo.getFeedid());
+			feed.setMsgId(feedInfo.getMsgid());
+			feed.setFeedType(Integer.valueOf(MsgType.SHUOFEED));
+			feed.setCommentCount(0);
+			feed.setLikeCount(0);
+			feed.setTag(feedInfo.getTagname());
+			feed.setAuthorId(feedInfo.getUserid());
+
+			User user = userInfoService.load(feedInfo.getUserid());
+			feed.setAuthor(user);
+			feedResponse.setFeeds(Arrays.asList(new Feed[]{feed}));
+			response.setCode(200);
+			response.setMsg(feedResponse);
+		}catch (Exception e){
+			response.setCode(500);
+			response.setMsg("服务器错误");
+		}
+		return response;
 	}
 	
 	
