@@ -38,6 +38,7 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                         var compiled =  _.template(templates.feedTemplate);
                         $('.feed-container').append(compiled(data));
                         $('div[data-feedId='+ data.feedId +']').slideDown(500);
+                        $('div[data-feedId='+ data.feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
                     });
                     setTimeout(function(){
                        _canMore = true;
@@ -63,6 +64,7 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                     $('.feed-container').append(compiled(data));
                     $('div[data-feedId='+ data.feedId +']').slideDown(500);
                 });
+                $('.eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
             }else{
                 alert(data.msg);
             }
@@ -175,6 +177,7 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                 }else{
                     alert(data.msg);//TODO 优化弹框
                 }
+                $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
             }
             function linkFeedCallback(data){
 
