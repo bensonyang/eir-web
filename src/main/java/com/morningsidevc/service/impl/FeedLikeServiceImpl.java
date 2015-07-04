@@ -31,15 +31,7 @@ public class FeedLikeServiceImpl implements FeedLikeService {
     private FeedInfoMapper feedInfoMapper;
 
     @Override
-    public Integer addlike(Integer feedId) throws Exception{
-        Integer userId = 0;
-        FeedLikeMsgExample example = new FeedLikeMsgExample();
-        example.createCriteria().andUseridEqualTo(userId).andFeedidEqualTo(feedId);
-        return feedLikeMsgMapper.deleteByExample(example);
-    }
-
-    @Override
-    public Integer deletelike(Integer feedId, Integer currentUserId) throws Exception{
+    public Integer addlike(Integer feedId, Integer currentUserId) throws Exception{
         Assert.state(feedId != null);
         FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
         Assert.notNull(feedInfo);
@@ -53,6 +45,15 @@ public class FeedLikeServiceImpl implements FeedLikeService {
         feedLikeMsg.setUserid(currentUserId);
         feedLikeMsg.setFeeduserid(feedInfo.getUserid());
         return feedLikeMsgMapper.insert(feedLikeMsg);
+    }
+
+    @Override
+    public Integer deletelike(Integer feedId) throws Exception{
+        Integer userId = 0;
+        FeedLikeMsgExample example = new FeedLikeMsgExample();
+        example.createCriteria().andUseridEqualTo(userId).andFeedidEqualTo(feedId);
+        return feedLikeMsgMapper.deleteByExample(example);
+
     }
 
     //获取当前用户对指定动态的点赞信息

@@ -62,7 +62,7 @@ public class FeedController extends BaseController{
 		FeedResponse feedResponse = new FeedResponse();
 
 		try {
-			List<Feed> feedList = this.feedInfoService.findFeeds(startIndex, pageSize);
+			List<Feed> feedList = this.feedInfoService.findFeeds(startIndex, pageSize, getUserId());
 			if (feedList != null && feedList.size() != 0) {
 				feedResponse.setFeeds(feedList);
 				feedResponse.setLastFeedIndex(startIndex+feedList.size()-1);

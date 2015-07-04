@@ -21,17 +21,17 @@ import javax.annotation.Resource;
  */
 @Controller
 @RequestMapping("community")
-public class LikeController{
+public class LikeController extends BaseController{
 
     @Resource
     FeedLikeService feedLikeService;
 
-    @RequestMapping(value = "addlike", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "addlike", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public JsonResponse addLike(@RequestParam(value = "feedId", required = true)Integer feedId){
         JsonResponse response = new JsonResponse();
         try {
-            Integer likeId = feedLikeService.addlike(feedId);
+            Integer likeId = feedLikeService.addlike(feedId, getUserId());
             Assert.state(likeId != null && likeId > 0);
             FeedLikeResponse feedLikeResponse = new FeedLikeResponse();
             feedLikeResponse.setFeedId(feedId);
@@ -44,12 +44,12 @@ public class LikeController{
         }
         return response;
     }
-    @RequestMapping(value = "deletelike", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "deletelike", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public JsonResponse deleteLike(@RequestParam(value = "feedId", required = true) Integer feedId){
         JsonResponse response = new JsonResponse();
         try {
-            Integer ret = feedLikeService.deletelike(feedId, 0);
+            Integer ret = feedLikeService.deletelike(feedId);
             Assert.state(ret != null && ret > 0);
             FeedLikeResponse feedLikeResponse = new FeedLikeResponse();
             feedLikeResponse.setFeedId(feedId);

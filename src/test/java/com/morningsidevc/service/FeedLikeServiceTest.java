@@ -15,7 +15,7 @@ public class FeedLikeServiceTest extends BaseTest {
     @Test
     public void like(){
         try{
-            feedLikeService.addlike(0);
+            feedLikeService.addlike(0, 0);
         }catch (Exception e){
 
         }

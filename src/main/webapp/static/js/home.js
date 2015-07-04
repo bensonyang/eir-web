@@ -65,6 +65,8 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                     $('div[data-feedId='+ data.feedId +']').slideDown(500);
                 });
                 $('.eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
+                $('.eir-feed .eir-feed-options .icon-thumbs-up.unliked a').click(HANDLERS.likeFeedHandler);//Feed点赞
+                $('.eir-feed .eir-feed-options .icon-thumbs-up.liked a').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
             }else{
                 alert(data.msg);
             }
