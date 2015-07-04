@@ -49,32 +49,32 @@
                <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()"/>
            </table>-->
         <table tableName="Account" domainObjectName="Account">
-            <generatedKey column="UserId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+            <generatedKey column="UserId" sqlStatement="SELECT LAST_INSERT_ID()" type="post" identity="true"/>
         </table>
         <table tableName="UserInfo" domainObjectName="UserInfo">
         </table>
         <table tableName="UserFeedCounter" domainObjectName="UserFeedCounter">
         </table>
         <table tableName="WeixinUserInfo" domainObjectName="WeixinUserInfo">
-            <generatedKey column="Id" sqlStatement="SELECT LAST_INSERT_ID()"/>
+            <generatedKey column="Id" sqlStatement="SELECT LAST_INSERT_ID()" type="post" identity="true"/>
         </table>
         <table tableName="FeedInfo" domainObjectName="FeedInfo">
-            <generatedKey column="FeedId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+            <generatedKey column="FeedId" sqlStatement="SELECT LAST_INSERT_ID()" type="post" identity="true"/>
         </table>
         <table tableName="WeiboMsg" domainObjectName="WeiboMsg">
-            <generatedKey column="MsgId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+            <generatedKey column="MsgId" sqlStatement="SELECT LAST_INSERT_ID()" type="post" identity="true"/>
         </table>
         <table tableName="WebPageMsg" domainObjectName="WebPageMsg">
-            <generatedKey column="MsgId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+            <generatedKey column="MsgId" sqlStatement="SELECT LAST_INSERT_ID()" type="post" identity="true"/>
         </table>
         <table tableName="FeedCommentMsg" domainObjectName="FeedCommentMsg">
-            <generatedKey column="CommentId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+            <generatedKey column="CommentId" sqlStatement="SELECT LAST_INSERT_ID()" type="post" identity="true"/>
         </table>
         <table tableName="FeedLikeMsg" domainObjectName="FeedLikeMsg">
-            <generatedKey column="LikeId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+            <generatedKey column="LikeId" sqlStatement="SELECT LAST_INSERT_ID()" type="post" identity="true"/>
         </table>
         <table tableName="TagInfo" domainObjectName="TagInfo">
-            <generatedKey column="TagId" sqlStatement="SELECT LAST_INSERT_ID()"/>
+            <generatedKey column="TagId" sqlStatement="SELECT LAST_INSERT_ID()" type="post" identity="true"/>
         </table>
     </context>
 

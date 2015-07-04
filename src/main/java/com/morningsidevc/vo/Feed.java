@@ -25,7 +25,8 @@ public class Feed {
 	private User author;
 	private MsgBody msgBody;
 	private List<Comment> comment;
-	
+	private boolean isLiked;
+
 	public Integer getFeedId() {
 		return feedId;
 	}
@@ -92,5 +93,11 @@ public class Feed {
 	public void setComment(List<Comment> comment) {
 		this.comment = comment;
 	}
-	
+	public boolean isLiked() {
+		return isLiked;
+	}
+
+	public void setIsLiked(boolean isLiked) {
+		this.isLiked = isLiked;
+	}
 }

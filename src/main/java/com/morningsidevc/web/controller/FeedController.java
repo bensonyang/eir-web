@@ -7,12 +7,14 @@ import java.util.*;
 
 import javax.annotation.Resource;
 
+import com.morningsidevc.dao.gen.WeiboMsgMapper;
 import com.morningsidevc.enums.FeedType;
 import com.morningsidevc.enums.MsgType;
 import com.morningsidevc.po.gen.FeedInfo;
 import com.morningsidevc.service.UserInfoService;
+import com.morningsidevc.service.WeiboMsgService;
 import com.morningsidevc.utils.DateTimeUtils;
-import com.morningsidevc.vo.User;
+import com.morningsidevc.vo.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -23,7 +25,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.morningsidevc.po.gen.UserInfo;
 import com.morningsidevc.service.FeedInfoService;
-import com.morningsidevc.vo.Feed;
 import com.morningsidevc.web.response.FeedResponse;
 import com.morningsidevc.web.response.JsonResponse;
 
@@ -38,6 +39,8 @@ public class FeedController extends BaseController{
     private FeedInfoService feedInfoService;
 	@Resource
 	private UserInfoService userInfoService;
+	@Resource
+	private WeiboMsgService weiboMsgService;
 
 	/* Ajax json */
 	@RequestMapping(value = "morefeed", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
@@ -92,9 +95,11 @@ public class FeedController extends BaseController{
 			feed.setLikeCount(0);
 			feed.setTag(feedInfo.getTagname());
 			feed.setAuthorId(feedInfo.getUserid());
-
+			WeiboMsgBody weiboMsgBody = weiboMsgService.loadMsgBody(feedInfo.getMsgid());
+			feed.setMsgBody(weiboMsgBody);
 			User user = userInfoService.load(feedInfo.getUserid());
 			feed.setAuthor(user);
+			feed.setComment(new ArrayList<Comment>());
 			feedResponse.setFeeds(Arrays.asList(new Feed[]{feed}));
 			response.setCode(200);
 			response.setMsg(feedResponse);

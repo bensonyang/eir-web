@@ -7,7 +7,7 @@ public class TagInfo {
 
     private Byte status;
 
-    private Integer order;
+    private Integer ordernum;
 
     public Integer getTagid() {
         return tagid;
@@ -33,11 +33,11 @@ public class TagInfo {
         this.status = status;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getOrdernum() {
+        return ordernum;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setOrdernum(Integer ordernum) {
+        this.ordernum = ordernum;
     }
 }

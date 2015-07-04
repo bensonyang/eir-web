@@ -103,28 +103,48 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
         },
         commentsOnClickHandler  :   function commentsOnClickHandler(){
             var _content = $('.form-group .main-textarea').val();
-            var _tag = $('.form-group a[data-index]').data('index');
+            var _tag = $('.form-group a[data-index]').text();
             var _link = $('.form-group .eir-recommend-link').val();
             var feedTypeId = $('.eir-options i.active').attr('id');
             switch(feedTypeId){
                 case "write-feed":
-                    $.post(API.shuoFeed,{
-                        content:_content,
-                        tag:_tag
-                    },shuoFeedCallback);
+                    $.ajax({
+                        type:"POST",
+                        url:API.shuoFeed,
+                        data:{
+                            tagName : _tag,
+                            content : _content
+                        },
+                        success:shuoFeedCallback,
+                        error:errorCallback
+                    });
                     break;
                 case "recommend-link":
-                    $.post(API.linkFeed,{
-                        content:_content,
-                        tag:_tag,
-                        link:_link
-                    },linkFeedCallback);
+                    $.ajax({
+                        type : "POST",
+                        url : API.linkFeed,
+                        data:{
+                            tagName : _tag,
+                            content : _content,
+                            link : _link
+                        },
+                        success : linkFeedCallback,
+                        error : errorCallback
+                    });
                     break;
             }
             function shuoFeedCallback(data){
-
+                if(data.code == 200){
+                    var compiled =  _.template(templates.feedTemplate);
+                    $('.feed-container').prepend(compiled(data.msg));
+                }else{
+                    alert(data.msg);//TODO 优化弹框
+                }
             }
             function linkFeedCallback(data){
+
+            }
+            function errorCallback(){
 
             }
         },
@@ -188,6 +208,37 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
 
 });
 data = {
+    "code":200,
+    "msg":{
+        "feeds":[
+            {
+                "addTime":"2015-07-04 14:23:01",
+                "author":{
+                    "company":"IBM",
+                    "jobTitle":"CTO",
+                    "realName":"陆晨",
+                    "userId":0
+                },
+                "authorId":0,
+                "commentCount":0,
+                "feedId":27,
+                "feedType":0,
+                "likeCount":0,
+                "msgBody":{
+                    "content":"啊啊啊",
+                    "msgId":27
+                },
+                "msgId":27,
+                "tag":"互联网金融",
+                isLiked:"true"//是否已赞
+            }
+        ],
+        "lastFeedIndex":-1,
+        "totalFeedCount":0
+    }
+}
+
+var t = {
     code: 200,
     msg:{
         lastFeedIndex:1,//当前页最后一个Feed索引
@@ -249,3 +300,5 @@ data = {
     }
 
 };
+
+
