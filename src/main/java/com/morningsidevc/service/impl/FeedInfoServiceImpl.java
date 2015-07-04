@@ -196,10 +196,10 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			Map<Integer, WebPageMsgBody> webPageMsg = this.webPageMsgService.findMsgBodys(webPageMsgIdList);
 			Map<Integer, FeedLikeMsg> feedLikeMsgMap = this.feedLikeService.findIsLiked(feedIdList, currentUserId);
 			for (Feed element : feedList) {
-				if (authors != null) {
+				if (authors != null && authors.get(element.getAuthorId()) != null) {
 					element.setAuthor(authors.get(element.getAuthorId()).clone());
 				}
-				if (comments != null) {
+				if (comments != null && comments.get(element.getFeedId()) != null) {
 					element.setComment(comments.get(element.getFeedId()));
 				}else{
 					element.setComment(new ArrayList<Comment>());

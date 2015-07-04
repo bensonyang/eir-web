@@ -31,7 +31,7 @@
                 <a deleteFeed data-toggle="popover" data-placement="bottom" data-container="body" >删除</a>
             </li>
         </div>
-        <div class=" eir-feed-item-container">
+        <div class="eir-feed-item-container">
             <%
             if(comment != undefined){
             _.each(comment,function(_comment){
@@ -50,7 +50,7 @@
                                         <span class="icon-grey">
                                             <a>@<%= _comment.toUserName %></a>
                                         </span>
-                                        <%  %>
+                                        <% _comment.userName %>
                                         : <%= _comment.content %></span>
                                     <span class="eir-feed-comments-item-content-time icon-grey">
                                         <d><%= _comment.commentTime %></d>
@@ -78,8 +78,8 @@
 <script type="text/template" id="eir-feed-comments-more">
     <div class="row eir-feed-comments-more">
         <div class="form-group">
-            <label class="eir-feed-comments-label">我也说一句</label>
-            <textarea class="col-md-12 col-xs-12" rows="3"></textarea>
+            <!--<label class="eir-feed-comments-label">我也说一句</label>-->
+            <textarea class="col-md-12 col-xs-12 eir-feed-comments-textarea" rows="3"></textarea>
             <a class="btn btn-default pull-right eir-feed-comments-comments eir-noradius">评论</a>
         </div>
     </div>
@@ -87,5 +87,29 @@
 <script type="text/template" id="eir-feed-comments">
     <div class="row eir-feed-comments">
         <input type="text" placeholder="我也说一句">
+    </div>
+</script>
+<script type="text/template" id="eir-feed-comments-item">
+    <div class="row eir-feed-comments-item eir-hide" data-commentid="<%= commentId %>">
+        <div class="eir-feed-pic01">
+            <img src="<%= userPic %>">
+        </div>
+        <div class="eir-feed-comments-item-content">
+                <span class="eir-feed-comments-item-content-name">
+                    <span class="icon-grey">
+                        <a><%= userName %></a>
+                    </span>
+                    <% if(toUserId != undefined && toUserId != '') %>
+                    回复
+                    <span class="icon-grey">
+                        <a>@<%= toUserName %></a>
+                    </span>
+                    <% userName %>
+                    : <%= content %></span>
+                <span class="eir-feed-comments-item-content-time icon-grey">
+                    <d><%= commentTime %></d>
+                    <a data-toggle="popover" data-commentid="<%= commentId %>" data-trigger="focus" role="button" tabindex="0" data-placement="bottom" data-container="body" >删除</a>
+                </span>
+        </div>
     </div>
 </script>

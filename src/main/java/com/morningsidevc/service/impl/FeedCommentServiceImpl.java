@@ -4,11 +4,7 @@
 package com.morningsidevc.service.impl;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Resource;
 
@@ -78,20 +74,28 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		example.setOrderByClause("AddTime DESC");
 		example.or().andFeedidIn(feedIds);
 		List<FeedCommentMsg> comments = feedCommentMsgMapper.selectByExample(example);
-		
-		if (comments != null && comments.size() != 0) {
+		if(!CollectionUtils.isEmpty(comments)){
+			List<Integer> userIds = new ArrayList<Integer>(userIds(comments));
+			UserInfoExample userInfoExample = new UserInfoExample();
+			userInfoExample.createCriteria().andUseridIn(userIds);
+			List<UserInfo> userInfos = userInfoMapper.selectByExample(userInfoExample);
+			Map<Integer, UserInfo> userInfoMap = mapUserInfo(userInfos);
 			for (FeedCommentMsg feedCommentMsg : comments) {
 				Comment comment = new Comment();
 				comment.setCommentId(feedCommentMsg.getCommentid());
 				comment.setUserId(feedCommentMsg.getUserid());
 				comment.setToUserId(feedCommentMsg.getUserid());
 				comment.setContent(feedCommentMsg.getContent());
-				
+				comment.setUserName(userInfoMap.get(feedCommentMsg.getUserid()).getNickname());
+				if(feedCommentMsg.getTouserid() != null){
+					comment.setToUserName(userInfoMap.get(feedCommentMsg.getTouserid()).getNickname());
+				}
+
 				if (feedCommentMsg.getAddtime() != null) {
 					String date = DateFormat.getDateInstance().format(feedCommentMsg.getAddtime());
 					comment.setCommentTime(date);
 				}
-				
+
 				if (commentMap.containsKey(feedCommentMsg.getFeedid())) {
 					commentMap.get(feedCommentMsg.getFeedid()).add(comment);
 				} else {
@@ -99,39 +103,62 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 					commentList.add(comment);
 					commentMap.put(feedCommentMsg.getFeedid(), commentList);
 				}
-				
 			}
-		} else {
+		}else{
 			return null;
 		}
-		
 		return commentMap;
+	}
+
+	private Map<Integer, UserInfo> mapUserInfo(List<UserInfo> userInfos){
+		Map<Integer, UserInfo> userInfoMap = new HashMap<Integer, UserInfo>();
+		for(UserInfo userInfo : userInfos){
+			userInfoMap.put(userInfo.getUserid(), userInfo);
+		}
+		return userInfoMap;
+	}
+
+	private Set<Integer> userIds(List<FeedCommentMsg> comments){
+		Set<Integer> userIds = new HashSet<Integer>();
+		for(FeedCommentMsg feedCommentMsg : comments){
+			userIds.add(feedCommentMsg.getUserid());
+			userIds.add(feedCommentMsg.getTouserid());
+		}
+		return  userIds;
 	}
 	
 	public Comment addComment(AddCommentRequest request, Integer currentUserId) throws Exception{
 		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(request.getFeedId());
+		Assert.notNull(feedInfo);
 		UserInfo currentUser = userInfoMapper.selectByPrimaryKey(currentUserId);
+		Assert.notNull(currentUser);
 		UserInfo toUser = userInfoMapper.selectByPrimaryKey(feedInfo.getUserid());
+		Assert.notNull(toUser);
+		feedInfo.setCommentcount(feedInfo.getCommentcount() + 1);
+		feedInfoMapper.updateByPrimaryKeySelective(feedInfo);//更新feed中的评论数
 		UserFeedCounterExample example = new UserFeedCounterExample();
 		example.createCriteria().andUseridEqualTo(feedInfo.getUserid())
 				.andCountertypeEqualTo(CounterType.CommentCounter.getValue());
 		List<UserFeedCounter> feedCounters = userFeedCounterMapper.selectByExample(example);
-		if(CollectionUtils.isEmpty(feedCounters)){
+		if(CollectionUtils.isEmpty(feedCounters)){//更新计数器
 			UserFeedCounter counter = new UserFeedCounter();
 			counter.setSum(1);//初始值
 			counter.setCountertype(CounterType.CommentCounter.getValue());
 			counter.setUserid(feedInfo.getUserid());
-			userFeedCounterMapper.insertSelective(counter);
+			Integer ret = userFeedCounterMapper.insertSelective(counter);
+			Assert.state(ret > 0);
 		}else{
 			UserFeedCounter counter = feedCounters.get(0);
 			counter.setSum(counter.getSum() + 1);
-			userFeedCounterMapper.updateByPrimaryKeySelective(counter);
+			Integer ret = userFeedCounterMapper.updateByPrimaryKeySelective(counter);
+			Assert.state(ret > 0);
 		}
 		FeedCommentMsg feedCommentMsg = buildNewFeedCommentMsg(feedInfo, request, currentUserId);
-		Integer commentId = feedCommentMsgMapper.insert(feedCommentMsg);
+		Integer ret = feedCommentMsgMapper.insert(feedCommentMsg);//插入评论内容
+		Assert.state(ret > 0);
 		Comment comment = new Comment();
 		comment.setContent(request.getContent());
-		comment.setCommentId(commentId);
+		comment.setCommentId(feedCommentMsg.getCommentid());
 		comment.setToUserId(feedInfo.getUserid());
 		comment.setToUserName(toUser.getNickname());
 		comment.setUserId(currentUserId);
@@ -158,7 +185,8 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		Assert.state(!CollectionUtils.isEmpty(counters));
 		UserFeedCounter userFeedCounter = counters.get(0);
 		userFeedCounter.setSum(userFeedCounter.getSum() - 1);
-		userFeedCounterMapper.updateByPrimaryKeySelective(userFeedCounter);
+		Integer ret = userFeedCounterMapper.updateByPrimaryKeySelective(userFeedCounter);
+		Assert.state(ret > 0);
 		return feedCommentMsgMapper.deleteByPrimaryKey(commentId);
 	}
 

@@ -27,12 +27,14 @@ public class CommentController extends BaseController{
     FeedCommentService feedCommentService;
 
     @ResponseBody
-    @RequestMapping(value = "addcomment", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "addcomment", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public JsonResponse addComment(AddCommentRequest request){
         JsonResponse response = new JsonResponse();
         try {
             Comment comment = feedCommentService.addComment(request, getUserId());
             Assert.notNull(comment);
+            comment.setUserPic("/static/images/pic1.jpeg");
+            comment.setToUserPic("/static/images/pic1.jpeg");
             response.setCode(200);
             response.setMsg(comment);
         }catch (Exception e){

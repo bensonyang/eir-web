@@ -246,13 +246,39 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
             });
         },
         feedCommentFocusInHandler : function(){
+            var _feed = $(this).closest('.eir-feed');
             var compiled =  _.template(templates.feedCommentMore);
             $(this).closest('.eir-feed-comments').replaceWith(compiled({})).fadeIn(1000);
+            _feed.find('a.eir-feed-comments-comments').click(HANDLERS.commentToFeedHandler);
         },
         getMoreFeedCommentsHandler  : function(){
             var _lastIndex = 1;
             var _feedId=1;
+        },
+        commentToFeedHandler : function(){
+            var _feed = $(this).closest('.eir-feed');
+            var _feedId = $(this).closest('.eir-feed').data('feedid');
+            var _content = $(this).parent().find('.eir-feed-comments-textarea').val();
+            $.ajax({
+                type:"POST",
+                url:API.addComment,
+                data:{
+                    feedId:_feedId,
+                    content:_content
+                },
+                success:function(data){
+                    if(data.code == 200){
+                        var compiled =  _.template(templates.feedCommentItem);
+                        _feed.find('.eir-feed-item-container').prepend(compiled(data.msg));
+                        $('div[data-commentid='+ data.msg.commentId +']').slideDown();
+                    }else{
 
+                    }
+                },
+                error:function(){
+
+                }
+            });
         }
     };
     //################################事件处理器配置END#######################################
@@ -269,8 +295,8 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
     $('.eir-feed .eir-feed-options .icon-thumbs-up.liked a').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
     $('.eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
     $('.eir-get-more-comments .a-more-comments').click(HANDLERS.getMoreFeedCommentsHandler);//获取更多评论
+    $('.eir-feed .eir-feed-comments-comments').click(HANDLERS.commentToFeedHandler);//Feed下面添加评论
     //################################事件配置END#######################################
-
 });
 data = {
     "code":200,
