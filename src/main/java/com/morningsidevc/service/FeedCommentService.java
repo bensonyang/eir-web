@@ -9,7 +9,7 @@ import com.morningsidevc.web.request.AddCommentRequest;
 public interface FeedCommentService {
 	Comment loadLastestComment(Integer feedId);
 	
-	Map<Integer, List<Comment>> findComments(List<Integer> feedIds);
+	Map<Integer, List<Comment>> findComments(List<Integer> feedIds) throws Exception;
 
 	/**
 	 * 添加评论接口

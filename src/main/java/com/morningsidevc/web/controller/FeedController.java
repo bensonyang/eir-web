@@ -56,17 +56,20 @@ public class FeedController extends BaseController{
 		}
 		
 		JsonResponse jsonResponse = new JsonResponse();
-		FeedResponse feedResponse = new FeedResponse();	
-		
-		List<Feed> feedList = this.feedInfoService.findFeeds(startIndex, pageSize);
-		if (feedList != null && feedList.size() != 0) {
-			feedResponse.setFeeds(feedList);
-			feedResponse.setLastFeedIndex(startIndex+feedList.size()-1);
-			feedResponse.setTotalFeedCount(feedList.size());
+		FeedResponse feedResponse = new FeedResponse();
+
+		try {
+			List<Feed> feedList = this.feedInfoService.findFeeds(startIndex, pageSize);
+			if (feedList != null && feedList.size() != 0) {
+				feedResponse.setFeeds(feedList);
+				feedResponse.setLastFeedIndex(startIndex+feedList.size()-1);
+				feedResponse.setTotalFeedCount(feedList.size());
+			}
+			jsonResponse.setCode(200);
+			jsonResponse.setMsg(feedResponse);
+		}catch (Exception e){
+			jsonResponse.setCode(500);
 		}
-		
-		jsonResponse.setCode(200);
-		jsonResponse.setMsg(feedResponse);
     	return jsonResponse;
 	}
 

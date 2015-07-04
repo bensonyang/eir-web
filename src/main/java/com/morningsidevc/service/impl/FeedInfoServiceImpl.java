@@ -154,7 +154,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	}
 
 	@Override
-	public List<Feed> findFeeds(int start, int pageSize) {
+	public List<Feed> findFeeds(int start, int pageSize) throws Exception{
 		List<Feed> feedList = new ArrayList<Feed>();
 		
 		FeedInfoExample feedInfoExample = new FeedInfoExample();
