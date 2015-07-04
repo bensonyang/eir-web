@@ -1,12 +1,15 @@
 package com.morningsidevc.web.controller;
 
-import com.morningsidevc.po.gen.UserInfo;
+import java.util.List;
+
+import com.morningsidevc.service.TagInfoService;
 import com.morningsidevc.service.UserInfoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.morningsidevc.service.FeedInfoService;
+import com.morningsidevc.vo.Tag;
 import com.morningsidevc.vo.User;
 
 import javax.annotation.Resource;
@@ -15,13 +18,16 @@ import javax.annotation.Resource;
  * @author float.lu
  */
 @Controller
-public class HomeController {
+public class HomeController extends BaseController {
     
     @Resource
     private FeedInfoService feedInfoService;
     
 	@Resource
 	private UserInfoService userInfoService;
+	
+	@Resource
+	private TagInfoService tagInfoService;
 
     /* HTML */
     @RequestMapping(value = "/community", method = RequestMethod.GET)
@@ -30,10 +36,23 @@ public class HomeController {
      	mav.setViewName("home");
     	
      	// UserInfo retrieved from cookie and the number of feed and comment
+     	int userId = super.getUserId();
+     	if (userId != 0) {
+     		// 登录
+     		User user = userInfoService.load(userId);
+     		
+     		mav.addObject("loginState", "login");
+     		if (user != null) {
+     			mav.addObject("loginUser", user);
+     		}
+     		
+     	} else {
+     		mav.addObject("loginState", "nologin");
+     	}
      	
-     	// TagList maybe ajax
+     	// TagList
+     	mav.addObject("tagList", tagInfoService.findTags());
      	
-     	// FeedList     	
     	return mav;
     }
 

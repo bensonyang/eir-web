@@ -66,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    TagId, TagName, Status, Order
+    TagId, TagName, Status, `Order`
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.po.gen.TagInfoExample" >
     select
@@ -106,7 +106,7 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into TagInfo (TagId, TagName, Status, 
-      Order)
+      `Order`)
     values (#{tagid,jdbcType=INTEGER}, #{tagname,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
       #{order,jdbcType=INTEGER})
   </insert>
@@ -124,7 +124,7 @@
         Status,
       </if>
       <if test="order != null" >
-        Order,
+        `Order`,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -159,7 +159,7 @@
         Status = #{record.status,jdbcType=TINYINT},
       </if>
       <if test="record.order != null" >
-        Order = #{record.order,jdbcType=INTEGER},
+        `Order` = #{record.order,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -171,7 +171,7 @@
     set TagId = #{record.tagid,jdbcType=INTEGER},
       TagName = #{record.tagname,jdbcType=VARCHAR},
       Status = #{record.status,jdbcType=TINYINT},
-      Order = #{record.order,jdbcType=INTEGER}
+      `Order` = #{record.order,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -186,7 +186,7 @@
         Status = #{status,jdbcType=TINYINT},
       </if>
       <if test="order != null" >
-        Order = #{order,jdbcType=INTEGER},
+        `Order` = #{order,jdbcType=INTEGER},
       </if>
     </set>
     where TagId = #{tagid,jdbcType=INTEGER}
@@ -195,7 +195,7 @@
     update TagInfo
     set TagName = #{tagname,jdbcType=VARCHAR},
       Status = #{status,jdbcType=TINYINT},
-      Order = #{order,jdbcType=INTEGER}
+      `Order` = #{order,jdbcType=INTEGER}
     where TagId = #{tagid,jdbcType=INTEGER}
   </update>
 </mapper>
