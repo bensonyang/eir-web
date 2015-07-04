@@ -22,20 +22,54 @@ require.config({
 var data = undefined;
 //模块入口
 require(["API","jquery","underscore","templates","tooltip","popover"], function(API, $, _, templates){
-    var _startOff = 1;
+    var _lastFeedIndex = undefined;
+    var _pageSize = 5;
+    var _canMore = true;
     $(window).scroll(function(){
         if (($(document).height() - $(this).scrollTop() - $(this).height()) < 50){
-            $.post(API.moreFeed,{
-                startOff:_startOff
-            },function(data){
+            if(_canMore){
+                _canMore = false;
+                $.get(API.moreFeed,{
+                    startIndex:_lastFeedIndex + 1,
+                    pageSize:_pageSize
+                },function(data){
+                    _lastFeedIndex = data.msg.lastFeedIndex;
+                    _.each(data.msg.feeds, function(data){
+                        var compiled =  _.template(templates.feedTemplate);
+                        $('.feed-container').append(compiled(data));
+                        $('div[data-feedId='+ data.feedId +']').slideDown(500);
+                    });
+                    setTimeout(function(){
+                       _canMore = true;
+                    },1000);
+                });
+            }
 
-            });
         }
     });
 
-    _.each(data.msg.feeds, function(data){
-        var compiled =  _.template(templates.feedTemplate);
-        $('.feed-container').append(compiled(data));
+    $.ajax({
+        type:"GET",
+        url:API.moreFeed,
+        data:{
+            startIndex:0,
+            pageSize:5
+        },
+        success:function(data){
+            if(data.code == 200){
+                _lastFeedIndex = data.msg.lastFeedIndex;
+                _.each(data.msg.feeds, function(data){
+                    var compiled =  _.template(templates.feedTemplate);
+                    $('.feed-container').append(compiled(data));
+                    $('div[data-feedId='+ data.feedId +']').slideDown(500);
+                });
+            }else{
+                alert(data.msg);
+            }
+        },
+        error:function(){
+            alert("服务器错误");
+        }
     });
 
     //删除Feed
@@ -136,7 +170,8 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
             function shuoFeedCallback(data){
                 if(data.code == 200){
                     var compiled =  _.template(templates.feedTemplate);
-                    $('.feed-container').prepend(compiled(data.msg));
+                    $('.feed-container').prepend(compiled(data.msg.feeds[0]));
+                    $('div[data-feedId='+ data.msg.feeds[0].feedId +']').slideDown(500);
                 }else{
                     alert(data.msg);//TODO 优化弹框
                 }
@@ -212,7 +247,7 @@ data = {
     "msg":{
         "feeds":[
             {
-                "addTime":"2015-07-04 14:23:01",
+                "addTime":"2015-07-04 15:09:43",
                 "author":{
                     "company":"IBM",
                     "jobTitle":"CTO",
@@ -220,23 +255,27 @@ data = {
                     "userId":0
                 },
                 "authorId":0,
+                "comment":[
+
+                ],
                 "commentCount":0,
-                "feedId":27,
+                "feedId":34,
                 "feedType":0,
+                "lastCommentIndex":0,
                 "likeCount":0,
+                "liked":false,
                 "msgBody":{
-                    "content":"啊啊啊",
-                    "msgId":27
+                    "content":"呵呵额",
+                    "msgId":34
                 },
-                "msgId":27,
-                "tag":"互联网金融",
-                isLiked:"true"//是否已赞
+                "msgId":34,
+                "tag":""
             }
         ],
         "lastFeedIndex":-1,
         "totalFeedCount":0
     }
-}
+};
 
 var t = {
     code: 200,
@@ -260,7 +299,7 @@ var t = {
                     "company": "huhaha",
                     "avatarUrl": "/static/images/pic1.jpeg"
                 },
-                comments:{
+                comment:{
                     feedId:123,
                     lastIndex:2,
                     totalCount:111,

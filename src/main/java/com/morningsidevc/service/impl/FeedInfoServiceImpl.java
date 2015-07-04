@@ -201,6 +201,8 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 				}
 				if (comments != null) {
 					element.setComment(comments.get(element.getFeedId()));
+				}else{
+					element.setComment(new ArrayList<Comment>());
 				}
 				if (element.getFeedType() == 0 && weiboMsg != null) {
 					element.setMsgBody(weiboMsg.get(element.getMsgId()));

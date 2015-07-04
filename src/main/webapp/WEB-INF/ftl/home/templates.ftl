@@ -1,5 +1,5 @@
 <script type="text/template" id="feedTemplate">
-    <div class="row eir-feed" data-feedId="<%= feedId %>" data-feedtype="<%= feedType %>">
+    <div class="row eir-feed eir-hide" data-feedId="<%= feedId %>" data-feedtype="<%= feedType %>">
         <div class="row eir-feed-head" data-userid="<%= author.userId %>">
             <div class="eir-feed-pic">
                 <img src="<%= author.avatarUrl %>">
@@ -20,7 +20,7 @@
         <div class="row eir-feed-options">
             <li class="icon-comment icon-grey"><a>评论</a><span><%= commentCount %></span></li>
             <li class="icon-thumbs-up icon-grey unliked">
-                <% if(isLiked == 'true'){%>
+                <% if(liked == 'true'){%>
                 <a class="liked">已赞</a>
                 <% }else{ %>
                 <a class="unliked">赞</a>
@@ -33,8 +33,8 @@
         </div>
         <div class=" eir-feed-item-container">
             <%
-            if(comments != undefined){
-            _.each(comments.data,function(comment){
+            if(comment != undefined){
+            _.each(comment,function(_comment){
             %>
             <div class="row eir-feed-comments-item">
                 <div class="eir-feed-pic01">
@@ -43,17 +43,17 @@
                 <div class="eir-feed-comments-item-content">
                                     <span class="eir-feed-comments-item-content-name">
                                         <span class="icon-grey">
-                                            <a><%= comment.userName %></a>
+                                            <a><%= _comment.userName %></a>
                                         </span>
-                                        <% if(comment.toUserId != undefined && comment.toUserId != '') %>
+                                        <% if(_comment.toUserId != undefined && _comment.toUserId != '') %>
                                         回复
                                         <span class="icon-grey">
-                                            <a>@<%= comment.toUserName %></a>
+                                            <a>@<%= _comment.toUserName %></a>
                                         </span>
                                         <%  %>
-                                        : <%= comment.content %></span>
+                                        : <%= _comment.content %></span>
                                     <span class="eir-feed-comments-item-content-time icon-grey">
-                                        <d><%= comment.commentTime %></d>
+                                        <d><%= _comment.commentTime %></d>
                                         <a data-toggle="popover" data-commentid="<%= comment.commentId %>" data-trigger="focus" role="button" tabindex="0" data-placement="bottom" data-container="body" >删除</a>
                                     </span>
                 </div>
@@ -63,9 +63,11 @@
             }
             %>
             <div class="eir-get-more-comments">
+                <% if(lastCommentIndex < commentCount){ %>
                 <div class=" icon-grey">
-                    <a class="a-more-comments" data-feedid="<%= comments.feedId %>" data-lastindex="<%= comments.lastIndex %>">加载更多(<%= comments.totalCount %>)</a>
+                    <a class="a-more-comments" data-feedid="<%= feedId %>" data-lastindex="<%= lastCommentIndex %>">加载更多(<%= commentCount %>)</a>
                 </div>
+                <% } %>
             </div>
         </div>
         <div class="row eir-feed-comments">
