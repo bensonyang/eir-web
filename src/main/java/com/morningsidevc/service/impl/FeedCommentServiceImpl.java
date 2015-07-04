@@ -68,7 +68,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	}
 
 	@Override
-	public Map<Integer, List<Comment>> findComments(List<Integer> feedIds) {
+	public Map<Integer, List<Comment>> findComments(List<Integer> feedIds) throws Exception{
 		if (feedIds == null || feedIds.size() == 0) {
 			return null;
 		}
@@ -108,7 +108,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		return commentMap;
 	}
 	
-	public Comment addComment(AddCommentRequest request, Integer currentUserId) {
+	public Comment addComment(AddCommentRequest request, Integer currentUserId) throws Exception{
 		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(request.getFeedId());
 		UserInfo currentUser = userInfoMapper.selectByPrimaryKey(currentUserId);
 		UserInfo toUser = userInfoMapper.selectByPrimaryKey(feedInfo.getUserid());
