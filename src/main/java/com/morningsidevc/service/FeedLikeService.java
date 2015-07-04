@@ -7,7 +7,7 @@ public interface FeedLikeService {
      * @param feedId
      * @return
      */
-    Integer addlike(Integer feedId);
+    Integer addlike(Integer feedId) throws Exception;
 
     /**
      * 取消点赞
@@ -15,6 +15,6 @@ public interface FeedLikeService {
      * @param currentUserId
      * @return 被删除的feedId
      */
-    Integer deletelike(Integer feedId, Integer currentUserId);
+    Integer deletelike(Integer feedId, Integer currentUserId) throws Exception;
 
 }
