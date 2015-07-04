@@ -5,7 +5,7 @@ http://localhost:8080/community
 http://localhost:8080/community/morefeed
 
 参数:
-lastIndex:2 //已经取多少条feed,下次从第lastIndex+1开始取
+startIndex:2 //开始取的Index
 pageSize:10 //当前页取多少条
 
 方法:GET/POST
