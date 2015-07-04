@@ -49,14 +49,14 @@ INSERT INTO
 VALUES(1, 1, 123, 123, NOW());
 
 INSERT INTO
-`EIR`.TagInfo(`TagId`, `TagName`, `Status`, `Order`)
+`EIR`.TagInfo(`TagId`, `TagName`, `Status`, `OrderNum`)
 VALUES(1, '互联网金融', 0, 1);
 
 
 INSERT INTO
-`EIR`.TagInfo(`TagId`, `TagName`, `Status`, `Order`)
+`EIR`.TagInfo(`TagId`, `TagName`, `Status`, `OrderNum`)
 VALUES(2, 'O2O', 0, 2);
 
 INSERT INTO
-`EIR`.TagInfo(`TagId`, `TagName`, `Status`, `Order`)
+`EIR`.TagInfo(`TagId`, `TagName`, `Status`, `OrderNum`)
 VALUES(3, '智能硬件', 0, 3);

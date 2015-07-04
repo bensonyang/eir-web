@@ -5,8 +5,8 @@
             <img src="/static/images/pic1.jpeg">
         </div>
         <div class="eir-profile-name-group">
-            <span class="eir-name">Cheng</span>
-            <span class="eir-summary">Huhaha CEO</span>
+            <span class="eir-name">${loginUser.realName}</span>
+            <span class="eir-summary">${loginUser.company}</span><span>${loginUser.jobTitle}</span>
         </div>
         <div class="eir-clear-both"></div>
         <div class="eir-line-hor">
@@ -15,7 +15,9 @@
             <div class="col-md-6 col-xs-6 eir-feed-count">
                 <div class="d">发表数</div>
                                     <span>
-                                        14
+                                        <#if counterMap??>
+                                        	${counterMap[0]}!0
+                                        </#if>
                                     </span>
             </div>
             <div class="eir-line-ver">
@@ -23,7 +25,9 @@
             <div class="eir-feed-comments-count">
                 <div class="d">点赞数</div>
                                     <span>
-                                        55
+                                        <#if counterMap??>
+                                        	${counterMap[1]}!0
+                                        </#if>
                                     </span>
             </div>
         </div>

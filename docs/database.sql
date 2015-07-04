@@ -137,10 +137,10 @@ CREATE TABLE IF NOT EXISTS `EIR`.`TagInfo` (
 	`TagId` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增ID',
 	`TagName` varchar(50) NOT NULL COMMENT '标签名称',
 	`Status` tinyint(3) DEFAULT 0 COMMENT '标签状态(0-正常显示,1-不显示)',
-	`Order` int(11) NOT NULL COMMENT '标签排序,数值越小，优先级越高',
+	`OrderNum` int(11) NOT NULL COMMENT '标签排序,数值越小，优先级越高',
 	PRIMARY KEY (`TagId`),
 	UNIQUE `UK_TagInfo_TagName`(`TagName`),
-	INDEX `IX_TagInfo_Order`(`Order`, `Status`)
+	INDEX `IX_TagInfo_Order`(`OrderNum`, `Status`)
 ) ENGINE=`InnoDB` DEFAULT CHARSET=utf8;
 
 
