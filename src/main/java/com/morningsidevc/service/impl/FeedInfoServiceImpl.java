@@ -14,18 +14,15 @@ import javax.annotation.Resource;
 import com.morningsidevc.enums.FeedStatus;
 import com.morningsidevc.enums.FeedType;
 import com.morningsidevc.enums.MsgType;
+import com.morningsidevc.po.gen.FeedLikeMsg;
 import com.morningsidevc.po.gen.WeiboMsg;
+import com.morningsidevc.service.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 import com.morningsidevc.dao.gen.FeedInfoMapper;
 import com.morningsidevc.po.gen.FeedInfo;
 import com.morningsidevc.po.gen.FeedInfoExample;
-import com.morningsidevc.service.FeedCommentService;
-import com.morningsidevc.service.FeedInfoService;
-import com.morningsidevc.service.UserInfoService;
-import com.morningsidevc.service.WebPageMsgService;
-import com.morningsidevc.service.WeiboMsgService;
 import com.morningsidevc.vo.Comment;
 import com.morningsidevc.vo.Feed;
 import com.morningsidevc.vo.MsgBody;
@@ -55,6 +52,9 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	
 	@Resource
 	private WeiboMsgService weiboMsgService;
+
+	@Resource
+	private FeedLikeService feedLikeService;
 	
 	/* (non-Javadoc)
 	 * @see com.morningsidevc.service.FeedInfoService#addFeed(java.lang.Integer, java.lang.String)
@@ -154,7 +154,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	}
 
 	@Override
-	public List<Feed> findFeeds(int start, int pageSize) throws Exception{
+	public List<Feed> findFeeds(int start, int pageSize, Integer currentUserId) throws Exception{
 		List<Feed> feedList = new ArrayList<Feed>();
 		
 		FeedInfoExample feedInfoExample = new FeedInfoExample();
@@ -194,18 +194,25 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			Map<Integer, List<Comment>> comments = feedCommentService.findComments(feedIdList);
 			Map<Integer, WeiboMsgBody> weiboMsg = this.weiboMsgService.findMsgBodys(weiboMsgIdList);
 			Map<Integer, WebPageMsgBody> webPageMsg = this.webPageMsgService.findMsgBodys(webPageMsgIdList);
-			
+			Map<Integer, FeedLikeMsg> feedLikeMsgMap = this.feedLikeService.findIsLiked(feedIdList, currentUserId);
 			for (Feed element : feedList) {
 				if (authors != null) {
 					element.setAuthor(authors.get(element.getAuthorId()).clone());
 				}
 				if (comments != null) {
 					element.setComment(comments.get(element.getFeedId()));
+				}else{
+					element.setComment(new ArrayList<Comment>());
 				}
 				if (element.getFeedType() == 0 && weiboMsg != null) {
 					element.setMsgBody(weiboMsg.get(element.getMsgId()));
 				} else if (element.getFeedType() == 1 && webPageMsg != null) {
 					element.setMsgBody(webPageMsg.get(element.getMsgId()));
+				}
+				if(feedLikeMsgMap.get(element.getFeedId()) != null){
+					element.setIsLiked(true);
+				}else{
+					element.setIsLiked(false);
 				}
 			}
 

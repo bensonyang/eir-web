@@ -27,6 +27,8 @@ public class Feed {
 	private List<Comment> comment;
 	private boolean isLiked;
 
+	private int lastCommentIndex;
+
 	public Integer getFeedId() {
 		return feedId;
 	}
@@ -96,8 +98,15 @@ public class Feed {
 	public boolean isLiked() {
 		return isLiked;
 	}
-
 	public void setIsLiked(boolean isLiked) {
 		this.isLiked = isLiked;
+	}
+
+	public int getLastCommentIndex() {
+		return lastCommentIndex;
+	}
+
+	public void setLastCommentIndex(int lastCommentIndex) {
+		this.lastCommentIndex = lastCommentIndex;
 	}
 }

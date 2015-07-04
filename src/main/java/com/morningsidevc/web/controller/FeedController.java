@@ -62,7 +62,7 @@ public class FeedController extends BaseController{
 		FeedResponse feedResponse = new FeedResponse();
 
 		try {
-			List<Feed> feedList = this.feedInfoService.findFeeds(startIndex, pageSize);
+			List<Feed> feedList = this.feedInfoService.findFeeds(startIndex, pageSize, getUserId());
 			if (feedList != null && feedList.size() != 0) {
 				feedResponse.setFeeds(feedList);
 				feedResponse.setLastFeedIndex(startIndex+feedList.size()-1);
@@ -82,7 +82,10 @@ public class FeedController extends BaseController{
 	public JsonResponse addShuoFeed(String tagName, String content){
 		JsonResponse response = new JsonResponse();
 		try{
-			Assert.state(StringUtils.isNotBlank(tagName) && StringUtils.isNotBlank(content));
+			Assert.state(StringUtils.isNotBlank(content));
+			if(StringUtils.isNotBlank(tagName)){
+				tagName = "无";
+			}
 			FeedInfo feedInfo = feedInfoService.addFeed(getUserId(), content, tagName);
 			Assert.notNull(feedInfo);
 			FeedResponse feedResponse = new FeedResponse();
@@ -100,6 +103,7 @@ public class FeedController extends BaseController{
 			User user = userInfoService.load(feedInfo.getUserid());
 			feed.setAuthor(user);
 			feed.setComment(new ArrayList<Comment>());
+			feed.setLastCommentIndex(0);
 			feedResponse.setFeeds(Arrays.asList(new Feed[]{feed}));
 			response.setCode(200);
 			response.setMsg(feedResponse);

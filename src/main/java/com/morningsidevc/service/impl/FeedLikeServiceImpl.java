@@ -16,7 +16,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author yangna
@@ -31,15 +31,7 @@ public class FeedLikeServiceImpl implements FeedLikeService {
     private FeedInfoMapper feedInfoMapper;
 
     @Override
-    public Integer addlike(Integer feedId) throws Exception{
-        Integer userId = 0;
-        FeedLikeMsgExample example = new FeedLikeMsgExample();
-        example.createCriteria().andUseridEqualTo(userId).andFeedidEqualTo(feedId);
-        return feedLikeMsgMapper.deleteByExample(example);
-    }
-
-    @Override
-    public Integer deletelike(Integer feedId, Integer currentUserId) throws Exception{
+    public Integer addlike(Integer feedId, Integer currentUserId) throws Exception{
         Assert.state(feedId != null);
         FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
         Assert.notNull(feedInfo);
@@ -47,12 +39,25 @@ public class FeedLikeServiceImpl implements FeedLikeService {
         if(oldFeedLikeMsg != null){
             return  oldFeedLikeMsg.getLikeid();
         }
+        feedInfo.setLikecount(feedInfo.getLikecount() + 1);
+        feedInfoMapper.updateByPrimaryKey(feedInfo);
         FeedLikeMsg feedLikeMsg = new FeedLikeMsg();
         feedLikeMsg.setAddtime(new Date());
         feedLikeMsg.setFeedid(feedId);
         feedLikeMsg.setUserid(currentUserId);
         feedLikeMsg.setFeeduserid(feedInfo.getUserid());
         return feedLikeMsgMapper.insert(feedLikeMsg);
+    }
+
+    @Override
+    public Integer deletelike(Integer feedId, Integer currentUserId) throws Exception{
+        FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
+        feedInfo.setLikecount(feedInfo.getLikecount() - 1);
+        feedInfoMapper.updateByPrimaryKey(feedInfo);
+        FeedLikeMsgExample example = new FeedLikeMsgExample();
+        example.createCriteria().andUseridEqualTo(currentUserId).andFeedidEqualTo(feedId);
+        return feedLikeMsgMapper.deleteByExample(example);
+
     }
 
     //获取当前用户对指定动态的点赞信息
@@ -66,5 +71,30 @@ public class FeedLikeServiceImpl implements FeedLikeService {
             return null;
         }
         return feedLikeMsgs.get(0);
+    }
+
+    @Override
+    public Map<Integer, FeedLikeMsg> findIsLiked(List<Integer> feedIds, Integer currentId) throws Exception {
+        FeedLikeMsgExample example = new FeedLikeMsgExample();
+        example.createCriteria().andUseridEqualTo(currentId).andFeedidIn(feedIds);
+        List<FeedLikeMsg> feedLikeMsgs = feedLikeMsgMapper.selectByExample(example);
+        return buildFeedLikeMap(feedLikeMsgs);
+    }
+
+    @Override
+    public Integer countFeedCount(Integer feedId, Integer currentUserId) {
+        FeedLikeMsgExample example = new FeedLikeMsgExample();
+        example.createCriteria().andUseridEqualTo(currentUserId).andFeedidEqualTo(feedId);
+        Integer count = feedLikeMsgMapper.countByExample(example);
+        return count;
+    }
+
+
+    private Map<Integer, FeedLikeMsg> buildFeedLikeMap(List<FeedLikeMsg> feedLikeMsgs){
+        Map<Integer, FeedLikeMsg> feedLikeMsgMap = new HashMap<Integer, FeedLikeMsg>();
+        for(FeedLikeMsg feedLikeMsg : feedLikeMsgs){
+            feedLikeMsgMap.put(feedLikeMsg.getFeedid(), feedLikeMsg);
+        }
+        return feedLikeMsgMap;
     }
 }
