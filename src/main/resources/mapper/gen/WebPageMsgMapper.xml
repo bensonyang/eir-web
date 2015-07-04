@@ -102,21 +102,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.morningsidevc.po.gen.WebPageMsg" >
-    <selectKey resultType="java.lang.Integer" keyProperty="msgid" order="BEFORE" >
+    <selectKey resultType="java.lang.Integer" keyProperty="msgid" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into WebPageMsg (MsgId, Title, Description, 
-      WebPageUrl)
-    values (#{msgid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{webpageurl,jdbcType=VARCHAR})
+    insert into WebPageMsg (Title, Description, WebPageUrl
+      )
+    values (#{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{webpageurl,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.WebPageMsg" >
-    <selectKey resultType="java.lang.Integer" keyProperty="msgid" order="BEFORE" >
+    <selectKey resultType="java.lang.Integer" keyProperty="msgid" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into WebPageMsg
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      MsgId,
       <if test="title != null" >
         Title,
       </if>
@@ -128,7 +127,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      #{msgid,jdbcType=INTEGER},
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
       </if>

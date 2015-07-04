@@ -100,25 +100,23 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.morningsidevc.po.gen.WeiboMsg" >
-    <selectKey resultType="java.lang.Integer" keyProperty="msgid" order="BEFORE" >
+    <selectKey resultType="java.lang.Integer" keyProperty="msgid" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into WeiboMsg (MsgId, Content)
-    values (#{msgid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR})
+    insert into WeiboMsg (Content)
+    values (#{content,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.WeiboMsg" >
-    <selectKey resultType="java.lang.Integer" keyProperty="msgid" order="BEFORE" >
+    <selectKey resultType="java.lang.Integer" keyProperty="msgid" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into WeiboMsg
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      MsgId,
       <if test="content != null" >
         Content,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      #{msgid,jdbcType=INTEGER},
       <if test="content != null" >
         #{content,jdbcType=VARCHAR},
       </if>

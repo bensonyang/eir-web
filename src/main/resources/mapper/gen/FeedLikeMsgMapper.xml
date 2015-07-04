@@ -103,21 +103,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.morningsidevc.po.gen.FeedLikeMsg" >
-    <selectKey resultType="java.lang.Integer" keyProperty="likeid" order="BEFORE" >
+    <selectKey resultType="java.lang.Integer" keyProperty="likeid" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into FeedLikeMsg (LikeId, FeedId, FeedUserId, 
-      UserId, AddTime)
-    values (#{likeid,jdbcType=INTEGER}, #{feedid,jdbcType=INTEGER}, #{feeduserid,jdbcType=INTEGER}, 
-      #{userid,jdbcType=INTEGER}, #{addtime,jdbcType=TIMESTAMP})
+    insert into FeedLikeMsg (FeedId, FeedUserId, UserId, 
+      AddTime)
+    values (#{feedid,jdbcType=INTEGER}, #{feeduserid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{addtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.FeedLikeMsg" >
-    <selectKey resultType="java.lang.Integer" keyProperty="likeid" order="BEFORE" >
+    <selectKey resultType="java.lang.Integer" keyProperty="likeid" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into FeedLikeMsg
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      LikeId,
       <if test="feedid != null" >
         FeedId,
       </if>
@@ -132,7 +131,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      #{likeid,jdbcType=INTEGER},
       <if test="feedid != null" >
         #{feedid,jdbcType=INTEGER},
       </if>

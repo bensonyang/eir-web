@@ -314,63 +314,63 @@ public class TagInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andOrderIsNull() {
-            addCriterion("Order is null");
+        public Criteria andOrdernumIsNull() {
+            addCriterion("OrderNum is null");
             return (Criteria) this;
         }
 
-        public Criteria andOrderIsNotNull() {
-            addCriterion("Order is not null");
+        public Criteria andOrdernumIsNotNull() {
+            addCriterion("OrderNum is not null");
             return (Criteria) this;
         }
 
-        public Criteria andOrderEqualTo(Integer value) {
-            addCriterion("Order =", value, "order");
+        public Criteria andOrdernumEqualTo(Integer value) {
+            addCriterion("OrderNum =", value, "ordernum");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNotEqualTo(Integer value) {
-            addCriterion("Order <>", value, "order");
+        public Criteria andOrdernumNotEqualTo(Integer value) {
+            addCriterion("OrderNum <>", value, "ordernum");
             return (Criteria) this;
         }
 
-        public Criteria andOrderGreaterThan(Integer value) {
-            addCriterion("Order >", value, "order");
+        public Criteria andOrdernumGreaterThan(Integer value) {
+            addCriterion("OrderNum >", value, "ordernum");
             return (Criteria) this;
         }
 
-        public Criteria andOrderGreaterThanOrEqualTo(Integer value) {
-            addCriterion("Order >=", value, "order");
+        public Criteria andOrdernumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("OrderNum >=", value, "ordernum");
             return (Criteria) this;
         }
 
-        public Criteria andOrderLessThan(Integer value) {
-            addCriterion("Order <", value, "order");
+        public Criteria andOrdernumLessThan(Integer value) {
+            addCriterion("OrderNum <", value, "ordernum");
             return (Criteria) this;
         }
 
-        public Criteria andOrderLessThanOrEqualTo(Integer value) {
-            addCriterion("Order <=", value, "order");
+        public Criteria andOrdernumLessThanOrEqualTo(Integer value) {
+            addCriterion("OrderNum <=", value, "ordernum");
             return (Criteria) this;
         }
 
-        public Criteria andOrderIn(List<Integer> values) {
-            addCriterion("Order in", values, "order");
+        public Criteria andOrdernumIn(List<Integer> values) {
+            addCriterion("OrderNum in", values, "ordernum");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNotIn(List<Integer> values) {
-            addCriterion("Order not in", values, "order");
+        public Criteria andOrdernumNotIn(List<Integer> values) {
+            addCriterion("OrderNum not in", values, "ordernum");
             return (Criteria) this;
         }
 
-        public Criteria andOrderBetween(Integer value1, Integer value2) {
-            addCriterion("Order between", value1, value2, "order");
+        public Criteria andOrdernumBetween(Integer value1, Integer value2) {
+            addCriterion("OrderNum between", value1, value2, "ordernum");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNotBetween(Integer value1, Integer value2) {
-            addCriterion("Order not between", value1, value2, "order");
+        public Criteria andOrdernumNotBetween(Integer value1, Integer value2) {
+            addCriterion("OrderNum not between", value1, value2, "ordernum");
             return (Criteria) this;
         }
     }

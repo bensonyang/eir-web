@@ -85,7 +85,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		feedInfo.setMsgtype(MsgType.SHUOFEED);
 		Integer feedId = feedInfoMapper.insert(feedInfo);
 		Assert.state(feedId >= 0);
-		return feedInfoMapper.selectByPrimaryKey(feedId);
+		return feedInfoMapper.selectByPrimaryKey(feedInfo.getFeedid());
 	}
 
 	/* (non-Javadoc)

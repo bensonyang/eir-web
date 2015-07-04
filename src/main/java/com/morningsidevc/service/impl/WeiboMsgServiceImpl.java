@@ -79,6 +79,7 @@ public class WeiboMsgServiceImpl implements WeiboMsgService {
 
 	@Override
 	public Integer insertWeiboMsg(WeiboMsg weiboMsg) {
-		return weiboMsgMapper.insert(weiboMsg);
+		weiboMsgMapper.insert(weiboMsg);
+		return weiboMsg.getMsgid();
 	}
 }

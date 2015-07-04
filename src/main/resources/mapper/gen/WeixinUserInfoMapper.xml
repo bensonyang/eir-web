@@ -110,25 +110,24 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.morningsidevc.po.gen.WeixinUserInfo" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into WeixinUserInfo (Id, UserId, OpenId, 
-      AvatarUrl, WeixinUserName, Gender, 
-      Province, City, Country, 
-      Privilege, UnionId)
-    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, 
-      #{avatarurl,jdbcType=VARCHAR}, #{weixinusername,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, 
-      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
-      #{privilege,jdbcType=VARCHAR}, #{unionid,jdbcType=VARCHAR})
+    insert into WeixinUserInfo (UserId, OpenId, AvatarUrl, 
+      WeixinUserName, Gender, Province, 
+      City, Country, Privilege, 
+      UnionId)
+    values (#{userid,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR}, 
+      #{weixinusername,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{privilege,jdbcType=VARCHAR}, 
+      #{unionid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.WeixinUserInfo" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into WeixinUserInfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      Id,
       <if test="userid != null" >
         UserId,
       </if>
@@ -161,7 +160,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      #{id,jdbcType=INTEGER},
       <if test="userid != null" >
         #{userid,jdbcType=INTEGER},
       </if>

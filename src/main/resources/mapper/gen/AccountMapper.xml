@@ -102,16 +102,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.morningsidevc.po.gen.Account" >
-    <selectKey resultType="java.lang.Integer" keyProperty="userid" order="BEFORE" >
+    <selectKey resultType="java.lang.Integer" keyProperty="userid" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into Account (UserEmail, UserPassword,
-      Status)
-    values (#{useremail,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR},
-      #{status,jdbcType=TINYINT})
+    insert into Account (UserEmail, UserPassword, Status
+      )
+    values (#{useremail,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.Account" >
-    <selectKey resultType="java.lang.Integer" keyProperty="userid" order="BEFORE" >
+    <selectKey resultType="java.lang.Integer" keyProperty="userid" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into Account

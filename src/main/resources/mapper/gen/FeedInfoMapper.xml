@@ -109,25 +109,24 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.morningsidevc.po.gen.FeedInfo" >
-    <selectKey resultType="java.lang.Integer" keyProperty="feedid" order="BEFORE" >
+    <selectKey resultType="java.lang.Integer" keyProperty="feedid" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into FeedInfo (FeedId, MsgId, MsgType, 
-      UserId, Status, LikeCount, 
-      CommentCount, TagName, AddTime, 
-      LastTime)
-    values (#{feedid,jdbcType=INTEGER}, #{msgid,jdbcType=INTEGER}, #{msgtype,jdbcType=TINYINT}, 
-      #{userid,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{likecount,jdbcType=INTEGER}, 
-      #{commentcount,jdbcType=INTEGER}, #{tagname,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}, 
-      #{lasttime,jdbcType=TIMESTAMP})
+    insert into FeedInfo (MsgId, MsgType, UserId, 
+      Status, LikeCount, CommentCount, 
+      TagName, AddTime, LastTime
+      )
+    values (#{msgid,jdbcType=INTEGER}, #{msgtype,jdbcType=TINYINT}, #{userid,jdbcType=INTEGER}, 
+      #{status,jdbcType=TINYINT}, #{likecount,jdbcType=INTEGER}, #{commentcount,jdbcType=INTEGER}, 
+      #{tagname,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}, #{lasttime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.FeedInfo" >
-    <selectKey resultType="java.lang.Integer" keyProperty="feedid" order="BEFORE" >
+    <selectKey resultType="java.lang.Integer" keyProperty="feedid" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into FeedInfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      FeedId,
       <if test="msgid != null" >
         MsgId,
       </if>
@@ -157,7 +156,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      #{feedid,jdbcType=INTEGER},
       <if test="msgid != null" >
         #{msgid,jdbcType=INTEGER},
       </if>
