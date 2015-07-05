@@ -34,22 +34,33 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                     startIndex:_lastFeedIndex + 1,
                     pageSize:_pageSize
                 },function(data){
-                    _lastFeedIndex = data.msg.lastFeedIndex;
-                    _.each(data.msg.feeds, function(data){
-                        var compiled =  _.template(templates.feedTemplate);
-                        $('.feed-container').append(compiled(data));
-                        $('div[data-feedId='+ data.feedId +']').slideDown(500);
-                        $('div[data-feedId='+ data.feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
-                        $('div[data-feedId='+ data.feedId +'] .eir-feed-options .icon-thumbs-up.unliked a').click(HANDLERS.likeFeedHandler);
-                        $('div[data-feedId='+ data.feedId +'] .eir-feed-options .icon-thumbs-up.liked a').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
-                        $('div[data-feedId='+ data.feedId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
-                        $('div[data-feedId='+ data.feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler());//删除Feed事件注册
-                        $('div[data-feedId='+ data.feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler());//删除Feed事件注册
-                        $('div[data-feedId='+ data.feedId +'] a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
-                    });
+                    if(data.code == 200){
+                        if(data.msg != undefined && data.msg.feeds != undefined && data.msg.feeds.length > 0){
+                            _lastFeedIndex = data.msg.lastFeedIndex;
+                            _.each(data.msg.feeds, function(data){
+                                var compiled =  _.template(templates.feedTemplate);
+                                if(data.msgBody == undefined){
+                                    data.msgBody = new Object();
+                                }
+                                $('.feed-container').append(compiled(data));
+                                $('div[data-feedId='+ data.feedId +']').slideDown(500);
+                                $('div[data-feedId='+ data.feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
+                                $('div[data-feedId='+ data.feedId +'] .eir-feed-options .icon-thumbs-up.unliked a').click(HANDLERS.likeFeedHandler);
+                                $('div[data-feedId='+ data.feedId +'] .eir-feed-options .icon-thumbs-up.liked a').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
+                                $('div[data-feedId='+ data.feedId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
+                                $('div[data-feedId='+ data.feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
+                                $('div[data-feedId='+ data.feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler());//删除Feed事件注册
+                                $('div[data-feedId='+ data.feedId +'] a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
+                            });
+                        }else{
+                            $('.feed-end').text("已经没有更多啦");
+                        }
+                    }else{
+
+                    }
                     setTimeout(function(){
                        _canMore = true;
-                    },1000);
+                    },500);
                 });
             }
 
