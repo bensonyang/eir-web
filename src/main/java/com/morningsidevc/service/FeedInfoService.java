@@ -36,7 +36,7 @@ public interface FeedInfoService {
 	 */
 	Integer addFeed(Integer userId, String url, String content, String tagName) throws Exception;
 	
-	void deleteFeed() throws Exception;
+	void deleteFeed(Integer feedId) throws Exception;
 	
 	Boolean isFeedExisted(Integer feedId);
 	

@@ -14,7 +14,10 @@
                 <%= msgBody.title %>
             </div>
             <div class="row eir-feed-content-content">
-                <%= msgBody.content %><a href="<%= msgBody.link %>" class="btn btn-default eir-feed-content-link">网址链接</a>
+                <%= msgBody.content %>
+                <% if(msgBody.link != undefined && msgBody.link != ""){ %>
+                <a href="<%= msgBody.link %>" class="btn btn-default eir-feed-content-link">网址链接</a>
+                <% } %>
             </div>
         </div>
         <div class="row eir-feed-options">
@@ -36,7 +39,7 @@
             if(comment != undefined){
             _.each(comment,function(_comment){
             %>
-            <div class="row eir-feed-comments-item">
+            <div class="row eir-feed-comments-item" data-commentid="<%= _comment.commentId %>">
                 <div class="eir-feed-pic01">
                     <img src="<%= comment.userPic %>">
                 </div>
@@ -54,7 +57,7 @@
                                         : <%= _comment.content %></span>
                                     <span class="eir-feed-comments-item-content-time icon-grey">
                                         <d><%= _comment.commentTime %></d>
-                                        <a data-toggle="popover" data-commentid="<%= comment.commentId %>" data-trigger="focus" role="button" tabindex="0" data-placement="bottom" data-container="body" >删除</a>
+                                        <a deleteComment data-toggle="popover" data-commentid="<%= _comment.commentId %>" data-placement="bottom" data-container="body" >删除</a>
                                     </span>
                 </div>
             </div>
@@ -108,7 +111,7 @@
                     : <%= content %></span>
                 <span class="eir-feed-comments-item-content-time icon-grey">
                     <d><%= commentTime %></d>
-                    <a data-toggle="popover" data-commentid="<%= commentId %>" data-trigger="focus" role="button" tabindex="0" data-placement="bottom" data-container="body" >删除</a>
+                    <a deleteComment data-toggle="popover" data-commentid="<%= commentId %>" data-placement="bottom" data-container="body" >删除</a>
                 </span>
         </div>
     </div>

@@ -6,6 +6,7 @@ package com.morningsidevc.web.controller;
 import com.morningsidevc.service.FeedCommentService;
 import com.morningsidevc.vo.Comment;
 import com.morningsidevc.web.request.AddCommentRequest;
+import com.morningsidevc.web.response.DeleteCommentResponse;
 import com.morningsidevc.web.response.JsonResponse;
 import com.morningsidevc.web.response.MoreCommentResponse;
 import org.springframework.stereotype.Controller;
@@ -50,15 +51,15 @@ public class CommentController extends BaseController{
     }
 
     @ResponseBody
-    @RequestMapping(value = "deletecomment", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "deletecomment", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public JsonResponse deleteComment(Integer commentId){
         JsonResponse response = new JsonResponse();
         try {
             Assert.notNull(commentId);
-            Integer deleteCommentId = feedCommentService.deleteComment(commentId);
-            Assert.state(deleteCommentId != null && deleteCommentId > 0);
+            DeleteCommentResponse deleteCommentResponse = feedCommentService.deleteComment(commentId);
+            Assert.notNull(deleteCommentResponse);
             response.setCode(200);
-            response.setMsg(deleteCommentId);
+            response.setMsg(deleteCommentResponse);
         }catch (Exception e){
             response.setCode(500);
             response.setMsg("服务器错误");

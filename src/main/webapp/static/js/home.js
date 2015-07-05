@@ -42,6 +42,9 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                         $('div[data-feedId='+ data.feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
                         $('div[data-feedId='+ data.feedId +'] .eir-feed-options .icon-thumbs-up.unliked a').click(HANDLERS.likeFeedHandler);
                         $('div[data-feedId='+ data.feedId +'] .eir-feed-options .icon-thumbs-up.liked a').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
+                        $('div[data-feedId='+ data.feedId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
+                        $('div[data-feedId='+ data.feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler());//删除Feed事件注册
+                        $('div[data-feedId='+ data.feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler());//删除Feed事件注册
                     });
                     setTimeout(function(){
                        _canMore = true;
@@ -71,6 +74,9 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                 $('.eir-feed .eir-feed-options .icon-thumbs-up.unliked a').click(HANDLERS.likeFeedHandler);//Feed点赞
                 $('.eir-feed .eir-feed-options .icon-thumbs-up.liked a').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
                 $('.eir-get-more-comments .a-more-comments').click(HANDLERS.getMoreFeedCommentsHandler);//获取更多Comments
+                $('[data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
+                $('.eir-feed a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
+                $('.eir-feed a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
             }else{
                 alert(data.msg);
             }
@@ -82,15 +88,40 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
 
     //删除Feed
     window.currentDeleteFeedId = undefined;
+    window.currentDeleteCommentId = undefined;
     window.currentPopover = undefined;
-    window.removeFeed = function(){
+    window.isDeleteFeed = undefined;
+    window.popoverRemove = function(){
+        var _url  = undefined;
+        var _data = {};
+        var _callback = function(){};
+        var _deleteFeedCallback = function(data){
+            if(data.code == 200){
+                $('div[data-feedId='+ data.msg +']').slideUp(500);
+            }else{
+                alert("服务器错误");
+            }
+            window.currentPopover.popover('hide');
+        };
+        var _deleteCommentCallback = function(data){
+            var _deleteCommentId = data.msg.commentId;
+            $('div[data-commentid='+_deleteCommentId+'].eir-feed-comments-item').slideUp(500);
+            window.currentPopover.popover('hide');
+        };
+        if(window.isDeleteFeed){
+            _url = API.deleteFeed;
+            _data = {feedId:window.currentDeleteFeedId};
+            _callback = _deleteFeedCallback;
+        }else{
+            _url = API.delComment;
+            _data = {commentId: window.currentDeleteCommentId};
+            _callback = _deleteCommentCallback;
+        }
         $.ajax({
             type : "POST",
-            url : API.deleteFeed,
-            data:{feedId:window.currentDeleteFeedId},
-            success:function(data){
-                window.currentPopover.popover('hide');
-            },
+            url : _url,
+            data:_data,
+            success:_callback,
             error:function(){
                 window.currentPopover.popover('hide');
             }
@@ -99,13 +130,17 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
     window.cancelPopover = function(){
         if(window.currentPopover != undefined){
             window.currentPopover.popover('hide');
+            setTimeout(function(){
+                $('.popover').css('z-index',-100);
+            },1000);
+
         }
     }
 
     //popover组件
     var popoverOps = {
         title:'是否确认删除？',
-        content:"<a class='btn btn-danger eir-pop-btn' onclick=\"removeFeed();\">确定</a><a class='btn btn-default eir-pop-btn' onclick=\"cancelPopover();\" >取消</a>",
+        content:"<a class='btn btn-danger eir-pop-btn' onclick=\"popoverRemove();\">确定</a><a class='btn btn-default eir-pop-btn' onclick=\"cancelPopover();\" >取消</a>",
         html:true,
         template:'<div class="popover" role="tooltip">' +
         '<div class="arrow">' +
@@ -183,6 +218,10 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                     $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//新内容绑定评论框聚焦事件
                     $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up.unliked a').click(HANDLERS.likeFeedHandler);
                     $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up.liked a').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
+                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
+                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
+                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
+                    $('.form-group .main-textarea').val("");
                 }else{
                     alert(data.msg);//TODO 优化弹框
                 }
@@ -194,9 +233,16 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
 
             }
         },
-        deleteFeedHandler : function deleteFeedHandler(){
+        deletebtnHandler : function deletebtnHandler(){
             window.currentDeleteFeedId = $(this).closest('.eir-feed').data('feedid');
             window.currentPopover = $(this);
+            if($(this).data('commentid') == undefined){//是删除feed还是comment
+                window.isDeleteFeed = true;
+            }else{
+                window.isDeleteFeed = false;
+                window.currentDeleteCommentId = $(this).data('commentid');
+            }
+            $('.popover').css('z-index',1000);
         },
         likeFeedHandler : function likeFeedHandler(){
             var _feedId = $(this).closest('.eir-feed').data('feedid');
@@ -250,12 +296,12 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
             var _feed = $(this).closest('.eir-feed');
             var compiled =  _.template(templates.feedCommentMore);
             $(this).closest('.eir-feed-comments').replaceWith(compiled({})).fadeIn(1000);
+            _feed.find('.eir-feed-comments-textarea').focus();
             _feed.find('a.eir-feed-comments-comments').click(HANDLERS.commentToFeedHandler);
         },
         getMoreFeedCommentsHandler  : function(){
             var _this = $(this);
             var _btnContainer = $(this).closest('.eir-get-more-comments');
-            var _feed = $(this).closest('.eir-feed');
             var _lastCommentIndex = $(this).data('lastcommentindex');
             var _feedId = $(this).data('feedid');
             $.ajax({
@@ -309,6 +355,9 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                         var compiled =  _.template(templates.feedCommentItem);
                         _feed.find('.eir-feed-item-container').prepend(compiled(data.msg));
                         $('div[data-commentid='+ data.msg.commentId +']').slideDown();
+                        _feed.find('.eir-feed-comments-textarea').val("");
+                        $('div[data-commentid='+ data.msg.commentId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
+                        $('div[data-commentid='+ data.msg.commentId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除按钮事件
                     }else{
 
                     }
@@ -328,7 +377,8 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
     $('#recommend-link').click(HANDLERS.recommendLinkOnClickHandler);
     $('.eir-mytags .eir-li').click(HANDLERS.clickTagHandler);
     $('.eir-comments-btn').click(HANDLERS.commentsOnClickHandler);//发表说说
-    $('.eir-feed a[deleteFeed]').click(HANDLERS.deleteFeedHandler);//删除Feed
+    $('.eir-feed a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除按钮事件
+    $('.eir-feed a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除按钮事件
     $('.eir-feed .eir-feed-options .icon-thumbs-up.unliked a').click(HANDLERS.likeFeedHandler);//Feed点赞
     $('.eir-feed .eir-feed-options .icon-thumbs-up.liked a').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
     $('.eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦

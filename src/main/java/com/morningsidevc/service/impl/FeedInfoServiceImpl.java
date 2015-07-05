@@ -100,13 +100,10 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.morningsidevc.service.FeedInfoService#deleteFeed()
-	 */
 	@Override
-	public void deleteFeed() throws Exception {
-		// TODO Auto-generated method stub
-
+	public void deleteFeed(Integer feedId) throws Exception {
+		Integer ret = feedInfoMapper.deleteByPrimaryKey(feedId);
+		Assert.state( ret > 0);
 	}
 
 	/* (non-Javadoc)

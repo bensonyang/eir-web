@@ -14,6 +14,7 @@ import com.morningsidevc.dao.gen.UserInfoMapper;
 import com.morningsidevc.enums.CounterType;
 import com.morningsidevc.po.gen.*;
 import com.morningsidevc.web.request.AddCommentRequest;
+import com.morningsidevc.web.response.DeleteCommentResponse;
 import org.springframework.stereotype.Component;
 
 import com.morningsidevc.dao.gen.FeedCommentMsgMapper;
@@ -137,7 +138,8 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		UserInfo toUser = userInfoMapper.selectByPrimaryKey(feedInfo.getUserid());
 		Assert.notNull(toUser);
 		feedInfo.setCommentcount(feedInfo.getCommentcount() + 1);
-		feedInfoMapper.updateByPrimaryKeySelective(feedInfo);//更新feed中的评论数
+		Integer updateFeedRet = feedInfoMapper.updateByPrimaryKeySelective(feedInfo);//更新feed中的评论数
+		Assert.state(updateFeedRet > 0);
 		UserFeedCounterExample example = new UserFeedCounterExample();
 		example.createCriteria().andUseridEqualTo(feedInfo.getUserid())
 				.andCountertypeEqualTo(CounterType.CommentCounter.getValue());
@@ -175,10 +177,13 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	}
 
 	@Override
-	public Integer deleteComment(Integer commentId) {
+	public DeleteCommentResponse deleteComment(Integer commentId) {
 		FeedCommentMsg feedCommentMsg = feedCommentMsgMapper.selectByPrimaryKey(commentId);
 		Assert.notNull(feedCommentMsg);
-		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedCommentMsg.getFeeduserid());
+		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedCommentMsg.getFeedid());
+		feedInfo.setCommentcount(feedInfo.getCommentcount() - 1);
+		Integer updateFeedRet =  feedInfoMapper.updateByPrimaryKeySelective(feedInfo);//feedInfo中的计数更新
+		Assert.state(updateFeedRet > 0);
 		UserInfo feedUser = userInfoMapper.selectByPrimaryKey(feedInfo.getUserid());
 		UserFeedCounterExample example = new UserFeedCounterExample();
 		example.createCriteria().andUseridEqualTo(feedUser.getUserid())
@@ -189,7 +194,12 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		userFeedCounter.setSum(userFeedCounter.getSum() - 1);
 		Integer ret = userFeedCounterMapper.updateByPrimaryKeySelective(userFeedCounter);
 		Assert.state(ret > 0);
-		return feedCommentMsgMapper.deleteByPrimaryKey(commentId);
+		Integer delRet = feedCommentMsgMapper.deleteByPrimaryKey(commentId);
+		Assert.state(delRet > 0);
+		DeleteCommentResponse response = new DeleteCommentResponse();
+		response.setCommentId(commentId);
+		response.setCommentCount(feedInfo.getCommentcount());
+		return response;
 	}
 
 	@Override

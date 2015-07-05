@@ -113,6 +113,19 @@ public class FeedController extends BaseController{
 		}
 		return response;
 	}
-	
-	
+
+	@ResponseBody
+	@RequestMapping(value = "deletefeed", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	public JsonResponse deleteFeed(Integer feedId){
+		JsonResponse response = new JsonResponse();
+		try{
+			feedInfoService.deleteFeed(feedId);
+			response.setCode(200);
+			response.setMsg(feedId);
+		}catch (Exception e){
+			response.setCode(500);
+			response.setMsg("服务器错误");
+		}
+		return  response;
+	}
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.morningsidevc.vo.Comment;
 import com.morningsidevc.web.request.AddCommentRequest;
+import com.morningsidevc.web.response.DeleteCommentResponse;
 
 public interface FeedCommentService {
 	Comment loadLastestComment(Integer feedId);
@@ -25,7 +26,7 @@ public interface FeedCommentService {
 	 * @param commentId
 	 * @return
 	 */
-	Integer deleteComment(Integer commentId);
+	DeleteCommentResponse deleteComment(Integer commentId);
 
 	/**
 	 * 获取更多评论
