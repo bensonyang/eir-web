@@ -64,7 +64,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	}
 
 	@Override
-	public Map<Integer, List<Comment>> findComments(List<Integer> feedIds) throws Exception{
+	public Map<Integer, List<Comment>> findComments(List<Integer> feedIds, Integer pageSize) throws Exception{
 		if (feedIds == null || feedIds.size() == 0) {
 			return null;
 		}
@@ -72,7 +72,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		Map<Integer, List<Comment>> commentMap = new HashMap<Integer, List<Comment>>();
 		FeedCommentMsgExample example = new FeedCommentMsgExample();
 		example.setOrderByClause("AddTime DESC");
-		example.or().andFeedidIn(feedIds);
+		example.createCriteria().andFeedidIn(feedIds).andCommentidGreaterThan(0);
 		List<FeedCommentMsg> comments = feedCommentMsgMapper.selectByExample(example);
 		if(!CollectionUtils.isEmpty(comments)){
 			List<Integer> userIds = new ArrayList<Integer>(userIds(comments));
@@ -96,9 +96,11 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 					comment.setCommentTime(date);
 				}
 
-				if (commentMap.containsKey(feedCommentMsg.getFeedid())) {
+				//每条Feed默认只取两条评论
+				if (commentMap.containsKey(feedCommentMsg.getFeedid())
+						&& commentMap.get(feedCommentMsg.getFeedid()).size() < pageSize) {
 					commentMap.get(feedCommentMsg.getFeedid()).add(comment);
-				} else {
+				} else if(!commentMap.containsKey(feedCommentMsg.getFeedid())) {
 					List<Comment> commentList = new ArrayList<Comment>();
 					commentList.add(comment);
 					commentMap.put(feedCommentMsg.getFeedid(), commentList);
@@ -189,6 +191,45 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		Assert.state(ret > 0);
 		return feedCommentMsgMapper.deleteByPrimaryKey(commentId);
 	}
+
+	@Override
+	public List<Comment> moreComment(Integer lastCommentIndex, Integer feedId, Integer pageSize) throws Exception{
+		FeedCommentMsgExample example = new FeedCommentMsgExample();
+		example.setOrderByClause("AddTime DESC");
+		example.setLimitStart(0);
+		example.setLimitEnd(pageSize);
+		example.createCriteria().andFeedidEqualTo(feedId).andCommentidLessThan(lastCommentIndex);
+		List<FeedCommentMsg> comments = feedCommentMsgMapper.selectByExample(example);
+		List<Comment> commentList = new ArrayList<Comment>();
+		if(!CollectionUtils.isEmpty(comments)){
+			List<Integer> userIds = new ArrayList<Integer>(userIds(comments));
+			UserInfoExample userInfoExample = new UserInfoExample();
+			userInfoExample.createCriteria().andUseridIn(userIds);
+			List<UserInfo> userInfos = userInfoMapper.selectByExample(userInfoExample);
+			Map<Integer, UserInfo> userInfoMap = mapUserInfo(userInfos);
+			for (FeedCommentMsg feedCommentMsg : comments) {
+				Comment comment = new Comment();
+				comment.setCommentId(feedCommentMsg.getCommentid());
+				comment.setUserId(feedCommentMsg.getUserid());
+				comment.setToUserId(feedCommentMsg.getUserid());
+				comment.setContent(feedCommentMsg.getContent());
+				comment.setUserName(userInfoMap.get(feedCommentMsg.getUserid()).getNickname());
+				if(feedCommentMsg.getTouserid() != null){
+					comment.setToUserName(userInfoMap.get(feedCommentMsg.getTouserid()).getNickname());
+				}
+				comment.setToUserPic("");
+				comment.setUserPic("");
+				if (feedCommentMsg.getAddtime() != null) {
+					String date = DateFormat.getDateInstance().format(feedCommentMsg.getAddtime());
+					comment.setCommentTime(date);
+				}
+					commentList.add(comment);
+				}
+		}
+		return commentList;
+	}
+
+
 
 	private FeedCommentMsg buildNewFeedCommentMsg(FeedInfo feedInfo,
 												  AddCommentRequest request, Integer currentUserId){

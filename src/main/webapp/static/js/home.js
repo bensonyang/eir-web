@@ -51,7 +51,7 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
 
         }
     });
-
+    //第一页内容
     $.ajax({
         type:"GET",
         url:API.moreFeed,
@@ -70,6 +70,7 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                 $('.eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
                 $('.eir-feed .eir-feed-options .icon-thumbs-up.unliked a').click(HANDLERS.likeFeedHandler);//Feed点赞
                 $('.eir-feed .eir-feed-options .icon-thumbs-up.liked a').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
+                $('.eir-get-more-comments .a-more-comments').click(HANDLERS.getMoreFeedCommentsHandler);//获取更多Comments
             }else{
                 alert(data.msg);
             }
@@ -252,8 +253,45 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
             _feed.find('a.eir-feed-comments-comments').click(HANDLERS.commentToFeedHandler);
         },
         getMoreFeedCommentsHandler  : function(){
-            var _lastIndex = 1;
-            var _feedId=1;
+            var _this = $(this);
+            var _btnContainer = $(this).closest('.eir-get-more-comments');
+            var _feed = $(this).closest('.eir-feed');
+            var _lastCommentIndex = $(this).data('lastcommentindex');
+            var _feedId = $(this).data('feedid');
+            $.ajax({
+                type:"POST",
+                url:API.moreComment,
+                data:{
+                    lastCommentIndex:_lastCommentIndex,
+                    feedId:_feedId,
+                    pageSize:5
+                },
+                success:function(data){
+                  if(data.code == 200){
+                      _.each(data.msg.comments, function(comment){
+                          var compiled =  _.template(templates.feedCommentItem);
+                          _btnContainer.before(compiled(comment));
+                          $('div[data-commentid='+ comment.commentId +']').slideDown();
+                      });
+                      _this.attr('data-lastcommentindex',data.msg.lastFeedIndex);
+                      var _c = _this.find('c');
+                      if(_c != undefined){
+                          var currentCount = parseInt(_this.find('c').text());
+                          if(currentCount - data.msg.size > 0){
+                              _c.text(currentCount - data.msg.size);
+                          }else{//移除加载更多
+                            _btnContainer.remove();
+                          }
+                      }
+
+                  }else{
+                      alert("服务器错误");
+                  }
+                },
+                error:function(){
+
+                }
+            });
         },
         commentToFeedHandler : function(){
             var _feed = $(this).closest('.eir-feed');

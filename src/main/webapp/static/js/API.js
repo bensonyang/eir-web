@@ -10,6 +10,7 @@ define(function(){
         addComment  :   '/community/addcomment',//添加评论url
         delComment  :   '/community/deletecomment',//删除评论url
         addLike     :   '/community/addlike',//点赞url
-        delLike     :   '/community/deletelike'//取消点赞url
+        delLike     :   '/community/deletelike',//取消点赞url
+        moreComment :   '/community/morecomment'//获取更多的评论url
     };
 });

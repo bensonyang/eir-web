@@ -63,9 +63,9 @@
             }
             %>
             <div class="eir-get-more-comments">
-                <% if(lastCommentIndex < commentCount){ %>
+                <% if(2 < commentCount){ %>
                 <div class=" icon-grey">
-                    <a class="a-more-comments" data-feedid="<%= feedId %>" data-lastindex="<%= lastCommentIndex %>">加载更多(<%= commentCount %>)</a>
+                    <a class="a-more-comments" data-feedid="<%= feedId %>" data-lastcommentindex="<%= lastCommentIndex %>">加载更多(<c><%= commentCount - 2 %></c>)</a>
                 </div>
                 <% } %>
             </div>

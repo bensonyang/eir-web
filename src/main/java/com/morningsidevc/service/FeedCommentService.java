@@ -9,7 +9,7 @@ import com.morningsidevc.web.request.AddCommentRequest;
 public interface FeedCommentService {
 	Comment loadLastestComment(Integer feedId);
 	
-	Map<Integer, List<Comment>> findComments(List<Integer> feedIds) throws Exception;
+	Map<Integer, List<Comment>> findComments(List<Integer> feedIds, Integer pageSize) throws Exception;
 
 	/**
 	 * 添加评论接口
@@ -26,4 +26,13 @@ public interface FeedCommentService {
 	 * @return
 	 */
 	Integer deleteComment(Integer commentId);
+
+	/**
+	 * 获取更多评论
+	 * @param lastCommentIndex
+	 * @param feedId
+	 * @param pageSize
+	 * @return
+	 */
+	List<Comment> moreComment(Integer lastCommentIndex, Integer feedId, Integer pageSize) throws Exception;
 }

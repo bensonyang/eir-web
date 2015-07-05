@@ -30,6 +30,7 @@ import com.morningsidevc.vo.User;
 import com.morningsidevc.vo.WebPageMsgBody;
 import com.morningsidevc.vo.WeiboMsgBody;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 /**
  * @author yangna
@@ -191,7 +192,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			}
 			
 			Map<Integer, User> authors = userInfoService.findUsers(userIdList);
-			Map<Integer, List<Comment>> comments = feedCommentService.findComments(feedIdList);
+			Map<Integer, List<Comment>> comments = feedCommentService.findComments(feedIdList, 2);
 			Map<Integer, WeiboMsgBody> weiboMsg = this.weiboMsgService.findMsgBodys(weiboMsgIdList);
 			Map<Integer, WebPageMsgBody> webPageMsg = this.webPageMsgService.findMsgBodys(webPageMsgIdList);
 			Map<Integer, FeedLikeMsg> feedLikeMsgMap = this.feedLikeService.findIsLiked(feedIdList, currentUserId);
@@ -201,6 +202,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 				}
 				if (comments != null && comments.get(element.getFeedId()) != null) {
 					element.setComment(comments.get(element.getFeedId()));
+					element.setLastCommentIndex(lastCommentIndex(comments.get(element.getFeedId())));
 				}else{
 					element.setComment(new ArrayList<Comment>());
 				}
@@ -223,6 +225,14 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		}
 		
 		return feedList;
+	}
+
+	//取commentId最大的那个，comments的大小有可能是0，1，2
+	private Integer lastCommentIndex(List<Comment> comments){
+		if(CollectionUtils.isEmpty(comments)) return 0;
+		if(comments.size() == 1) return comments.get(0).getCommentId();
+		return comments.get(0).getCommentId() > comments.get(1).getCommentId()
+				? comments.get(0).getCommentId() : comments.get(1).getCommentId();
 	}
 	
 	private Feed convertFeed(FeedInfo feedInfo) {
