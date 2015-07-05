@@ -250,7 +250,9 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		feedCommentMsg.setAddtime(new Date());
 		feedCommentMsg.setLasttime(new Date());
 		feedCommentMsg.setContent(request.getContent());
-		feedCommentMsg.setTouserid(request.getToUserId());
+		if(request.getToUserId() != null){
+			feedCommentMsg.setTouserid(request.getToUserId());
+		}
 		return feedCommentMsg;
 	}
 }

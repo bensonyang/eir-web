@@ -48,7 +48,7 @@
                                         <span class="icon-grey">
                                             <a><%= _comment.userName %></a>
                                         </span>
-                                        <% if(_comment.toUserId != undefined && _comment.toUserId != '') %>
+                                        <% if(_comment.toUserName != undefined && _comment.toUserName != '') %>
                                         回复
                                         <span class="icon-grey">
                                             <a>@<%= _comment.toUserName %></a>
@@ -58,6 +58,7 @@
                                     <span class="eir-feed-comments-item-content-time icon-grey">
                                         <d><%= _comment.commentTime %></d>
                                         <a deleteComment data-toggle="popover" data-commentid="<%= _comment.commentId %>" data-placement="bottom" data-container="body" >删除</a>
+                                        <a backComment data-userid="<%= _comment.userId %>">回复</a>
                                     </span>
                 </div>
             </div>
@@ -82,8 +83,8 @@
     <div class="row eir-feed-comments-more">
         <div class="form-group">
             <!--<label class="eir-feed-comments-label">我也说一句</label>-->
-            <textarea class="col-md-12 col-xs-12 eir-feed-comments-textarea" rows="3"></textarea>
-            <a class="btn btn-default pull-right eir-feed-comments-comments eir-noradius">评论</a>
+            <textarea <%= type %> class="col-md-12 col-xs-12 eir-feed-comments-textarea" rows="3"></textarea>
+            <a <%= type %> data-touserid="<%= touserid %>" class="btn btn-default pull-right eir-feed-comments-comments eir-noradius">评论</a>
         </div>
     </div>
 </script>
@@ -102,7 +103,7 @@
                     <span class="icon-grey">
                         <a><%= userName %></a>
                     </span>
-                    <% if(toUserId != undefined && toUserId != '') %>
+                    <% if(toUserName != undefined && toUserName != '') %>
                     回复
                     <span class="icon-grey">
                         <a>@<%= toUserName %></a>
@@ -112,6 +113,7 @@
                 <span class="eir-feed-comments-item-content-time icon-grey">
                     <d><%= commentTime %></d>
                     <a deleteComment data-toggle="popover" data-commentid="<%= commentId %>" data-placement="bottom" data-container="body" >删除</a>
+                    <a data-userid="<%= userId %>">回复</a>
                 </span>
         </div>
     </div>
