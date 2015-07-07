@@ -24,11 +24,10 @@ public interface FeedLikeService {
     /**
      * 批量查询指定用户对Feeds的点赞情况
      * @param feedIds
-     * @param currentId
      * @return
      * @throws Exception
      */
-    Map<Integer, FeedLikeMsg> findIsLiked(List<Integer> feedIds, Integer currentId) throws Exception;
+    Map<Integer, FeedLikeMsg> findIsLiked(List<Integer> feedIds) throws Exception;
 
 
     /**

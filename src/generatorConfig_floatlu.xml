@@ -51,6 +51,7 @@
         <table tableName="Account" domainObjectName="Account">
             <generatedKey column="UserId" sqlStatement="SELECT LAST_INSERT_ID()" type="post" identity="true"/>
         </table>
+        <!--
         <table tableName="UserInfo" domainObjectName="UserInfo">
         </table>
         <table tableName="UserFeedCounter" domainObjectName="UserFeedCounter">
@@ -76,6 +77,7 @@
         <table tableName="TagInfo" domainObjectName="TagInfo">
             <generatedKey column="TagId" sqlStatement="SELECT LAST_INSERT_ID()" type="post" identity="true"/>
         </table>
+        -->
     </context>
 
 </generatorConfiguration>

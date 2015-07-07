@@ -18,8 +18,6 @@ require.config({
     }
 });
 
-
-var data = undefined;
 //模块入口
 require(["API","jquery","underscore","templates","tooltip","popover"], function(API, $, _, templates){
     var _lastFeedIndex = undefined;
@@ -339,6 +337,7 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                           $('div[data-commentid='+ comment.commentId +']').slideDown();
                           $('a[data-commentid='+comment.commentId+']').popover(popoverOps);//初始化删除Feed组件
                           $('a[data-commentid='+comment.commentId+']').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
+                          $('div[data-commentid='+ comment.commentId +'] a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
                       });
                       _this.attr('data-lastcommentindex',data.msg.lastFeedIndex);
                       var _c = _this.find('c');
@@ -404,6 +403,25 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
             $(this).closest('.eir-feed-comments-item').after(compiled({type:"backComment",touserid:_touserid})).fadeIn(1000);
             _feed.find('textarea[backComment]').focus()
             _feed.find('a[backComment]').click(HANDLERS.commentToFeedHandler);
+        },
+        loginHandler:function(){
+            var _uid = $('#uid').val();
+            var _pwd = $('#pwd').val();
+            $.ajax({
+                type:'GET',
+                url:API.login,
+                data:{
+                    account :_uid,
+                    password:_pwd
+                },
+                success:function(data){
+                    if(data.code == 200){
+                       window.location.reload();
+                    }else{
+                        alert("登陆失败");
+                    }
+                }
+            });
         }
     };
     //################################事件处理器配置END#######################################
@@ -423,104 +441,6 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
     $('.eir-get-more-comments .a-more-comments').click(HANDLERS.getMoreFeedCommentsHandler);//获取更多评论
     $('.eir-feed .eir-feed-comments-comments').click(HANDLERS.commentToFeedHandler);//Feed下面添加评论
     $('.eir-feef a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
+    $('#login').click(HANDLERS.loginHandler);//登陆按钮
     //################################事件配置END#######################################
 });
-data = {
-    "code":200,
-    "msg":{
-        "feeds":[
-            {
-                "addTime":"2015-07-04 15:09:43",
-                "author":{
-                    "company":"IBM",
-                    "jobTitle":"CTO",
-                    "realName":"陆晨",
-                    "userId":0
-                },
-                "authorId":0,
-                "comment":[
-
-                ],
-                "commentCount":0,
-                "feedId":34,
-                "feedType":0,
-                "lastCommentIndex":0,
-                "likeCount":0,
-                "liked":false,
-                "msgBody":{
-                    "content":"呵呵额",
-                    "msgId":34
-                },
-                "msgId":34,
-                "tag":""
-            }
-        ],
-        "lastFeedIndex":-1,
-        "totalFeedCount":0
-    }
-};
-
-var t = {
-    code: 200,
-    msg:{
-        lastFeedIndex:1,//当前页最后一个Feed索引
-        totalFeedCount:111,//总Feed数
-        feeds: [
-            {
-                feedId: 123,
-                feedType: 0,
-                msgBody: {
-                    msgId: 666,
-                    title:"猫眼格瓦拉百度淘宝们怎么打?",
-                    content: "在已经大幕拉开的暑期档，价格补贴的恶战会再次重燃，到 年底究竟还能留下谁呢?",
-                    "link": "http: //***"
-                },
-                "author": {
-                    "userId": 123456,
-                    "realName": "Cheng",
-                    "jobTiltle": "CEO",
-                    "company": "huhaha",
-                    "avatarUrl": "/static/images/pic1.jpeg"
-                },
-                comment:{
-                    feedId:123,
-                    lastIndex:2,
-                    totalCount:111,
-                    data:[
-                        {
-                            commentId:1,
-                            userPic:"/static/images/pic1.jpeg",//作者头像图片
-                            userId:1,//作者ID
-                            userName:"float.lu",//作者名字
-                            toUserPic:"/static/images/pic1.jpeg",//被@的作者图片
-                            toUserId:123,//被@的作者
-                            toUserName:"cheng",//被@的作者名字
-                            content:"不错哟",//评论内容
-                            commentTime:"2015-6-15"
-                        },
-                        {
-                            commentId:1,
-                            userPic:"/static/images/pic1.jpeg",//作者头像图片
-                            userId:123,//作者ID
-                            userName:"cheng",//作者名字
-                            toUserPic:"/static/images/pic1.jpeg",//被@的作者图片
-                            toUserId:1,//被@的作者
-                            toUserName:"cheng",//被@的作者名字
-                            content:"不错哟",//评论内容
-                            commentTime:"2015-6-16"
-                        }
-                    ]
-                },
-                "addTime": "2015-6-15",
-                "commentCount": 0,
-                "likeCount": 0,
-                "tag": "O2O",
-                tagId:1,//标签ID
-                isLiked:"true"//是否已赞
-            }
-        ]
-    }
-
-};
-
-

@@ -31,6 +31,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     		user.setRealName(userInfo.getRealname());
     		user.setJobTitle(userInfo.getJobtitle());
     		user.setCompany(userInfo.getCompany());
+    		user.setAvatarUrl("http://i1.dpfile.com/pc/3dc7f5f3ef7468611cb6886fa3010177(120c120)/thumb.jpg");
     	} else {
     		return null;
     	}
@@ -56,6 +57,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	    		user.setRealName(userInfo.getRealname());
 	    		user.setJobTitle(userInfo.getJobtitle());
 	    		user.setCompany(userInfo.getCompany());
+	    		user.setAvatarUrl("http://i1.dpfile.com/pc/3dc7f5f3ef7468611cb6886fa3010177(120c120)/thumb.jpg");
 				userMap.put(user.getUserId(), user);
 			}
 		} else {

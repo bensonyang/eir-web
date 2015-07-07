@@ -1,9 +1,8 @@
-<#--封路模块-->
-<div class="row eir-login text-center">
-    <div class="eir-login-title">
-        <span>用户登录</span>
+<div class="row eir-reg text-center">
+    <div class="eir-reg-title">
+        <span>用户注册</span>
     </div>
-    <div class="eir-login-form">
+    <div class="eir-reg-form">
         <form action="/community" method="post" id="loginForm">
             <div class="input-prepend">
                 <span class="add-on icon-grey"><i class="icon-envelope"></i></span>
@@ -14,9 +13,8 @@
                 <input id="pwd" class="span2" type="password" placeholder="密码">
             </div>
             <div class="input-prepend">
-                <input id="login" class="btn btn-primary" value="登录">
+                <input id="reg" class="btn btn-primary" value="注册">
             </div>
-            <input id="userId" type="hidden" name="userId">
         </form>
     </div>
 </div>

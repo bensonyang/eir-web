@@ -6,6 +6,7 @@ package com.morningsidevc.web.controller;
 import com.morningsidevc.po.gen.Account;
 import com.morningsidevc.service.UserAccountService;
 import com.morningsidevc.utils.LoginUtils;
+import com.morningsidevc.web.response.JsonResponse;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,24 +34,25 @@ public class RegisterController extends BaseController {
     @RequestMapping(value = "/reg", method = RequestMethod.GET)
     public ModelAndView register() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("register");
+        mav.setViewName("reg");
 
         return mav;
     }
 
     /* Ajax json */
-    @RequestMapping(value = "/ajax/reg", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/ajax/reg", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public int register(String email, String password, String nickName, String realName, String jobTitle, String company, HttpServletRequest request, HttpServletResponse response) {
+    public JsonResponse register(String email, String password, String nickName, String realName, String jobTitle, String company, HttpServletRequest request, HttpServletResponse response) {
         int result = userAccountService.create(email, password);
+        JsonResponse jsonResponse = new JsonResponse();
 
         if (result <= 0) {
-            return result;
+            jsonResponse.setCode(400);
         }
 
         LoginUtils.signon(result, email, true, request, response);
-
-        return result;
+        jsonResponse.setCode(200);
+        return jsonResponse;
     }
 
     @RequestMapping(value = "/ajax/validate/accountName", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")

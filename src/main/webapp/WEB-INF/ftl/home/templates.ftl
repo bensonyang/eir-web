@@ -16,7 +16,7 @@
             <div class="row eir-feed-content-content">
                 <%= msgBody.content %>
                 <% if(msgBody.link != undefined && msgBody.link != ""){ %>
-                <a href="<%= msgBody.link %>" class="btn btn-default eir-feed-content-link">网址链接</a>
+                <a href="<%= msgBody.link %>" target="_blank" class="btn btn-default eir-feed-content-link">网址链接</a>
                 <% } %>
             </div>
         </div>
@@ -113,7 +113,7 @@
                 <span class="eir-feed-comments-item-content-time icon-grey">
                     <d><%= commentTime %></d>
                     <a deleteComment data-toggle="popover" data-commentid="<%= commentId %>" data-placement="bottom" data-container="body" >删除</a>
-                    <a data-userid="<%= userId %>">回复</a>
+                    <a backComment data-userid="<%= userId %>">回复</a>
                 </span>
         </div>
     </div>

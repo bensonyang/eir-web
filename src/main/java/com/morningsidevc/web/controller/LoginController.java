@@ -5,6 +5,8 @@ package com.morningsidevc.web.controller;
 
 import com.morningsidevc.service.UserAccountService;
 import com.morningsidevc.utils.LoginUtils;
+import com.morningsidevc.web.response.JsonResponse;
+import com.morningsidevc.web.response.LoginResponse;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,16 +33,20 @@ public class LoginController extends BaseController {
     /* Ajax json */
     @RequestMapping(value = "/ajax/login", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public int login(String account, String password, HttpServletRequest request, HttpServletResponse response) {
+    public JsonResponse login(String account, String password, HttpServletRequest request, HttpServletResponse response) {
         int result = userAccountService.validate(account, password);
-
+        JsonResponse jsonResponse = new JsonResponse();
         if (result <= 0) {
-            return result;
+            jsonResponse.setCode(400);
+            return jsonResponse;
         }
-
         LoginUtils.signon(result, account, true, request, response);
-
-        return result;
+        jsonResponse.setCode(200);
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setUserId(result);
+        loginResponse.setAccount(account);
+        jsonResponse.setMsg(loginResponse);
+        return jsonResponse;
     }
 
 }

@@ -2,7 +2,7 @@
 <div class="row eir-profile">
     <div class="eir-profile-head">
         <div class="eir-feed-pic">
-            <img src="/static/images/pic1.jpeg">
+            <img src="${loginUser.avatarUrl}">
         </div>
         <div class="eir-profile-name-group">
             <span class="eir-name">${loginUser.realName}</span>
