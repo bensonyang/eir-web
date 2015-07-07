@@ -402,6 +402,26 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
             $(this).closest('.eir-feed-comments-item').after(compiled({type:"backComment",touserid:_touserid})).fadeIn(1000);
             _feed.find('textarea[backComment]').focus()
             _feed.find('a[backComment]').click(HANDLERS.commentToFeedHandler);
+        },
+        loginHandler:function(){
+            var _uid = $('#uid').val();
+            var _pwd = $('#pwd').val();
+            $.ajax({
+                type:'GET',
+                url:API.login,
+                data:{
+                    account :_uid,
+                    password:_pwd
+                },
+                success:function(data){
+                    if(data.code == 200){
+                        $('#userId').val(data.msg.userId);
+                        $('#loginForm').submit();
+                    }else{
+                        alert("登陆失败");
+                    }
+                }
+            });
         }
     };
     //################################事件处理器配置END#######################################
@@ -421,5 +441,6 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
     $('.eir-get-more-comments .a-more-comments').click(HANDLERS.getMoreFeedCommentsHandler);//获取更多评论
     $('.eir-feed .eir-feed-comments-comments').click(HANDLERS.commentToFeedHandler);//Feed下面添加评论
     $('.eir-feef a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
+    $('#login').click(HANDLERS.loginHandler);//登陆按钮
     //################################事件配置END#######################################
 });

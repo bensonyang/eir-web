@@ -7,6 +7,7 @@ import com.morningsidevc.po.gen.UserFeedCounter;
 import com.morningsidevc.service.TagInfoService;
 import com.morningsidevc.service.UserFeedCounterService;
 import com.morningsidevc.service.UserInfoService;
+import com.morningsidevc.utils.LoginUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,8 @@ import com.morningsidevc.vo.Tag;
 import com.morningsidevc.vo.User;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author float.lu
@@ -38,13 +41,12 @@ public class HomeController extends BaseController {
 
     /* HTML */
     @RequestMapping(value = "/community", method = RequestMethod.GET)
-    public ModelAndView community() {
+    public ModelAndView community(HttpServletRequest request, HttpServletResponse response) {
     	ModelAndView mav = new ModelAndView();
      	mav.setViewName("home");
     	
      	// UserInfo retrieved from cookie and the number of feed and comment
      	int userId = super.getUserId();
-     	userId = 123;
      	if (userId != 0) {
      		// 登录
      		User user = userInfoService.load(userId);
@@ -69,6 +71,12 @@ public class HomeController extends BaseController {
     	return mav;
     }
 
+	@RequestMapping(value = "/community", method = RequestMethod.POST)
+	public ModelAndView signonCommunity(Integer userId, String account,
+										HttpServletRequest request, HttpServletResponse response) {
+		LoginUtils.signon(userId, account, true, request, response);
+		return community(request, response);
+	}
     /* Ajax json */
 	@RequestMapping(value = "/community/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	@ResponseBody

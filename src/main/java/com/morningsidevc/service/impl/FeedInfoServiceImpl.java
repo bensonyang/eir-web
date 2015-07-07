@@ -160,7 +160,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		feedInfoExample.setLimitEnd(pageSize);
 		feedInfoExample.setDistinct(true);
 		feedInfoExample.setOrderByClause("FeedId DESC");
-		
+
 		List<FeedInfo> feedInfoList = feedInfoMapper.selectByExample(feedInfoExample);
 		
 		List<Integer> userIdList = new ArrayList<Integer>();
@@ -192,7 +192,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			Map<Integer, List<Comment>> comments = feedCommentService.findComments(feedIdList, 2);
 			Map<Integer, WeiboMsgBody> weiboMsg = this.weiboMsgService.findMsgBodys(weiboMsgIdList);
 			Map<Integer, WebPageMsgBody> webPageMsg = this.webPageMsgService.findMsgBodys(webPageMsgIdList);
-			Map<Integer, FeedLikeMsg> feedLikeMsgMap = this.feedLikeService.findIsLiked(feedIdList, currentUserId);
+			Map<Integer, FeedLikeMsg> feedLikeMsgMap = this.feedLikeService.findIsLiked(feedIdList);
 			for (Feed element : feedList) {
 				if (authors != null && authors.get(element.getAuthorId()) != null) {
 					element.setAuthor(authors.get(element.getAuthorId()).clone());

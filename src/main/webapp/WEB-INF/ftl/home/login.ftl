@@ -4,18 +4,19 @@
         <span>用户登录</span>
     </div>
     <div class="eir-login-form">
-        <form>
+        <form action="/community" method="post" id="loginForm">
             <div class="input-prepend">
                 <span class="add-on icon-grey"><i class="icon-envelope"></i></span>
-                <input class="span2" type="text" placeholder="会员账号/微信号">
+                <input id="uid" class="span2" type="text" name="account" placeholder="会员账号/微信号">
             </div>
             <div class="input-prepend">
                 <span class="add-on icon-grey"><i class="icon-key"></i></span>
-                <input class="span2" type="password" placeholder="密码">
+                <input id="pwd" class="span2" type="password" placeholder="密码">
             </div>
             <div class="input-prepend">
-                <input class="btn btn-primary" value="登录">
+                <input id="login" class="btn btn-primary" value="登录">
             </div>
+            <input id="userId" type="hidden" name="userId">
         </form>
     </div>
 </div>

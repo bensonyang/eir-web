@@ -35,5 +35,13 @@ public class BaseController {
         }
     }
 
+    protected boolean isLogin(){
+        int uid = getUserId();
+        if(uid != 0){
+            return true;
+        }
+        return false;
+    }
+
 
 }

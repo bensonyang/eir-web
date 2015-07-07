@@ -11,6 +11,7 @@ define(function(){
         delComment  :   '/community/deletecomment',//删除评论url
         addLike     :   '/community/addlike',//点赞url
         delLike     :   '/community/deletelike',//取消点赞url
-        moreComment :   '/community/morecomment'//获取更多的评论url
+        moreComment :   '/community/morecomment',//获取更多的评论url
+        login       :   '/ajax/login'//登陆
     };
 });
