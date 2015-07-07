@@ -113,7 +113,7 @@
                 <span class="eir-feed-comments-item-content-time icon-grey">
                     <d><%= commentTime %></d>
                     <a deleteComment data-toggle="popover" data-commentid="<%= commentId %>" data-placement="bottom" data-container="body" >删除</a>
-                    <a data-userid="<%= userId %>">回复</a>
+                    <a backComment data-userid="<%= userId %>">回复</a>
                 </span>
         </div>
     </div>

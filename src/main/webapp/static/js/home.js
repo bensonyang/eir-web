@@ -337,6 +337,7 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                           $('div[data-commentid='+ comment.commentId +']').slideDown();
                           $('a[data-commentid='+comment.commentId+']').popover(popoverOps);//初始化删除Feed组件
                           $('a[data-commentid='+comment.commentId+']').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
+                          $('div[data-commentid='+ comment.commentId +'] a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
                       });
                       _this.attr('data-lastcommentindex',data.msg.lastFeedIndex);
                       var _c = _this.find('c');
