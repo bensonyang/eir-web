@@ -47,8 +47,13 @@ public class UserAccountServiceImpl implements UserAccountService {
         userAccount.setUseremail(email);
         userAccount.setUserpassword(EncryptionUtils.md5Hex(password, false, false));
         userAccount.setStatus((byte) 0);
+        int result = accountMapper.insertSelective(userAccount);
 
-        return accountMapper.insertSelective(userAccount);
+        if (result <= 0) {
+            return result;
+        }
+
+        return userAccount.getUserid();
     }
 
     @Override
