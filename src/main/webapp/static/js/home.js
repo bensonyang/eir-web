@@ -415,8 +415,7 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                 },
                 success:function(data){
                     if(data.code == 200){
-                        $('#userId').val(data.msg.userId);
-                        $('#loginForm').submit();
+                       window.location.reload();
                     }else{
                         alert("登陆失败");
                     }

@@ -70,13 +70,7 @@ public class HomeController extends BaseController {
      	
     	return mav;
     }
-
-	@RequestMapping(value = "/community", method = RequestMethod.POST)
-	public ModelAndView signonCommunity(Integer userId, String account,
-										HttpServletRequest request, HttpServletResponse response) {
-		LoginUtils.signon(userId, account, true, request, response);
-		return community(request, response);
-	}
+	
     /* Ajax json */
 	@RequestMapping(value = "/community/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	@ResponseBody

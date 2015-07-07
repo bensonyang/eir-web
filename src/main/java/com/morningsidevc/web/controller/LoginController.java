@@ -40,12 +40,12 @@ public class LoginController extends BaseController {
             jsonResponse.setCode(400);
             return jsonResponse;
         }
+        LoginUtils.signon(result, account, true, request, response);
         jsonResponse.setCode(200);
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setUserId(result);
         loginResponse.setAccount(account);
         jsonResponse.setMsg(loginResponse);
-
         return jsonResponse;
     }
 
