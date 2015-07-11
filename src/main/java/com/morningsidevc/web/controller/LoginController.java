@@ -49,4 +49,14 @@ public class LoginController extends BaseController {
         return jsonResponse;
     }
 
+    /* Ajax json */
+    @RequestMapping(value = "/ajax/logout", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public JsonResponse logout(HttpServletRequest request, HttpServletResponse response) {
+        LoginUtils.signout(request, response);
+        JsonResponse jsonResponse = new JsonResponse();
+        jsonResponse.setCode(200);
+        return jsonResponse;
+    }
+
 }
