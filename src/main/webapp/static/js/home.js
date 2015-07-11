@@ -235,6 +235,8 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                     $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
                     $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
                     $('.form-group .main-textarea').val("");
+                }else if(data.code == 300){
+                    alert("对不起，登陆才能发表内容");
                 }else{
                     alert(data.msg);//TODO 优化弹框
                 }

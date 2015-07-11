@@ -1,5 +1,6 @@
 body {
   font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: 0 50% #f5f5f5;
 }
 .eir-box1 {
   background: #f4f4f4;
@@ -614,6 +615,11 @@ a {
   padding-bottom: 5px;
   text-align: center;
   font-size: 13px;
+}
+.go-reg {
+  font-size: 12px;
+  text-align: right;
+  padding-right: 10px;
 }
 [placeholder] {
   font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;

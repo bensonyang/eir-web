@@ -86,6 +86,10 @@ public class FeedController extends BaseController{
 			if(StringUtils.isNotBlank(tagName)){
 				tagName = "无";
 			}
+			if(getUserId() == 0){
+				response.setCode(300);
+				return response;
+			}
 			FeedInfo feedInfo = feedInfoService.addFeed(getUserId(), content, tagName);
 			Assert.notNull(feedInfo);
 			FeedResponse feedResponse = new FeedResponse();
