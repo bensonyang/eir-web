@@ -169,13 +169,13 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		comment.setCommentId(feedCommentMsg.getCommentid());
 		if(toUser != null){
 			comment.setToUserId(feedInfo.getUserid());
-			comment.setToUserName(toUser.getNickname());
+			comment.setToUserName(toUser.getRealname());
 		}else{
 			comment.setToUserId(0);
 			comment.setToUserName("");
 		}
 		comment.setUserId(currentUserId);
-		comment.setUserName(currentUser.getNickname());
+		comment.setUserName(currentUser.getRealname());
 		
 		if (feedCommentMsg.getAddtime() != null) {
 			String date = DateFormat.getDateInstance().format(feedCommentMsg.getAddtime());
