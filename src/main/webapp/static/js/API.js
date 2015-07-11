@@ -15,6 +15,7 @@ define(function(){
         login           :   '/ajax/login',//登陆
         reg             :   '/ajax/reg',//注册
         home            :   '/community',//首页
-        isAccountExist  :   '/ajax/validate/accountName'//账户是否已经存在
+        isAccountExist  :   '/ajax/validate/accountName',//账户是否已经存在
+        logOut          :   '/ajax/logout'//退出
     };
 });

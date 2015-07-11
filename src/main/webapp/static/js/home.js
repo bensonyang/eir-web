@@ -447,6 +447,13 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                     }
                 }
             });
+        },
+        logOutHandler:function(){
+            $.get(API.logOut,{},function(data){
+                if(data.code == 200){
+                    window.location.reload();
+                }
+            });
         }
     };
     //################################事件处理器配置END#######################################
@@ -467,5 +474,6 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
     $('.eir-feed .eir-feed-comments-comments').click(HANDLERS.commentToFeedHandler);//Feed下面添加评论
     $('.eir-feef a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
     $('#login').click(HANDLERS.loginHandler);//登陆按钮
+    $('.icon-off').click(HANDLERS.logOutHandler);//退出
     //################################事件配置END#######################################
 });
