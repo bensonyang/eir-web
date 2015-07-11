@@ -57,14 +57,20 @@ public class RegisterController extends BaseController {
 
     @RequestMapping(value = "/ajax/validate/accountName", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public int validateAccountName(String email) {
-        Account result = userAccountService.loadRyEmail(email);
-
-        if (result == null) {
-            return 0;
+    public JsonResponse validateAccountName(String email) {
+        JsonResponse jsonResponse = new JsonResponse();
+        try {
+            Account result = userAccountService.loadRyEmail(email);
+            if (result == null) {
+                jsonResponse.setCode(200);
+            }else{
+                jsonResponse.setCode(400);
+            }
+        }catch (Exception e){
+            LOGGER.info("", e);
+            jsonResponse.setCode(500);
         }
-
-        return 1;
+        return jsonResponse;
     }
 
 
