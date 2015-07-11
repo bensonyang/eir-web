@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -78,7 +79,7 @@ public class CommentController extends BaseController{
             List<Comment> commentList = feedCommentService.moreComment(lastCommentIndex,feedId,pageSize,getUserId());
             moreCommentResponse.setComments(commentList);
             moreCommentResponse.setSize(commentList.size());
-            moreCommentResponse.setLastCommentIndex(lastCommentIndex(commentList));
+            moreCommentResponse.setLastCommentIndex(lastCommentIndex(new ArrayList<Comment>(commentList)));
             response.setCode(200);
             response.setMsg(moreCommentResponse);
         }catch (Exception e){

@@ -219,7 +219,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		example.setLimitEnd(pageSize);
 		example.createCriteria().andFeedidEqualTo(feedId).andCommentidLessThan(lastCommentIndex);
 		List<FeedCommentMsg> comments = feedCommentMsgMapper.selectByExample(example);
-		List<Comment> commentList = new ArrayList<Comment>();
+		List<Comment> commentList = new LinkedList<Comment>();
 		if(!CollectionUtils.isEmpty(comments)){
 			List<Integer> userIds = new ArrayList<Integer>(userIds(comments));
 			UserInfoExample userInfoExample = new UserInfoExample();
