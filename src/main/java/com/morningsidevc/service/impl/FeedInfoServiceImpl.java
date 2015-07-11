@@ -11,18 +11,17 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.morningsidevc.dao.gen.UserFeedCounterMapper;
+import com.morningsidevc.enums.CounterType;
 import com.morningsidevc.enums.FeedStatus;
 import com.morningsidevc.enums.FeedType;
 import com.morningsidevc.enums.MsgType;
-import com.morningsidevc.po.gen.FeedLikeMsg;
-import com.morningsidevc.po.gen.WeiboMsg;
+import com.morningsidevc.po.gen.*;
 import com.morningsidevc.service.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 import com.morningsidevc.dao.gen.FeedInfoMapper;
-import com.morningsidevc.po.gen.FeedInfo;
-import com.morningsidevc.po.gen.FeedInfoExample;
 import com.morningsidevc.vo.Comment;
 import com.morningsidevc.vo.Feed;
 import com.morningsidevc.vo.MsgBody;
@@ -56,6 +55,9 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 
 	@Resource
 	private FeedLikeService feedLikeService;
+
+	@Resource
+	private UserFeedCounterMapper userFeedCounterMapper;
 	
 	/* (non-Javadoc)
 	 * @see com.morningsidevc.service.FeedInfoService#addFeed(java.lang.Integer, java.lang.String)
@@ -72,6 +74,20 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		if(weiboMsgId == null){
 			throw new RuntimeException(String.format("微博内容可能持久化失败，返回ID为:" +
 					"%s",weiboMsgId));
+		}
+		UserFeedCounterExample example = new UserFeedCounterExample();
+		example.createCriteria().andUseridEqualTo(userId)
+				.andCountertypeEqualTo(CounterType.FeedCounter.getValue());
+		List<UserFeedCounter> counters = userFeedCounterMapper.selectByExample(example);
+		if(counters == null || counters.size() < 1){
+			UserFeedCounter counter = new UserFeedCounter();
+			counter.setUserid(userId);
+			counter.setSum(1);
+			counter.setCountertype(CounterType.FeedCounter.getValue());
+			userFeedCounterMapper.insertSelective(counter);
+		}else{
+			counters.get(0).setSum(counters.get(0).getSum() + 1);
+			userFeedCounterMapper.updateByPrimaryKeySelective(counters.get(0));
 		}
 		Integer initCommentCount = 0, initLikeCount = 0;
 		FeedInfo feedInfo = new FeedInfo();
@@ -192,7 +208,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			
 			/* Map[FeedId]=Object */
 			Map<Integer, User> authors = userInfoService.findUsers(userIdList);
-			Map<Integer, List<Comment>> comments = feedCommentService.findComments(feedIdList, 2);
+			Map<Integer, List<Comment>> comments = feedCommentService.findComments(feedIdList, 2, currentUserId);
 			Map<Integer, WeiboMsgBody> weiboMsg = this.weiboMsgService.findMsgBodys(weiboMsgIdList);
 			Map<Integer, WebPageMsgBody> webPageMsg = this.webPageMsgService.findMsgBodys(webPageMsgIdList);
 			Map<Integer, FeedLikeMsg> feedLikeMsgMap = this.feedLikeService.findIsLiked(feedIdList, currentUserId);
@@ -215,6 +231,11 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 					element.setIsLiked(true);
 				}else{
 					element.setIsLiked(false);
+				}
+				if(element.getAuthor().getUserId() == currentUserId){
+					element.setCanDelete(true);
+				}else{
+					element.setCanDelete(false);
 				}
 			}
 		} else {

@@ -65,7 +65,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	}
 
 	@Override
-	public Map<Integer, List<Comment>> findComments(List<Integer> feedIds, Integer pageSize) throws Exception{
+	public Map<Integer, List<Comment>> findComments(List<Integer> feedIds, Integer pageSize, Integer currentUserId) throws Exception{
 		if (feedIds == null || feedIds.size() == 0) {
 			return null;
 		}
@@ -88,6 +88,11 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 				comment.setToUserId(feedCommentMsg.getUserid());
 				comment.setContent(feedCommentMsg.getContent());
 				comment.setUserName(userInfoMap.get(feedCommentMsg.getUserid()).getNickname());
+				if(comment.getUserId() == currentUserId){
+					comment.setCanDelete(true);
+				}else{
+					comment.setCanDelete(false);
+				}
 				if(feedCommentMsg.getTouserid() != null){
 					comment.setToUserName(userInfoMap.get(feedCommentMsg.getTouserid()).getNickname());
 				}
@@ -135,8 +140,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		Assert.notNull(feedInfo);
 		UserInfo currentUser = userInfoMapper.selectByPrimaryKey(currentUserId);
 		Assert.notNull(currentUser);
-		UserInfo toUser = userInfoMapper.selectByPrimaryKey(feedInfo.getUserid());
-		Assert.notNull(toUser);
+		UserInfo toUser = userInfoMapper.selectByPrimaryKey(request.getToUserId());
 		feedInfo.setCommentcount(feedInfo.getCommentcount() + 1);
 		Integer updateFeedRet = feedInfoMapper.updateByPrimaryKeySelective(feedInfo);//更新feed中的评论数
 		Assert.state(updateFeedRet > 0);
@@ -163,8 +167,13 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		Comment comment = new Comment();
 		comment.setContent(request.getContent());
 		comment.setCommentId(feedCommentMsg.getCommentid());
-		comment.setToUserId(feedInfo.getUserid());
-		comment.setToUserName(toUser.getNickname());
+		if(toUser != null){
+			comment.setToUserId(feedInfo.getUserid());
+			comment.setToUserName(toUser.getNickname());
+		}else{
+			comment.setToUserId(0);
+			comment.setToUserName("");
+		}
 		comment.setUserId(currentUserId);
 		comment.setUserName(currentUser.getNickname());
 		

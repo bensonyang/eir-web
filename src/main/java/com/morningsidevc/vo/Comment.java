@@ -19,6 +19,7 @@ public class Comment {
 	private String toUserName;
 	private String content;
 	private String commentTime;
+	private boolean canDelete;
 	public Integer getCommentId() {
 		return commentId;
 	}
@@ -73,5 +74,12 @@ public class Comment {
 	public void setCommentTime(String commentTime) {
 		this.commentTime = commentTime;
 	}
-	
+
+	public boolean isCanDelete() {
+		return canDelete;
+	}
+
+	public void setCanDelete(boolean canDelete) {
+		this.canDelete = canDelete;
+	}
 }

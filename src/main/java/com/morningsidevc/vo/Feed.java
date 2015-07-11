@@ -28,6 +28,7 @@ public class Feed {
 	private boolean isLiked;
 
 	private int lastCommentIndex;
+	private boolean canDelete;
 
 	public Integer getFeedId() {
 		return feedId;
@@ -108,5 +109,13 @@ public class Feed {
 
 	public void setLastCommentIndex(int lastCommentIndex) {
 		this.lastCommentIndex = lastCommentIndex;
+	}
+
+	public boolean isCanDelete() {
+		return canDelete;
+	}
+
+	public void setCanDelete(boolean canDelete) {
+		this.canDelete = canDelete;
 	}
 }

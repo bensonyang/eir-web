@@ -86,6 +86,10 @@ public class FeedController extends BaseController{
 			if(StringUtils.isNotBlank(tagName)){
 				tagName = "无";
 			}
+			if(getUserId() == 0){
+				response.setCode(300);
+				return response;
+			}
 			FeedInfo feedInfo = feedInfoService.addFeed(getUserId(), content, tagName);
 			Assert.notNull(feedInfo);
 			FeedResponse feedResponse = new FeedResponse();
@@ -102,6 +106,7 @@ public class FeedController extends BaseController{
 			feed.setMsgBody(weiboMsgBody);
 			User user = userInfoService.load(feedInfo.getUserid());
 			feed.setAuthor(user);
+			feed.setCanDelete(true);
 			feed.setComment(new ArrayList<Comment>());
 			feed.setLastCommentIndex(0);
 			feedResponse.setFeeds(Arrays.asList(new Feed[]{feed}));

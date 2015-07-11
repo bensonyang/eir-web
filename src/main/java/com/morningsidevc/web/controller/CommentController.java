@@ -41,6 +41,7 @@ public class CommentController extends BaseController{
             Assert.notNull(comment);
             comment.setUserPic("/static/images/pic1.jpeg");
             comment.setToUserPic("/static/images/pic1.jpeg");
+            comment.setCanDelete(true);
             response.setCode(200);
             response.setMsg(comment);
         }catch (Exception e){
