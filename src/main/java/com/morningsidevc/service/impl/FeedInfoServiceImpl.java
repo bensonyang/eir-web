@@ -249,7 +249,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	private Integer lastCommentIndex(List<Comment> comments){
 		if(CollectionUtils.isEmpty(comments)) return 0;
 		if(comments.size() == 1) return comments.get(0).getCommentId();
-		return comments.get(0).getCommentId() > comments.get(1).getCommentId()
+		return comments.get(0).getCommentId() < comments.get(1).getCommentId()
 				? comments.get(0).getCommentId() : comments.get(1).getCommentId();
 	}
 	

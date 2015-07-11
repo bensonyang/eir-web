@@ -8,6 +8,11 @@
             <span class="eir-name">${loginUser.realName}</span>
             <span class="eir-summary">${loginUser.company}&nbsp;&nbsp;${loginUser.jobTitle}</span>
         </div>
+        <div class="go-logout">
+            <a class="btn btn-default logout" href="#" role="button">
+                <li class="icon-off icon-grey"></li>
+            </a>
+        </div>
         <div class="eir-clear-both"></div>
         <div class="eir-line-hor">
         </div>

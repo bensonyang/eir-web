@@ -75,7 +75,7 @@ public class CommentController extends BaseController{
         try {
             Assert.notNull(lastCommentIndex);Assert.notNull(feedId);Assert.notNull(pageSize);
             MoreCommentResponse moreCommentResponse = new MoreCommentResponse();
-            List<Comment> commentList = feedCommentService.moreComment(lastCommentIndex,feedId,pageSize);
+            List<Comment> commentList = feedCommentService.moreComment(lastCommentIndex,feedId,pageSize,getUserId());
             moreCommentResponse.setComments(commentList);
             moreCommentResponse.setSize(commentList.size());
             moreCommentResponse.setLastCommentIndex(lastCommentIndex(commentList));

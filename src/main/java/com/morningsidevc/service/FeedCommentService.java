@@ -33,7 +33,8 @@ public interface FeedCommentService {
 	 * @param lastCommentIndex
 	 * @param feedId
 	 * @param pageSize
+	 * @param currentUserId
 	 * @return
 	 */
-	List<Comment> moreComment(Integer lastCommentIndex, Integer feedId, Integer pageSize) throws Exception;
+	List<Comment> moreComment(Integer lastCommentIndex, Integer feedId, Integer pageSize, Integer currentUserId) throws Exception;
 }

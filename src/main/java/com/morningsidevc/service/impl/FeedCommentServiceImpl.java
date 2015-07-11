@@ -212,7 +212,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	}
 
 	@Override
-	public List<Comment> moreComment(Integer lastCommentIndex, Integer feedId, Integer pageSize) throws Exception{
+	public List<Comment> moreComment(Integer lastCommentIndex, Integer feedId, Integer pageSize, Integer currentUserId) throws Exception{
 		FeedCommentMsgExample example = new FeedCommentMsgExample();
 		example.setOrderByClause("AddTime DESC");
 		example.setLimitStart(0);
@@ -238,6 +238,11 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 				}
 				comment.setToUserPic("");
 				comment.setUserPic("");
+				if(feedCommentMsg.getUserid() == currentUserId){
+					comment.setCanDelete(true);
+				}else{
+					comment.setCanDelete(false);
+				}
 				if (feedCommentMsg.getAddtime() != null) {
 					String date = DateFormat.getDateInstance().format(feedCommentMsg.getAddtime());
 					comment.setCommentTime(date);
