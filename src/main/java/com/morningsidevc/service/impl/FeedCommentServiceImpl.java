@@ -145,7 +145,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		Integer updateFeedRet = feedInfoMapper.updateByPrimaryKeySelective(feedInfo);//更新feed中的评论数
 		Assert.state(updateFeedRet > 0);
 		UserFeedCounterExample example = new UserFeedCounterExample();
-		example.createCriteria().andUseridEqualTo(currentUserId)
+		example.createCriteria().andUseridEqualTo(feedInfo.getUserid())
 				.andCountertypeEqualTo(CounterType.CommentCounter.getValue());
 		List<UserFeedCounter> feedCounters = userFeedCounterMapper.selectByExample(example);
 		if(CollectionUtils.isEmpty(feedCounters)){//更新计数器
@@ -219,7 +219,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		example.setLimitEnd(pageSize);
 		example.createCriteria().andFeedidEqualTo(feedId).andCommentidLessThan(lastCommentIndex);
 		List<FeedCommentMsg> comments = feedCommentMsgMapper.selectByExample(example);
-		List<Comment> commentList = new ArrayList<Comment>();
+		List<Comment> commentList = new LinkedList<Comment>();
 		if(!CollectionUtils.isEmpty(comments)){
 			List<Integer> userIds = new ArrayList<Integer>(userIds(comments));
 			UserInfoExample userInfoExample = new UserInfoExample();
