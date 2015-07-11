@@ -160,7 +160,8 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		feedInfoExample.setLimitEnd(pageSize);
 		feedInfoExample.setDistinct(true);
 		feedInfoExample.setOrderByClause("FeedId DESC");
-
+		
+		/* retrieve feeds */
 		List<FeedInfo> feedInfoList = feedInfoMapper.selectByExample(feedInfoExample);
 		
 		List<Integer> userIdList = new ArrayList<Integer>();
@@ -169,6 +170,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		List<Integer> webPageMsgIdList = new ArrayList<Integer>();
 		if (feedInfoList != null && feedInfoList.size() != 0) {
 			for (FeedInfo feedInfo : feedInfoList) {
+				/* retrieve userId list from feedList */
 				if (!userIdList.contains(feedInfo.getUserid())) {
 					userIdList.add(feedInfo.getUserid());
 				}
@@ -177,9 +179,9 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 					feedIdList.add(feedInfo.getFeedid());
 				}
 				
-				if (feedInfo.getMsgtype() == 0) {
+				if (MsgType.SHUOFEED.equals(feedInfo.getMsgtype())) {
 					weiboMsgIdList.add(feedInfo.getMsgid());
-				} else if (feedInfo.getMsgtype() == 1) {
+				} else if (MsgType.LINK.equals(feedInfo.getMsgtype())) {
 					webPageMsgIdList.add(feedInfo.getMsgid());
 				}
 				
@@ -188,11 +190,12 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 				feedList.add(feed);
 			}
 			
+			/* Map[FeedId]=Object */
 			Map<Integer, User> authors = userInfoService.findUsers(userIdList);
 			Map<Integer, List<Comment>> comments = feedCommentService.findComments(feedIdList, 2);
 			Map<Integer, WeiboMsgBody> weiboMsg = this.weiboMsgService.findMsgBodys(weiboMsgIdList);
 			Map<Integer, WebPageMsgBody> webPageMsg = this.webPageMsgService.findMsgBodys(webPageMsgIdList);
-			Map<Integer, FeedLikeMsg> feedLikeMsgMap = this.feedLikeService.findIsLiked(feedIdList);
+			Map<Integer, FeedLikeMsg> feedLikeMsgMap = this.feedLikeService.findIsLiked(feedIdList, currentUserId);
 			for (Feed element : feedList) {
 				if (authors != null && authors.get(element.getAuthorId()) != null) {
 					element.setAuthor(authors.get(element.getAuthorId()).clone());
@@ -203,9 +206,9 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 				}else{
 					element.setComment(new ArrayList<Comment>());
 				}
-				if (element.getFeedType() == 0 && weiboMsg != null) {
+				if (FeedType.PLAINFEED.getValue().equals(element.getFeedType()) && weiboMsg != null) {
 					element.setMsgBody(weiboMsg.get(element.getMsgId()));
-				} else if (element.getFeedType() == 1 && webPageMsg != null) {
+				} else if (FeedType.RECLINK.getValue().equals(element.getFeedType()) && webPageMsg != null) {
 					element.setMsgBody(webPageMsg.get(element.getMsgId()));
 				}
 				if(feedLikeMsgMap.get(element.getFeedId()) != null){
@@ -214,10 +217,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 					element.setIsLiked(false);
 				}
 			}
-
-			
 		} else {
-			
 			return null;
 		}
 		

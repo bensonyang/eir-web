@@ -74,9 +74,9 @@ public class FeedLikeServiceImpl implements FeedLikeService {
     }
 
     @Override
-    public Map<Integer, FeedLikeMsg> findIsLiked(List<Integer> feedIds) throws Exception {
+    public Map<Integer, FeedLikeMsg> findIsLiked(List<Integer> feedIds, Integer currentUserId) throws Exception {
         FeedLikeMsgExample example = new FeedLikeMsgExample();
-        example.createCriteria().andFeedidIn(feedIds);
+        example.createCriteria().andFeedidIn(feedIds).andUseridEqualTo(currentUserId);
         List<FeedLikeMsg> feedLikeMsgs = feedLikeMsgMapper.selectByExample(example);
         return buildFeedLikeMap(feedLikeMsgs);
     }

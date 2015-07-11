@@ -27,7 +27,7 @@ public interface FeedLikeService {
      * @return
      * @throws Exception
      */
-    Map<Integer, FeedLikeMsg> findIsLiked(List<Integer> feedIds) throws Exception;
+    Map<Integer, FeedLikeMsg> findIsLiked(List<Integer> feedIds, Integer currentUserId) throws Exception;
 
 
     /**

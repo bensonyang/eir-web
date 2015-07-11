@@ -7,16 +7,20 @@ package com.morningsidevc.enums;
 public enum FeedType {
     PLAINFEED(0), //短文
     RECLINK(1); //推荐网址
-    private int value;
-    private FeedType(int value){
+    private Integer value;
+    private FeedType(Integer value){
         this.value = value;
     }
-    public static FeedType fromInt(int value){
+    public static FeedType fromInt(Integer value){
         switch(value){
             case 0: return PLAINFEED;
             case 1: return RECLINK;
         }
         throw new RuntimeException(String.format("convert from int{%d} to FeedType Failed" +
                 ", please check your int value.", value));
+    }
+    
+    public Integer getValue() {
+    	return value;
     }
 }

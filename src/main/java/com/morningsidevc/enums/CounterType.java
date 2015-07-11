@@ -4,8 +4,6 @@ package com.morningsidevc.enums;
  * @author float.lu
  */
 public enum CounterType {
-    //public static Byte FEED = Byte.parseByte("0");//动态
-    //public static Byte COMMENT = Byte.parseByte("1");//评论
     
     FeedCounter("FeedCounter", Byte.parseByte("0")),
     CommentCounter("CommentCounter", Byte.parseByte("1"));
