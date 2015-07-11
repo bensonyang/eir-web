@@ -3,6 +3,7 @@
  */
 package com.morningsidevc.web.controller;
 
+import com.morningsidevc.enums.HttpResponseStatus;
 import com.morningsidevc.service.FeedLikeService;
 import com.morningsidevc.web.response.FeedLikeResponse;
 import com.morningsidevc.web.response.JsonResponse;
@@ -30,6 +31,11 @@ public class LikeController extends BaseController{
     @ResponseBody
     public JsonResponse addLike(@RequestParam(value = "feedId", required = true)Integer feedId){
         JsonResponse response = new JsonResponse();
+        
+    	if (!super.isLogin()) {
+    		return new JsonResponse(HttpResponseStatus.nologinCode, HttpResponseStatus.nologinMsg);
+    	}       
+        
         try {
             Integer likeId = feedLikeService.addlike(feedId, getUserId());
             Assert.state(likeId != null && likeId > 0);
@@ -50,6 +56,11 @@ public class LikeController extends BaseController{
     @ResponseBody
     public JsonResponse deleteLike(@RequestParam(value = "feedId", required = true) Integer feedId){
         JsonResponse response = new JsonResponse();
+        
+    	if (!super.isLogin()) {
+    		return new JsonResponse(HttpResponseStatus.nologinCode, HttpResponseStatus.nologinMsg);
+    	}    
+        
         try {
             Integer ret = feedLikeService.deletelike(feedId, getUserId());
             Assert.state(ret != null && ret > 0);

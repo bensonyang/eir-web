@@ -109,6 +109,8 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
         var _deleteFeedCallback = function(data){
             if(data.code == 200){
                 $('div[data-feedId='+ data.msg +']').slideUp(500);
+            }else if(data.code == 300){
+            	alert(data.msg);	
             }else{
                 alert("服务器错误");
             }
@@ -248,7 +250,7 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                     $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
                     $('.form-group .main-textarea').val("");
                 }else if(data.code == 300){
-                    alert("对不起，登陆才能发表内容");
+                    alert(data.msg);
                 }else{
                     alert(data.msg);//TODO 优化弹框
                 }
@@ -296,6 +298,8 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                         _a.unbind("click");
                         _a.click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
                         _a.next().text(data.msg.likeCount);
+                    }else if(data.code == 300){
+                    	alert(data.msg);
                     }else{
                         alert("服务器错误");
                     }
@@ -320,6 +324,8 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                         _a.unbind("click");
                         _a.click(HANDLERS.likeFeedHandler);
                         _a.next().text(data.msg.likeCount);
+                    }else if(data.code == 300){
+                    	alert(data.msg);
                     }else{
                         alert("服务器错误");
                     }

@@ -3,6 +3,7 @@
  */
 package com.morningsidevc.web.controller;
 
+import com.morningsidevc.enums.HttpResponseStatus;
 import com.morningsidevc.service.FeedCommentService;
 import com.morningsidevc.vo.Comment;
 import com.morningsidevc.web.request.AddCommentRequest;
@@ -34,8 +35,13 @@ public class CommentController extends BaseController{
 
     @ResponseBody
     @RequestMapping(value = "addcomment", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public JsonResponse addComment(AddCommentRequest request){
-        JsonResponse response = new JsonResponse();
+    public JsonResponse addComment(AddCommentRequest request){    	
+    	JsonResponse response = new JsonResponse();
+    	
+    	if (!super.isLogin()) {
+    		return new JsonResponse(HttpResponseStatus.nologinCode, HttpResponseStatus.nologinMsg);
+    	}
+    	
         try {
             Comment comment = feedCommentService.addComment(request, getUserId());
             Assert.notNull(comment);
@@ -55,6 +61,11 @@ public class CommentController extends BaseController{
     @RequestMapping(value = "deletecomment", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public JsonResponse deleteComment(Integer commentId){
         JsonResponse response = new JsonResponse();
+        
+    	if (!super.isLogin()) {
+    		return new JsonResponse(HttpResponseStatus.nologinCode, HttpResponseStatus.nologinMsg);
+    	}      
+        
         try {
             Assert.notNull(commentId);
             DeleteCommentResponse deleteCommentResponse = feedCommentService.deleteComment(commentId);

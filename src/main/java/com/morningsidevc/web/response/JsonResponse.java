@@ -12,6 +12,14 @@ import java.util.Map;
 public class JsonResponse {
 	protected Integer code;
 	protected Object msg;
+	
+	public JsonResponse() {}
+	
+	public JsonResponse(Integer code, Object msg) {
+		this.code = code;
+		this.msg = msg;
+	}
+	
 	public Integer getCode() {
 		return code;
 	}

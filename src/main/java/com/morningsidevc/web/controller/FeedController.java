@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import com.morningsidevc.dao.gen.WeiboMsgMapper;
 import com.morningsidevc.enums.FeedType;
+import com.morningsidevc.enums.HttpResponseStatus;
 import com.morningsidevc.enums.MsgType;
 import com.morningsidevc.po.gen.FeedInfo;
 import com.morningsidevc.service.UserInfoService;
@@ -81,6 +82,11 @@ public class FeedController extends BaseController{
 	@ResponseBody
 	public JsonResponse addShuoFeed(String tagName, String content){
 		JsonResponse response = new JsonResponse();
+		
+    	if (!super.isLogin()) {
+    		return new JsonResponse(HttpResponseStatus.nologinCode, HttpResponseStatus.nologinMsg);
+    	}		
+		
 		try{
 			Assert.state(StringUtils.isNotBlank(content));
 			if(StringUtils.isNotBlank(tagName)){
@@ -123,6 +129,11 @@ public class FeedController extends BaseController{
 	@RequestMapping(value = "deletefeed", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	public JsonResponse deleteFeed(Integer feedId){
 		JsonResponse response = new JsonResponse();
+		
+    	if (!super.isLogin()) {
+    		return new JsonResponse(HttpResponseStatus.nologinCode, HttpResponseStatus.nologinMsg);
+    	}	
+		
 		try{
 			feedInfoService.deleteFeed(feedId);
 			response.setCode(200);
