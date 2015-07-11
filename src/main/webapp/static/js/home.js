@@ -196,6 +196,18 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
             var _tag = $('.form-group a[data-index]').text();
             var _link = $('.form-group .eir-recommend-link').val();
             var feedTypeId = $('.eir-options i.active').attr('id');
+            
+            var _cur = getByteLen(_content);
+            if(_cur == 0) {
+            	alert("请输入评论后再提交。");
+            	return false;
+            } else if(_cur <= 280){
+            	// 符合长度
+            } else {
+            	alert("字数长度超出范围，请重新输入。");
+            	return false;
+            } 
+            
             switch(feedTypeId){
                 case "write-feed":
                     $.ajax({
@@ -244,6 +256,16 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
             }
             function errorCallback(){
 
+            }
+            function getByteLen(val) {
+            	var len = 0;
+                for (var i = 0; i < val.length; i++) {
+                    if (val.charCodeAt(i) > 255)
+                        len += 2;
+                    else
+                        len += 1;
+                }
+                return len;
             }
         },
         deletebtnHandler : function deletebtnHandler(){

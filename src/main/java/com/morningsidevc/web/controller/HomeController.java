@@ -72,11 +72,11 @@ public class HomeController extends BaseController {
     }
 	
     /* Ajax json */
-	@RequestMapping(value = "/community/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public User load(@PathVariable Integer id) {
-		User user = this.userInfoService.load(id);
-    	return user;
-	}
+//	@RequestMapping(value = "/community/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+//	@ResponseBody
+//	public User load(@PathVariable Integer id) {
+//		User user = this.userInfoService.load(id);
+//    	return user;
+//	}
 
 }
