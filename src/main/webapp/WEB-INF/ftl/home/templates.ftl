@@ -30,9 +30,13 @@
                 <% } %>
                 <span><%= likeCount %></span>
             </li>
+            <%
+                if(canDelete){
+            %>
             <li class="icon-trash icon-grey">
                 <a deleteFeed data-toggle="popover" data-placement="bottom" data-container="body" >删除</a>
             </li>
+            <% } %>
         </div>
         <div class="eir-feed-item-container">
             <%
@@ -57,7 +61,9 @@
                                         : <%= _comment.content %></span>
                                     <span class="eir-feed-comments-item-content-time icon-grey">
                                         <d><%= _comment.commentTime %></d>
+                                        <% if(_comment.canDelete){ %>
                                         <a deleteComment data-toggle="popover" data-commentid="<%= _comment.commentId %>" data-placement="bottom" data-container="body" >删除</a>
+                                        <% } %>
                                         <a backComment data-userid="<%= _comment.userId %>">回复</a>
                                     </span>
                 </div>
@@ -112,7 +118,9 @@
                     : <%= content %></span>
                 <span class="eir-feed-comments-item-content-time icon-grey">
                     <d><%= commentTime %></d>
+                    <% if(canDelete){ %>
                     <a deleteComment data-toggle="popover" data-commentid="<%= commentId %>" data-placement="bottom" data-container="body" >删除</a>
+                    <% } %>
                     <a backComment data-userid="<%= userId %>">回复</a>
                 </span>
         </div>

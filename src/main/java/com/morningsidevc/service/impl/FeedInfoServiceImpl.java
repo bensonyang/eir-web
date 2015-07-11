@@ -192,7 +192,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			
 			/* Map[FeedId]=Object */
 			Map<Integer, User> authors = userInfoService.findUsers(userIdList);
-			Map<Integer, List<Comment>> comments = feedCommentService.findComments(feedIdList, 2);
+			Map<Integer, List<Comment>> comments = feedCommentService.findComments(feedIdList, 2, currentUserId);
 			Map<Integer, WeiboMsgBody> weiboMsg = this.weiboMsgService.findMsgBodys(weiboMsgIdList);
 			Map<Integer, WebPageMsgBody> webPageMsg = this.webPageMsgService.findMsgBodys(webPageMsgIdList);
 			Map<Integer, FeedLikeMsg> feedLikeMsgMap = this.feedLikeService.findIsLiked(feedIdList, currentUserId);
@@ -215,6 +215,11 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 					element.setIsLiked(true);
 				}else{
 					element.setIsLiked(false);
+				}
+				if(element.getAuthor().getUserId() == currentUserId){
+					element.setCanDelete(true);
+				}else{
+					element.setCanDelete(false);
 				}
 			}
 		} else {

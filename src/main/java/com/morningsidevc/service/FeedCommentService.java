@@ -10,7 +10,7 @@ import com.morningsidevc.web.response.DeleteCommentResponse;
 public interface FeedCommentService {
 	Comment loadLastestComment(Integer feedId);
 	
-	Map<Integer, List<Comment>> findComments(List<Integer> feedIds, Integer pageSize) throws Exception;
+	Map<Integer, List<Comment>> findComments(List<Integer> feedIds, Integer pageSize, Integer currentUserId) throws Exception;
 
 	/**
 	 * 添加评论接口

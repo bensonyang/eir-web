@@ -102,6 +102,7 @@ public class FeedController extends BaseController{
 			feed.setMsgBody(weiboMsgBody);
 			User user = userInfoService.load(feedInfo.getUserid());
 			feed.setAuthor(user);
+			feed.setCanDelete(true);
 			feed.setComment(new ArrayList<Comment>());
 			feed.setLastCommentIndex(0);
 			feedResponse.setFeeds(Arrays.asList(new Feed[]{feed}));

@@ -387,6 +387,7 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                         _feed.find('.eir-feed-comments-textarea').val("");
                         $('div[data-commentid='+ data.msg.commentId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
                         $('div[data-commentid='+ data.msg.commentId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除按钮事件
+                        $('div[data-commentid='+ data.msg.commentId +'] a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
                     }else{
 
                     }
