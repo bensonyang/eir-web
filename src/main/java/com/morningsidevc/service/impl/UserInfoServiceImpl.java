@@ -1,5 +1,6 @@
 package com.morningsidevc.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,5 +65,13 @@ public class UserInfoServiceImpl implements UserInfoService {
 			return null;
 		}
 		return userMap;
+	}
+
+	@Override
+	public UserInfo createUser(UserInfo userInfo) {
+		userInfo.setAddtime(new Date());
+		userInfo.setLasttime(new Date());
+		userInfoMapper.insertSelective(userInfo);
+		return userInfo;
 	}
 }

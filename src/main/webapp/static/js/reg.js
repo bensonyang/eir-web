@@ -20,7 +20,12 @@ require(["API","jquery"], function(API, $) {
         serverErr       :   "服务器错误",
         pwdNotEquals    :   "两次密码不同",
         uidNotNull      :   "用户名不能为空",
-        pwdNotNull      :   "密码不能为空"
+        pwdNotNull      :   "密码不能为空",
+        nickNameNull    :   "昵称不能为空",
+        realNameNull    :   "真是姓名不能为空",
+        jobtitleNull    :   "公司职位不能为空",
+        companyNull     :   "公司不能为空",
+        genderNull      :   "性别必须选择哦"
     };
 
 
@@ -59,10 +64,16 @@ require(["API","jquery"], function(API, $) {
             }
         },
         reg : function(){
-            var _uid = $('#uid');
-            var _pwd = $('#pwd');
-            var _ppwd = $('#ppwd');
-            var _reg = $('#reg');
+            var _uid = $('#uid');//注册账号
+            var _pwd = $('#pwd');//注册密码
+            var _ppwd = $('#ppwd');//重复密码
+            var _nickname = $('#nickname');//昵称
+            var _realname = $('#realname');//真是姓名
+            var _jobtitle = $('#jobtitle');//公司职位
+            var _company = $('#company');//公司
+            var _gender = $('input[type=radio]:checked');//性别
+            var _reg = $('#reg');//注册按钮
+
             var _alert  =   $('.alert');
             if($.trim(_uid.val()) == ""){
                 _alert.text(TIPS.uidNotNull);
@@ -73,6 +84,21 @@ require(["API","jquery"], function(API, $) {
             }else if($.trim(_pwd.val()) != $.trim(_ppwd.val())){
                 _alert.text(TIPS.pwdNotEquals);
                 _alert.fadeIn(500);
+            }else if($.trim(_nickname.val()) == ""){
+                _alert.text(TIPS.nickNameNull);
+                _alert.fadeIn(500);
+            }else if($.trim(_realname.val()) == ""){
+                _alert.text(TIPS.realNameNull);
+                _alert.fadeIn(500);
+            }else if($.trim(_jobtitle.val()) == ""){
+                _alert.text(TIPS.jobtitleNull);
+                _alert.fadeIn(500);
+            }else if($.trim(_company.val()) == ""){
+                _alert.text(TIPS.companyNull);
+                _alert.fadeIn(500);
+            }else if(_gender == undefined || $.trim(_gender.val()) == ""){
+                _alert.text(TIPS.genderNull);
+                _alert.fadeIn(500);
             }else{
                 _alert.hide();
             }
@@ -81,7 +107,15 @@ require(["API","jquery"], function(API, $) {
                 $.ajax({
                     type    :"POST",
                     url     :API.reg,
-                    data    :{email: $.trim(_uid.val()),password: $.trim(_pwd.val())},
+                    data    :{
+                        email       :   $.trim(_uid.val()),
+                        password    :   $.trim(_pwd.val()),
+                        nickname    :   $.trim(_nickname.val()),
+                        realname    :   $.trim(_realname.val()),
+                        jobtitle    :   $.trim(_jobtitle.val()),
+                        company     :   $.trim(_company.val()),
+                        gender      :   $.trim(_gender.val())
+                    },
                     success :function(data){
                         if(data.code == 200){
                             $('.eir-reg').hide();
@@ -89,6 +123,8 @@ require(["API","jquery"], function(API, $) {
                             setTimeout(function(){
                                 window.location.href = API.home;
                             },1500);
+                        }else{
+                            _reg.attr('disabled', '');
                         }
                     }
                 });
