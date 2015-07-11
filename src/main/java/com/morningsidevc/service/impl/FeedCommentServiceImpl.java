@@ -145,7 +145,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		Integer updateFeedRet = feedInfoMapper.updateByPrimaryKeySelective(feedInfo);//更新feed中的评论数
 		Assert.state(updateFeedRet > 0);
 		UserFeedCounterExample example = new UserFeedCounterExample();
-		example.createCriteria().andUseridEqualTo(currentUserId)
+		example.createCriteria().andUseridEqualTo(feedInfo.getUserid())
 				.andCountertypeEqualTo(CounterType.CommentCounter.getValue());
 		List<UserFeedCounter> feedCounters = userFeedCounterMapper.selectByExample(example);
 		if(CollectionUtils.isEmpty(feedCounters)){//更新计数器
