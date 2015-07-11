@@ -4,11 +4,14 @@
 package com.morningsidevc.web.controller;
 
 import com.morningsidevc.po.gen.Account;
+import com.morningsidevc.po.gen.UserInfo;
 import com.morningsidevc.service.UserAccountService;
+import com.morningsidevc.service.UserInfoService;
 import com.morningsidevc.utils.LoginUtils;
 import com.morningsidevc.web.response.JsonResponse;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,6 +32,8 @@ public class RegisterController extends BaseController {
 
     @Resource
     private UserAccountService userAccountService;
+    @Resource
+    private UserInfoService userInfoService;
 
     /* HTML */
     @RequestMapping(value = "/reg", method = RequestMethod.GET)
@@ -42,16 +47,23 @@ public class RegisterController extends BaseController {
     /* Ajax json */
     @RequestMapping(value = "/ajax/reg", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public JsonResponse register(String email, String password, String nickName, String realName, String jobTitle, String company, HttpServletRequest request, HttpServletResponse response) {
-        int result = userAccountService.create(email, password);
+    public JsonResponse register(String email, String password, UserInfo userInfo, HttpServletRequest request, HttpServletResponse response) {
         JsonResponse jsonResponse = new JsonResponse();
-
-        if (result <= 0) {
-            jsonResponse.setCode(400);
+        try{
+            int userId = userAccountService.create(email, password);
+            if (userId <= 0) {
+                jsonResponse.setCode(400);
+                return jsonResponse;
+            }
+            userInfo.setUserid(userId);
+            UserInfo newUser = userInfoService.createUser(userInfo);
+            Assert.notNull(newUser);
+            LoginUtils.signon(userId, email, true, request, response);
+            jsonResponse.setCode(200);
+        }catch (Exception e){
+            jsonResponse.setCode(500);
+            LOGGER.info("", e);
         }
-
-        LoginUtils.signon(result, email, true, request, response);
-        jsonResponse.setCode(200);
         return jsonResponse;
     }
 
