@@ -43,6 +43,10 @@ public class CommentController extends BaseController{
     		return new JsonResponse(HttpResponseStatus.nologinCode, HttpResponseStatus.nologinMsg);
     	}
     	
+    	if (request.getContent() == null || request.getContent().trim().equalsIgnoreCase("")) {
+    		return new JsonResponse(HttpResponseStatus.emptyInputCode, HttpResponseStatus.emptyInputMsg);
+    	}
+    	
         try {
             Comment comment = feedCommentService.addComment(request, getUserId());
             Assert.notNull(comment);
