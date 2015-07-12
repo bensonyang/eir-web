@@ -3,7 +3,8 @@ require.config({
     //baseUrl : "/static/",
     paths:{
         "jquery" : "/static/components/jquery/jquery.min",
-        "API" : "/static/js/API"
+        "API" : "/static/js/API",
+        "toast" : "/static/js/toast"
     },
     shim:{
         "jquery":{
@@ -13,7 +14,7 @@ require.config({
 });
 
 //模块入口
-require(["API","jquery"], function(API, $) {
+require(["API","jquery","toast"], function(API, $, toast) {
     //定义提示文字
     var TIPS = {
         accountExist    :   "该账户已经存在",

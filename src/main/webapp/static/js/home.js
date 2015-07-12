@@ -7,7 +7,8 @@ require.config({
         "popover" : "/static/components/bootstrap/js/popover",
         "underscore" : "/static/components/underscore/underscore-min",
         "API" : "/static/js/API",
-        "templates" : "/static/js/templates"
+        "templates" : "/static/js/templates",
+        "toast" : "/static/js/toast"
     },
     shim:{
         "jquery":{
@@ -19,7 +20,7 @@ require.config({
 });
 
 //模块入口
-require(["API","jquery","underscore","templates","tooltip","popover"], function(API, $, _, templates){
+require(["API","jquery","underscore","templates","toast","tooltip","popover"], function(API, $, _, templates,toast){
     var _lastFeedIndex = undefined;
     var _pageSize = 5;
     var _canMore = true;
@@ -89,11 +90,11 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                 $('.eir-feed a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
                 $('.eir-feed a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
             }else{
-                alert(data.msg);
+                toast(data.msg);
             }
         },
         error:function(){
-            alert("服务器错误");
+            toast("服务器错误");
         }
     });
 
@@ -110,9 +111,9 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
             if(data.code == 200){
                 $('div[data-feedId='+ data.msg +']').slideUp(500);
             }else if(data.code == 300){
-            	alert(data.msg);	
+            	toast(data.msg);
             }else{
-                alert("服务器错误");
+                toast("服务器错误");
             }
             window.currentPopover.popover('hide');
         };
@@ -201,12 +202,12 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
             
             var _cur = getByteLen(_content);
             if(_cur == 0) {
-            	alert("请输入评论后再提交。");
+                toast("请输入评论后再提交。");
             	return false;
             } else if(_cur <= 280){
             	// 符合长度
             } else {
-            	alert("字数长度超出范围，请重新输入。");
+                toast("字数长度超出范围，请重新输入。");
             	return false;
             } 
             
@@ -250,9 +251,9 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                     $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
                     $('.form-group .main-textarea').val("");
                 }else if(data.code == 300){
-                    alert(data.msg);
+                    toast(data.msg);
                 }else{
-                    alert(data.msg);//TODO 优化弹框
+                    toast(data.msg);//TODO 优化弹框
                 }
             }
             function linkFeedCallback(data){
@@ -299,9 +300,9 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                         _a.click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
                         _a.next().text(data.msg.likeCount);
                     }else if(data.code == 300){
-                    	alert(data.msg);
+                        toast(data.msg);
                     }else{
-                        alert("服务器错误");
+                        toast("服务器错误");
                     }
                 },
                 error:function(){
@@ -325,9 +326,9 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                         _a.click(HANDLERS.likeFeedHandler);
                         _a.next().text(data.msg.likeCount);
                     }else if(data.code == 300){
-                    	alert(data.msg);
+                        toast(data.msg);
                     }else{
-                        alert("服务器错误");
+                        toast("服务器错误");
                     }
                 },
                 error:function(){
@@ -381,7 +382,7 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                       }
 
                   }else{
-                      alert("服务器错误");
+                      toast("服务器错误");
                   }
                 },
                 error:function(){
@@ -395,6 +396,10 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
             var _feedId = $(this).closest('.eir-feed').data('feedid');
             var _content = $(this).parent().find('.eir-feed-comments-textarea').val();
             var _toUserId = $(this).data('touserid');
+            if($.trim(_content) == ""){
+                toast("评论内容不能为空");
+                return;
+            }
             $.ajax({
                 type:"POST",
                 url:API.addComment,
@@ -419,9 +424,9 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                         $('div[data-commentid='+ data.msg.commentId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除按钮事件
                         $('div[data-commentid='+ data.msg.commentId +'] a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
                     }else if(data.code == 300){
-                    	alert(data.msg);
+                    	toast(data.msg);
                     }else{
-                    	alert("服务器错误");
+                        toast("服务器错误");
                     }
                 },
                 error:function(){
@@ -455,7 +460,7 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                     if(data.code == 200){
                        window.location.reload();
                     }else{
-                        alert("登陆失败");
+                        toast("登陆失败");
                     }
                 }
             });
