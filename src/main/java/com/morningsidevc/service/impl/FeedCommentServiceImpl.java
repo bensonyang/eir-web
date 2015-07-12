@@ -4,6 +4,7 @@
 package com.morningsidevc.service.impl;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.annotation.Resource;
@@ -60,7 +61,8 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 			comment.setContent(result.getContent());
 			
 			if (result.getAddtime() != null) {
-				String date = DateFormat.getDateInstance().format(result.getAddtime());
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String date = dateFormat.format(result.getAddtime());
 				comment.setCommentTime(date);
 			}
 			
@@ -103,7 +105,8 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 				}
 
 				if (feedCommentMsg.getAddtime() != null) {
-					String date = DateFormat.getDateInstance().format(feedCommentMsg.getAddtime());
+					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String date = dateFormat.format(feedCommentMsg.getAddtime());
 					comment.setCommentTime(date);
 				}
 
@@ -183,7 +186,8 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		comment.setUserName(currentUser.getRealname());
 		
 		if (feedCommentMsg.getAddtime() != null) {
-			String date = DateFormat.getDateInstance().format(feedCommentMsg.getAddtime());
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String date = dateFormat.format(feedCommentMsg.getAddtime());
 			comment.setCommentTime(date);
 		}
 		
@@ -249,7 +253,8 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 					comment.setCanDelete(false);
 				}
 				if (feedCommentMsg.getAddtime() != null) {
-					String date = DateFormat.getDateInstance().format(feedCommentMsg.getAddtime());
+					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String date = dateFormat.format(feedCommentMsg.getAddtime());
 					comment.setCommentTime(date);
 				}
 					commentList.add(comment);

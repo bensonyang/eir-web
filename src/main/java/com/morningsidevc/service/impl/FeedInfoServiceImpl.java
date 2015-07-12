@@ -4,6 +4,7 @@
 package com.morningsidevc.service.impl;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -277,7 +278,8 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		feed.setMsgId(feedInfo.getMsgid());
 		
 		if (feedInfo.getAddtime() != null) {
-			String date = DateFormat.getDateInstance().format(feedInfo.getAddtime());
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String date = dateFormat.format(feedInfo.getAddtime());
 			feed.setAddTime(date);
 		}
 		
