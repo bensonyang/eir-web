@@ -278,17 +278,12 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 
 	@Override
 	public int deleteCommentOfFeed(Integer feedId, Integer feedUserId) {
-		
 		FeedCommentMsgExample example = new FeedCommentMsgExample();
 		example.createCriteria().andFeedidEqualTo(feedId);
 		
 		FeedCommentMsg record = new FeedCommentMsg();
 		record.setStatus(CommentStatus.DELETED.getValue());
 		int commentCount = feedCommentMsgMapper.updateByExampleSelective(record, example);
-		
-		if (commentCount > 0) {
-			userFeedCounterService.decreaseCounterByOffset(feedUserId, CounterType.CommentCounter.getValue(), commentCount);
-		}
 		
 		return commentCount;
 	}
