@@ -292,7 +292,7 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                 data:{feedId:_feedId},
                 success:function(data){
                     if(data.code == 200){
-                        _a.text("已赞");
+                        _a.text("取消赞");
                         _a.removeClass("unliked");
                         _a.addClass("liked");
                         _a.unbind("click");
