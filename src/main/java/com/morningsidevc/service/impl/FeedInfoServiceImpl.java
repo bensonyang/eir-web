@@ -281,4 +281,9 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		
 		return feed;
 	}
+
+	@Override
+	public FeedInfo loadFeedInfo(Integer feedId) throws Exception {
+		return feedInfoMapper.selectByPrimaryKey(feedId);
+	}
 }

@@ -81,8 +81,8 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                     $('div[data-feedId='+ data.feedId +']').slideDown(500);
                 });
                 $('.eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
-                $('.eir-feed .eir-feed-options .icon-thumbs-up.unliked a').click(HANDLERS.likeFeedHandler);//Feed点赞
-                $('.eir-feed .eir-feed-options .icon-thumbs-up.liked a').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
+                $('.eir-feed .eir-feed-options .icon-thumbs-up .unliked').click(HANDLERS.likeFeedHandler);//Feed点赞
+                $('.eir-feed .eir-feed-options .icon-thumbs-up .liked').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
                 $('.eir-get-more-comments .a-more-comments').click(HANDLERS.getMoreFeedCommentsHandler);//获取更多Comments
                 $('[data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
                 $('.eir-feed a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
@@ -243,8 +243,8 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
                     $('.feed-container').prepend(compiled(data.msg.feeds[0]));
                     $('div[data-feedId='+ data.msg.feeds[0].feedId +']').slideDown(500);
                     $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//新内容绑定评论框聚焦事件
-                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up.unliked a').click(HANDLERS.likeFeedHandler);
-                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up.liked a').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
+                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up .unliked').click(HANDLERS.likeFeedHandler);
+                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up .liked').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
                     $('div[data-feedId='+ data.msg.feeds[0].feedId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
                     $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
                     $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
@@ -475,8 +475,8 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
     $('.eir-comments-btn').click(HANDLERS.commentsOnClickHandler);//发表说说
     $('.eir-feed a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除按钮事件
     $('.eir-feed a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除按钮事件
-    $('.eir-feed .eir-feed-options .icon-thumbs-up.unliked a').click(HANDLERS.likeFeedHandler);//Feed点赞
-    $('.eir-feed .eir-feed-options .icon-thumbs-up.liked a').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
+    $('.eir-feed .eir-feed-options .icon-thumbs-up .unliked').click(HANDLERS.likeFeedHandler);//Feed点赞
+    $('.eir-feed .eir-feed-options .icon-thumbs-up .liked').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
     $('.eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
     $('.eir-get-more-comments .a-more-comments').click(HANDLERS.getMoreFeedCommentsHandler);//获取更多评论
     $('.eir-feed .eir-feed-comments-comments').click(HANDLERS.commentToFeedHandler);//Feed下面添加评论
