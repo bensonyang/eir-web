@@ -6,7 +6,7 @@
             </div>
             <div class="eir-feed-name-group">
                 <span class="eir-feed-name"><%= author.realName %></span>
-                <span class="eir-feed-summary"><%= author.company %> <%= author.jobTiltle %></span>
+                <span class="eir-feed-summary"><%= author.company %> <%= author.jobTitle %></span>
             </div>
         </div>
         <div class="row eir-feed-content">
