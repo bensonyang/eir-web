@@ -370,7 +370,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                           $('a[data-commentid='+comment.commentId+']').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
                           $('div[data-commentid='+ comment.commentId +'] a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
                       });
-                      _this.attr('data-lastcommentindex',data.msg.lastFeedIndex);
+                      _this.data('lastcommentindex',data.msg.lastCommentIndex);
                       var _c = _this.find('c');
                       if(_c != undefined){
                           var currentCount = parseInt(_this.find('c').text());
