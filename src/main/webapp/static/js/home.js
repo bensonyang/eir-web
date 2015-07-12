@@ -433,9 +433,13 @@ require(["API","jquery","underscore","templates","tooltip","popover"], function(
             var _feed = $(this).closest('.eir-feed');
             var _touserid = $(this).data('userid');
             var compiled =  _.template(templates.feedCommentMore);
-            $(this).closest('.eir-feed-comments-item').after(compiled({type:"backComment",touserid:_touserid})).fadeIn(1000);
-            _feed.find('textarea[backComment]').focus()
-            _feed.find('a[backComment]').click(HANDLERS.commentToFeedHandler);
+            var _next = $(this).closest('.eir-feed-comments-item').next();
+            if(_next.hasClass('eir-feed-comments-more')){
+                return;
+            }
+            $(this).closest('.eir-feed-comments-item').after(compiled({type:"actBackComment",touserid:_touserid})).fadeIn(1000);
+            _feed.find('textarea[actBackComment]').focus()
+            _feed.find('a[actBackComment]').click(HANDLERS.commentToFeedHandler);
         },
         loginHandler:function(){
             var _uid = $('#uid').val();

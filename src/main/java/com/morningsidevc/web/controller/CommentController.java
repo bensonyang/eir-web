@@ -105,7 +105,7 @@ public class CommentController extends BaseController{
     }
 
     private Integer lastCommentIndex(List<Comment> comments){
-        if(CollectionUtils.isEmpty(comments)) return Integer.MAX_VALUE;
+        if(CollectionUtils.isEmpty(comments)) return 0;
         if(comments.size() == 1) return comments.get(0).getCommentId();//只有一个 不用排序
         Collections.sort(comments, new Comparator<Comment>() {
             @Override

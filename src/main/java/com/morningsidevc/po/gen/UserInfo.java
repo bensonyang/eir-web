@@ -1,5 +1,7 @@
 package com.morningsidevc.po.gen;
 
+import org.springframework.util.StringUtils;
+
 import java.util.Date;
 
 public class UserInfo {
@@ -50,6 +52,7 @@ public class UserInfo {
     }
 
     public String getRealname() {
+        if(StringUtils.isEmpty(realname)) return nickname;
         return realname;
     }
 
