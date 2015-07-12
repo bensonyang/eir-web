@@ -59,6 +59,9 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	@Resource
 	private UserFeedCounterMapper userFeedCounterMapper;
 	
+	@Resource
+	private UserFeedCounterService userFeedCounterService;
+	
 	/* (non-Javadoc)
 	 * @see com.morningsidevc.service.FeedInfoService#addFeed(java.lang.Integer, java.lang.String)
 	 */
@@ -118,8 +121,14 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 
 	@Override
 	public void deleteFeed(Integer feedId) throws Exception {
-		Integer ret = feedInfoMapper.deleteByPrimaryKey(feedId);
-		Assert.state( ret > 0);
+		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
+		
+		if (feedInfo != null) {
+			Integer ret = feedInfoMapper.deleteByPrimaryKey(feedId);
+			Assert.state( ret > 0);
+			
+			userFeedCounterService.decreaseCounterByOne(feedInfo.getUserid(), CounterType.FeedCounter.getValue());
+		}
 	}
 
 	/* (non-Javadoc)
@@ -176,6 +185,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		feedInfoExample.setLimitEnd(pageSize);
 		feedInfoExample.setDistinct(true);
 		feedInfoExample.setOrderByClause("FeedId DESC");
+		feedInfoExample.createCriteria().andStatusEqualTo(FeedStatus.NORMAL);
 		
 		/* retrieve feeds */
 		List<FeedInfo> feedInfoList = feedInfoMapper.selectByExample(feedInfoExample);

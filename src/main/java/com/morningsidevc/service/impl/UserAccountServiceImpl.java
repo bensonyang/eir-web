@@ -1,6 +1,7 @@
 package com.morningsidevc.service.impl;
 
 import com.morningsidevc.dao.gen.AccountMapper;
+import com.morningsidevc.enums.AccountStatus;
 import com.morningsidevc.po.gen.Account;
 import com.morningsidevc.po.gen.AccountExample;
 import com.morningsidevc.service.UserAccountService;
@@ -26,7 +27,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     public int validate(String account, String password) {
 
         AccountExample example = new AccountExample();
-        example.createCriteria().andUseremailEqualTo(account.trim());
+        example.createCriteria().andUseremailEqualTo(account.trim()).andStatusEqualTo(AccountStatus.NORMAL.getValue());
 
         List<Account> result = accountMapper.selectByExample(example);
         if (CollectionUtils.isEmpty(result)) {
@@ -46,7 +47,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         Account userAccount = new Account();
         userAccount.setUseremail(email);
         userAccount.setUserpassword(EncryptionUtils.md5Hex(password, false, false));
-        userAccount.setStatus((byte) 0);
+        userAccount.setStatus(AccountStatus.NORMAL.getValue());
         int result = accountMapper.insertSelective(userAccount);
 
         if (result <= 0) {
@@ -76,7 +77,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     public Account loadRyEmail(String email) {
 
         AccountExample example = new AccountExample();
-        example.createCriteria().andUseremailEqualTo(email.trim());
+        example.createCriteria().andUseremailEqualTo(email.trim()).andStatusEqualTo(AccountStatus.NORMAL.getValue());
 
         List<Account> result = accountMapper.selectByExample(example);
         if (CollectionUtils.isEmpty(result)) {

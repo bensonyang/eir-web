@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import com.morningsidevc.dao.gen.FeedInfoMapper;
 import com.morningsidevc.dao.gen.UserFeedCounterMapper;
 import com.morningsidevc.dao.gen.UserInfoMapper;
+import com.morningsidevc.enums.CommentStatus;
 import com.morningsidevc.enums.CounterType;
 import com.morningsidevc.po.gen.*;
 import com.morningsidevc.web.request.AddCommentRequest;
@@ -42,7 +43,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		Comment comment = new Comment();
 		FeedCommentMsgExample feedCommentMsgExample = new FeedCommentMsgExample();
 		
-		feedCommentMsgExample.or().andFeedidEqualTo(feedId);
+		feedCommentMsgExample.createCriteria().andFeedidEqualTo(feedId).andStatusEqualTo(CommentStatus.NORMAL.getValue());
 		feedCommentMsgExample.setOrderByClause("AddTime DESC Limit 1");
 		
 		List<FeedCommentMsg> resultList = feedCommentMsgMapper.selectByExample(feedCommentMsgExample);
@@ -73,7 +74,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		Map<Integer, List<Comment>> commentMap = new HashMap<Integer, List<Comment>>();
 		FeedCommentMsgExample example = new FeedCommentMsgExample();
 		example.setOrderByClause("AddTime DESC");
-		example.createCriteria().andFeedidIn(feedIds).andCommentidGreaterThan(0);
+		example.createCriteria().andFeedidIn(feedIds).andStatusEqualTo(CommentStatus.NORMAL.getValue());
 		List<FeedCommentMsg> comments = feedCommentMsgMapper.selectByExample(example);
 		if(!CollectionUtils.isEmpty(comments)){
 			List<Integer> userIds = new ArrayList<Integer>(userIds(comments));
@@ -217,7 +218,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		example.setOrderByClause("AddTime DESC");
 		example.setLimitStart(0);
 		example.setLimitEnd(pageSize);
-		example.createCriteria().andFeedidEqualTo(feedId).andCommentidLessThan(lastCommentIndex);
+		example.createCriteria().andFeedidEqualTo(feedId).andCommentidLessThan(lastCommentIndex).andStatusEqualTo(CommentStatus.NORMAL.getValue());
 		List<FeedCommentMsg> comments = feedCommentMsgMapper.selectByExample(example);
 		List<Comment> commentList = new LinkedList<Comment>();
 		if(!CollectionUtils.isEmpty(comments)){
@@ -264,6 +265,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		feedCommentMsg.setAddtime(new Date());
 		feedCommentMsg.setLasttime(new Date());
 		feedCommentMsg.setContent(request.getContent());
+		feedCommentMsg.setStatus(CommentStatus.NORMAL.getValue());
 		if(request.getToUserId() != null){
 			feedCommentMsg.setTouserid(request.getToUserId());
 		}

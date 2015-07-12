@@ -48,7 +48,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 		
 		Map<Integer, User> userMap = new HashMap<Integer, User>(); 
 		UserInfoExample example = new UserInfoExample();
-		example.or().andUseridIn(userIds);
+		example.createCriteria().andUseridIn(userIds);
 		
 		List<UserInfo> userInfoList = userInfoMapper.selectByExample(example);
 		if (userInfoList != null && userInfoList.size() != 0) {
