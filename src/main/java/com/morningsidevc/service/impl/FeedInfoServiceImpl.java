@@ -127,7 +127,9 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			Integer ret = feedInfoMapper.deleteByPrimaryKey(feedId);
 			Assert.state( ret > 0);
 			
-			userFeedCounterService.decreaseCounterByOne(feedInfo.getUserid(), CounterType.FeedCounter.getValue());
+			userFeedCounterService.decreaseCounterByOffset(feedInfo.getUserid(), CounterType.FeedCounter.getValue(), 1);
+			
+			feedCommentService.deleteCommentOfFeed(feedId, feedInfo.getUserid());
 		}
 	}
 

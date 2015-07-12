@@ -27,6 +27,8 @@ public interface FeedCommentService {
 	 * @return
 	 */
 	DeleteCommentResponse deleteComment(Integer commentId);
+	
+	int deleteCommentOfFeed(Integer feedId, Integer feedUserId);
 
 	/**
 	 * 获取更多评论

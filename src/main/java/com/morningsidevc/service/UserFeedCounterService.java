@@ -12,7 +12,7 @@ import java.util.Map;
 public interface UserFeedCounterService {
 	Map<String, Integer> findUserCounter(Integer userId);
 	
-	void decreaseCounterByOne(Integer userId, Byte counterType);
+	void decreaseCounterByOffset(Integer userId, Byte counterType, int offset);
 	
-	void increaseCounterByOne(Integer userId, Byte counterType);
+	void increaseCounterByOffset(Integer userId, Byte counterType, int offset);
 }

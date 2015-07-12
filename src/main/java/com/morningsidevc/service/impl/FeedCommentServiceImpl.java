@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import com.morningsidevc.dao.gen.FeedCommentMsgMapper;
 import com.morningsidevc.service.FeedCommentService;
+import com.morningsidevc.service.UserFeedCounterService;
 import com.morningsidevc.vo.Comment;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -38,6 +39,9 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	private FeedInfoMapper feedInfoMapper;
 	@Resource
 	private UserInfoMapper userInfoMapper;
+	
+	@Resource
+	private UserFeedCounterService userFeedCounterService;
 	
 	public Comment loadLastestComment(Integer feedId) {
 		Comment comment = new Comment();
@@ -270,5 +274,22 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 			feedCommentMsg.setTouserid(request.getToUserId());
 		}
 		return feedCommentMsg;
+	}
+
+	@Override
+	public int deleteCommentOfFeed(Integer feedId, Integer feedUserId) {
+		
+		FeedCommentMsgExample example = new FeedCommentMsgExample();
+		example.createCriteria().andFeedidEqualTo(feedId);
+		
+		FeedCommentMsg record = new FeedCommentMsg();
+		record.setStatus(CommentStatus.DELETED.getValue());
+		int commentCount = feedCommentMsgMapper.updateByExampleSelective(record, example);
+		
+		if (commentCount > 0) {
+			userFeedCounterService.decreaseCounterByOffset(feedUserId, CounterType.CommentCounter.getValue(), commentCount);
+		}
+		
+		return commentCount;
 	}
 }
