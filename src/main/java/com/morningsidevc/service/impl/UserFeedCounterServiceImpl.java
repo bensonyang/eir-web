@@ -47,5 +47,37 @@ public class UserFeedCounterServiceImpl implements UserFeedCounterService {
 		}
 		return counterMap;
 	}
+	
+	@Override
+	public void decreaseCounterByOffset(Integer userId, Byte counterType, int offset) {
+		UserFeedCounterExample example = new UserFeedCounterExample();
+		example.createCriteria().andUseridEqualTo(userId).andCountertypeEqualTo(counterType);
+		
+		List<UserFeedCounter> result = mapper.selectByExample(example);
+		
+		if (result != null && result.size() > 0) {
+			Integer sum = result.get(0).getSum();
+			result.get(0).setSum(sum - offset);
+			
+			mapper.updateByPrimaryKeySelective(result.get(0));
+		}
+		
+	}
+
+	@Override
+	public void increaseCounterByOffset(Integer userId, Byte counterType, int offset) {
+		UserFeedCounterExample example = new UserFeedCounterExample();
+		example.createCriteria().andUseridEqualTo(userId).andCountertypeEqualTo(counterType);
+		
+		List<UserFeedCounter> result = mapper.selectByExample(example);
+		
+		if (result != null && result.size() > 0) {
+			Integer sum = result.get(0).getSum();
+			result.get(0).setSum(sum + offset);
+			
+			mapper.updateByPrimaryKeySelective(result.get(0));
+		}
+		
+	}
 
 }

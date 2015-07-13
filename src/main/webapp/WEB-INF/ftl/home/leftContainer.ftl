@@ -3,7 +3,7 @@
         <div class="row eir-options">
             <div class="col-md-4">
                 <i class="icon-comment icon-grey active" id="write-feed"><a>写说说</a></i>
-                <i class="icon-link icon-grey" id="recommend-link"><a>推荐网页</a></i>
+                <!--<i class="icon-link icon-grey" id="recommend-link"><a>推荐网页</a></i>-->
             </div>
         </div>
     </div>

@@ -47,4 +47,6 @@ public interface FeedInfoService {
 	void likeIncreasedByOne(Integer feedId) throws Exception;
 	
 	void likeDecreasedByOne(Integer feedId) throws Exception;
+
+	FeedInfo loadFeedInfo(Integer feedId) throws Exception;
 }

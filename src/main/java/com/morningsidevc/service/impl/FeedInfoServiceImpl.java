@@ -4,6 +4,7 @@
 package com.morningsidevc.service.impl;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,6 +59,9 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 
 	@Resource
 	private UserFeedCounterMapper userFeedCounterMapper;
+	
+	@Resource
+	private UserFeedCounterService userFeedCounterService;
 	
 	/* (non-Javadoc)
 	 * @see com.morningsidevc.service.FeedInfoService#addFeed(java.lang.Integer, java.lang.String)
@@ -118,8 +122,16 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 
 	@Override
 	public void deleteFeed(Integer feedId) throws Exception {
-		Integer ret = feedInfoMapper.deleteByPrimaryKey(feedId);
-		Assert.state( ret > 0);
+		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
+		
+		if (feedInfo != null) {
+			Integer ret = feedInfoMapper.deleteByPrimaryKey(feedId);
+			Assert.state( ret > 0);
+			
+			userFeedCounterService.decreaseCounterByOffset(feedInfo.getUserid(), CounterType.FeedCounter.getValue(), 1);
+			
+			feedCommentService.deleteCommentOfFeed(feedId, feedInfo.getUserid());
+		}
 	}
 
 	/* (non-Javadoc)
@@ -176,6 +188,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		feedInfoExample.setLimitEnd(pageSize);
 		feedInfoExample.setDistinct(true);
 		feedInfoExample.setOrderByClause("FeedId DESC");
+		feedInfoExample.createCriteria().andStatusEqualTo(FeedStatus.NORMAL);
 		
 		/* retrieve feeds */
 		List<FeedInfo> feedInfoList = feedInfoMapper.selectByExample(feedInfoExample);
@@ -265,10 +278,16 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		feed.setMsgId(feedInfo.getMsgid());
 		
 		if (feedInfo.getAddtime() != null) {
-			String date = DateFormat.getDateInstance().format(feedInfo.getAddtime());
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String date = dateFormat.format(feedInfo.getAddtime());
 			feed.setAddTime(date);
 		}
 		
 		return feed;
+	}
+
+	@Override
+	public FeedInfo loadFeedInfo(Integer feedId) throws Exception {
+		return feedInfoMapper.selectByPrimaryKey(feedId);
 	}
 }

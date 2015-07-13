@@ -4,6 +4,7 @@
 package com.morningsidevc.service.impl;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.annotation.Resource;
@@ -11,6 +12,7 @@ import javax.annotation.Resource;
 import com.morningsidevc.dao.gen.FeedInfoMapper;
 import com.morningsidevc.dao.gen.UserFeedCounterMapper;
 import com.morningsidevc.dao.gen.UserInfoMapper;
+import com.morningsidevc.enums.CommentStatus;
 import com.morningsidevc.enums.CounterType;
 import com.morningsidevc.po.gen.*;
 import com.morningsidevc.web.request.AddCommentRequest;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import com.morningsidevc.dao.gen.FeedCommentMsgMapper;
 import com.morningsidevc.service.FeedCommentService;
+import com.morningsidevc.service.UserFeedCounterService;
 import com.morningsidevc.vo.Comment;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -38,11 +41,14 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	@Resource
 	private UserInfoMapper userInfoMapper;
 	
+	@Resource
+	private UserFeedCounterService userFeedCounterService;
+	
 	public Comment loadLastestComment(Integer feedId) {
 		Comment comment = new Comment();
 		FeedCommentMsgExample feedCommentMsgExample = new FeedCommentMsgExample();
 		
-		feedCommentMsgExample.or().andFeedidEqualTo(feedId);
+		feedCommentMsgExample.createCriteria().andFeedidEqualTo(feedId).andStatusEqualTo(CommentStatus.NORMAL.getValue());
 		feedCommentMsgExample.setOrderByClause("AddTime DESC Limit 1");
 		
 		List<FeedCommentMsg> resultList = feedCommentMsgMapper.selectByExample(feedCommentMsgExample);
@@ -55,7 +61,8 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 			comment.setContent(result.getContent());
 			
 			if (result.getAddtime() != null) {
-				String date = DateFormat.getDateInstance().format(result.getAddtime());
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String date = dateFormat.format(result.getAddtime());
 				comment.setCommentTime(date);
 			}
 			
@@ -73,7 +80,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		Map<Integer, List<Comment>> commentMap = new HashMap<Integer, List<Comment>>();
 		FeedCommentMsgExample example = new FeedCommentMsgExample();
 		example.setOrderByClause("AddTime DESC");
-		example.createCriteria().andFeedidIn(feedIds).andCommentidGreaterThan(0);
+		example.createCriteria().andFeedidIn(feedIds).andStatusEqualTo(CommentStatus.NORMAL.getValue());
 		List<FeedCommentMsg> comments = feedCommentMsgMapper.selectByExample(example);
 		if(!CollectionUtils.isEmpty(comments)){
 			List<Integer> userIds = new ArrayList<Integer>(userIds(comments));
@@ -87,18 +94,19 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 				comment.setUserId(feedCommentMsg.getUserid());
 				comment.setToUserId(feedCommentMsg.getUserid());
 				comment.setContent(feedCommentMsg.getContent());
-				comment.setUserName(userInfoMap.get(feedCommentMsg.getUserid()).getNickname());
+				comment.setUserName(userInfoMap.get(feedCommentMsg.getUserid()).getRealname());
 				if(comment.getUserId() == currentUserId){
 					comment.setCanDelete(true);
 				}else{
 					comment.setCanDelete(false);
 				}
 				if(feedCommentMsg.getTouserid() != null){
-					comment.setToUserName(userInfoMap.get(feedCommentMsg.getTouserid()).getNickname());
+					comment.setToUserName(userInfoMap.get(feedCommentMsg.getTouserid()).getRealname());
 				}
 
 				if (feedCommentMsg.getAddtime() != null) {
-					String date = DateFormat.getDateInstance().format(feedCommentMsg.getAddtime());
+					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String date = dateFormat.format(feedCommentMsg.getAddtime());
 					comment.setCommentTime(date);
 				}
 
@@ -169,16 +177,17 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		comment.setCommentId(feedCommentMsg.getCommentid());
 		if(toUser != null){
 			comment.setToUserId(feedInfo.getUserid());
-			comment.setToUserName(toUser.getNickname());
+			comment.setToUserName(toUser.getRealname());
 		}else{
 			comment.setToUserId(0);
 			comment.setToUserName("");
 		}
 		comment.setUserId(currentUserId);
-		comment.setUserName(currentUser.getNickname());
+		comment.setUserName(currentUser.getRealname());
 		
 		if (feedCommentMsg.getAddtime() != null) {
-			String date = DateFormat.getDateInstance().format(feedCommentMsg.getAddtime());
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String date = dateFormat.format(feedCommentMsg.getAddtime());
 			comment.setCommentTime(date);
 		}
 		
@@ -217,7 +226,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		example.setOrderByClause("AddTime DESC");
 		example.setLimitStart(0);
 		example.setLimitEnd(pageSize);
-		example.createCriteria().andFeedidEqualTo(feedId).andCommentidLessThan(lastCommentIndex);
+		example.createCriteria().andFeedidEqualTo(feedId).andCommentidLessThan(lastCommentIndex).andStatusEqualTo(CommentStatus.NORMAL.getValue());
 		List<FeedCommentMsg> comments = feedCommentMsgMapper.selectByExample(example);
 		List<Comment> commentList = new LinkedList<Comment>();
 		if(!CollectionUtils.isEmpty(comments)){
@@ -244,7 +253,8 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 					comment.setCanDelete(false);
 				}
 				if (feedCommentMsg.getAddtime() != null) {
-					String date = DateFormat.getDateInstance().format(feedCommentMsg.getAddtime());
+					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String date = dateFormat.format(feedCommentMsg.getAddtime());
 					comment.setCommentTime(date);
 				}
 					commentList.add(comment);
@@ -264,9 +274,22 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		feedCommentMsg.setAddtime(new Date());
 		feedCommentMsg.setLasttime(new Date());
 		feedCommentMsg.setContent(request.getContent());
+		feedCommentMsg.setStatus(CommentStatus.NORMAL.getValue());
 		if(request.getToUserId() != null){
 			feedCommentMsg.setTouserid(request.getToUserId());
 		}
 		return feedCommentMsg;
+	}
+
+	@Override
+	public int deleteCommentOfFeed(Integer feedId, Integer feedUserId) {
+		FeedCommentMsgExample example = new FeedCommentMsgExample();
+		example.createCriteria().andFeedidEqualTo(feedId);
+		
+		FeedCommentMsg record = new FeedCommentMsg();
+		record.setStatus(CommentStatus.DELETED.getValue());
+		int commentCount = feedCommentMsgMapper.updateByExampleSelective(record, example);
+		
+		return commentCount;
 	}
 }

@@ -1,23 +1,26 @@
+/**
+ * 
+ */
 package com.morningsidevc.enums;
 
 /**
- * @author float.lu
+ * @author yangna
+ *
  */
-public enum CounterType {
-    
-    FeedCounter("FeedCounter", Byte.parseByte("0")),
-    CommentCounter("CommentCounter", Byte.parseByte("1"));
+public enum AccountStatus {
+    NORMAL("NORMAL", Byte.parseByte("0")),
+    BLOCKED("BLOCKED", Byte.parseByte("1"));
     
     private String name;
     private Byte value;
-    private CounterType(String name, Byte value) {
+    private AccountStatus(String name, Byte value) {
     	this.name = name;
     	this.value = value;
     }
     public static String getName(Byte value) {
-    	for (CounterType counter : CounterType.values()) {
-    		if (counter.value == value) {
-    			return counter.name;
+    	for (AccountStatus status : AccountStatus.values()) {
+    		if (status.value == value) {
+    			return status.name;
     		}
     	}
     	return "";

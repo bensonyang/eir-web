@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import com.morningsidevc.dao.gen.TagInfoMapper;
+import com.morningsidevc.enums.TagStatus;
 import com.morningsidevc.po.gen.TagInfo;
 import com.morningsidevc.po.gen.TagInfoExample;
 import com.morningsidevc.service.TagInfoService;
@@ -32,8 +33,8 @@ public class TagInfoServiceImpl implements TagInfoService {
 		List<Tag> tags = new ArrayList<Tag>();
 		
 		TagInfoExample example = new TagInfoExample();
-		//example.createCriteria().andStatusEqualTo((byte)0);
-		//example.setOrderByClause("`Order` ASC");
+		example.createCriteria().andStatusEqualTo(TagStatus.NORMAL.getValue());
+		example.setOrderByClause("OrderNum ASC");
 		List<TagInfo> tagInfos = mapper.selectByExample(example);
 		
 		if (!CollectionUtils.isEmpty(tagInfos)) {

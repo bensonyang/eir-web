@@ -9,7 +9,7 @@
             <span class="eir-summary">${loginUser.company}&nbsp;&nbsp;${loginUser.jobTitle}</span>
         </div>
         <div class="go-logout">
-            <a class="btn btn-default logout" href="#" role="button">
+            <a class="btn btn-default logout" href="#" title="退出" role="button">
                 <li class="icon-off icon-grey"></li>
             </a>
         </div>
