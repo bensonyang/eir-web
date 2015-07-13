@@ -76,9 +76,9 @@ public class LoginUtils {
 	 * @param userId
 	 * @param keepLogin
 	 */
-	public static void signon(int userId, String userEmail, boolean keepLogin, HttpServletRequest request, HttpServletResponse response) {
+	public static void signon(int userId, boolean keepLogin, HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute(Constants.BIZ_CONTEXT_USER_ID, String.valueOf(userId));
-		addSignonCookie(userId, userEmail, keepLogin, response);
+		addSignonCookie(userId, keepLogin, response);
 	}
 
 	/**
@@ -129,12 +129,12 @@ public class LoginUtils {
 	private static final int SECONDS_OF_DAY = 86400; // 一天的总秒数
 	private static final int EXPIRE_DATE = 31;// 保持登录的天数
 
-	private static void addSignonCookie(int userId, String userEmail, boolean keepLogin, HttpServletResponse response) {
-		String euser = EncryptionUtils.encrypt(getEuserToken(userId, userEmail, keepLogin));
+	private static void addSignonCookie(int userId, boolean keepLogin, HttpServletResponse response) {
+		String euser = EncryptionUtils.encrypt(getEuserToken(userId, keepLogin));
 		addEUserCookie(euser, keepLogin, response);
 	}
 
-	private static String getEuserToken(int userId, String userEmail, boolean keepLogin) {
+	private static String getEuserToken(int userId, boolean keepLogin) {
 
 		// 参数检查
 		if (userId < 1) {
@@ -154,8 +154,6 @@ public class LoginUtils {
 		// 组装dper token
 		StringBuffer sb = new StringBuffer();
 		sb.append(userId);
-		sb.append(SPLIT);
-		sb.append(userEmail);
 		sb.append(SPLIT);
 		sb.append(expireTime.getTime().getTime() / 1000);
 		sb.append(SPLIT);
@@ -210,7 +208,7 @@ public class LoginUtils {
 	public static String getUserId(String dper) {
 		// 以'|'分隔dper，确认格式
 		String[] tokens = dper.split("[|]");
-		if (tokens == null || tokens.length < 4) {
+		if (tokens == null || tokens.length < 3) {
 			return null;
 		}
 
@@ -226,7 +224,7 @@ public class LoginUtils {
 
 		// 解析过期时间
 		try {
-			Double expired = Double.valueOf(tokens[2]);
+			Double expired = Double.valueOf(tokens[1]);
 			long currentSeconds = Calendar.getInstance().getTime().getTime() / 1000;
 			if (expired.intValue() < currentSeconds) {
 				// 判断dper中的过期时间

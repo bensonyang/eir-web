@@ -58,7 +58,7 @@ public class RegisterController extends BaseController {
             userInfo.setUserid(userId);
             UserInfo newUser = userInfoService.createUser(userInfo);
             Assert.notNull(newUser);
-            LoginUtils.signon(userId, email, true, request, response);
+            LoginUtils.signon(userId, true, request, response);
             jsonResponse.setCode(200);
         }catch (Exception e){
             jsonResponse.setCode(500);

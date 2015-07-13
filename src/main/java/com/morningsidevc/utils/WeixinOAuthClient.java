@@ -31,8 +31,8 @@ public class WeixinOAuthClient {
     private static final String GET_USER_INFO_URL = "https://api.weixin.qq.com/sns/userinfo";
 
 
-    private static final String WEIXIN_APPID = "wx841a97238d9e17b2";
-    private static final String WEIXIN_SECRET = "cd011983a415b327892e75cd5ce5e9f1";
+    private static final String WEIXIN_APPID = "38d9e17b2";
+    private static final String WEIXIN_SECRET = "cd5b3e75cd5ce5e9f1";
 
 
 
@@ -41,7 +41,7 @@ public class WeixinOAuthClient {
      *
      * @return
      */
-    public WeixinUserToken getWeixinUserToken(String authcode) {
+    public static WeixinUserToken getWeixinUserToken(String authcode) {
 
         if (StringUtils.isBlank(authcode)) {
             return null;
@@ -68,7 +68,7 @@ public class WeixinOAuthClient {
             String unionid = accessInfo.getString("unionid");
 
             if (StringUtils.isBlank(accessToken) || StringUtils.isBlank(openId) || StringUtils.isBlank(unionid)) {
-                throw null;
+                return null;
             }
 
             weixinUserToken.setAccessToken(accessToken);
@@ -90,7 +90,7 @@ public class WeixinOAuthClient {
      *
      * @return
      */
-    public WeixinUser getWeixinUser(String accessToken, String openId) {
+    public static WeixinUser getWeixinUser(String accessToken, String openId) {
 
         if (StringUtils.isBlank(accessToken) || StringUtils.isBlank(openId)) {
             return null;
@@ -117,7 +117,7 @@ public class WeixinOAuthClient {
             String unionid = userInfo.getString("unionid");
 
             if (StringUtils.isBlank(nickName) || StringUtils.isBlank(headimgurl) || StringUtils.isBlank(unionid)) {
-                throw null;
+                return null;
             }
 
             weixinUser.setNickName(nickName);

@@ -10,15 +10,31 @@ import com.morningsidevc.po.gen.WeixinUserInfo;
 public interface WeixinUserService {
 
 
+    /**
+     * 根据authcode验证解析微信用户信息
+     *
+     * @param authcode
+     * @return
+     */
     WeixinUserInfo authWeixinUserInfo(String authcode);
 
 
-
+    /**
+     * 根据userID获取微信用户信息
+     *
+     * @param userId
+     * @return
+     */
     WeixinUserInfo getWeixinUserInfoByUserId(int userId);
 
 
-
-    WeixinUserInfo getWeixinUserInfoByUnionid(String unionid);
+    /**
+     * 根据微信unionId获取微信用户信息
+     *
+     * @param unionId
+     * @return
+     */
+    WeixinUserInfo getWeixinUserInfoByUnionid(String unionId);
 
 
 
