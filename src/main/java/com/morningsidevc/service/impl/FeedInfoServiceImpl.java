@@ -110,11 +110,49 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	 * @see com.morningsidevc.service.FeedInfoService#addFeed(java.lang.Integer, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public Integer addFeed(Integer userId, String url, String content, String tagName)
+	public FeedInfo addFeed(Integer userId, String url,String title, String content, String tagName)
 			throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-
+		if(StringUtils.length(content) > 140){
+			throw new RuntimeException(String.format("微博长度不得超过140,当前长度为:" +
+					"%s",StringUtils.length(content)));
+		}
+		WebPageMsg webPageMsg = new WebPageMsg();
+		webPageMsg.setTitle(title);
+		webPageMsg.setDescription(content);
+		webPageMsg.setWebpageurl(url);
+		Integer webPageMsgId = webPageMsgService.insertWebPageMsg(webPageMsg);
+		if(webPageMsgId == null){
+			throw new RuntimeException(String.format("微博内容可能持久化失败，返回ID为:" +
+					"%s",webPageMsgId));
+		}
+		UserFeedCounterExample example = new UserFeedCounterExample();
+		example.createCriteria().andUseridEqualTo(userId)
+				.andCountertypeEqualTo(CounterType.FeedCounter.getValue());
+		List<UserFeedCounter> counters = userFeedCounterMapper.selectByExample(example);
+		if(counters == null || counters.size() < 1){
+			UserFeedCounter counter = new UserFeedCounter();
+			counter.setUserid(userId);
+			counter.setSum(1);
+			counter.setCountertype(CounterType.FeedCounter.getValue());
+			userFeedCounterMapper.insertSelective(counter);
+		}else{
+			counters.get(0).setSum(counters.get(0).getSum() + 1);
+			userFeedCounterMapper.updateByPrimaryKeySelective(counters.get(0));
+		}
+		Integer initCommentCount = 0, initLikeCount = 0;
+		FeedInfo feedInfo = new FeedInfo();
+		feedInfo.setUserid(userId);
+		feedInfo.setAddtime(new Date());
+		feedInfo.setCommentcount(initCommentCount);
+		feedInfo.setLikecount(initLikeCount);
+		feedInfo.setLasttime(new Date());
+		feedInfo.setTagname(tagName);
+		feedInfo.setMsgid(webPageMsgId);
+		feedInfo.setStatus(FeedStatus.NORMAL);
+		feedInfo.setMsgtype(MsgType.LINK);
+		Integer feedId = feedInfoMapper.insert(feedInfo);
+		Assert.state(feedId >= 0);
+		return feedInfoMapper.selectByPrimaryKey(feedInfo.getFeedid());
 	}
 
 	@Override

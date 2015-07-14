@@ -12,7 +12,9 @@ import com.morningsidevc.enums.FeedType;
 import com.morningsidevc.enums.HttpResponseStatus;
 import com.morningsidevc.enums.MsgType;
 import com.morningsidevc.po.gen.FeedInfo;
+import com.morningsidevc.po.gen.WebPageMsg;
 import com.morningsidevc.service.UserInfoService;
+import com.morningsidevc.service.WebPageMsgService;
 import com.morningsidevc.service.WeiboMsgService;
 import com.morningsidevc.utils.DateTimeUtils;
 import com.morningsidevc.vo.*;
@@ -42,6 +44,8 @@ public class FeedController extends BaseController{
 	private UserInfoService userInfoService;
 	@Resource
 	private WeiboMsgService weiboMsgService;
+	@Resource
+	private WebPageMsgService webPageMsgService;
 
 	/* Ajax json */
 	@RequestMapping(value = "morefeed", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
@@ -110,6 +114,53 @@ public class FeedController extends BaseController{
 			feed.setAuthorId(feedInfo.getUserid());
 			WeiboMsgBody weiboMsgBody = weiboMsgService.loadMsgBody(feedInfo.getMsgid());
 			feed.setMsgBody(weiboMsgBody);
+			User user = userInfoService.load(feedInfo.getUserid());
+			feed.setAuthor(user);
+			feed.setCanDelete(true);
+			feed.setComment(new ArrayList<Comment>());
+			feed.setLastCommentIndex(0);
+			feedResponse.setFeeds(Arrays.asList(new Feed[]{feed}));
+			response.setCode(200);
+			response.setMsg(feedResponse);
+		}catch (Exception e){
+			response.setCode(500);
+			response.setMsg("服务器错误");
+		}
+		return response;
+	}
+
+	@RequestMapping(value = "linkfeed", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public JsonResponse linkfeed(String tagName, String title, String content, String link){
+		JsonResponse response = new JsonResponse();
+
+		if (!super.isLogin()) {
+			return new JsonResponse(HttpResponseStatus.nologinCode, HttpResponseStatus.nologinMsg);
+		}
+
+		try{
+			Assert.state(StringUtils.isNotBlank(content));
+			if(StringUtils.isNotBlank(tagName)){
+				tagName = "无";
+			}
+			if(getUserId() == 0){
+				response.setCode(300);
+				return response;
+			}
+			FeedInfo feedInfo = feedInfoService.addFeed(getUserId(),link,title,content,tagName);
+			Assert.notNull(feedInfo);
+			FeedResponse feedResponse = new FeedResponse();
+			Feed feed = new Feed();
+			feed.setAddTime(DateTimeUtils.date2SmartFormat(feedInfo.getAddtime()));
+			feed.setFeedId(feedInfo.getFeedid());
+			feed.setMsgId(feedInfo.getMsgid());
+			feed.setFeedType(Integer.valueOf(MsgType.SHUOFEED));
+			feed.setCommentCount(0);
+			feed.setLikeCount(0);
+			feed.setTag(feedInfo.getTagname());
+			feed.setAuthorId(feedInfo.getUserid());
+			WebPageMsgBody webPageMsg = webPageMsgService.loadMsgBody(feedInfo.getMsgid());
+			feed.setMsgBody(webPageMsg);
 			User user = userInfoService.load(feedInfo.getUserid());
 			feed.setAuthor(user);
 			feed.setCanDelete(true);

@@ -19,7 +19,7 @@ public class CrawlerController {
 
     private static Logger LOG = LoggerFactory.getLogger("crawler.controller");
 
-    @RequestMapping(value = "get", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "get", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public JsonResponse crawler(String url){
         JsonResponse response = new JsonResponse();
