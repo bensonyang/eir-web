@@ -143,6 +143,16 @@ CREATE TABLE IF NOT EXISTS `EIR`.`TagInfo` (
 	INDEX `IX_TagInfo_Order`(`OrderNum`, `Status`)
 ) ENGINE=`InnoDB` DEFAULT CHARSET=utf8;
 
+/* 微信用户开放平台ID映射表 */
+DROP TABLE `EIR`.`WeixinUserMapping`;
+CREATE TABLE `WeixinUserMapping` (
+  `ID` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `UnionId` varchar(100) NOT NULL DEFAULT '' COMMENT '微信用户统一标示',
+  `OpenId` varchar(100) NOT NULL DEFAULT '' COMMENT '微信用户openID',
+  `Channel` tinyint(3) NOT NULL COMMENT '微信用户来源渠道',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 
