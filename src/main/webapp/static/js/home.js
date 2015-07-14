@@ -522,9 +522,12 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
         },
         closeAbstractDivHandler:function(){
             $('.link-page-content').hide();
+            $('.link-page-content-title span').text("");
+            $('.link-page-content-abstract').text("");
             $('.for-recommend-link').show();
             $('.eir-recommend-link').val('');
-            $('.link-page-content').show();
+            $('.main-textarea').show();
+
         }
     };
     //################################事件处理器配置END#######################################
