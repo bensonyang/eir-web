@@ -48,10 +48,11 @@
         <!--   <table tableName="myDesc" domainObjectName="DescBean">
                <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()"/>
            </table>-->
+        <!--
         <table tableName="Account" domainObjectName="Account">
             <generatedKey column="UserId" sqlStatement="SELECT LAST_INSERT_ID()" type="post" identity="true"/>
         </table>
-        <!--
+
         <table tableName="UserInfo" domainObjectName="UserInfo">
         </table>
         <table tableName="UserFeedCounter" domainObjectName="UserFeedCounter">
@@ -78,6 +79,9 @@
             <generatedKey column="TagId" sqlStatement="SELECT LAST_INSERT_ID()" type="post" identity="true"/>
         </table>
         -->
+        <table tableName="WeixinUserMapping" domainObjectName="WeixinUserMapping">
+            <generatedKey column="ID" sqlStatement="SELECT LAST_INSERT_ID()" type="post" identity="true"/>
+        </table>
     </context>
 
 </generatorConfiguration>
