@@ -43,6 +43,7 @@ public class HTMLCrawlerUtils {
 
     private static HTMLBean doGet(String url){
         HTMLBean html = new HTMLBean();
+        html.setUrl(url);
         try {
             Document doc = Jsoup.connect(url).timeout(TIMEOUT).get();
             html.setPageTitle(doc.title());
