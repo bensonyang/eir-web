@@ -276,7 +276,12 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                     $('div[data-feedId='+ data.msg.feeds[0].feedId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
                     $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
                     $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
-                    $('.form-group .main-textarea').val("");
+                    $('.link-page-content-title span').text("");
+                    $('.link-page-content-abstract').text("");
+                    $('.eir-recommend-link').val("");
+                    $('.main-textarea').show();
+                    $('.link-page-content').hide();
+                    $('.for-recommend-link').show();
                 }else if(data.code == 300){
                     toast(data.msg);
                 }else{
