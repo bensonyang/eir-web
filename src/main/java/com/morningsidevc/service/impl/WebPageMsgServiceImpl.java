@@ -69,6 +69,9 @@ public class WebPageMsgServiceImpl implements WebPageMsgService {
 		
 		return msgMap;
 	}
-	
-	
+	@Override
+	public Integer insertWebPageMsg(WebPageMsg webPageMsg) {
+		msgMapper.insertSelective(webPageMsg);
+		return webPageMsg.getMsgid();
+	}
 }

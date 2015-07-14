@@ -50,6 +50,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                                 $('div[data-feedId='+ data.feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
                                 $('div[data-feedId='+ data.feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler());//删除Feed事件注册
                                 $('div[data-feedId='+ data.feedId +'] a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
+                                $('div[data-feedId='+ data.feedId +'] .eir-get-more-comments .a-more-comments').click(HANDLERS.getMoreFeedCommentsHandler);//获取更多Comments
                             });
                         }else{
                             $('.feed-end').text("已经没有更多啦");
@@ -177,12 +178,15 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
         writeFeedOnClickHandler  :   function writeFeedClick(){
             $(this).siblings().removeClass('active');
             $(this).addClass('active');
+            $('.main-textarea').show();
             $('.for-recommend-link').hide();
+            $('.link-page-content').hide();
         },
         recommendLinkOnClickHandler   :   function recommendLink(){
             $(this).siblings().removeClass('active');
             $(this).addClass('active');
             $('.for-recommend-link').show();
+            $('.eir-recommend-link').val('');
         },
         clickTagHandler    :   function clickTag(){//单选tag
             $(this).siblings().find('li').removeClass('icon-tag');
@@ -199,12 +203,16 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
             var _tag = $('.form-group a[data-index]').text();
             var _link = $('.form-group .eir-recommend-link').val();
             var feedTypeId = $('.eir-options i.active').attr('id');
-            
+
+            var _title = $('.link-page-content-title span').text();
+            var _abstract = $('.link-page-content-abstract').text();
+
             var _cur = getByteLen(_content);
-            if(_cur == 0) {
+            var _linkAbstract = getByteLen(_title) + getByteLen(_abstract);
+            if(_cur == 0 && _linkAbstract == 0) {
                 toast("请输入评论后再提交。");
             	return false;
-            } else if(_cur <= 280){
+            } else if(_cur <= 280 && _linkAbstract <= 280){
             	// 符合长度
             } else {
                 toast("字数长度超出范围，请重新输入。");
@@ -230,7 +238,8 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                         url : API.linkFeed,
                         data:{
                             tagName : _tag,
-                            content : _content,
+                            title   : $.trim(_title),
+                            content : $.trim(_abstract),
                             link : _link
                         },
                         success : linkFeedCallback,
@@ -253,11 +262,31 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                 }else if(data.code == 300){
                     toast(data.msg);
                 }else{
-                    toast(data.msg);//TODO 优化弹框
+                    toast(data.msg);
                 }
             }
             function linkFeedCallback(data){
-
+                if(data.code == 200){
+                    var compiled =  _.template(templates.feedTemplate);
+                    $('.feed-container').prepend(compiled(data.msg.feeds[0]));
+                    $('div[data-feedId='+ data.msg.feeds[0].feedId +']').slideDown(500);
+                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//新内容绑定评论框聚焦事件
+                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up .unliked').click(HANDLERS.likeFeedHandler);
+                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up .liked').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
+                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
+                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
+                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
+                    $('.link-page-content-title span').text("");
+                    $('.link-page-content-abstract').text("");
+                    $('.eir-recommend-link').val("");
+                    $('.main-textarea').show();
+                    $('.link-page-content').hide();
+                    $('.for-recommend-link').show();
+                }else if(data.code == 300){
+                    toast(data.msg);
+                }else{
+                    toast(data.msg);
+                }
             }
             function errorCallback(){
 
@@ -471,6 +500,39 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                     window.location.reload();
                 }
             });
+        },
+        inputLinkOnClickHandler:function(){
+            var _linkIptDiv = $('.for-recommend-link');
+            var _urlIpt = $('.eir-recommend-link');
+            var _abstractDiv = $('.link-page-content');
+            var _mainTextArea = $('.main-textarea');
+            $.ajax({
+                type:'POST',
+                url:API.pageCrawler,
+                data:{url: $.trim(_urlIpt.val())},
+                success:function(data){
+                    if(data.code == 200){
+                        var _title = data.msg.pageTitle;
+                        var _abstract = data.msg.pageAbstract;
+                        $('.link-page-content-title span').text(_title);
+                        $('.link-page-content-abstract').text(_abstract);
+                        _linkIptDiv.hide();
+                        _abstractDiv.show();
+                        _mainTextArea.hide();
+                    }else{
+                        toast("服务器错误");
+                    }
+                }
+            });
+        },
+        closeAbstractDivHandler:function(){
+            $('.link-page-content').hide();
+            $('.link-page-content-title span').text("");
+            $('.link-page-content-abstract').text("");
+            $('.for-recommend-link').show();
+            $('.eir-recommend-link').val('');
+            $('.main-textarea').show();
+
         }
     };
     //################################事件处理器配置END#######################################
@@ -492,5 +554,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
     $('.eir-feef a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
     $('#login').click(HANDLERS.loginHandler);//登陆按钮
     $('.icon-off').click(HANDLERS.logOutHandler);//退出
+    $('.eir-input-link').click(HANDLERS.inputLinkOnClickHandler);//获取网页内容
+    $('.link-page-content-title .close').click(HANDLERS.closeAbstractDivHandler);//重新获取网页摘要
     //################################事件配置END#######################################
 });

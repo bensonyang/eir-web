@@ -34,7 +34,7 @@ public interface FeedInfoService {
 	 * @return FeedId
 	 * @throws Exception
 	 */
-	Integer addFeed(Integer userId, String url, String content, String tagName) throws Exception;
+	FeedInfo addFeed(Integer userId, String url,String title, String content, String tagName) throws Exception;
 	
 	void deleteFeed(Integer feedId) throws Exception;
 	

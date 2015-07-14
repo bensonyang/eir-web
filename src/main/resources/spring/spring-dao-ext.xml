@@ -2,8 +2,8 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" " http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
 
-       <bean id="userInfoDao" parent="baseMapper">
-              <property name="mapperInterface" value="com.morningsidevc.dao.UserInfoDao"></property>
+       <bean id="feedCommentDao" parent="baseMapper">
+              <property name="mapperInterface" value="com.morningsidevc.dao.FeedCommentDao"></property>
        </bean>
 
 </beans>

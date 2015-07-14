@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.morningsidevc.dao.FeedCommentDao" >
+    <resultMap id="BaseResultMap" type="com.morningsidevc.po.FeedCommentCount" >
+        <result column="FeedId" property="feedId" jdbcType="INTEGER" />
+        <result column="FeedCommentCount" property="feedCommentCount" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        FeedId, COUNT(*) AS FeedCommentCount
+    </sql>
+    <select id="selectFeedCommentCount" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List" />
+        from FeedCommentMsg
+        WHERE  FeedId IN
+        <foreach collection="feedIds" item="listItem" open="(" close=")" separator="," >
+            #{listItem}
+        </foreach>
+        GROUP BY FeedId
+    </select>
+</mapper>

@@ -9,11 +9,13 @@ import java.util.*;
 
 import javax.annotation.Resource;
 
+import com.morningsidevc.dao.FeedCommentDao;
 import com.morningsidevc.dao.gen.FeedInfoMapper;
 import com.morningsidevc.dao.gen.UserFeedCounterMapper;
 import com.morningsidevc.dao.gen.UserInfoMapper;
 import com.morningsidevc.enums.CommentStatus;
 import com.morningsidevc.enums.CounterType;
+import com.morningsidevc.po.FeedCommentCount;
 import com.morningsidevc.po.gen.*;
 import com.morningsidevc.web.request.AddCommentRequest;
 import com.morningsidevc.web.response.DeleteCommentResponse;
@@ -40,6 +42,8 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	private FeedInfoMapper feedInfoMapper;
 	@Resource
 	private UserInfoMapper userInfoMapper;
+	@Resource
+	private FeedCommentDao feedCommentDao;
 	
 	@Resource
 	private UserFeedCounterService userFeedCounterService;
@@ -291,5 +295,10 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		int commentCount = feedCommentMsgMapper.updateByExampleSelective(record, example);
 		
 		return commentCount;
+	}
+
+	@Override
+	public List<FeedCommentCount> findFeedCommentsCountByFeedIds(List<Integer> feedIds) throws Exception {
+		return feedCommentDao.selectFeedCommentCount(feedIds);
 	}
 }
