@@ -50,6 +50,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                                 $('div[data-feedId='+ data.feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
                                 $('div[data-feedId='+ data.feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler());//删除Feed事件注册
                                 $('div[data-feedId='+ data.feedId +'] a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
+                                $('div[data-feedId='+ data.feedId +'] .eir-get-more-comments .a-more-comments').click(HANDLERS.getMoreFeedCommentsHandler);//获取更多Comments
                             });
                         }else{
                             $('.feed-end').text("已经没有更多啦");

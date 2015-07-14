@@ -3,6 +3,7 @@ package com.morningsidevc.service;
 import java.util.List;
 import java.util.Map;
 
+import com.morningsidevc.po.FeedCommentCount;
 import com.morningsidevc.vo.Comment;
 import com.morningsidevc.web.request.AddCommentRequest;
 import com.morningsidevc.web.response.DeleteCommentResponse;
@@ -39,4 +40,6 @@ public interface FeedCommentService {
 	 * @return
 	 */
 	List<Comment> moreComment(Integer lastCommentIndex, Integer feedId, Integer pageSize, Integer currentUserId) throws Exception;
+
+	List<FeedCommentCount> findFeedCommentsCountByFeedIds(List<Integer> feedIds)throws Exception;
 }

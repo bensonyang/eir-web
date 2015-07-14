@@ -5,10 +5,7 @@ package com.morningsidevc.service.impl;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Resource;
 
@@ -17,6 +14,7 @@ import com.morningsidevc.enums.CounterType;
 import com.morningsidevc.enums.FeedStatus;
 import com.morningsidevc.enums.FeedType;
 import com.morningsidevc.enums.MsgType;
+import com.morningsidevc.po.FeedCommentCount;
 import com.morningsidevc.po.gen.*;
 import com.morningsidevc.service.*;
 import org.apache.commons.lang.StringUtils;
@@ -25,7 +23,6 @@ import org.springframework.stereotype.Component;
 import com.morningsidevc.dao.gen.FeedInfoMapper;
 import com.morningsidevc.vo.Comment;
 import com.morningsidevc.vo.Feed;
-import com.morningsidevc.vo.MsgBody;
 import com.morningsidevc.vo.User;
 import com.morningsidevc.vo.WebPageMsgBody;
 import com.morningsidevc.vo.WeiboMsgBody;
@@ -225,7 +222,15 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			Map<Integer, WeiboMsgBody> weiboMsg = this.weiboMsgService.findMsgBodys(weiboMsgIdList);
 			Map<Integer, WebPageMsgBody> webPageMsg = this.webPageMsgService.findMsgBodys(webPageMsgIdList);
 			Map<Integer, FeedLikeMsg> feedLikeMsgMap = this.feedLikeService.findIsLiked(feedIdList, currentUserId);
+			List<FeedCommentCount> feedCommentCounts = feedCommentService.findFeedCommentsCountByFeedIds(feedIdList);
+			Map<Integer,Integer> feedCommentCountMap = mapFeedIdToCommentCount(feedCommentCounts);
 			for (Feed element : feedList) {
+				//实时计算评论数
+				if(feedCommentCountMap.get(element.getFeedId()) != null){
+					element.setCommentCount(feedCommentCountMap.get(element.getFeedId()));
+				}else {
+					element.setCommentCount(0);
+				}
 				if (authors != null && authors.get(element.getAuthorId()) != null) {
 					element.setAuthor(authors.get(element.getAuthorId()).clone());
 				}
@@ -256,6 +261,14 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		}
 		
 		return feedList;
+	}
+
+	private Map<Integer,Integer> mapFeedIdToCommentCount(List<FeedCommentCount> feedCommentCounts){
+		Map<Integer, Integer> result = new HashMap<Integer, Integer>();
+		for(FeedCommentCount feedCommentCount : feedCommentCounts){
+			result.put(feedCommentCount.getFeedId(), feedCommentCount.getFeedCommentCount());
+		}
+		return result;
 	}
 
 	//取commentId最大的那个，comments的大小有可能是0，1，2
