@@ -7,6 +7,8 @@ import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.TimeUnit;
+
 
 /**
  * @author float.lu
@@ -32,7 +34,7 @@ public class HTMLCrawlerUtils {
             }catch (Exception e){
                 LOG.info("", e);
                 try {
-                    Thread.sleep(666);
+                    TimeUnit.MICROSECONDS.sleep(500);
                 }catch (InterruptedException ie){
                     LOG.info("", e);
                 }
