@@ -149,11 +149,12 @@ a {
   width: 80%;
   border: 1px solid #efefef;
   margin-bottom: 5px;
+  float: left;
 }
 .eir-input-link {
-  line-height: 11px;
+  line-height: 9px;
   font-size: 13px;
-  height: 24px;
+  height: 21px;
   margin-bottom: 3px;
   border: 1px solid #efefef;
 }
@@ -603,6 +604,28 @@ a {
   padding-bottom: 10px;
   font-size: 13px;
   color: #dbdbdb;
+}
+@media (min-width: 950px) {
+  .eir-feed-comments-item-content {
+    max-width: 90%;
+  }
+}
+@media (max-width: 950px) {
+  .eir-feed-comments-item-content {
+    max-width: 86%;
+  }
+}
+@media (max-width: 768px) {
+  max-width: 86%;
+}
+@media (max-width: 414px) {
+  max-width: 86%;
+}
+@media (max-width: 375px) {
+  max-width: 86%;
+}
+@media (max-width: 320px) {
+  max-width: 86%;
 }
 .eir-login {
   margin-top: 10px;
