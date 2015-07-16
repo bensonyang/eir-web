@@ -395,6 +395,76 @@ public class UserInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andAvatarurlIsNull() {
+            addCriterion("AvatarUrl is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarurlIsNotNull() {
+            addCriterion("AvatarUrl is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarurlEqualTo(String value) {
+            addCriterion("AvatarUrl =", value, "avatarurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarurlNotEqualTo(String value) {
+            addCriterion("AvatarUrl <>", value, "avatarurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarurlGreaterThan(String value) {
+            addCriterion("AvatarUrl >", value, "avatarurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarurlGreaterThanOrEqualTo(String value) {
+            addCriterion("AvatarUrl >=", value, "avatarurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarurlLessThan(String value) {
+            addCriterion("AvatarUrl <", value, "avatarurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarurlLessThanOrEqualTo(String value) {
+            addCriterion("AvatarUrl <=", value, "avatarurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarurlLike(String value) {
+            addCriterion("AvatarUrl like", value, "avatarurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarurlNotLike(String value) {
+            addCriterion("AvatarUrl not like", value, "avatarurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarurlIn(List<String> values) {
+            addCriterion("AvatarUrl in", values, "avatarurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarurlNotIn(List<String> values) {
+            addCriterion("AvatarUrl not in", values, "avatarurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarurlBetween(String value1, String value2) {
+            addCriterion("AvatarUrl between", value1, value2, "avatarurl");
+            return (Criteria) this;
+        }
+
+        public Criteria andAvatarurlNotBetween(String value1, String value2) {
+            addCriterion("AvatarUrl not between", value1, value2, "avatarurl");
+            return (Criteria) this;
+        }
+
         public Criteria andGenderIsNull() {
             addCriterion("Gender is null");
             return (Criteria) this;

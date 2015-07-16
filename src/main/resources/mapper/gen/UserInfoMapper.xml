@@ -6,6 +6,7 @@
     <result column="MobileNum" property="mobilenum" jdbcType="VARCHAR" />
     <result column="NickName" property="nickname" jdbcType="VARCHAR" />
     <result column="RealName" property="realname" jdbcType="VARCHAR" />
+    <result column="AvatarUrl" property="avatarurl" jdbcType="VARCHAR" />
     <result column="Gender" property="gender" jdbcType="TINYINT" />
     <result column="JobTitle" property="jobtitle" jdbcType="VARCHAR" />
     <result column="Company" property="company" jdbcType="VARCHAR" />
@@ -73,8 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    UserId, MobileNum, NickName, RealName, Gender, JobTitle, Company, Description, ProfileStatus, 
-    AddTime, LastTime
+    UserId, MobileNum, NickName, RealName, AvatarUrl, Gender, JobTitle, Company, Description, 
+    ProfileStatus, AddTime, LastTime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.morningsidevc.po.gen.UserInfoExample" >
     select
@@ -111,13 +112,15 @@
   </delete>
   <insert id="insert" parameterType="com.morningsidevc.po.gen.UserInfo" >
     insert into UserInfo (UserId, MobileNum, NickName, 
-      RealName, Gender, JobTitle, 
-      Company, Description, ProfileStatus, 
-      AddTime, LastTime)
+      RealName, AvatarUrl, Gender, 
+      JobTitle, Company, Description, 
+      ProfileStatus, AddTime, LastTime
+      )
     values (#{userid,jdbcType=INTEGER}, #{mobilenum,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
-      #{realname,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, #{jobtitle,jdbcType=VARCHAR}, 
-      #{company,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{profilestatus,jdbcType=TINYINT}, 
-      #{addtime,jdbcType=TIMESTAMP}, #{lasttime,jdbcType=TIMESTAMP})
+      #{realname,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, 
+      #{jobtitle,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{profilestatus,jdbcType=TINYINT}, #{addtime,jdbcType=TIMESTAMP}, #{lasttime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.morningsidevc.po.gen.UserInfo" >
     insert into UserInfo
@@ -133,6 +136,9 @@
       </if>
       <if test="realname != null" >
         RealName,
+      </if>
+      <if test="avatarurl != null" >
+        AvatarUrl,
       </if>
       <if test="gender != null" >
         Gender,
@@ -168,6 +174,9 @@
       </if>
       <if test="realname != null" >
         #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarurl != null" >
+        #{avatarurl,jdbcType=VARCHAR},
       </if>
       <if test="gender != null" >
         #{gender,jdbcType=TINYINT},
@@ -213,6 +222,9 @@
       <if test="record.realname != null" >
         RealName = #{record.realname,jdbcType=VARCHAR},
       </if>
+      <if test="record.avatarurl != null" >
+        AvatarUrl = #{record.avatarurl,jdbcType=VARCHAR},
+      </if>
       <if test="record.gender != null" >
         Gender = #{record.gender,jdbcType=TINYINT},
       </if>
@@ -245,6 +257,7 @@
       MobileNum = #{record.mobilenum,jdbcType=VARCHAR},
       NickName = #{record.nickname,jdbcType=VARCHAR},
       RealName = #{record.realname,jdbcType=VARCHAR},
+      AvatarUrl = #{record.avatarurl,jdbcType=VARCHAR},
       Gender = #{record.gender,jdbcType=TINYINT},
       JobTitle = #{record.jobtitle,jdbcType=VARCHAR},
       Company = #{record.company,jdbcType=VARCHAR},
@@ -267,6 +280,9 @@
       </if>
       <if test="realname != null" >
         RealName = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarurl != null" >
+        AvatarUrl = #{avatarurl,jdbcType=VARCHAR},
       </if>
       <if test="gender != null" >
         Gender = #{gender,jdbcType=TINYINT},
@@ -297,6 +313,7 @@
     set MobileNum = #{mobilenum,jdbcType=VARCHAR},
       NickName = #{nickname,jdbcType=VARCHAR},
       RealName = #{realname,jdbcType=VARCHAR},
+      AvatarUrl = #{avatarurl,jdbcType=VARCHAR},
       Gender = #{gender,jdbcType=TINYINT},
       JobTitle = #{jobtitle,jdbcType=VARCHAR},
       Company = #{company,jdbcType=VARCHAR},

@@ -1,7 +1,5 @@
 package com.morningsidevc.po.gen;
 
-import org.springframework.util.StringUtils;
-
 import java.util.Date;
 
 public class UserInfo {
@@ -12,6 +10,8 @@ public class UserInfo {
     private String nickname;
 
     private String realname;
+
+    private String avatarurl;
 
     private Byte gender;
 
@@ -52,12 +52,19 @@ public class UserInfo {
     }
 
     public String getRealname() {
-        if(StringUtils.isEmpty(realname)) return nickname;
         return realname;
     }
 
     public void setRealname(String realname) {
         this.realname = realname;
+    }
+
+    public String getAvatarurl() {
+        return avatarurl;
+    }
+
+    public void setAvatarurl(String avatarurl) {
+        this.avatarurl = avatarurl;
     }
 
     public Byte getGender() {
