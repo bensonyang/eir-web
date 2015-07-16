@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS `EIR`.`UserInfo` (
 	`MobileNum` varchar(20) COMMENT '用户手机号码',
 	`NickName` varchar(100) COMMENT '用户昵称',
 	`RealName` varchar(100) COMMENT '用户真实姓名',
+	`AvatarUrl` varchar(200) DEFAULT NULL COMMENT '用户头像Url',
 	`Gender` tinyint(3) COMMENT '用户性别(1-男, 2-女)',
 	`JobTitle` varchar(100) COMMENT '公司职位',
 	`Company` varchar(100) COMMENT '公司名称',
