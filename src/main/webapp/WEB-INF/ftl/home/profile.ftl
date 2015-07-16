@@ -9,10 +9,23 @@
             <span class="eir-summary">${loginUser.company}&nbsp;&nbsp;${loginUser.jobTitle}</span>
         </div>
         <div class="go-logout">
+            <li class="dropdown icon-cog meinfo icon-grey">
+                <a href="#" class="dropdown-toggle">
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">个人中心</a></li>
+                    <li><a href="#" onclick="goOut();">退出</a></li>
+                </ul>
+            </li>
+        </div>
+        <!--
+        <div class="go-logout">
             <a class="btn btn-default logout" href="#" title="退出" role="button">
                 <li class="icon-off icon-grey"></li>
             </a>
         </div>
+        -->
         <div class="eir-clear-both"></div>
         <div class="eir-line-hor">
         </div>

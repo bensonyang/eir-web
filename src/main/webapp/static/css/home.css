@@ -273,7 +273,7 @@ a {
   padding: 3px;
   display: inline-block;
 }
-.eir-profile .logout {
+.eir-profile .meinfo {
   border: 0px solid #eeeeee;
   margin-top: 5px;
   position: absolute;
@@ -614,18 +614,6 @@ a {
   .eir-feed-comments-item-content {
     max-width: 86%;
   }
-}
-@media (max-width: 768px) {
-  max-width: 86%;
-}
-@media (max-width: 414px) {
-  max-width: 86%;
-}
-@media (max-width: 375px) {
-  max-width: 86%;
-}
-@media (max-width: 320px) {
-  max-width: 86%;
 }
 .eir-login {
   margin-top: 10px;

@@ -533,6 +533,13 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
             $('.eir-recommend-link').val('');
             $('.main-textarea').show();
 
+        },
+        meinfoOnClickHandler:function(){
+            $(this).toggleClass('open');
+            $('.dropdown-toggle').focus()
+        },
+        meinfoHide:function(){
+            $('.meinfo').toggleClass('open');
         }
     };
     //################################事件处理器配置END#######################################
@@ -553,8 +560,11 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
     $('.eir-feed .eir-feed-comments-comments').click(HANDLERS.commentToFeedHandler);//Feed下面添加评论
     $('.eir-feef a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
     $('#login').click(HANDLERS.loginHandler);//登陆按钮
-    $('.icon-off').click(HANDLERS.logOutHandler);//退出
     $('.eir-input-link').click(HANDLERS.inputLinkOnClickHandler);//获取网页内容
     $('.link-page-content-title .close').click(HANDLERS.closeAbstractDivHandler);//重新获取网页摘要
+    $('.meinfo').click(HANDLERS.meinfoOnClickHandler);//个人中心
+    $('.dropdown-toggle').focusout(HANDLERS.meinfoHide);//隐藏个人中心
     //################################事件配置END#######################################
+
+    window.goOut = HANDLERS.logOutHandler ;
 });
