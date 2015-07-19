@@ -23,6 +23,7 @@ import com.morningsidevc.dao.gen.FeedCommentMsgMapper;
 import com.morningsidevc.service.FeedCommentService;
 import com.morningsidevc.service.UserFeedCounterService;
 import com.morningsidevc.vo.Comment;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
@@ -140,7 +141,9 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		}
 		return  userIds;
 	}
-	
+
+	@Override
+	@Transactional(rollbackFor = Throwable.class)
 	public Comment addComment(AddCommentRequest request, Integer currentUserId) throws Exception{
 		FeedInfo feedInfo = feedInfoService.loadFeedInfo(request.getFeedId());
 		UserInfo currentUser = userInfoService.loadUserInfoById(currentUserId);
@@ -173,6 +176,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Throwable.class)
 	public DeleteCommentResponse deleteComment(Integer commentId) {
 		FeedCommentMsg feedCommentMsg = feedCommentMsgMapper.selectByPrimaryKey(commentId);
 		FeedInfo feedInfo = feedInfoService.loadFeedInfo(feedCommentMsg.getFeedid());
@@ -246,6 +250,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Throwable.class)
 	public int deleteCommentOfFeed(Integer feedId, Integer feedUserId) {
 		FeedCommentMsgExample example = new FeedCommentMsgExample();
 		example.createCriteria().andFeedidEqualTo(feedId);

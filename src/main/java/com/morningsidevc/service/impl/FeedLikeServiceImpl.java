@@ -50,7 +50,7 @@ public class FeedLikeServiceImpl implements FeedLikeService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Throwable.class)
     public Integer deletelike(Integer feedId, Integer currentUserId) throws Exception{
         feedInfoService.cutFeedLikeCountByOne(feedId);
         FeedLikeMsgExample example = new FeedLikeMsgExample();

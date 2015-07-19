@@ -26,6 +26,7 @@ import com.morningsidevc.vo.Feed;
 import com.morningsidevc.vo.User;
 import com.morningsidevc.vo.WebPageMsgBody;
 import com.morningsidevc.vo.WeiboMsgBody;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
@@ -61,6 +62,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	private UserFeedCounterService userFeedCounterService;
 
 	@Override
+	@Transactional(rollbackFor = Throwable.class)
 	public FeedInfo addFeed(Integer userId, String content, String tagName) throws Exception {
 		if(StringUtils.length(content) > 140){
 			throw new RuntimeException(String.format("微博长度不得超过140,当前长度为:" +
@@ -326,6 +328,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Throwable.class)
 	public void cutFeedLikeCountByOne(Integer feedId) throws Exception {
 		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
 		feedInfo.setLikecount(feedInfo.getLikecount() - 1);
@@ -333,6 +336,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Throwable.class)
 	public void addFeedLikeCountByOne(Integer feedId) throws Exception {
 		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
 		feedInfo.setLikecount(feedInfo.getLikecount() + 1);
@@ -340,6 +344,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Throwable.class)
 	public void cutFeedCommentCountByOne(Integer feedId){
 		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
 		feedInfo.setCommentcount(feedInfo.getCommentcount() - 1);
@@ -347,6 +352,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Throwable.class)
 	public void addFeedCommentCountByOne(Integer feedId) throws Exception {
 		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
 		feedInfo.setCommentcount(feedInfo.getCommentcount() + 1);

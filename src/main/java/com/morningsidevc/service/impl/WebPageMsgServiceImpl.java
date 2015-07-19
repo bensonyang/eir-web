@@ -17,6 +17,7 @@ import com.morningsidevc.po.gen.WebPageMsgExample;
 import com.morningsidevc.service.WebPageMsgService;
 import com.morningsidevc.vo.WebPageMsgBody;
 import com.morningsidevc.vo.WeiboMsgBody;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author yangna
@@ -70,6 +71,7 @@ public class WebPageMsgServiceImpl implements WebPageMsgService {
 		return msgMap;
 	}
 	@Override
+	@Transactional(rollbackFor = Throwable.class)
 	public Integer insertWebPageMsg(WebPageMsg webPageMsg) {
 		msgMapper.insertSelective(webPageMsg);
 		return webPageMsg.getMsgid();

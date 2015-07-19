@@ -7,6 +7,7 @@ import com.morningsidevc.po.gen.AccountExample;
 import com.morningsidevc.service.UserAccountService;
 import com.morningsidevc.utils.EncryptionUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -43,6 +44,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
+    @Transactional(rollbackFor = Throwable.class)
     public int create(String email, String password) {
         Account userAccount = new Account();
         userAccount.setUseremail(email);
@@ -58,6 +60,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
+    @Transactional(rollbackFor = Throwable.class)
     public int updatePassword(int userId, String oldPassword, String newPassword) {
 
         Account userAccount = accountMapper.selectByPrimaryKey(userId);

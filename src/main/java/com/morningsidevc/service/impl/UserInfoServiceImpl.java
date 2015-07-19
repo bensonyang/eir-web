@@ -12,6 +12,7 @@ import com.morningsidevc.service.UserInfoService;
 import com.morningsidevc.vo.User;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -68,6 +69,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Throwable.class)
 	public UserInfo createUser(UserInfo userInfo) {
 		userInfo.setAddtime(new Date());
 		userInfo.setLasttime(new Date());
