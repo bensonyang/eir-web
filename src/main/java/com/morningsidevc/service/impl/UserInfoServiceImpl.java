@@ -74,4 +74,26 @@ public class UserInfoServiceImpl implements UserInfoService {
 		userInfoMapper.insertSelective(userInfo);
 		return userInfo;
 	}
+
+	@Override
+	public List<UserInfo> findUserInfoByIds(List<Integer> userIds) {
+		UserInfoExample userInfoExample = new UserInfoExample();
+		userInfoExample.createCriteria().andUseridIn(userIds);
+		return userInfoMapper.selectByExample(userInfoExample);
+	}
+
+	@Override
+	public UserInfo loadUserInfoById(Integer userId) {
+		return userInfoMapper.selectByPrimaryKey(userId);
+	}
+
+	@Override
+	public void cutCommentCountByOne(Integer userId) {
+
+	}
+
+	@Override
+	public void addCommentCountByOne(Integer userId) {
+
+	}
 }

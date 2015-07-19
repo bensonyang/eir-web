@@ -169,45 +169,31 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.morningsidevc.service.FeedInfoService#isFeedExisted(java.lang.Integer)
-	 */
 	@Override
 	public Boolean isFeedExisted(Integer feedId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.morningsidevc.service.FeedInfoService#commentIncreasedByOne(java.lang.Integer)
-	 */
+
 	@Override
 	public void commentIncreasedByOne(Integer feedId) throws Exception {
 		// TODO Auto-generated method stub
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.morningsidevc.service.FeedInfoService#commentDecreasedByOne(java.lang.Integer)
-	 */
 	@Override
 	public void commentDecreasedByOne(Integer feedId) throws Exception {
 		// TODO Auto-generated method stub
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.morningsidevc.service.FeedInfoService#likeIncreasedByOne(java.lang.Integer)
-	 */
 	@Override
 	public void likeIncreasedByOne(Integer feedId) throws Exception {
 		// TODO Auto-generated method stub
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.morningsidevc.service.FeedInfoService#likeDecreasedByOne(java.lang.Integer)
-	 */
 	@Override
 	public void likeDecreasedByOne(Integer feedId) throws Exception {
 		// TODO Auto-generated method stub
@@ -338,7 +324,35 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	}
 
 	@Override
-	public FeedInfo loadFeedInfo(Integer feedId) throws Exception {
+	public FeedInfo loadFeedInfo(Integer feedId){
 		return feedInfoMapper.selectByPrimaryKey(feedId);
+	}
+
+	@Override
+	public void cutFeedLikeCountByOne(Integer feedId) throws Exception {
+		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
+		feedInfo.setLikecount(feedInfo.getLikecount() - 1);
+		feedInfoMapper.updateByPrimaryKey(feedInfo);
+	}
+
+	@Override
+	public void addFeedLikeCountByOne(Integer feedId) throws Exception {
+		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
+		feedInfo.setLikecount(feedInfo.getLikecount() + 1);
+		feedInfoMapper.updateByPrimaryKey(feedInfo);
+	}
+
+	@Override
+	public void cutFeedCommentCountByOne(Integer feedId){
+		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
+		feedInfo.setCommentcount(feedInfo.getCommentcount() - 1);
+		feedInfoMapper.updateByPrimaryKeySelective(feedInfo);
+	}
+
+	@Override
+	public void addFeedCommentCountByOne(Integer feedId) throws Exception {
+		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
+		feedInfo.setCommentcount(feedInfo.getCommentcount() + 1);
+		feedInfoMapper.updateByPrimaryKeySelective(feedInfo);
 	}
 }
