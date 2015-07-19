@@ -15,12 +15,4 @@ public interface UserFeedCounterService {
 	void decreaseCounterByOffset(Integer userId, Byte counterType, int offset);
 	
 	void increaseCounterByOffset(Integer userId, Byte counterType, int offset);
-
-	void addOneToUserCommentCounter(Integer userId);
-
-	void cutOneToUserCommentCounter(Integer userId);
-
-	void addOneToUserFeedCounter(Integer userId);
-
-	void cutOneToUserFeedCounter(Integer userId);
 }

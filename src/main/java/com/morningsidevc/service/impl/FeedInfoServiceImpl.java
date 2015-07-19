@@ -70,7 +70,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			throw new RuntimeException(String.format("微博内容可能持久化失败，返回ID为:" +
 					"%s",weiboMsgId));
 		}
-		userFeedCounterService.addOneToUserFeedCounter(userId);
+		userFeedCounterService.increaseCounterByOffset(userId,CounterType.FeedCounter.getValue(),1);
 		Integer initCommentCount = 0, initLikeCount = 0;
 		FeedInfo feedInfo = new FeedInfo();
 		feedInfo.setUserid(userId);
@@ -106,7 +106,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			throw new RuntimeException(String.format("微博内容可能持久化失败，返回ID为:" +
 					"%s",webPageMsgId));
 		}
-		userFeedCounterService.addOneToUserFeedCounter(userId);
+		userFeedCounterService.increaseCounterByOffset(userId,CounterType.FeedCounter.getValue(),1);
 		Integer initCommentCount = 0, initLikeCount = 0;
 		FeedInfo feedInfo = new FeedInfo();
 		feedInfo.setUserid(userId);

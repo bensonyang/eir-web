@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 
 import com.morningsidevc.dao.FeedCommentDao;
 import com.morningsidevc.enums.CommentStatus;
+import com.morningsidevc.enums.CounterType;
 import com.morningsidevc.po.FeedCommentCount;
 import com.morningsidevc.po.gen.*;
 import com.morningsidevc.service.FeedInfoService;
@@ -148,7 +149,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		UserInfo currentUser = userInfoService.loadUserInfoById(currentUserId);
 		UserInfo toUser = userInfoService.loadUserInfoById(request.getToUserId());
 		feedInfoService.addFeedCommentCountByOne(request.getFeedId());
-		userFeedCounterService.addOneToUserCommentCounter(feedInfo.getUserid());
+		userFeedCounterService.increaseCounterByOffset(feedInfo.getUserid(),CounterType.CommentCounter.getValue(),1);
 		FeedCommentMsg feedCommentMsg = buildNewFeedCommentMsg(feedInfo, request, currentUserId);
 		Integer ret = feedCommentMsgMapper.insert(feedCommentMsg);//插入评论内容
 		Comment comment = new Comment();
@@ -180,7 +181,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		FeedInfo feedInfo = feedInfoService.loadFeedInfo(feedCommentMsg.getFeedid());
 		feedInfoService.cutFeedCommentCountByOne(feedCommentMsg.getFeedid());
 		UserInfo feedUser = userInfoService.loadUserInfoById(feedInfo.getUserid());
-		userFeedCounterService.cutOneToUserCommentCounter(feedUser.getUserid());
+		userFeedCounterService.decreaseCounterByOffset(feedUser.getUserid(), CounterType.CommentCounter.getValue(),1);
 		feedCommentMsgMapper.deleteByPrimaryKey(commentId);
 		DeleteCommentResponse response = new DeleteCommentResponse();
 		response.setCommentId(commentId);

@@ -61,10 +61,8 @@ public class WeiboMsgServiceImpl implements WeiboMsgService {
 		if (weiboMsgBodys != null && weiboMsgBodys.size() != 0) {
 			for (WeiboMsg element : weiboMsgBodys) {
 				WeiboMsgBody msgBody = new WeiboMsgBody();
-				
 				msgBody.setMsgId(element.getMsgid());
 				msgBody.setContent(element.getContent());
-				
 				msgMap.put(element.getMsgid(), msgBody);
 			}
 		} else {
