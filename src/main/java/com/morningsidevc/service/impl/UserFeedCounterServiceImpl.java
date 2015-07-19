@@ -109,4 +109,27 @@ public class UserFeedCounterServiceImpl implements UserFeedCounterService {
 		userFeedCounter.setSum(userFeedCounter.getSum() - 1);
 		mapper.updateByPrimaryKeySelective(userFeedCounter);
 	}
+
+	@Override
+	public void addOneToUserFeedCounter(Integer userId) {
+		UserFeedCounterExample example = new UserFeedCounterExample();
+		example.createCriteria().andUseridEqualTo(userId)
+				.andCountertypeEqualTo(CounterType.FeedCounter.getValue());
+		List<UserFeedCounter> counters = mapper.selectByExample(example);
+		if(counters == null || counters.size() < 1){
+			UserFeedCounter counter = new UserFeedCounter();
+			counter.setUserid(userId);
+			counter.setSum(1);
+			counter.setCountertype(CounterType.FeedCounter.getValue());
+			mapper.insertSelective(counter);
+		}else{
+			counters.get(0).setSum(counters.get(0).getSum() + 1);
+			mapper.updateByPrimaryKeySelective(counters.get(0));
+		}
+	}
+
+	@Override
+	public void cutOneToUserFeedCounter(Integer userId) {
+
+	}
 }

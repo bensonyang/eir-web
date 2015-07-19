@@ -56,9 +56,6 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	private FeedLikeService feedLikeService;
 
 	@Resource
-	private UserFeedCounterMapper userFeedCounterMapper;
-	
-	@Resource
 	private UserFeedCounterService userFeedCounterService;
 
 	@Override
@@ -75,20 +72,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			throw new RuntimeException(String.format("微博内容可能持久化失败，返回ID为:" +
 					"%s",weiboMsgId));
 		}
-		UserFeedCounterExample example = new UserFeedCounterExample();
-		example.createCriteria().andUseridEqualTo(userId)
-				.andCountertypeEqualTo(CounterType.FeedCounter.getValue());
-		List<UserFeedCounter> counters = userFeedCounterMapper.selectByExample(example);
-		if(counters == null || counters.size() < 1){
-			UserFeedCounter counter = new UserFeedCounter();
-			counter.setUserid(userId);
-			counter.setSum(1);
-			counter.setCountertype(CounterType.FeedCounter.getValue());
-			userFeedCounterMapper.insertSelective(counter);
-		}else{
-			counters.get(0).setSum(counters.get(0).getSum() + 1);
-			userFeedCounterMapper.updateByPrimaryKeySelective(counters.get(0));
-		}
+		userFeedCounterService.addOneToUserCommentCounter(userId);
 		Integer initCommentCount = 0, initLikeCount = 0;
 		FeedInfo feedInfo = new FeedInfo();
 		feedInfo.setUserid(userId);
@@ -124,20 +108,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			throw new RuntimeException(String.format("微博内容可能持久化失败，返回ID为:" +
 					"%s",webPageMsgId));
 		}
-		UserFeedCounterExample example = new UserFeedCounterExample();
-		example.createCriteria().andUseridEqualTo(userId)
-				.andCountertypeEqualTo(CounterType.FeedCounter.getValue());
-		List<UserFeedCounter> counters = userFeedCounterMapper.selectByExample(example);
-		if(counters == null || counters.size() < 1){
-			UserFeedCounter counter = new UserFeedCounter();
-			counter.setUserid(userId);
-			counter.setSum(1);
-			counter.setCountertype(CounterType.FeedCounter.getValue());
-			userFeedCounterMapper.insertSelective(counter);
-		}else{
-			counters.get(0).setSum(counters.get(0).getSum() + 1);
-			userFeedCounterMapper.updateByPrimaryKeySelective(counters.get(0));
-		}
+		userFeedCounterService.addOneToUserCommentCounter(userId);
 		Integer initCommentCount = 0, initLikeCount = 0;
 		FeedInfo feedInfo = new FeedInfo();
 		feedInfo.setUserid(userId);
@@ -159,11 +130,8 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
 		
 		if (feedInfo != null) {
-			Integer ret = feedInfoMapper.deleteByPrimaryKey(feedId);
-			Assert.state( ret > 0);
-			
+			feedInfoMapper.deleteByPrimaryKey(feedId);
 			userFeedCounterService.decreaseCounterByOffset(feedInfo.getUserid(), CounterType.FeedCounter.getValue(), 1);
-			
 			feedCommentService.deleteCommentOfFeed(feedId, feedInfo.getUserid());
 		}
 	}

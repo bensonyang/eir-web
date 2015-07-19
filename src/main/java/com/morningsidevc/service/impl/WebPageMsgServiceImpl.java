@@ -71,7 +71,6 @@ public class WebPageMsgServiceImpl implements WebPageMsgService {
 		return msgMap;
 	}
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
 	public Integer insertWebPageMsg(WebPageMsg webPageMsg) {
 		msgMapper.insertSelective(webPageMsg);
 		return webPageMsg.getMsgid();

@@ -79,7 +79,6 @@ public class WeiboMsgServiceImpl implements WeiboMsgService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
 	public Integer insertWeiboMsg(WeiboMsg weiboMsg) {
 		weiboMsgMapper.insert(weiboMsg);
 		return weiboMsg.getMsgid();

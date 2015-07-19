@@ -19,4 +19,8 @@ public interface UserFeedCounterService {
 	void addOneToUserCommentCounter(Integer userId);
 
 	void cutOneToUserCommentCounter(Integer userId);
+
+	void addOneToUserFeedCounter(Integer userId);
+
+	void cutOneToUserFeedCounter(Integer userId);
 }

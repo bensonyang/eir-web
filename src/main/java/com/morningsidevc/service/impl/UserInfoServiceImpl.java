@@ -69,7 +69,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
 	public UserInfo createUser(UserInfo userInfo) {
 		userInfo.setAddtime(new Date());
 		userInfo.setLasttime(new Date());

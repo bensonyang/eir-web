@@ -44,7 +44,6 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    @Transactional(rollbackFor = Throwable.class)
     public int create(String email, String password) {
         Account userAccount = new Account();
         userAccount.setUseremail(email);
@@ -60,7 +59,6 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    @Transactional(rollbackFor = Throwable.class)
     public int updatePassword(int userId, String oldPassword, String newPassword) {
 
         Account userAccount = accountMapper.selectByPrimaryKey(userId);
