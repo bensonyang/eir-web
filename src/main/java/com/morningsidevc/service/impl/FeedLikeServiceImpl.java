@@ -33,7 +33,7 @@ public class FeedLikeServiceImpl implements FeedLikeService {
     private FeedInfoService feedInfoService;
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Throwable.class)
     public Integer addlike(Integer feedId, Integer currentUserId) throws Exception{
         FeedInfo feedInfo = feedInfoService.loadFeedInfo(feedId);
         feedInfoService.addFeedLikeCountByOne(feedId);
