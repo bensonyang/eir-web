@@ -93,6 +93,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	 * @see com.morningsidevc.service.FeedInfoService#addFeed(java.lang.Integer, java.lang.String, java.lang.String)
 	 */
 	@Override
+	@Transactional(rollbackFor = Throwable.class)
 	public FeedInfo addFeed(Integer userId, String url,String title, String content, String tagName)
 			throws Exception {
 		if(StringUtils.length(content) > 140){
@@ -296,7 +297,6 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
 	public void cutFeedLikeCountByOne(Integer feedId) throws Exception {
 		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
 		feedInfo.setLikecount(feedInfo.getLikecount() - 1);
@@ -304,7 +304,6 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
 	public void addFeedLikeCountByOne(Integer feedId) throws Exception {
 		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
 		feedInfo.setLikecount(feedInfo.getLikecount() + 1);
@@ -312,7 +311,6 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
 	public void cutFeedCommentCountByOne(Integer feedId){
 		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
 		feedInfo.setCommentcount(feedInfo.getCommentcount() - 1);
@@ -320,7 +318,6 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
 	public void addFeedCommentCountByOne(Integer feedId) throws Exception {
 		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
 		feedInfo.setCommentcount(feedInfo.getCommentcount() + 1);
