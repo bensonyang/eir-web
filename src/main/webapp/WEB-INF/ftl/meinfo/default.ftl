@@ -12,52 +12,52 @@
     <div class="row eir-input-group-container">
         <div class="row eir-input-group">
             <div class="l">我的昵称:</div>
-            <input type="text" placeholder="昵称" class="border-zero icon-grey" value="路大大">
-            <span class="op"><a>修改</a></span>
+            <input val name="nickname" type="text" placeholder="昵称" class="border-zero icon-grey" value="${user.nickname!}">
+            <span class="op"><a op>修改</a></span>
             <div class="eir-clear-both"></div>
         </div>
         <div class="row eir-input-group">
             <div class="l">真实姓名:</div>
-            <input type="text" placeholder="真实姓名" class="border-zero icon-grey" value="陆晨">
-            <span class="op"><a>修改</a></span>
+            <input val name="realname" type="text" placeholder="真实姓名" class="border-zero icon-grey" value="${user.realname!}">
+            <span class="op"><a op>修改</a></span>
             <div class="eir-clear-both"></div>
         </div>
         <div class="row eir-input-group">
             <div class="l">手机号码:</div>
-            <input type="text" placeholder="手机号码" class="border-zero icon-grey" value="15502196456">
-            <span class="op"><a>修改</a></span>
+            <input val name="mobilenum" type="text" placeholder="手机号码" class="border-zero icon-grey" value="${user.mobilenum!}">
+            <span class="op"><a op>修改</a></span>
             <div class="eir-clear-both"></div>
         </div>
         <div class="row eir-input-group">
             <div class="l">性别:</div>
             <uninput>
                 <div class="radio-item">
-                    <input type="radio" name="sex" checked="checked"/><label class="radio-label icon-grey">男</label>
+                    <input type="radio" value="1" name="gender" <#if user.gender == 1>checked="checked" </#if>/><label class="radio-label icon-grey">男</label>
                 </div>
                 <div class="radio-item">
-                    <input type="radio" name="sex" /><label class="radio-label icon-grey">女</label>
+                    <input type="radio" value="2" name="gender" <#if user.gender == 2>checked="checked" </#if> /><label class="radio-label icon-grey">女</label>
                 </div>
             </uninput>
             <div class="eir-clear-both"></div>
         </div>
         <div class="row eir-input-group">
             <div class="l">公司职位:</div>
-            <input type="text" placeholder="公司职位" class="border-zero icon-grey" value="DEV">
-            <span class="op"><a>修改</a></span>
+            <input val name="jobtitle" type="text" placeholder="公司职位" class="border-zero icon-grey" value="${user.jobtitle!}">
+            <span class="op"><a op>修改</a></span>
             <div class="eir-clear-both"></div>
         </div>
         <div class="row eir-input-group">
             <div class="l">公司名称:</div>
-            <input type="text" placeholder="公司名称" class="border-zero icon-grey" value="大众点评">
-            <span class="op"><a>修改</a></span>
+            <input val name="company" type="text" placeholder="公司名称" class="border-zero icon-grey" value="${user.company!}">
+            <span class="op"><a op>修改</a></span>
             <div class="eir-clear-both"></div>
         </div>
         <div class="row eir-input-group">
             <label class="l">描述:</label>
             <uninput>
-                <textarea class="border-zero icon-grey">不错哦</textarea>
+                <textarea val name="description" class="border-zero icon-grey">${user.description!}</textarea>
             </uninput>
-            <span class="op"><a>修改</a></span>
+            <span class="op"><a op>修改</a></span>
             <div class="eir-clear-both"></div>
         </div>
     </div>

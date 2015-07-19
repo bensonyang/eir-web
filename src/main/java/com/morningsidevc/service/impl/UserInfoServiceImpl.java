@@ -88,12 +88,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	public void cutCommentCountByOne(Integer userId) {
-
-	}
-
-	@Override
-	public void addCommentCountByOne(Integer userId) {
-
+	public UserInfo updateUserInfoSelective(UserInfo userInfo) {
+		userInfoMapper.updateByPrimaryKeySelective(userInfo);
+		return userInfoMapper.selectByPrimaryKey(userInfo.getUserid());
 	}
 }

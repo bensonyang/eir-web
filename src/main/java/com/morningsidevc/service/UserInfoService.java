@@ -21,7 +21,6 @@ public interface UserInfoService {
 
     UserInfo loadUserInfoById(Integer userId);
 
-    void cutCommentCountByOne(Integer userId);
+    UserInfo updateUserInfoSelective(UserInfo userInfo);
 
-    void addCommentCountByOne(Integer userId);
 }
