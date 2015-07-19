@@ -59,10 +59,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	
 	@Resource
 	private UserFeedCounterService userFeedCounterService;
-	
-	/* (non-Javadoc)
-	 * @see com.morningsidevc.service.FeedInfoService#addFeed(java.lang.Integer, java.lang.String)
-	 */
+
 	@Override
 	public FeedInfo addFeed(Integer userId, String content, String tagName) throws Exception {
 		if(StringUtils.length(content) > 140){
