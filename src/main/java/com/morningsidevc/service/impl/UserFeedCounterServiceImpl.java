@@ -72,7 +72,7 @@ public class UserFeedCounterServiceImpl implements UserFeedCounterService {
 			Integer sum = result.get(0).getSum();
 			result.get(0).setSum(sum + offset);
 			mapper.updateByPrimaryKeySelective(result.get(0));
-		}else{
+		}else{//没有计数器的时候要新加入一条记录
 			UserFeedCounter counter = new UserFeedCounter();
 			counter.setSum(offset);//初始值
 			counter.setCountertype(counterType);
