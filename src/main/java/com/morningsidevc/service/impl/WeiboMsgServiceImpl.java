@@ -12,14 +12,10 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import com.morningsidevc.dao.gen.WeiboMsgMapper;
-import com.morningsidevc.po.gen.WebPageMsg;
-import com.morningsidevc.po.gen.WebPageMsgExample;
 import com.morningsidevc.po.gen.WeiboMsg;
 import com.morningsidevc.po.gen.WeiboMsgExample;
 import com.morningsidevc.service.WeiboMsgService;
-import com.morningsidevc.vo.WebPageMsgBody;
 import com.morningsidevc.vo.WeiboMsgBody;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author yangna

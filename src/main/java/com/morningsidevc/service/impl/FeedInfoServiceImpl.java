@@ -9,7 +9,6 @@ import java.util.*;
 
 import javax.annotation.Resource;
 
-import com.morningsidevc.dao.gen.UserFeedCounterMapper;
 import com.morningsidevc.enums.CounterType;
 import com.morningsidevc.enums.FeedStatus;
 import com.morningsidevc.enums.FeedType;
@@ -27,7 +26,6 @@ import com.morningsidevc.vo.User;
 import com.morningsidevc.vo.WebPageMsgBody;
 import com.morningsidevc.vo.WeiboMsgBody;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -85,7 +83,6 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		feedInfo.setStatus(FeedStatus.NORMAL);
 		feedInfo.setMsgtype(MsgType.SHUOFEED);
 		Integer feedId = feedInfoMapper.insert(feedInfo);
-		Assert.state(feedId >= 0);
 		return feedInfoMapper.selectByPrimaryKey(feedInfo.getFeedid());
 	}
 
@@ -122,7 +119,6 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		feedInfo.setStatus(FeedStatus.NORMAL);
 		feedInfo.setMsgtype(MsgType.LINK);
 		Integer feedId = feedInfoMapper.insert(feedInfo);
-		Assert.state(feedId >= 0);
 		return feedInfoMapper.selectByPrimaryKey(feedInfo.getFeedid());
 	}
 

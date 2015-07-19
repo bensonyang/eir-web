@@ -10,7 +10,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import com.morningsidevc.dao.gen.UserFeedCounterMapper;
@@ -104,7 +103,6 @@ public class UserFeedCounterServiceImpl implements UserFeedCounterService {
 		example.createCriteria().andUseridEqualTo(userId)
 				.andCountertypeEqualTo(CounterType.CommentCounter.getValue());
 		List<UserFeedCounter> counters = mapper.selectByExample(example);
-		Assert.state(!CollectionUtils.isEmpty(counters));
 		UserFeedCounter userFeedCounter = counters.get(0);
 		userFeedCounter.setSum(userFeedCounter.getSum() - 1);
 		mapper.updateByPrimaryKeySelective(userFeedCounter);

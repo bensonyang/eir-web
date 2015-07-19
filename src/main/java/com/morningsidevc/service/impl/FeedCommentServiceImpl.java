@@ -24,7 +24,6 @@ import com.morningsidevc.service.FeedCommentService;
 import com.morningsidevc.service.UserFeedCounterService;
 import com.morningsidevc.vo.Comment;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -152,7 +151,6 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		userFeedCounterService.addOneToUserCommentCounter(feedInfo.getUserid());
 		FeedCommentMsg feedCommentMsg = buildNewFeedCommentMsg(feedInfo, request, currentUserId);
 		Integer ret = feedCommentMsgMapper.insert(feedCommentMsg);//插入评论内容
-		Assert.state(ret > 0);
 		Comment comment = new Comment();
 		comment.setContent(request.getContent());
 		comment.setCommentId(feedCommentMsg.getCommentid());

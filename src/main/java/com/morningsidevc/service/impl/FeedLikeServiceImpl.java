@@ -3,7 +3,6 @@
  */
 package com.morningsidevc.service.impl;
 
-import com.morningsidevc.dao.gen.FeedInfoMapper;
 import com.morningsidevc.dao.gen.FeedLikeMsgMapper;
 import com.morningsidevc.po.gen.FeedInfo;
 import com.morningsidevc.po.gen.FeedLikeMsg;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import com.morningsidevc.service.FeedLikeService;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -61,7 +59,6 @@ public class FeedLikeServiceImpl implements FeedLikeService {
 
     //获取当前用户对指定动态的点赞信息
     private FeedLikeMsg findSpecialFeedLikeMsg(Integer feedId, Integer userId){
-        Assert.state(feedId != null && userId != null);
         FeedLikeMsgExample example = new FeedLikeMsgExample();
         example.createCriteria().andFeedidEqualTo(feedId)
                 .andUseridEqualTo(userId);

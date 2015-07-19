@@ -7,7 +7,6 @@ import com.morningsidevc.po.gen.AccountExample;
 import com.morningsidevc.service.UserAccountService;
 import com.morningsidevc.utils.EncryptionUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
