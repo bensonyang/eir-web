@@ -1,5 +1,6 @@
 body {
     font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: url("../images/b1.png") repeat;
 }
 .eir-box1 {
     background: #f4f4f4;
@@ -149,11 +150,12 @@ a {
     width: 80%;
     border: 1px solid #efefef;
     margin-bottom: 5px;
+    float: left;
 }
 .eir-input-link {
-    line-height: 11px;
+    line-height: 9px;
     font-size: 13px;
-    height: 24px;
+    height: 21px;
     margin-bottom: 3px;
     border: 1px solid #efefef;
 }
