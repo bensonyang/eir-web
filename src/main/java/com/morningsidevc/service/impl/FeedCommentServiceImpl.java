@@ -10,9 +10,6 @@ import java.util.*;
 import javax.annotation.Resource;
 
 import com.morningsidevc.dao.FeedCommentDao;
-import com.morningsidevc.dao.gen.FeedInfoMapper;
-import com.morningsidevc.dao.gen.UserFeedCounterMapper;
-import com.morningsidevc.dao.gen.UserInfoMapper;
 import com.morningsidevc.enums.CommentStatus;
 import com.morningsidevc.po.FeedCommentCount;
 import com.morningsidevc.po.gen.*;
