@@ -539,7 +539,12 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
             $('.dropdown-toggle').focus()
         },
         meinfoHide:function(){
-            $('.meinfo').toggleClass('open');
+            if($('a[goOut]:hover').length == 0 && $('a[goMeInfoCenter]:hover').length == 0){
+                $('.meinfo').toggleClass('open');
+            }
+        },
+        goMeInfoCenter:function(){
+            window.location.href = API.meInfoCenter;
         }
     };
     //################################事件处理器配置END#######################################
@@ -566,5 +571,6 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
     $('.dropdown-toggle').focusout(HANDLERS.meinfoHide);//隐藏个人中心
     //################################事件配置END#######################################
 
-    window.goOut = HANDLERS.logOutHandler ;
+    window.goOut = HANDLERS.logOutHandler;
+    window.goMeInfoCenter = HANDLERS.goMeInfoCenter;//个人中心
 });

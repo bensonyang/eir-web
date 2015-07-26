@@ -3,15 +3,15 @@
  */
 package com.morningsidevc.service.impl;
 
-import com.morningsidevc.dao.gen.FeedInfoMapper;
 import com.morningsidevc.dao.gen.FeedLikeMsgMapper;
 import com.morningsidevc.po.gen.FeedInfo;
 import com.morningsidevc.po.gen.FeedLikeMsg;
 import com.morningsidevc.po.gen.FeedLikeMsgExample;
+import com.morningsidevc.service.FeedInfoService;
 import org.springframework.stereotype.Component;
 
 import com.morningsidevc.service.FeedLikeService;
-import org.springframework.util.Assert;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -28,19 +28,17 @@ public class FeedLikeServiceImpl implements FeedLikeService {
     @Resource
     private FeedLikeMsgMapper feedLikeMsgMapper;
     @Resource
-    private FeedInfoMapper feedInfoMapper;
+    private FeedInfoService feedInfoService;
 
     @Override
+    @Transactional(rollbackFor = Throwable.class)
     public Integer addlike(Integer feedId, Integer currentUserId) throws Exception{
-        Assert.state(feedId != null);
-        FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
-        Assert.notNull(feedInfo);
+        FeedInfo feedInfo = feedInfoService.loadFeedInfo(feedId);
+        feedInfoService.addFeedLikeCountByOne(feedId);
         FeedLikeMsg oldFeedLikeMsg = findSpecialFeedLikeMsg(feedId, currentUserId);
         if(oldFeedLikeMsg != null){
             return  oldFeedLikeMsg.getLikeid();
         }
-        feedInfo.setLikecount(feedInfo.getLikecount() + 1);
-        feedInfoMapper.updateByPrimaryKey(feedInfo);
         FeedLikeMsg feedLikeMsg = new FeedLikeMsg();
         feedLikeMsg.setAddtime(new Date());
         feedLikeMsg.setFeedid(feedId);
@@ -50,10 +48,9 @@ public class FeedLikeServiceImpl implements FeedLikeService {
     }
 
     @Override
+    @Transactional(rollbackFor = Throwable.class)
     public Integer deletelike(Integer feedId, Integer currentUserId) throws Exception{
-        FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
-        feedInfo.setLikecount(feedInfo.getLikecount() - 1);
-        feedInfoMapper.updateByPrimaryKey(feedInfo);
+        feedInfoService.cutFeedLikeCountByOne(feedId);
         FeedLikeMsgExample example = new FeedLikeMsgExample();
         example.createCriteria().andUseridEqualTo(currentUserId).andFeedidEqualTo(feedId);
         return feedLikeMsgMapper.deleteByExample(example);
@@ -62,7 +59,6 @@ public class FeedLikeServiceImpl implements FeedLikeService {
 
     //获取当前用户对指定动态的点赞信息
     private FeedLikeMsg findSpecialFeedLikeMsg(Integer feedId, Integer userId){
-        Assert.state(feedId != null && userId != null);
         FeedLikeMsgExample example = new FeedLikeMsgExample();
         example.createCriteria().andFeedidEqualTo(feedId)
                 .andUseridEqualTo(userId);

@@ -9,7 +9,6 @@ import java.util.*;
 
 import javax.annotation.Resource;
 
-import com.morningsidevc.dao.gen.UserFeedCounterMapper;
 import com.morningsidevc.enums.CounterType;
 import com.morningsidevc.enums.FeedStatus;
 import com.morningsidevc.enums.FeedType;
@@ -26,7 +25,7 @@ import com.morningsidevc.vo.Feed;
 import com.morningsidevc.vo.User;
 import com.morningsidevc.vo.WebPageMsgBody;
 import com.morningsidevc.vo.WeiboMsgBody;
-import org.springframework.util.Assert;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -55,15 +54,10 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	private FeedLikeService feedLikeService;
 
 	@Resource
-	private UserFeedCounterMapper userFeedCounterMapper;
-	
-	@Resource
 	private UserFeedCounterService userFeedCounterService;
-	
-	/* (non-Javadoc)
-	 * @see com.morningsidevc.service.FeedInfoService#addFeed(java.lang.Integer, java.lang.String)
-	 */
+
 	@Override
+	@Transactional(rollbackFor = Throwable.class)
 	public FeedInfo addFeed(Integer userId, String content, String tagName) throws Exception {
 		if(StringUtils.length(content) > 140){
 			throw new RuntimeException(String.format("微博长度不得超过140,当前长度为:" +
@@ -76,20 +70,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			throw new RuntimeException(String.format("微博内容可能持久化失败，返回ID为:" +
 					"%s",weiboMsgId));
 		}
-		UserFeedCounterExample example = new UserFeedCounterExample();
-		example.createCriteria().andUseridEqualTo(userId)
-				.andCountertypeEqualTo(CounterType.FeedCounter.getValue());
-		List<UserFeedCounter> counters = userFeedCounterMapper.selectByExample(example);
-		if(counters == null || counters.size() < 1){
-			UserFeedCounter counter = new UserFeedCounter();
-			counter.setUserid(userId);
-			counter.setSum(1);
-			counter.setCountertype(CounterType.FeedCounter.getValue());
-			userFeedCounterMapper.insertSelective(counter);
-		}else{
-			counters.get(0).setSum(counters.get(0).getSum() + 1);
-			userFeedCounterMapper.updateByPrimaryKeySelective(counters.get(0));
-		}
+		userFeedCounterService.increaseCounterByOffset(userId,CounterType.FeedCounter.getValue(),1);
 		Integer initCommentCount = 0, initLikeCount = 0;
 		FeedInfo feedInfo = new FeedInfo();
 		feedInfo.setUserid(userId);
@@ -102,7 +83,6 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		feedInfo.setStatus(FeedStatus.NORMAL);
 		feedInfo.setMsgtype(MsgType.SHUOFEED);
 		Integer feedId = feedInfoMapper.insert(feedInfo);
-		Assert.state(feedId >= 0);
 		return feedInfoMapper.selectByPrimaryKey(feedInfo.getFeedid());
 	}
 
@@ -110,6 +90,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	 * @see com.morningsidevc.service.FeedInfoService#addFeed(java.lang.Integer, java.lang.String, java.lang.String)
 	 */
 	@Override
+	@Transactional(rollbackFor = Throwable.class)
 	public FeedInfo addFeed(Integer userId, String url,String title, String content, String tagName)
 			throws Exception {
 		if(StringUtils.length(content) > 140){
@@ -125,20 +106,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			throw new RuntimeException(String.format("微博内容可能持久化失败，返回ID为:" +
 					"%s",webPageMsgId));
 		}
-		UserFeedCounterExample example = new UserFeedCounterExample();
-		example.createCriteria().andUseridEqualTo(userId)
-				.andCountertypeEqualTo(CounterType.FeedCounter.getValue());
-		List<UserFeedCounter> counters = userFeedCounterMapper.selectByExample(example);
-		if(counters == null || counters.size() < 1){
-			UserFeedCounter counter = new UserFeedCounter();
-			counter.setUserid(userId);
-			counter.setSum(1);
-			counter.setCountertype(CounterType.FeedCounter.getValue());
-			userFeedCounterMapper.insertSelective(counter);
-		}else{
-			counters.get(0).setSum(counters.get(0).getSum() + 1);
-			userFeedCounterMapper.updateByPrimaryKeySelective(counters.get(0));
-		}
+		userFeedCounterService.increaseCounterByOffset(userId,CounterType.FeedCounter.getValue(),1);
 		Integer initCommentCount = 0, initLikeCount = 0;
 		FeedInfo feedInfo = new FeedInfo();
 		feedInfo.setUserid(userId);
@@ -151,7 +119,6 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		feedInfo.setStatus(FeedStatus.NORMAL);
 		feedInfo.setMsgtype(MsgType.LINK);
 		Integer feedId = feedInfoMapper.insert(feedInfo);
-		Assert.state(feedId >= 0);
 		return feedInfoMapper.selectByPrimaryKey(feedInfo.getFeedid());
 	}
 
@@ -160,54 +127,37 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
 		
 		if (feedInfo != null) {
-			Integer ret = feedInfoMapper.deleteByPrimaryKey(feedId);
-			Assert.state( ret > 0);
-			
+			feedInfoMapper.deleteByPrimaryKey(feedId);
 			userFeedCounterService.decreaseCounterByOffset(feedInfo.getUserid(), CounterType.FeedCounter.getValue(), 1);
-			
 			feedCommentService.deleteCommentOfFeed(feedId, feedInfo.getUserid());
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.morningsidevc.service.FeedInfoService#isFeedExisted(java.lang.Integer)
-	 */
 	@Override
 	public Boolean isFeedExisted(Integer feedId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.morningsidevc.service.FeedInfoService#commentIncreasedByOne(java.lang.Integer)
-	 */
+
 	@Override
 	public void commentIncreasedByOne(Integer feedId) throws Exception {
 		// TODO Auto-generated method stub
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.morningsidevc.service.FeedInfoService#commentDecreasedByOne(java.lang.Integer)
-	 */
 	@Override
 	public void commentDecreasedByOne(Integer feedId) throws Exception {
 		// TODO Auto-generated method stub
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.morningsidevc.service.FeedInfoService#likeIncreasedByOne(java.lang.Integer)
-	 */
 	@Override
 	public void likeIncreasedByOne(Integer feedId) throws Exception {
 		// TODO Auto-generated method stub
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.morningsidevc.service.FeedInfoService#likeDecreasedByOne(java.lang.Integer)
-	 */
 	@Override
 	public void likeDecreasedByOne(Integer feedId) throws Exception {
 		// TODO Auto-generated method stub
@@ -338,7 +288,35 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	}
 
 	@Override
-	public FeedInfo loadFeedInfo(Integer feedId) throws Exception {
+	public FeedInfo loadFeedInfo(Integer feedId){
 		return feedInfoMapper.selectByPrimaryKey(feedId);
+	}
+
+	@Override
+	public void cutFeedLikeCountByOne(Integer feedId) throws Exception {
+		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
+		feedInfo.setLikecount(feedInfo.getLikecount() - 1);
+		feedInfoMapper.updateByPrimaryKey(feedInfo);
+	}
+
+	@Override
+	public void addFeedLikeCountByOne(Integer feedId) throws Exception {
+		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
+		feedInfo.setLikecount(feedInfo.getLikecount() + 1);
+		feedInfoMapper.updateByPrimaryKey(feedInfo);
+	}
+
+	@Override
+	public void cutFeedCommentCountByOne(Integer feedId){
+		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
+		feedInfo.setCommentcount(feedInfo.getCommentcount() - 1);
+		feedInfoMapper.updateByPrimaryKeySelective(feedInfo);
+	}
+
+	@Override
+	public void addFeedCommentCountByOne(Integer feedId) throws Exception {
+		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedId);
+		feedInfo.setCommentcount(feedInfo.getCommentcount() + 1);
+		feedInfoMapper.updateByPrimaryKeySelective(feedInfo);
 	}
 }

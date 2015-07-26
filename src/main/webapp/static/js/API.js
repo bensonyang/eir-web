@@ -17,6 +17,8 @@ define(function(){
         home            :   '/community',//首页
         isAccountExist  :   '/ajax/validate/accountName',//账户是否已经存在
         logOut          :   '/ajax/logout',//退出
-        pageCrawler         :   '/crawler/get'//爬去网页摘要
+        pageCrawler     :   '/crawler/get',//爬去网页摘要
+        meInfoCenter    :   '/meinfo/default',//个人中心
+        updateUserInfo  :   '/meinfo/update'//更新个人信息
     };
 });

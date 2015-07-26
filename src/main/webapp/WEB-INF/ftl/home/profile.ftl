@@ -14,8 +14,8 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">个人中心</a></li>
-                    <li><a href="#" onclick="goOut();">退出</a></li>
+                    <li><a href="#" onclick="goMeInfoCenter();" goMeInfoCenter >个人中心</a></li>
+                    <li><a href="#" onclick="goOut();" goOut>退出</a></li>
                 </ul>
             </li>
         </div>

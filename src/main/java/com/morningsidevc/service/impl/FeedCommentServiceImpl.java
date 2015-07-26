@@ -10,13 +10,12 @@ import java.util.*;
 import javax.annotation.Resource;
 
 import com.morningsidevc.dao.FeedCommentDao;
-import com.morningsidevc.dao.gen.FeedInfoMapper;
-import com.morningsidevc.dao.gen.UserFeedCounterMapper;
-import com.morningsidevc.dao.gen.UserInfoMapper;
 import com.morningsidevc.enums.CommentStatus;
 import com.morningsidevc.enums.CounterType;
 import com.morningsidevc.po.FeedCommentCount;
 import com.morningsidevc.po.gen.*;
+import com.morningsidevc.service.FeedInfoService;
+import com.morningsidevc.service.UserInfoService;
 import com.morningsidevc.web.request.AddCommentRequest;
 import com.morningsidevc.web.response.DeleteCommentResponse;
 import org.springframework.stereotype.Component;
@@ -25,7 +24,7 @@ import com.morningsidevc.dao.gen.FeedCommentMsgMapper;
 import com.morningsidevc.service.FeedCommentService;
 import com.morningsidevc.service.UserFeedCounterService;
 import com.morningsidevc.vo.Comment;
-import org.springframework.util.Assert;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -37,13 +36,11 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	@Resource
 	private FeedCommentMsgMapper feedCommentMsgMapper;
 	@Resource
-	private UserFeedCounterMapper userFeedCounterMapper;
-	@Resource
-	private FeedInfoMapper feedInfoMapper;
-	@Resource
-	private UserInfoMapper userInfoMapper;
-	@Resource
 	private FeedCommentDao feedCommentDao;
+	@Resource
+	private UserInfoService userInfoService;
+	@Resource
+	private FeedInfoService feedInfoService;
 	
 	@Resource
 	private UserFeedCounterService userFeedCounterService;
@@ -88,9 +85,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		List<FeedCommentMsg> comments = feedCommentMsgMapper.selectByExample(example);
 		if(!CollectionUtils.isEmpty(comments)){
 			List<Integer> userIds = new ArrayList<Integer>(userIds(comments));
-			UserInfoExample userInfoExample = new UserInfoExample();
-			userInfoExample.createCriteria().andUseridIn(userIds);
-			List<UserInfo> userInfos = userInfoMapper.selectByExample(userInfoExample);
+			List<UserInfo> userInfos = userInfoService.findUserInfoByIds(userIds);
 			Map<Integer, UserInfo> userInfoMap = mapUserInfo(userInfos);
 			for (FeedCommentMsg feedCommentMsg : comments) {
 				Comment comment = new Comment();
@@ -146,36 +141,17 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		}
 		return  userIds;
 	}
-	
+
+	@Override
+	@Transactional(rollbackFor = Throwable.class)
 	public Comment addComment(AddCommentRequest request, Integer currentUserId) throws Exception{
-		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(request.getFeedId());
-		Assert.notNull(feedInfo);
-		UserInfo currentUser = userInfoMapper.selectByPrimaryKey(currentUserId);
-		Assert.notNull(currentUser);
-		UserInfo toUser = userInfoMapper.selectByPrimaryKey(request.getToUserId());
-		feedInfo.setCommentcount(feedInfo.getCommentcount() + 1);
-		Integer updateFeedRet = feedInfoMapper.updateByPrimaryKeySelective(feedInfo);//更新feed中的评论数
-		Assert.state(updateFeedRet > 0);
-		UserFeedCounterExample example = new UserFeedCounterExample();
-		example.createCriteria().andUseridEqualTo(feedInfo.getUserid())
-				.andCountertypeEqualTo(CounterType.CommentCounter.getValue());
-		List<UserFeedCounter> feedCounters = userFeedCounterMapper.selectByExample(example);
-		if(CollectionUtils.isEmpty(feedCounters)){//更新计数器
-			UserFeedCounter counter = new UserFeedCounter();
-			counter.setSum(1);//初始值
-			counter.setCountertype(CounterType.CommentCounter.getValue());
-			counter.setUserid(feedInfo.getUserid());
-			Integer ret = userFeedCounterMapper.insertSelective(counter);
-			Assert.state(ret > 0);
-		}else{
-			UserFeedCounter counter = feedCounters.get(0);
-			counter.setSum(counter.getSum() + 1);
-			Integer ret = userFeedCounterMapper.updateByPrimaryKeySelective(counter);
-			Assert.state(ret > 0);
-		}
+		FeedInfo feedInfo = feedInfoService.loadFeedInfo(request.getFeedId());
+		UserInfo currentUser = userInfoService.loadUserInfoById(currentUserId);
+		UserInfo toUser = userInfoService.loadUserInfoById(request.getToUserId());
+		feedInfoService.addFeedCommentCountByOne(request.getFeedId());
+		userFeedCounterService.increaseCounterByOffset(feedInfo.getUserid(),CounterType.CommentCounter.getValue(),1);
 		FeedCommentMsg feedCommentMsg = buildNewFeedCommentMsg(feedInfo, request, currentUserId);
 		Integer ret = feedCommentMsgMapper.insert(feedCommentMsg);//插入评论内容
-		Assert.state(ret > 0);
 		Comment comment = new Comment();
 		comment.setContent(request.getContent());
 		comment.setCommentId(feedCommentMsg.getCommentid());
@@ -199,25 +175,14 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Throwable.class)
 	public DeleteCommentResponse deleteComment(Integer commentId) {
 		FeedCommentMsg feedCommentMsg = feedCommentMsgMapper.selectByPrimaryKey(commentId);
-		Assert.notNull(feedCommentMsg);
-		FeedInfo feedInfo = feedInfoMapper.selectByPrimaryKey(feedCommentMsg.getFeedid());
-		feedInfo.setCommentcount(feedInfo.getCommentcount() - 1);
-		Integer updateFeedRet =  feedInfoMapper.updateByPrimaryKeySelective(feedInfo);//feedInfo中的计数更新
-		Assert.state(updateFeedRet > 0);
-		UserInfo feedUser = userInfoMapper.selectByPrimaryKey(feedInfo.getUserid());
-		UserFeedCounterExample example = new UserFeedCounterExample();
-		example.createCriteria().andUseridEqualTo(feedUser.getUserid())
-				.andCountertypeEqualTo(CounterType.CommentCounter.getValue());
-		List<UserFeedCounter> counters = userFeedCounterMapper.selectByExample(example);
-		Assert.state(!CollectionUtils.isEmpty(counters));
-		UserFeedCounter userFeedCounter = counters.get(0);
-		userFeedCounter.setSum(userFeedCounter.getSum() - 1);
-		Integer ret = userFeedCounterMapper.updateByPrimaryKeySelective(userFeedCounter);
-		Assert.state(ret > 0);
-		Integer delRet = feedCommentMsgMapper.deleteByPrimaryKey(commentId);
-		Assert.state(delRet > 0);
+		FeedInfo feedInfo = feedInfoService.loadFeedInfo(feedCommentMsg.getFeedid());
+		feedInfoService.cutFeedCommentCountByOne(feedCommentMsg.getFeedid());
+		UserInfo feedUser = userInfoService.loadUserInfoById(feedInfo.getUserid());
+		userFeedCounterService.decreaseCounterByOffset(feedUser.getUserid(), CounterType.CommentCounter.getValue(),1);
+		feedCommentMsgMapper.deleteByPrimaryKey(commentId);
 		DeleteCommentResponse response = new DeleteCommentResponse();
 		response.setCommentId(commentId);
 		response.setCommentCount(feedInfo.getCommentcount());
@@ -235,9 +200,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		List<Comment> commentList = new LinkedList<Comment>();
 		if(!CollectionUtils.isEmpty(comments)){
 			List<Integer> userIds = new ArrayList<Integer>(userIds(comments));
-			UserInfoExample userInfoExample = new UserInfoExample();
-			userInfoExample.createCriteria().andUseridIn(userIds);
-			List<UserInfo> userInfos = userInfoMapper.selectByExample(userInfoExample);
+			List<UserInfo> userInfos = userInfoService.findUserInfoByIds(userIds);
 			Map<Integer, UserInfo> userInfoMap = mapUserInfo(userInfos);
 			for (FeedCommentMsg feedCommentMsg : comments) {
 				Comment comment = new Comment();
@@ -286,6 +249,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Throwable.class)
 	public int deleteCommentOfFeed(Integer feedId, Integer feedUserId) {
 		FeedCommentMsgExample example = new FeedCommentMsgExample();
 		example.createCriteria().andFeedidEqualTo(feedId);

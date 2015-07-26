@@ -1,22 +1,15 @@
 package com.morningsidevc.web.controller;
 
-import java.util.List;
 import java.util.Map;
 
-import com.morningsidevc.po.gen.UserFeedCounter;
 import com.morningsidevc.service.TagInfoService;
 import com.morningsidevc.service.UserFeedCounterService;
 import com.morningsidevc.service.UserInfoService;
-import com.morningsidevc.utils.LoginUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.morningsidevc.service.FeedInfoService;
-import com.morningsidevc.vo.Tag;
 import com.morningsidevc.vo.User;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,9 +19,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 public class HomeController extends BaseController {
-    
-    @Resource
-    private FeedInfoService feedInfoService;
     
 	@Resource
 	private UserInfoService userInfoService;
@@ -71,12 +61,4 @@ public class HomeController extends BaseController {
     	return mav;
     }
 	
-    /* Ajax json */
-//	@RequestMapping(value = "/community/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-//	@ResponseBody
-//	public User load(@PathVariable Integer id) {
-//		User user = this.userInfoService.load(id);
-//    	return user;
-//	}
-
 }

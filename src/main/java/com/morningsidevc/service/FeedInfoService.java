@@ -48,5 +48,34 @@ public interface FeedInfoService {
 	
 	void likeDecreasedByOne(Integer feedId) throws Exception;
 
-	FeedInfo loadFeedInfo(Integer feedId) throws Exception;
+	FeedInfo loadFeedInfo(Integer feedId);
+
+	/**
+	 * 指定的FeedLikeCount减1
+	 * @param feedId
+	 * @throws Exception
+	 */
+	void cutFeedLikeCountByOne(Integer feedId) throws Exception;
+
+	/**
+	 * 指定FeedLikeCount加1
+	 * @param feedId
+	 * @throws Exception
+	 */
+	void addFeedLikeCountByOne(Integer feedId) throws Exception;
+
+
+	/**
+	 * 指定FeedCommentCount减1
+	 * @param feedId
+	 * @throws Exception
+	 */
+	void cutFeedCommentCountByOne(Integer feedId);
+
+	/**
+	 * 指定FeedCommentCount加1
+	 * @param feedId
+	 * @throws Exception
+	 */
+	void addFeedCommentCountByOne(Integer feedId) throws Exception;
 }

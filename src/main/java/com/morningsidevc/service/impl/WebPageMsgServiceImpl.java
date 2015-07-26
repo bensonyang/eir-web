@@ -16,7 +16,6 @@ import com.morningsidevc.po.gen.WebPageMsg;
 import com.morningsidevc.po.gen.WebPageMsgExample;
 import com.morningsidevc.service.WebPageMsgService;
 import com.morningsidevc.vo.WebPageMsgBody;
-import com.morningsidevc.vo.WeiboMsgBody;
 
 /**
  * @author yangna

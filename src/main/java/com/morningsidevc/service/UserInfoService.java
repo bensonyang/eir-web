@@ -16,4 +16,11 @@ public interface UserInfoService {
     Map<Integer, User> findUsers(List<Integer> userIds);
 
     UserInfo createUser(UserInfo userInfo);
+
+    List<UserInfo> findUserInfoByIds(List<Integer> userIds);
+
+    UserInfo loadUserInfoById(Integer userId);
+
+    UserInfo updateUserInfoSelective(UserInfo userInfo);
+
 }
