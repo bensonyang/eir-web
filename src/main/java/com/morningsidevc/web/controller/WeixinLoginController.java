@@ -3,9 +3,8 @@
  */
 package com.morningsidevc.web.controller;
 
-import com.morningsidevc.po.gen.WeixinUserInfo;
+import com.morningsidevc.po.WeixinUser;
 import com.morningsidevc.service.WeixinUserService;
-import com.morningsidevc.utils.LoginUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -31,10 +30,12 @@ public class WeixinLoginController extends BaseController {
     @RequestMapping(value = "/weixinlogin", method = RequestMethod.GET)
     public String weixinlogin(String code, String state, HttpServletRequest request, HttpServletResponse response) {
         if (StringUtils.isNotBlank(code)) {
-            WeixinUserInfo weixinUserInfo = weixinUserService.authWeixinUserInfo(code);
+            WeixinUser weixinUser = weixinUserService.authWeixinUserInfo(code);
+            /*
             if (weixinUserInfo != null) {
                 LoginUtils.signon(weixinUserInfo.getUserid(), true, request, response);
             }
+            */
         }
 
         return "redirect:/community";

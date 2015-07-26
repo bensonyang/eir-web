@@ -1,5 +1,6 @@
 package com.morningsidevc.service;
 
+import com.morningsidevc.po.WeixinUser;
 import com.morningsidevc.po.gen.WeixinUserInfo;
 
 /**
@@ -16,7 +17,7 @@ public interface WeixinUserService {
      * @param authcode
      * @return
      */
-    WeixinUserInfo authWeixinUserInfo(String authcode);
+    WeixinUser authWeixinUserInfo(String authcode);
 
 
     /**

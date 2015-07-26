@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,7 +32,7 @@ public class WeixinUserServiceImpl implements WeixinUserService {
     private WeixinUserInfoMapper weixinUserInfoMapper;
 
     @Override
-    public WeixinUserInfo authWeixinUserInfo(String authcode) {
+    public WeixinUser authWeixinUserInfo(String authcode) {
         if (StringUtils.isBlank(authcode)) {
             return null;
         }
@@ -50,6 +49,9 @@ public class WeixinUserServiceImpl implements WeixinUserService {
             return null;
         }
 
+        return weixinUser;
+
+        /*
         WeixinUserInfo weixinUserInfo = new WeixinUserInfo();
 
         WeixinUserInfo result = getWeixinUserInfoByUnionid(weixinUser.getUnionId());
@@ -68,6 +70,7 @@ public class WeixinUserServiceImpl implements WeixinUserService {
         }
 
         return weixinUserInfo;
+        */
     }
 
     @Override
