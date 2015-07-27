@@ -34,7 +34,6 @@ public class WeixinUserServiceImpl implements WeixinUserService {
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
-    public WeixinUserInfo authWeixinUserInfo(String authcode) {
     public WeixinUser authWeixinUserInfo(String authcode) {
         if (StringUtils.isBlank(authcode)) {
             return null;

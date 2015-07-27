@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+    <bean id="weiXinCallBackHandle" class="com.morningsidevc.weixin.servlet.WeiXinCallBackServlet" />
+
+    <bean id="messageProcessFactory" class="com.morningsidevc.weixin.processor.factory.MessageProcessFactory">
+        <property name="processors">
+            <map>
+                <entry key="text" value-ref="textMsgProcessor" />
+                <entry key="link" value-ref="linkMsgProcessor" />
+            </map>
+        </property>
+    </bean>
+
+    <bean id="eventProcessFactory" class="com.morningsidevc.weixin.processor.factory.EventProcessFactory">
+        <property name="processors">
+            <map>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="defaultMsgProcessor" class="com.morningsidevc.weixin.processor.message.DefaultMsgProcessor">
+    </bean>
+
+    <bean id="textMsgProcessor" class="com.morningsidevc.weixin.processor.message.TextMsgProcessor">
+    </bean>
+
+    <bean id="linkMsgProcessor" class="com.morningsidevc.weixin.processor.message.LinkMsgProcessor">
+    </bean>
+
+
+</beans>
