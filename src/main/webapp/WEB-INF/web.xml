@@ -60,6 +60,17 @@
         <servlet-name>eirweb</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>weiXinCallBackServlet</servlet-name>
+        <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>weiXinCallBackServlet</servlet-name>
+        <url-pattern>/weixincallback/*</url-pattern>
+    </servlet-mapping>
 	<!-- 静态资源 http://127.0.0.1:8080/static/js/jquery.min.js -->
 	<!-- 应用程序 http://127.0.0.1:8080/home -->
 </web-app>

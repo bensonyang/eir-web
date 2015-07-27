@@ -15,4 +15,7 @@ public abstract class ProcessorFactory {
 
     public abstract WeiXinProcessor loadWeiXinProcessor(Map<String, String> requestMap);
 
+    public void setProcessors(Map<String, WeiXinProcessor> processors) {
+        this.processors = processors;
+    }
 }
