@@ -19,6 +19,8 @@ define(function(){
         logOut          :   '/ajax/logout',//退出
         pageCrawler     :   '/crawler/get',//爬去网页摘要
         meInfoCenter    :   '/meinfo/default',//个人中心
-        updateUserInfo  :   '/meinfo/update'//更新个人信息
+        updateUserInfo  :   '/meinfo/update',//更新个人信息
+        picUpload       :   "/pic/upload",//上传图片
+        pic             :   "/pic/{}"//加载图片
     };
 });

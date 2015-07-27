@@ -153,7 +153,13 @@ CREATE TABLE `WeixinUserMapping` (
   `Channel` tinyint(3) NOT NULL COMMENT '微信用户来源渠道',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+/* 图片存储 */
+DROP TABLE `EIR`.`Pic`;
+CREATE TABLE IF NOT EXISTS `EIR`.`Pic` (
+	`PicId` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+    `PicData` MEDIUMBLOB NOT NULL COMMENT '图片数据',
+	PRIMARY KEY (`PicId`)
+) ENGINE=`InnoDB` DEFAULT CHARSET=utf8;
 
 
 

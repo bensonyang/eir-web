@@ -27,6 +27,12 @@ public class MeInfoController extends BaseController{
         return "meinfo";
     }
 
+    @RequestMapping("pic")
+    public String mePic(Model model){
+        return "mepic";
+    }
+
+
     @RequestMapping(value = "update", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public JsonResponse update(UserInfo userInfo){

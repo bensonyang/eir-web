@@ -75,5 +75,7 @@
        <bean id="tagInfoMapper" parent="baseMapper">
               <property name="mapperInterface" value="com.morningsidevc.dao.gen.TagInfoMapper"></property>
        </bean>
-
+       <bean id="picMapper" parent="baseMapper">
+              <property name="mapperInterface" value="com.morningsidevc.dao.gen.PicMapper"></property>
+       </bean>
 </beans>

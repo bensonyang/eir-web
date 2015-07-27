@@ -30,6 +30,7 @@ require(["API","jquery","toast"], function(API, $, toast){
         var request = new Object();
         request[_input.attr('name')] = _input.val();
         if(_tag == "保存"){
+            _input.attr('disabled','disabled');
             $.ajax({
                 type:"POST",
                 url:API.updateUserInfo,
@@ -45,6 +46,7 @@ require(["API","jquery","toast"], function(API, $, toast){
                 }
             });
         }else{
+            _input.removeAttr('disabled');
             _input.css('border','1px solid #e4e4e4');
             _this.text("保存");
         }

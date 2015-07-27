@@ -12,19 +12,19 @@
     <div class="row eir-input-group-container">
         <div class="row eir-input-group">
             <div class="l">我的昵称:</div>
-            <input val name="nickname" type="text" placeholder="昵称" class="border-zero icon-grey" value="${user.nickname!}">
+            <input val name="nickname" type="text" placeholder="昵称" class="border-zero icon-grey" value="${user.nickname!}" disabled="disabled">
             <span class="op"><a op>修改</a></span>
             <div class="eir-clear-both"></div>
         </div>
         <div class="row eir-input-group">
             <div class="l">真实姓名:</div>
-            <input val name="realname" type="text" placeholder="真实姓名" class="border-zero icon-grey" value="${user.realname!}">
+            <input val name="realname" type="text" placeholder="真实姓名" class="border-zero icon-grey" value="${user.realname!}" disabled="disabled">
             <span class="op"><a op>修改</a></span>
             <div class="eir-clear-both"></div>
         </div>
         <div class="row eir-input-group">
             <div class="l">手机号码:</div>
-            <input val name="mobilenum" type="text" placeholder="手机号码" class="border-zero icon-grey" value="${user.mobilenum!}">
+            <input val name="mobilenum" type="text" placeholder="手机号码" class="border-zero icon-grey" value="${user.mobilenum!}" disabled="disabled">
             <span class="op"><a op>修改</a></span>
             <div class="eir-clear-both"></div>
         </div>
@@ -42,20 +42,20 @@
         </div>
         <div class="row eir-input-group">
             <div class="l">公司职位:</div>
-            <input val name="jobtitle" type="text" placeholder="公司职位" class="border-zero icon-grey" value="${user.jobtitle!}">
+            <input val name="jobtitle" type="text" placeholder="公司职位" class="border-zero icon-grey" value="${user.jobtitle!}" disabled="disabled">
             <span class="op"><a op>修改</a></span>
             <div class="eir-clear-both"></div>
         </div>
         <div class="row eir-input-group">
             <div class="l">公司名称:</div>
-            <input val name="company" type="text" placeholder="公司名称" class="border-zero icon-grey" value="${user.company!}">
+            <input val name="company" type="text" placeholder="公司名称" class="border-zero icon-grey" value="${user.company!}" disabled="disabled">
             <span class="op"><a op>修改</a></span>
             <div class="eir-clear-both"></div>
         </div>
         <div class="row eir-input-group">
             <label class="l">描述:</label>
             <uninput>
-                <textarea val name="description" class="border-zero icon-grey">${user.description!}</textarea>
+                <textarea val name="description" class="border-zero icon-grey" disabled="disabled">${user.description!}</textarea>
             </uninput>
             <span class="op"><a op>修改</a></span>
             <div class="eir-clear-both"></div>
