@@ -2,8 +2,8 @@
     <div class="left-menu">
         <div class="list-wapper">
             <div class="div-li div-li-title">账号设置</div>
-            <div class="div-li active">我的信息</div>
-            <div class="div-li">头像</div>
+            <div class="div-li active"><a href="/meinfo/default">我的信息</a></div>
+            <div class="div-li"><a href="/meinfo/pic">头像</a></div>
             <div class="div-li-padding"></div>
         </div>
     </div>

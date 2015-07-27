@@ -23,7 +23,8 @@ page:页面名
     <link rel="stylesheet" href="${con.basepath!}${mainCss!}">
 </head>
 <body>
-<div class="container-fluid">
+<!--<div class="container-fluid">-->
+<div class="container">
     <div class="row eir-home-header">
         <div class="eir-brand">
             <h1>
