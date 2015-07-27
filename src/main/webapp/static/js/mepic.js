@@ -80,8 +80,6 @@ require(["API","jquery","html2canvas","toast", "jcrop"], function(API, $, html2c
             allowTaint: true,
             taintTest: false,
             onrendered:function (canvas) {
-                document.body.appendChild(canvas);
-                console.log(canvas.toDataURL());
                 $.ajax({
                     type:"POST",
                     url:API.picUpload,
@@ -91,6 +89,7 @@ require(["API","jquery","html2canvas","toast", "jcrop"], function(API, $, html2c
                     success:function(data){
                         if(data.code == 200){
                             toast("上传成功");
+                            window.location.reload();
                         }else{
                             toast("上传失败");
                         }

@@ -2,8 +2,8 @@
     <div class="left-menu">
         <div class="list-wapper">
             <div class="div-li div-li-title">账号设置</div>
-            <div class="div-li">我的信息</div>
-            <div class="div-li active">头像</div>
+            <div class="div-li"><a href="/meinfo/default">我的信息</a></div>
+            <div class="div-li active"><a href="/meinfo/pic">头像</a></div>
             <div class="div-li-padding"></div>
         </div>
     </div>
@@ -19,11 +19,15 @@
     </div>
     <div class="mepic-mainpic">
         <div class="mepic-mainpic-img">
-            <img src="images/c1.jpg" id="target" alt="" width="100%"/>
+            <img src="/static/images/mepic2.png" id="target" alt="" width="100%"/>
         </div>
         <div id="preview-pane">
             <div class="preview-container" id="preview-container">
-                <img src="images/c1.jpg" id="jcrop-preview" class="jcrop-preview" alt="Preview" />
+                <#if user.avatarUrl?has_content>
+                    <img src="${user.avatarUrl!}" id="jcrop-preview" class="jcrop-preview" alt="Preview" />
+                <#else>
+                    <img src="/static/images/mepic.jpg" id="jcrop-preview" class="jcrop-preview" alt="Preview" />
+                </#if>
             </div>
         </div>
     </div>
