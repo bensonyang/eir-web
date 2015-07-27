@@ -2,6 +2,7 @@ package com.morningsidevc.web.controller;
 
 import com.morningsidevc.po.gen.UserInfo;
 import com.morningsidevc.service.UserInfoService;
+import com.morningsidevc.vo.User;
 import com.morningsidevc.web.response.JsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,13 @@ public class MeInfoController extends BaseController{
 
     @RequestMapping("pic")
     public String mePic(Model model){
+        User user = new User();
+        try {
+            user = userInfoService.load(getUserId());
+        }catch (Exception e){
+
+        }
+        model.addAttribute("user", user);
         return "mepic";
     }
 

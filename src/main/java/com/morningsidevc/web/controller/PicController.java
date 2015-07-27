@@ -1,7 +1,9 @@
 package com.morningsidevc.web.controller;
 
 import com.morningsidevc.po.gen.Pic;
+import com.morningsidevc.po.gen.UserInfo;
 import com.morningsidevc.service.PicService;
+import com.morningsidevc.service.UserInfoService;
 import com.morningsidevc.web.response.JsonResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +27,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping("pic")
-public class PicController {
+public class PicController extends BaseController{
 
     private static Logger LOG = LoggerFactory.getLogger(PicController.class);
 
     @Resource
     private PicService picService;
+    @Resource
+    private UserInfoService userInfoService;
 
     //produces = "application/octet-stream;charset=UTF-8" , produces = MediaType.IMAGE_JPEG_VALUE
     @RequestMapping(value = "{picId}", method = RequestMethod.GET , produces = MediaType.IMAGE_JPEG_VALUE)
@@ -54,6 +58,10 @@ public class PicController {
             Pic pic = new Pic();
             pic.setPicdata(Base64Utils.decodeFromString(datas[datas.length - 1]));
             picService.insertPic(pic);
+            UserInfo userInfo = new UserInfo();
+            userInfo.setAvatarurl("/pic/" + pic.getPicid());
+            userInfo.setUserid(getUserId());
+            userInfoService.updateUserInfoSelective(userInfo);
             response.setCode(200);
             response.setMsg(pic.getPicid());
         }catch (Exception e){
