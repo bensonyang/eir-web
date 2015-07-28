@@ -94,7 +94,7 @@ public class WeiXinCallBackServlet implements HttpRequestHandler {
     }
 
     private String getToken() {
-        return "wwwdazongdianpingtuangoucom";
+        return "eirweb123";
     }
 
     private String getVerifyInfo(HttpServletRequest request) {
