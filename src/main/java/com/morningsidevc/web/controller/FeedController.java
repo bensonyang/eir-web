@@ -19,6 +19,8 @@ import com.morningsidevc.service.WeiboMsgService;
 import com.morningsidevc.utils.DateTimeUtils;
 import com.morningsidevc.vo.*;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +40,8 @@ import com.morningsidevc.web.response.JsonResponse;
 @Controller
 @RequestMapping("community")
 public class FeedController extends BaseController{
+
+	private static final Logger LOG = LoggerFactory.getLogger(FeedController.class);
 	@Resource
     private FeedInfoService feedInfoService;
 	@Resource
@@ -77,6 +81,8 @@ public class FeedController extends BaseController{
 			jsonResponse.setMsg(feedResponse);
 		}catch (Exception e){
 			jsonResponse.setCode(500);
+			LOG.info("", e);
+
 		}
     	return jsonResponse;
 	}
@@ -125,6 +131,7 @@ public class FeedController extends BaseController{
 		}catch (Exception e){
 			response.setCode(500);
 			response.setMsg("服务器错误");
+			LOG.info("", e);
 		}
 		return response;
 	}
@@ -172,6 +179,7 @@ public class FeedController extends BaseController{
 		}catch (Exception e){
 			response.setCode(500);
 			response.setMsg("服务器错误");
+			LOG.info("", e);
 		}
 		return response;
 	}
@@ -192,6 +200,7 @@ public class FeedController extends BaseController{
 		}catch (Exception e){
 			response.setCode(500);
 			response.setMsg("服务器错误");
+			LOG.info("", e);
 		}
 		return  response;
 	}

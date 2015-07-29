@@ -36,6 +36,7 @@ public class HomeController extends BaseController {
     /* HTML */
     @RequestMapping(value = "/community", method = RequestMethod.GET)
     public ModelAndView community(HttpServletRequest request, HttpServletResponse response) {
+		LOG.info("home");
     	ModelAndView mav = new ModelAndView();
      	mav.setViewName("home");
     	

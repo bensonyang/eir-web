@@ -4,6 +4,8 @@ import com.morningsidevc.po.gen.UserInfo;
 import com.morningsidevc.service.UserInfoService;
 import com.morningsidevc.vo.User;
 import com.morningsidevc.web.response.JsonResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("meinfo")
 public class MeInfoController extends BaseController{
+
+    private static final Logger LOG = LoggerFactory.getLogger(MeInfoController.class);
 
     @Autowired
     private UserInfoService userInfoService;
@@ -34,7 +38,7 @@ public class MeInfoController extends BaseController{
         try {
             user = userInfoService.load(getUserId());
         }catch (Exception e){
-
+            LOG.info("", e);
         }
         model.addAttribute("user", user);
         return "mepic";
@@ -52,6 +56,7 @@ public class MeInfoController extends BaseController{
         }catch (Exception e){
             response.setCode(500);
             response.setMsg("服务器错误");
+            LOG.info("", e);
         }
         return response;
     }

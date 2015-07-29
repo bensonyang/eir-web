@@ -9,6 +9,8 @@ import com.morningsidevc.service.FeedInfoService;
 import com.morningsidevc.service.FeedLikeService;
 import com.morningsidevc.web.response.FeedLikeResponse;
 import com.morningsidevc.web.response.JsonResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,8 @@ import javax.annotation.Resource;
 @Controller
 @RequestMapping("community")
 public class LikeController extends BaseController{
+
+    private static final Logger LOG = LoggerFactory.getLogger(LikeController.class);
 
     @Resource
     FeedLikeService feedLikeService;
@@ -53,6 +57,7 @@ public class LikeController extends BaseController{
         }catch (Exception e){
             response.setCode(500);
             response.setMsg("服务器错误!");
+            LOG.info("", e);
         }
         return response;
     }
@@ -77,6 +82,7 @@ public class LikeController extends BaseController{
         }catch (Exception e){
             response.setCode(500);
             response.setMsg("服务器错误!");
+            LOG.info("", e);
         }
         return response;
     }

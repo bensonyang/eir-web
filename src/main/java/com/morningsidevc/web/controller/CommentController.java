@@ -10,6 +10,8 @@ import com.morningsidevc.web.request.AddCommentRequest;
 import com.morningsidevc.web.response.DeleteCommentResponse;
 import com.morningsidevc.web.response.JsonResponse;
 import com.morningsidevc.web.response.MoreCommentResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -30,6 +32,8 @@ import java.util.List;
 @Controller
 @RequestMapping("community")
 public class CommentController extends BaseController{
+
+    private static final Logger LOG = LoggerFactory.getLogger(CommentController.class);
 
     @Resource
     FeedCommentService feedCommentService;
@@ -58,6 +62,7 @@ public class CommentController extends BaseController{
         }catch (Exception e){
             response.setCode(500);
             response.setMsg("服务器错误");
+            LOG.info("", e);
         }
         return response;
     }
@@ -80,6 +85,7 @@ public class CommentController extends BaseController{
         }catch (Exception e){
             response.setCode(500);
             response.setMsg("服务器错误");
+            LOG.info("", e);
         }
         return response;
     }
@@ -100,6 +106,7 @@ public class CommentController extends BaseController{
         }catch (Exception e){
             response.setCode(500);
             response.setMsg("服务器错误");
+            LOG.info("", e);
         }
         return response;
     }
