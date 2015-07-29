@@ -3,10 +3,11 @@ package com.morningsidevc.weixin.utils;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -23,7 +24,7 @@ import java.util.Map;
  */
 public class WeiXinUtil {
 
-    private final static Logger logger = Logger.getLogger(WeiXinUtil.class);
+    private final static Logger logger = LoggerFactory.getLogger(WeiXinUtil.class);
 
     public static boolean validate(String timestamp, String nonce, String signature, String token) {
 

@@ -1,7 +1,8 @@
 package com.morningsidevc.utils;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -14,7 +15,7 @@ import java.net.URL;
  */
 public class RequestUtils {
 
-    private final static Logger LOGGER = Logger.getLogger(RequestUtils.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(RequestUtils.class);
 
 
     public static String doGet(String url, String queryString) {

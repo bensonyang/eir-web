@@ -5,6 +5,8 @@ import java.util.Map;
 import com.morningsidevc.service.TagInfoService;
 import com.morningsidevc.service.UserFeedCounterService;
 import com.morningsidevc.service.UserInfoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 public class HomeController extends BaseController {
+
+	private static final Logger LOG = LoggerFactory.getLogger(HomeController.class);
     
 	@Resource
 	private UserInfoService userInfoService;

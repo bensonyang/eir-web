@@ -16,7 +16,8 @@
 package com.morningsidevc.utils;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +35,7 @@ import java.util.TimeZone;
  */
 public class LoginUtils {
 
-    private final Logger LOGGER = Logger.getLogger(getClass());
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     /**
 	 * 等号

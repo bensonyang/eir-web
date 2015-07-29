@@ -18,7 +18,8 @@ package com.morningsidevc.utils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -35,7 +36,7 @@ import static org.apache.commons.lang.StringUtils.EMPTY;
  */
 public abstract class EncryptionUtils {
 
-    private final static Logger LOGGER = Logger.getLogger(EncryptionUtils.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(EncryptionUtils.class);
 
     private static final String ENCODING_KEY = "ASCII";
 	private static final String ENCODING_TEXT = "UTF-8";
@@ -71,7 +72,7 @@ public abstract class EncryptionUtils {
 		} catch (UnsupportedEncodingException e) {
 			// do nothing
 		} catch (Exception e) {
-			LOGGER.error(e, e);
+			LOGGER.error("", e);
 		}
 		return EMPTY;
 	}
@@ -100,7 +101,7 @@ public abstract class EncryptionUtils {
 		} catch (UnsupportedEncodingException e) {
 			// do nothing
 		} catch (Exception e) {
-			LOGGER.error(e, e);
+			LOGGER.error("", e);
 		}
 		return EMPTY;
 	}
@@ -115,7 +116,7 @@ public abstract class EncryptionUtils {
 			cipher.init(Cipher.ENCRYPT_MODE, KeySpec, new IvParameterSpec(iv));
 			return cipher.doFinal(padWithZeros(bytes));
 		} catch (Exception e) {
-			LOGGER.error(e, e);
+			LOGGER.error("", e);
 			return null;
 		}
 	}
@@ -130,7 +131,7 @@ public abstract class EncryptionUtils {
 			cipher.init(Cipher.DECRYPT_MODE, KeySpec, new IvParameterSpec(iv));
 			return cipher.doFinal(bytes);
 		} catch (Exception e) {
-			LOGGER.error(e, e);
+			LOGGER.error("", e);
 			return null;
 		}
 	}

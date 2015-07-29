@@ -6,9 +6,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import java.util.Map;
  */
 public class WeixinOAuthClient {
 
-    private final static Logger LOGGER = Logger.getLogger(WeixinOAuthClient.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(WeixinOAuthClient.class);
 
 
     private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/access_token";

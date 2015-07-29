@@ -9,7 +9,8 @@ import com.morningsidevc.service.UserAccountService;
 import com.morningsidevc.service.WeixinUserService;
 import com.morningsidevc.utils.WeixinOAuthClient;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -24,7 +25,7 @@ import java.util.List;
  */
 @Component
 public class WeixinUserServiceImpl implements WeixinUserService {
-    private final static Logger LOGGER = Logger.getLogger(WeixinUserServiceImpl.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(WeixinUserServiceImpl.class);
 
     @Resource
     private UserAccountService userAccountService;

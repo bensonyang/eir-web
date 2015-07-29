@@ -9,7 +9,8 @@ import com.morningsidevc.service.UserAccountService;
 import com.morningsidevc.service.UserInfoService;
 import com.morningsidevc.utils.LoginUtils;
 import com.morningsidevc.web.response.JsonResponse;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class RegisterController extends BaseController {
 
-    private final Logger LOGGER = Logger.getLogger(getClass());
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Resource
     private UserAccountService userAccountService;

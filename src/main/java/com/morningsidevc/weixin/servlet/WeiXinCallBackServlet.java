@@ -4,7 +4,8 @@ import com.morningsidevc.weixin.handler.WeixinMsgHandler;
 import com.morningsidevc.weixin.utils.WeiXinUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpStatus;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.HttpRequestHandler;
 
 import javax.servlet.ServletException;
@@ -21,7 +22,7 @@ import java.io.UnsupportedEncodingException;
  */
 public class WeiXinCallBackServlet implements HttpRequestHandler {
 
-    private final static Logger logger = Logger.getLogger(WeiXinCallBackServlet.class);
+    private final static Logger logger = LoggerFactory.getLogger(WeiXinCallBackServlet.class);
 
     private static final String UTF8   = "UTF-8";
 

@@ -8,7 +8,8 @@ import com.morningsidevc.weixin.processor.WeiXinBaseProcessor;
 import com.morningsidevc.weixin.replymessage.util.MsgConvertUtil;
 import com.morningsidevc.weixin.replymessage.xml.XmlText;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import java.util.Map;
@@ -18,7 +19,7 @@ import java.util.Map;
  */
 public class TextMsgProcessor extends WeiXinBaseProcessor {
 
-    private final static Logger logger = Logger.getLogger(TextMsgProcessor.class);
+    private final static Logger logger = LoggerFactory.getLogger(TextMsgProcessor.class);
 
     @Resource
     private FeedInfoService feedInfoService;

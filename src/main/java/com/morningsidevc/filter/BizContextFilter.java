@@ -19,7 +19,8 @@ import com.morningsidevc.utils.Constants;
 import com.morningsidevc.utils.EncryptionUtils;
 import com.morningsidevc.utils.LoginUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
@@ -34,7 +35,7 @@ import java.io.IOException;
  */
 public class BizContextFilter implements Filter {
 
-	private final Logger LOGGER = Logger.getLogger(getClass());
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,

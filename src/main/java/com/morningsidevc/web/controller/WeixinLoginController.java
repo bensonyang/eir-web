@@ -6,7 +6,8 @@ package com.morningsidevc.web.controller;
 import com.morningsidevc.po.WeixinUser;
 import com.morningsidevc.service.WeixinUserService;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class WeixinLoginController extends BaseController {
 
-    private final Logger LOGGER = Logger.getLogger(getClass());
+    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Resource
     private WeixinUserService weixinUserService;

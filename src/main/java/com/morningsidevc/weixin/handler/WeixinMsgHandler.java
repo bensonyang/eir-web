@@ -5,7 +5,8 @@ import com.morningsidevc.weixin.processor.factory.ProcessorFactory;
 import com.morningsidevc.weixin.processor.factory.ProcessorFactorySelecter;
 import com.morningsidevc.weixin.utils.WeiXinUtil;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 public class WeixinMsgHandler {
 
-    private final static Logger logger = Logger.getLogger(WeixinMsgHandler.class);
+    private final static Logger logger = LoggerFactory.getLogger(WeixinMsgHandler.class);
 
     private Map<String, String> requestData;
 
