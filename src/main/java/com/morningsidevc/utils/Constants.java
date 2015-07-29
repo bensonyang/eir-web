@@ -11,7 +11,7 @@ public class Constants {
 
     public static final String USER_INFO_COOKIE_NAME = "euser";
 
-    public static final String COOKIE_DOMAIN = ".huhaha.club";
+    public static final String COOKIE_DOMAIN = ".msvcplus.com";
 
     public static final String ENCRYPT_KEY = "p5Beh7g40m.df20k";
 
