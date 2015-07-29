@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" " http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
-       <bean id="configProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-              <property name="location">
-                     <value>classpath:properties/jdbc.properties</value>
+       <bean id="configProperties" class="com.morningsidevc.utils.MyPropertyPlaceholderConfigurer">
+              <property name="locations">
+                     <list>
+                            <value>/home/test/jdbc.properties</value>
+                            <value>classpath:properties/jdbc.properties</value>
+                     </list>
               </property>
        </bean>
 
