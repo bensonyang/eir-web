@@ -5,7 +5,9 @@ package com.morningsidevc.web.controller;
 
 import com.morningsidevc.enums.HttpResponseStatus;
 import com.morningsidevc.service.FeedCommentService;
+import com.morningsidevc.service.UserInfoService;
 import com.morningsidevc.vo.Comment;
+import com.morningsidevc.vo.User;
 import com.morningsidevc.web.request.AddCommentRequest;
 import com.morningsidevc.web.response.DeleteCommentResponse;
 import com.morningsidevc.web.response.JsonResponse;
@@ -37,6 +39,8 @@ public class CommentController extends BaseController{
 
     @Resource
     FeedCommentService feedCommentService;
+    @Resource
+    UserInfoService userInfoService;
 
     @ResponseBody
     @RequestMapping(value = "addcomment", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -53,8 +57,8 @@ public class CommentController extends BaseController{
     	
         try {
             Comment comment = feedCommentService.addComment(request, getUserId());
-            Assert.notNull(comment);
-            comment.setUserPic("/static/images/pic1.jpeg");
+            User user = userInfoService.load(getUserId());
+            comment.setUserPic(user.getAvatarUrl());
             comment.setToUserPic("/static/images/pic1.jpeg");
             comment.setCanDelete(true);
             response.setCode(200);

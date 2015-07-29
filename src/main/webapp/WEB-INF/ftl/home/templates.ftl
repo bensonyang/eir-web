@@ -45,7 +45,7 @@
             %>
             <div class="row eir-feed-comments-item" data-commentid="<%= _comment.commentId %>">
                 <div class="eir-feed-pic01">
-                    <img src="<%= comment.userPic %>">
+                    <img src="<%= _comment.userPic %>">
                 </div>
                 <div class="eir-feed-comments-item-content">
                                     <span class="eir-feed-comments-item-content-name">
