@@ -15,7 +15,6 @@ expect {
 }
 #expect "$"
 send "sh /home/test/installApplication.sh\r"
+interact
 #interact
-#interact
-expect "success"
-send "exit\r"
+expect eof
