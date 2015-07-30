@@ -150,7 +150,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		UserInfo currentUser = userInfoService.loadUserInfoById(currentUserId);
 		UserInfo toUser = userInfoService.loadUserInfoById(request.getToUserId());
 		feedInfoService.addFeedCommentCountByOne(request.getFeedId());
-		userFeedCounterService.increaseCounterByOffset(feedInfo.getUserid(),CounterType.CommentCounter.getValue(),1);
+		userFeedCounterService.increaseCounterByOffset(currentUserId,CounterType.CommentCounter.getValue(),1);
 		FeedCommentMsg feedCommentMsg = buildNewFeedCommentMsg(feedInfo, request, currentUserId);
 		Integer ret = feedCommentMsgMapper.insert(feedCommentMsg);//插入评论内容
 		Comment comment = new Comment();
