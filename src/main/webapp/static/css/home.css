@@ -330,6 +330,8 @@ a {
 .eir-feed .eir-feed-pic img {
   width: 50px;
   height: 50px;
+  border: 1px solid #eeeeee;
+  border-radius: 25px;
 }
 .eir-feed .eir-feed-pic {
   display: inline-block;
@@ -338,6 +340,8 @@ a {
 .eir-feed .eir-feed-pic01 img {
   width: 40px;
   height: 40px;
+  border: 1px solid #eeeeee;
+  border-radius: 20px;
 }
 .eir-feed .eir-feed-pic01 {
   display: inline-block;
@@ -458,6 +462,8 @@ a {
 .eir-feed:hover .eir-feed-pic img {
   width: 50px;
   height: 50px;
+  border: 1px solid #eeeeee;
+  border-radius: 25px;
 }
 .eir-feed:hover .eir-feed-pic {
   display: inline-block;
@@ -466,6 +472,8 @@ a {
 .eir-feed:hover .eir-feed-pic01 img {
   width: 40px;
   height: 40px;
+  border: 1px solid #eeeeee;
+  border-radius: 20px;
 }
 .eir-feed:hover .eir-feed-pic01 {
   display: inline-block;
