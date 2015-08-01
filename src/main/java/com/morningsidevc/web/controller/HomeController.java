@@ -33,6 +33,12 @@ public class HomeController extends BaseController {
 	@Resource
 	private UserFeedCounterService userFeedCounterService;
 
+	/* HTML */
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String community() {
+		return "redirect:/community";
+	}
+
     /* HTML */
     @RequestMapping(value = "/community", method = RequestMethod.GET)
     public ModelAndView community(HttpServletRequest request, HttpServletResponse response) {
