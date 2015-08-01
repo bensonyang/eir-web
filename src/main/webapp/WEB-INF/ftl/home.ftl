@@ -1,6 +1,6 @@
 <#include "common/document.ftl"/>
 <@html mainCss="static/css/home.css" mainJs="static/js/home" page="home">
-<div class="">
+<div class="container">
     <div class="row">
         <#include "home/leftContainer.ftl"/>
           <#include "home/rightContainer.ftl"/>

@@ -24,7 +24,7 @@ page:页面名
 </head>
 <body>
 <!--<div class="container-fluid">-->
-<div class="container">
+<div class="container-fluid">
     <div class="row eir-home-header">
         <div class="eir-brand">
             <h1>

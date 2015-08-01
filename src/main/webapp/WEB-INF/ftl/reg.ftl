@@ -1,6 +1,6 @@
 <#include "common/document.ftl"/>
 <@html mainCss="static/css/reg.css" mainJs="static/js/reg" page="reg">
-<div class="">
+<div class="container">
     <div class="row">
         <#include "reg/main.ftl"/>
     </div>
