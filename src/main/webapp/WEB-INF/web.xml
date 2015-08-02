@@ -48,8 +48,35 @@
     <!--让tomcat的defaultServlet来拦截静态资源-->
     <servlet-mapping>
         <servlet-name>default</servlet-name>
-        <url-pattern>/static/*</url-pattern>
+        <url-pattern>/static/components/*</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/static/css/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/static/images/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>js</servlet-name>
+        <url-pattern>/static/js/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>js</servlet-name>
+        <servlet-class>com.morningsidevc.utils.SmartDefaultServlet</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>0</param-value>
+        </init-param>
+        <init-param>
+            <param-name>listings</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
     <servlet>
         <servlet-name>eirweb</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
