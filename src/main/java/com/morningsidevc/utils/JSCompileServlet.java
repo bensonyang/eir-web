@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author float.lu
  */
-public class SmartDefaultServlet extends HttpServlet {
+public class JSCompileServlet extends HttpServlet {
 
     private ConcurrentHashMap<String,String> jsCache = new ConcurrentHashMap<String, String>();
 
