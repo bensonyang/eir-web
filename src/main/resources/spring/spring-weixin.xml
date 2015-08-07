@@ -8,9 +8,9 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
-    <bean id="weiXinCallBackServlet" class="com.morningsidevc.weixin.servlet.WeiXinCallBackServlet" />
+    <bean id="weiXinCallBackServlet" class="com.morningsidevc.wechart.servlet.WeChartCallBackServlet" />
 
-    <bean id="messageProcessFactory" class="com.morningsidevc.weixin.processor.factory.MessageProcessFactory">
+    <bean id="messageProcessFactory" class="com.morningsidevc.wechart.processor.factory.MessageProcessFactory">
         <property name="processors">
             <map>
                 <entry key="text" value-ref="textMsgProcessor" />
@@ -19,20 +19,20 @@
         </property>
     </bean>
 
-    <bean id="eventProcessFactory" class="com.morningsidevc.weixin.processor.factory.EventProcessFactory">
+    <bean id="eventProcessFactory" class="com.morningsidevc.wechart.processor.factory.EventProcessFactory">
         <property name="processors">
             <map>
             </map>
         </property>
     </bean>
 
-    <bean id="defaultMsgProcessor" class="com.morningsidevc.weixin.processor.message.DefaultMsgProcessor">
+    <bean id="defaultMsgProcessor" class="com.morningsidevc.wechart.processor.message.DefaultMsgProcessor">
     </bean>
 
-    <bean id="textMsgProcessor" class="com.morningsidevc.weixin.processor.message.TextMsgProcessor">
+    <bean id="textMsgProcessor" class="com.morningsidevc.wechart.processor.message.TextMsgProcessor">
     </bean>
 
-    <bean id="linkMsgProcessor" class="com.morningsidevc.weixin.processor.message.LinkMsgProcessor">
+    <bean id="linkMsgProcessor" class="com.morningsidevc.wechart.processor.message.LinkMsgProcessor">
     </bean>
 
 

@@ -57,7 +57,7 @@ public class WeixinLoginController extends BaseController {
             WeixinUserInfo weixinUserInfo = weixinUserService.getWeixinUserInfoByUnionid(weixinUser.getUnionId());
             if (weixinUserInfo == null) {
                 Gson gson = new Gson();
-                model.addAttribute("weixinUserInfo", gson.toJson(weixinUser));
+                model.addAttribute("weixinInfo", gson.toJson(weixinUser));
                 return "bind";
             }
 
