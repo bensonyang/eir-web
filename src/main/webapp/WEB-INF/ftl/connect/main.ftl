@@ -8,13 +8,13 @@
         注册成功!
     </div>
     <div class="row eir-reg text-center">
-        <div class="eir-reg-form">
+        <div class="eir-reg-form eir-hide haveno-form">
             <div class="eir-reg-title">
                 <span>完善填写个人信息</span>
             </div>
             <form action="/community" method="post" id="loginForm">
                 <div class="input-prepend">
-                    <input id="uid" class="span2" type="text" name="account" placeholder="会员账号/微信号">
+                    <input id="uid" class="span2" type="text" name="account" placeholder="会员账号">
                 </div>
                 <div class="input-prepend">
                     <input id="pwd" class="span2" type="password" placeholder="密码">
@@ -39,19 +39,19 @@
                 </div>
                 <div class="input-prepend">
                     <div class="radio-box">
-                        <input type="radio" name="gender" /><label class="radio-label">男</label>
+                        <input type="radio" name="gender" value="1"/><label class="radio-label">男</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" name="gender" /><label class="radio-label">女</label>
+                        <input type="radio" name="gender" value="2" /><label class="radio-label">女</label>
                     </div>
                 </div>
                 <div class="input-prepend">
-                    <input id="reg" class="btn btn-success eir-noradius" value="注册">
+                    <input id="reg" class="btn btn-success eir-noradius" value="连接">
                 </div>
             </form>
-            <a>已有账号？</a>
+            <a class="haveno">已有账号？</a>
         </div>
-        <div class="eir-reg-form">
+        <div class="eir-reg-form have-form">
             <div class="eir-reg-title">
                 <span>连接已有账号</span>
             </div>
@@ -66,12 +66,13 @@
                     <input id="connect-reg" class="btn btn-success eir-noradius" value="连接">
                 </div>
             </form>
-            <a>还没有账号？</a>
+            <a class="have">还没有账号？</a>
         </div>
     </div>
-    <div class="text-center eir-alert eir-hide">
-        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+    <div class="text-center eir-alert">
+        <div class="alert alert-danger alert-dismissible eir-hide" role="alert">
             错误：两次密码不一致
         </div>
     </div>
 </div>
+<input type="hidden" value="${weixinInfo!}" id="weixinInfo">

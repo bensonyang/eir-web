@@ -58,7 +58,7 @@ public class WeixinLoginController extends BaseController {
             if (weixinUserInfo == null) {
                 Gson gson = new Gson();
                 model.addAttribute("weixinInfo", gson.toJson(weixinUser));
-                return "bind";
+                return "connect";
             }
 
             LoginUtils.signon(weixinUserInfo.getUserid(), true, request, response);
@@ -68,7 +68,7 @@ public class WeixinLoginController extends BaseController {
     }
 
     /* Ajax json */
-    @RequestMapping(value = "/ajax/regbind", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/ajax/regbind", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public JsonResponse regBind(String email, String password, UserInfo userInfo, String weixinInfo, HttpServletRequest request, HttpServletResponse response) {
         JsonResponse jsonResponse = new JsonResponse();

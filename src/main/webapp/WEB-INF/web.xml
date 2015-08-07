@@ -60,7 +60,7 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>js</servlet-name>
+        <servlet-name>default</servlet-name>
         <url-pattern>/static/js/*</url-pattern>
     </servlet-mapping>
 
