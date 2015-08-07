@@ -5,7 +5,7 @@ package com.morningsidevc.wechart.service;
  * <p/>
  * Date: 15-8-2, Time: 下午11:41
  */
-public interface WeChartTokenService {
+public interface WeChartTokenService1 {
 
     /**
      * 获取微信公众号的AccessToken
