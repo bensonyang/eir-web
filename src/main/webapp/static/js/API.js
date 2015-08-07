@@ -21,6 +21,8 @@ define(function(){
         meInfoCenter    :   '/meinfo/default',//个人中心
         updateUserInfo  :   '/meinfo/update',//更新个人信息
         picUpload       :   "/pic/upload",//上传图片
-        pic             :   "/pic/{}"//加载图片
+        pic             :   "/pic/{}",//加载图片
+        regConnect      :   "/ajax/regbind",//注册连接
+        loginConnect    :   "/ajax/loginbind"//登录连接
     };
 });
