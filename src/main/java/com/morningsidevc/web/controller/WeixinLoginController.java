@@ -50,7 +50,7 @@ public class WeixinLoginController extends BaseController {
     public String weixinlogin(Model model, String code, HttpServletRequest request, HttpServletResponse response) {
         if (StringUtils.isNotBlank(code)) {
             WeixinUser weixinUser = weixinUserService.authWeixinUserInfo(code);
-            if (weixinUser == null || StringUtils.isNotBlank(weixinUser.getUnionId())) {
+            if (weixinUser == null || StringUtils.isBlank(weixinUser.getUnionId())) {
                 return "redirect:/community";
             }
 
