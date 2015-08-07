@@ -17,8 +17,8 @@ public class Constants {
 
     public static final String ENCRYPT_IV = "nv926fjl,dv6yuia";
 
-    public static final String WEIXIN_WEB_APPID = "appid";
+    public static final String WEIXIN_WEB_APPID = "wx512439f72ac23d42";
 
-    public static final String WEIXIN_WEB_SECRET = "secret";
+    public static final String WEIXIN_WEB_SECRET = "d98f6f8d669bac1a668927316c2f2135";
 
 }

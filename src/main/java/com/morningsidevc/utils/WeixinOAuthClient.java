@@ -32,11 +32,6 @@ public class WeixinOAuthClient {
     private static final String GET_USER_INFO_URL = "https://api.weixin.qq.com/sns/userinfo";
 
 
-    private static final String WEIXIN_APPID = "38d9e17b2";
-    private static final String WEIXIN_SECRET = "cd5b3e75cd5ce5e9f1";
-
-
-
     /**
      * 根据code获取accesstoken
      *
@@ -49,8 +44,8 @@ public class WeixinOAuthClient {
         }
 
         Map<String ,String> paramMap = new HashMap<String, String>();
-        paramMap.put("appid", WEIXIN_APPID);
-        paramMap.put("secret", WEIXIN_SECRET);
+        paramMap.put("appid", Constants.WEIXIN_WEB_APPID);
+        paramMap.put("secret", Constants.WEIXIN_WEB_SECRET);
         paramMap.put("grant_type", "authorization_code");
         paramMap.put("code", authcode);
 
