@@ -11,6 +11,7 @@ import com.morningsidevc.po.gen.WeixinUserInfo;
 import com.morningsidevc.service.UserAccountService;
 import com.morningsidevc.service.UserInfoService;
 import com.morningsidevc.service.WeixinUserService;
+import com.morningsidevc.utils.EncryptionUtils;
 import com.morningsidevc.utils.LoginUtils;
 import com.morningsidevc.web.response.JsonResponse;
 import org.apache.commons.lang.StringUtils;
@@ -57,7 +58,7 @@ public class WeixinLoginController extends BaseController {
             WeixinUserInfo weixinUserInfo = weixinUserService.getWeixinUserInfoByUnionid(weixinUser.getUnionId());
             if (weixinUserInfo == null) {
                 Gson gson = new Gson();
-                model.addAttribute("weixinInfo", gson.toJson(weixinUser));
+                model.addAttribute("weixinInfo", EncryptionUtils.encrypt(gson.toJson(weixinUser)));
                 return "connect";
             }
 
@@ -82,7 +83,7 @@ public class WeixinLoginController extends BaseController {
 
             if (StringUtils.isNotBlank(weixinInfo)) {
                 Gson gson = new Gson();
-                WeixinUser weixinUser = gson.fromJson(weixinInfo, WeixinUser.class);
+                WeixinUser weixinUser = gson.fromJson(EncryptionUtils.decrypt(weixinInfo), WeixinUser.class);
                 WeixinUserInfo weixinUserInfo = generateWeixinUserInfo(weixinUser);
                 weixinUserInfo.setUserid(userId);
                 weixinUserInfoMapper.insertSelective(weixinUserInfo);
@@ -114,7 +115,7 @@ public class WeixinLoginController extends BaseController {
 
         if (StringUtils.isNotBlank(weixinInfo)) {
             Gson gson = new Gson();
-            WeixinUser weixinUser = gson.fromJson(weixinInfo, WeixinUser.class);
+            WeixinUser weixinUser = gson.fromJson(EncryptionUtils.decrypt(weixinInfo), WeixinUser.class);
             WeixinUserInfo weixinUserInfo = generateWeixinUserInfo(weixinUser);
             weixinUserInfo.setUserid(userId);
             weixinUserInfoMapper.insertSelective(weixinUserInfo);
