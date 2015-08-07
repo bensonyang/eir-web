@@ -121,6 +121,7 @@ public class WeixinOAuthClient {
                 return null;
             }
 
+            weixinUser.setOpenId(openId);
             weixinUser.setNickName(nickName);
             weixinUser.setSex(sex);
             weixinUser.setProvince(province);
