@@ -4,7 +4,6 @@
 package com.morningsidevc.web.controller;
 
 import com.google.gson.Gson;
-import com.morningsidevc.dao.gen.WeixinUserInfoMapper;
 import com.morningsidevc.po.WeixinUser;
 import com.morningsidevc.po.gen.UserInfo;
 import com.morningsidevc.po.gen.WeixinUserInfo;
@@ -42,9 +41,6 @@ public class WeixinLoginController extends BaseController {
     private UserAccountService userAccountService;
     @Resource
     private UserInfoService userInfoService;
-
-    @Resource
-    private WeixinUserInfoMapper weixinUserInfoMapper;
 
 
     @RequestMapping(value = "/weixinlogin", method = RequestMethod.GET)
@@ -86,7 +82,8 @@ public class WeixinLoginController extends BaseController {
                 WeixinUser weixinUser = gson.fromJson(EncryptionUtils.decrypt(weixinInfo), WeixinUser.class);
                 WeixinUserInfo weixinUserInfo = generateWeixinUserInfo(weixinUser);
                 weixinUserInfo.setUserid(userId);
-                weixinUserInfoMapper.insertSelective(weixinUserInfo);
+                weixinUserService.insertWeixinUserInfo(weixinUserInfo);
+                weixinUserService.updateWeixinUserMapping(weixinUserInfo.getUnionid(), weixinUserInfo.getOpenid(), (byte) 1);
 
                 userInfo.setAvatarurl(weixinUserInfo.getAvatarurl());
             }
@@ -118,7 +115,8 @@ public class WeixinLoginController extends BaseController {
             WeixinUser weixinUser = gson.fromJson(EncryptionUtils.decrypt(weixinInfo), WeixinUser.class);
             WeixinUserInfo weixinUserInfo = generateWeixinUserInfo(weixinUser);
             weixinUserInfo.setUserid(userId);
-            weixinUserInfoMapper.insertSelective(weixinUserInfo);
+            weixinUserService.insertWeixinUserInfo(weixinUserInfo);
+            weixinUserService.updateWeixinUserMapping(weixinUserInfo.getUnionid(), weixinUserInfo.getOpenid(), (byte) 1);
 
             UserInfo userInfo = userInfoService.loadUserInfoById(userId);
             userInfo.setAvatarurl(weixinUserInfo.getAvatarurl());

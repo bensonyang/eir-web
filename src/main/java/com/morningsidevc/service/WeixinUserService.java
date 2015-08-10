@@ -37,6 +37,29 @@ public interface WeixinUserService {
      */
     WeixinUserInfo getWeixinUserInfoByUnionid(String unionId);
 
+    /**
+     * 添加微信用户信息
+     *
+     * @param weixinUserInfo
+     */
+    void insertWeixinUserInfo(WeixinUserInfo weixinUserInfo);
+
+    /**
+     * 更新微信用户信息
+     *
+     * @param weixinUserInfo
+     */
+    void updateWeixinUserInfo(WeixinUserInfo weixinUserInfo);
+
+
+    /**
+     * 更新微信用户标示映射信息
+     *
+     * @param unionid
+     * @param openid
+     * @param channel
+     */
+    void updateWeixinUserMapping(String unionid, String openid, Byte channel);
 
 
 }

@@ -1,10 +1,13 @@
 package com.morningsidevc.service.impl;
 
 import com.morningsidevc.dao.gen.WeixinUserInfoMapper;
+import com.morningsidevc.dao.gen.WeixinUserMappingMapper;
 import com.morningsidevc.po.WeixinUser;
 import com.morningsidevc.po.WeixinUserToken;
 import com.morningsidevc.po.gen.WeixinUserInfo;
 import com.morningsidevc.po.gen.WeixinUserInfoExample;
+import com.morningsidevc.po.gen.WeixinUserMapping;
+import com.morningsidevc.po.gen.WeixinUserMappingExample;
 import com.morningsidevc.service.UserAccountService;
 import com.morningsidevc.service.WeixinUserService;
 import com.morningsidevc.utils.WeixinOAuthClient;
@@ -32,6 +35,8 @@ public class WeixinUserServiceImpl implements WeixinUserService {
 
     @Resource
     private WeixinUserInfoMapper weixinUserInfoMapper;
+    @Resource
+    private WeixinUserMappingMapper weixinUserMappingMapper;
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
@@ -106,6 +111,40 @@ public class WeixinUserServiceImpl implements WeixinUserService {
         return result.get(0);
 
     }
+
+    @Override
+    public void insertWeixinUserInfo(WeixinUserInfo weixinUserInfo) {
+        weixinUserInfoMapper.insertSelective(weixinUserInfo);
+    }
+
+    @Override
+    public void updateWeixinUserInfo(WeixinUserInfo weixinUserInfo) {
+        weixinUserInfoMapper.updateByPrimaryKeySelective(weixinUserInfo);
+    }
+
+    @Override
+    public void updateWeixinUserMapping(String unionId, String openId, Byte channel) {
+        if (StringUtils.isBlank(unionId) || StringUtils.isBlank(openId)) {
+            return;
+        }
+
+        WeixinUserMappingExample example = new WeixinUserMappingExample();
+        example.createCriteria().andUnionidEqualTo(unionId).andChannelEqualTo(channel);
+        List<WeixinUserMapping> result = weixinUserMappingMapper.selectByExample(example);
+        if (CollectionUtils.isEmpty(result)) {
+            WeixinUserMapping weixinUserMapping = new WeixinUserMapping();
+            weixinUserMapping.setUnionid(unionId);
+            weixinUserMapping.setOpenid(openId);
+            weixinUserMapping.setChannel(channel);
+            weixinUserMappingMapper.insertSelective(weixinUserMapping);
+            return;
+        }
+        WeixinUserMapping weixinUserMapping = result.get(0);
+        weixinUserMapping.setOpenid(openId);
+        weixinUserMappingMapper.updateByPrimaryKeySelective(weixinUserMapping);
+    }
+
+
 
     private void convertWeixinUserInfo(WeixinUser weixinUser, WeixinUserInfo weixinUserInfo) {
         weixinUserInfo.setAvatarurl(weixinUser.getHeadImgUrl());
