@@ -58,6 +58,16 @@ public class WeixinLoginController extends BaseController {
                 return "connect";
             }
 
+            WeixinUserInfo weixinInfo = generateWeixinUserInfo(weixinUser);
+            weixinInfo.setId(weixinUserInfo.getId());
+            weixinInfo.setUserid(weixinUserInfo.getUserid());
+            weixinUserService.updateWeixinUserInfo(weixinInfo);
+            weixinUserService.updateWeixinUserMapping(weixinInfo.getUnionid(), weixinInfo.getOpenid(), (byte) 1);
+
+            UserInfo userInfo = userInfoService.loadUserInfoById(weixinUserInfo.getUserid());
+            userInfo.setAvatarurl(weixinUserInfo.getAvatarurl());
+            userInfoService.updateUserInfoSelective(userInfo);
+
             LoginUtils.signon(weixinUserInfo.getUserid(), true, request, response);
         }
 
@@ -69,7 +79,7 @@ public class WeixinLoginController extends BaseController {
     @ResponseBody
     public JsonResponse regBind(String email, String password, UserInfo userInfo, String weixinInfo, HttpServletRequest request, HttpServletResponse response) {
         JsonResponse jsonResponse = new JsonResponse();
-        try{
+        try {
             int userId = userAccountService.create(email, password);
             if (userId <= 0) {
                 jsonResponse.setCode(400);
@@ -92,7 +102,7 @@ public class WeixinLoginController extends BaseController {
             Assert.notNull(newUser);
             LoginUtils.signon(userId, true, request, response);
             jsonResponse.setCode(200);
-        }catch (Exception e){
+        } catch (Exception e) {
             jsonResponse.setCode(500);
             LOGGER.info("", e);
         }
