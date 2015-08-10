@@ -60,6 +60,9 @@
        <bean id="weixinUserInfoMapper" parent="baseMapper">
               <property name="mapperInterface" value="com.morningsidevc.dao.gen.WeixinUserInfoMapper"></property>
        </bean>
+       <bean id="weixinUserMappingMapper" parent="baseMapper">
+              <property name="mapperInterface" value="com.morningsidevc.dao.gen.WeixinUserMappingMapper"></property>
+       </bean>
        <bean id="feedInfoMapper" parent="baseMapper">
               <property name="mapperInterface" value="com.morningsidevc.dao.gen.FeedInfoMapper"></property>
        </bean>
