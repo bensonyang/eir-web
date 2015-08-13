@@ -61,7 +61,7 @@
                 </div>
                 <div class="input-prepend">
                     <input id="connect-pwd" class="span2" type="password" placeholder="密码">
-                </div>e
+                </div>
                 <div class="input-prepend">
                     <input id="connect-reg" class="btn btn-success eir-noradius" value="连接">
                 </div>
