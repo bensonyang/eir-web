@@ -165,7 +165,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 	}
 
 	@Override
-	public List<Feed> findFeeds(int start, int pageSize, Integer currentUserId) throws Exception{
+	public List<Feed> findFeeds(int start, int pageSize, Integer currentUserId, Integer feedId) throws Exception{
 		List<Feed> feedList = new ArrayList<Feed>();
 		
 		FeedInfoExample feedInfoExample = new FeedInfoExample();
@@ -174,6 +174,14 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		feedInfoExample.setDistinct(true);
 		feedInfoExample.setOrderByClause("FeedId DESC");
 		feedInfoExample.createCriteria().andStatusEqualTo(FeedStatus.NORMAL);
+		if(feedId != null && feedId != 0){
+			feedInfoExample.createCriteria()
+					.andStatusEqualTo(FeedStatus.NORMAL)
+					.andFeedidEqualTo(feedId);
+		}else{
+			feedInfoExample.createCriteria()
+					.andStatusEqualTo(FeedStatus.NORMAL);
+		}
 		
 		/* retrieve feeds */
 		List<FeedInfo> feedInfoList = feedInfoMapper.selectByExample(feedInfoExample);
@@ -271,7 +279,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		Feed feed = new Feed();
 		
 		feed.setFeedId(feedInfo.getFeedid());
-		feed.setFeedType((int)feedInfo.getMsgtype());
+		feed.setFeedType((int) feedInfo.getMsgtype());
 		feed.setCommentCount(feedInfo.getCommentcount());
 		feed.setLikeCount(feedInfo.getLikecount());
 		feed.setTag(feedInfo.getTagname());

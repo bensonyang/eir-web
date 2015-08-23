@@ -55,7 +55,8 @@ public class FeedController extends BaseController{
 	@RequestMapping(value = "morefeed", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public JsonResponse moreFeed(@RequestParam(value="startIndex", required=false) Integer startIndex,
-			@RequestParam(value="pageSize", required=false) Integer pageSize) {
+			@RequestParam(value="pageSize", required=false) Integer pageSize,
+								 Integer userId, Integer feedId) {
 		// 设定起始Index
 		if (startIndex == null || startIndex < 0) {
 			startIndex = 0;
@@ -71,7 +72,8 @@ public class FeedController extends BaseController{
 		FeedResponse feedResponse = new FeedResponse();
 
 		try {
-			List<Feed> feedList = this.feedInfoService.findFeeds(startIndex, pageSize, getUserId());
+			Integer uid = getUserId() == 0 ? userId : getUserId();
+			List<Feed> feedList = this.feedInfoService.findFeeds(startIndex, pageSize, uid, feedId);
 			if (feedList != null && feedList.size() != 0) {
 				feedResponse.setFeeds(feedList);
 				feedResponse.setLastFeedIndex(startIndex+feedList.size()-1);
