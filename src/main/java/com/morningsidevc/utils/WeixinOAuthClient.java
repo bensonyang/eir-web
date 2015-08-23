@@ -82,7 +82,7 @@ public class WeixinOAuthClient {
     }
 
     /**
-     * 根据code获取accesstoken
+     * 根据accesstoken获取用户信息
      *
      * @return
      */
@@ -112,7 +112,7 @@ public class WeixinOAuthClient {
             String privilege = userInfo.getString("privilege");
             String unionid = userInfo.getString("unionid");
 
-            if (StringUtils.isBlank(nickName) || StringUtils.isBlank(headimgurl) || StringUtils.isBlank(unionid)) {
+            if (StringUtils.isBlank(nickName) || StringUtils.isBlank(unionid)) {
                 return null;
             }
 
@@ -127,7 +127,7 @@ public class WeixinOAuthClient {
             weixinUser.setUnionId(unionid);
 
         } catch (JSONException e) {
-            LOGGER.error("weixin access token is error", e);
+            LOGGER.error("weixin user info is error", e);
         }
 
         return weixinUser;
