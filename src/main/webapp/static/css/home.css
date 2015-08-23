@@ -146,7 +146,7 @@ a {
   transform: rotate(-45deg);
 }
 .eir-recommend-link {
-  width: 80%;
+  width: 100%;
   border: 1px solid #efefef;
   margin-bottom: 5px;
   float: left;
@@ -183,12 +183,12 @@ a {
 }
 @media (min-width: 1024px) {
   .eir-recommend-link {
-    width: 85%;
+    width: 100%;
   }
 }
 @media (max-width: 768px) {
   .eir-recommend-link {
-    width: 74%;
+    width: 100%;
     margin-bottom: 5px;
   }
   .eir-home-right {
@@ -197,17 +197,12 @@ a {
 }
 @media (max-width: 414px) {
   .eir-recommend-link {
-    width: 80%;
+    width: 100%;
   }
 }
 @media (max-width: 375px) {
   .eir-recommend-link {
-    width: 78%;
-  }
-}
-@media (max-width: 320px) {
-  .eir-recommend-link {
-    width: 74%;
+    width: 100%;
   }
 }
 .eir-profile {
@@ -635,9 +630,14 @@ a {
   line-height: 1.5em;
   padding-left: 5px;
 }
+.eir-login .eir-login-form .login {
+  width: 154px;
+  float: left;
+  margin-left: 10px;
+}
 .eir-login .eir-login-form img {
-  width: 186px;
-  height: 27px;
+  margin-right: 10px;
+  float: right;
 }
 .eir-login .eir-login-title {
   padding-bottom: 5px;

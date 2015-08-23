@@ -506,6 +506,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
             var _urlIpt = $('.eir-recommend-link');
             var _abstractDiv = $('.link-page-content');
             var _mainTextArea = $('.main-textarea');
+            if($.trim(_urlIpt.val()) == "") return;
             $.ajax({
                 type:'POST',
                 url:API.pageCrawler,
@@ -514,11 +515,15 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                     if(data.code == 200){
                         var _title = data.msg.pageTitle;
                         var _abstract = data.msg.pageAbstract;
-                        $('.link-page-content-title span').text(_title);
-                        $('.link-page-content-abstract').text(_abstract);
-                        _linkIptDiv.hide();
-                        _abstractDiv.show();
-                        _mainTextArea.hide();
+                        if($.trim(_title) == ""){
+                            toast("当前输入没有获取到内容");
+                        }else{
+                            $('.link-page-content-title span').text(_title);
+                            $('.link-page-content-abstract').text(_abstract);
+                            _linkIptDiv.hide();
+                            _abstractDiv.show();
+                            _mainTextArea.hide();
+                        }
                     }else{
                         toast("服务器错误");
                     }
@@ -565,7 +570,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
     $('.eir-feed .eir-feed-comments-comments').click(HANDLERS.commentToFeedHandler);//Feed下面添加评论
     $('.eir-feef a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
     $('#login').click(HANDLERS.loginHandler);//登陆按钮
-    $('.eir-input-link').click(HANDLERS.inputLinkOnClickHandler);//获取网页内容
+    $('.for-recommend-link .eir-recommend-link').focusout(HANDLERS.inputLinkOnClickHandler);//获取网页内容
     $('.link-page-content-title .close').click(HANDLERS.closeAbstractDivHandler);//重新获取网页摘要
     $('.meinfo').click(HANDLERS.meinfoOnClickHandler);//个人中心
     $('.dropdown-toggle').focusout(HANDLERS.meinfoHide);//隐藏个人中心
