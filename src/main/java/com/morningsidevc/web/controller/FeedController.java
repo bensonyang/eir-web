@@ -72,7 +72,12 @@ public class FeedController extends BaseController{
 		FeedResponse feedResponse = new FeedResponse();
 
 		try {
-			Integer uid = getUserId() == 0 ? userId : getUserId();
+			Integer uid = null;
+			if(userId == null && feedId == null){
+				uid = getUserId();
+			}else{
+				uid = userId;
+			}
 			List<Feed> feedList = this.feedInfoService.findFeeds(startIndex, pageSize, uid, feedId);
 			if (feedList != null && feedList.size() != 0) {
 				feedResponse.setFeeds(feedList);

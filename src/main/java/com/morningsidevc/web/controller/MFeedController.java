@@ -13,8 +13,10 @@ public class MFeedController {
     /* HTML */
     @RequestMapping(value = "/mfeed", method = RequestMethod.GET)
     public String community(Model model,Integer feedId,Integer userId) {
-        model.addAttribute("feedId",95);
-        model.addAttribute("userId",22);
+        if(feedId == null) feedId = 95;
+        if(userId == null) userId = 22;
+        model.addAttribute("feedId",feedId);
+        model.addAttribute("userId",userId);
         return "mfeed";
     }
 
