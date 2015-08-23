@@ -52,6 +52,13 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                     var compiled =  _.template(templates.feedTemplate);
                     $('.feed-container').append(compiled(data));
                     $('div[data-feedId='+ data.feedId +']').slideDown(500);
+                    var _title = undefined;
+                    if(data.feedType == 0){
+                        _title = data.msgBody.content;
+                    }else{
+                        _title = data.msgBody.title;
+                    }
+                    $('title').text(_title);
                 });
                 $('.eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
                 $('.eir-feed .eir-feed-options .icon-thumbs-up .unliked').click(HANDLERS.likeFeedHandler);//Feed点赞
@@ -61,6 +68,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                 $('.eir-feed a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
                 $('.eir-feed a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
                 $('.eir-feed a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
+
             }else{
                 toast(data.msg);
             }
