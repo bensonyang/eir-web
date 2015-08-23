@@ -173,7 +173,6 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		feedInfoExample.setLimitEnd(pageSize);
 		feedInfoExample.setDistinct(true);
 		feedInfoExample.setOrderByClause("FeedId DESC");
-		feedInfoExample.createCriteria().andStatusEqualTo(FeedStatus.NORMAL);
 		if(feedId != null && feedId != 0){
 			feedInfoExample.createCriteria()
 					.andStatusEqualTo(FeedStatus.NORMAL)
