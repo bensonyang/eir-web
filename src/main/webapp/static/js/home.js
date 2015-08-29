@@ -402,8 +402,10 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
             var _touserid = $(this).data('userid');
             var compiled =  _.template(templates.feedCommentMore);
             $(this).closest('.eir-feed-comments').replaceWith(compiled({type:"goComment",touserid:_touserid})).fadeIn(1000);
+            _feed.find('textarea').focus();
             _feed.find('textarea[backComment]').focus();
             _feed.find('a[goComment]').click(HANDLERS.commentToFeedHandler);
+            _feed.find('.eir-feed-comments-textarea').focusout(HANDLERS.feedCommentFocusOutHandler);//注册失焦事件
         },
         getMoreFeedCommentsHandler  : function(){
             var _this = $(this);
@@ -605,6 +607,15 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
         onTagClick:function(){
             $('.tag-container .tag').removeClass('active');//clear all tags active class
             $(this).addClass('active');
+        },
+        feedCommentFocusOutHandler:function(){
+            var _this = $(this);
+            var _feed = $(this).closest('.eir-feed');
+            if($.trim(_this.val()) == ""){//没有内容，收回
+                var compiled =  _.template(templates.feedComment);
+                _this.closest('.eir-feed-comments-more').replaceWith(compiled({})).fadeIn(1000);
+                _feed.find('.eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
+            }
         }
     };
     //################################事件处理器配置END#######################################
