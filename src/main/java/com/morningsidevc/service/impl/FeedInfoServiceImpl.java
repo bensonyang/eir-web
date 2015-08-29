@@ -249,6 +249,9 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 				}else{
 					element.setCanDelete(false);
 				}
+				if("无".equals(element.getTag())){
+					element.setTag("");
+				}
 			}
 		} else {
 			return null;

@@ -327,7 +327,7 @@ a {
   right: -5px;
   font-size: 12px;
   padding: 2px 5px 2px 0px;
-  color: #FFFFFF;
+  border: 1px solid #13f913;
   font-style: italic;
   line-height: 16px;
   height: 22px;
@@ -492,7 +492,7 @@ a {
   right: -5px;
   font-size: 12px;
   padding: 2px 5px 2px 0px;
-  color: #FFFFFF;
+  border: 1px solid #13f913;
   font-style: italic;
   line-height: 16px;
   height: 22px;

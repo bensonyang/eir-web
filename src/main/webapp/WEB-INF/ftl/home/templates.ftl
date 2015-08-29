@@ -10,7 +10,7 @@
             color = "#13f913";
         }
         %>
-        <span class="feed-tag icon-tag" style="background-color:<%= color %>;border:1px solid <%= color %>;"><span class="arrow" style="border-right: 10px solid <%= color %>;"></span><%= tag %></span>
+        <span class="feed-tag" style="color:<%= color %>;border:1px solid <%= color %>;"><span class="arrow" style="border-right: 10px solid <%= color %>;"></span><%= tag %></span>
         <% } %>
         <div class="row eir-feed-head" data-userid="<%= author.userId %>">
             <div class="eir-feed-pic">
