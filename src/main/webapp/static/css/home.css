@@ -209,7 +209,6 @@ a {
   margin-top: 10px;
   padding: 10px 10px 0px 10px;
   border: 1px solid #efefef;
-  cursor: pointer;
 }
 .eir-profile .eir-feed-pic {
   float: left;
@@ -277,6 +276,7 @@ a {
   -webkit-border-radius: 17px;
   -moz-border-radius: 17px;
   border-radius: 17px;
+  cursor: pointer;
 }
 .eir-mytags {
   margin-top: 10px;
@@ -616,7 +616,6 @@ a {
   margin-top: 10px;
   padding: 10px 10px 10px 10px;
   border: 1px solid #efefef;
-  cursor: pointer;
 }
 .eir-login .eir-login-form .input-prepend {
   padding: 5px;
@@ -636,6 +635,7 @@ a {
 .eir-login .eir-login-form img {
   margin-right: 10px;
   float: right;
+  cursor: pointer;
 }
 .eir-login .eir-login-title {
   padding-bottom: 5px;
