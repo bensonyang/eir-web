@@ -3,6 +3,7 @@
  */
 package com.morningsidevc.web.controller;
 
+import java.net.URLDecoder;
 import java.util.*;
 
 import javax.annotation.Resource;
@@ -52,17 +53,24 @@ public class FeedController extends BaseController{
 	private WebPageMsgService webPageMsgService;
 
 	/* Ajax json */
-	@RequestMapping(value = "morefeed", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "morefeed", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public JsonResponse moreFeed(@RequestParam(value="startIndex", required=false) Integer startIndex,
 			@RequestParam(value="pageSize", required=false) Integer pageSize,
-								 Integer userId, Integer feedId) {
+								 Integer userId, Integer feedId, String tagName) {
 		// 设定起始Index
 		if (startIndex == null || startIndex < 0) {
 			startIndex = 0;
 		}
-		
-		
+
+		if(StringUtils.isNotBlank(tagName)){
+			try {
+				tagName = URLDecoder.decode(tagName, "UTF-8");
+			}catch (Exception e){
+				LOG.info("", e);
+			}
+		}
+
 		// 设定缺省结果大小
 		if (pageSize == null || pageSize < 1) {
 			pageSize = 9;
@@ -78,7 +86,7 @@ public class FeedController extends BaseController{
 			}else{
 				uid = userId;
 			}
-			List<Feed> feedList = this.feedInfoService.findFeeds(startIndex, pageSize, uid, feedId);
+			List<Feed> feedList = this.feedInfoService.findFeeds(startIndex, pageSize, uid, feedId, tagName);
 			if (feedList != null && feedList.size() != 0) {
 				feedResponse.setFeeds(feedList);
 				feedResponse.setLastFeedIndex(startIndex+feedList.size()-1);
@@ -106,7 +114,7 @@ public class FeedController extends BaseController{
 		
 		try{
 			Assert.state(StringUtils.isNotBlank(content));
-			if(StringUtils.isNotBlank(tagName)){
+			if(StringUtils.isBlank(tagName)){
 				tagName = "无";
 			}
 			if(getUserId() == 0){

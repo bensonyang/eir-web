@@ -130,3 +130,12 @@
         </div>
     </div>
 </script>
+<script type="text/template" id="eir-tag-buttons">
+    <%
+        _.each(msg,function(_tag){
+    %>
+    <input value="<%= _tag.tagName %>" type="button" class="tag" data-tagid="<%= _tag.tagId %>">
+    <%
+    });
+    %>
+</script>

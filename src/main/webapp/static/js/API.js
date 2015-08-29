@@ -23,6 +23,7 @@ define(function(){
         picUpload       :   "/pic/upload",//上传图片
         pic             :   "/pic/{}",//加载图片
         regConnect      :   "/ajax/regbind",//注册连接
-        loginConnect    :   "/ajax/loginbind"//登录连接
+        loginConnect    :   "/ajax/loginbind",//登录连接
+        tags            :   "/tags"
     };
 });

@@ -8,6 +8,9 @@
     </#if>
     <div class="row eir-mytags">
         <div class="eir-ul list-unstyled text-center">
+            <div class="eir-li active">
+                <li class="icon-tag"><label>全部</label></li>
+            </div>
             <#if tagList?? && tagList?size gt 0>
             	<#list tagList as tag>
             	<div class="eir-li">

@@ -8,6 +8,7 @@ package com.morningsidevc.vo;
  *
  */
 public class Tag {
+	private int tagId;
 	private String tagName;
 
 	public String getTagName() {
@@ -16,5 +17,13 @@ public class Tag {
 
 	public void setTagName(String tagName) {
 		this.tagName = tagName;
+	}
+
+	public int getTagId() {
+		return tagId;
+	}
+
+	public void setTagId(int tagId) {
+		this.tagId = tagId;
 	}
 }

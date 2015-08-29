@@ -40,6 +40,7 @@ public class TagInfoServiceImpl implements TagInfoService {
 		if (!CollectionUtils.isEmpty(tagInfos)) {
 			for (TagInfo tagInfo : tagInfos) {
 				Tag tag = new Tag();
+				tag.setTagId(tagInfo.getTagid());
 				tag.setTagName(tagInfo.getTagname());
 				tags.add(tag);
 			}

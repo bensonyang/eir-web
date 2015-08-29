@@ -13,7 +13,7 @@ import com.morningsidevc.vo.Feed;
  *
  */
 public interface FeedInfoService {
-	List<Feed> findFeeds(int start, int pageSize, Integer currentUserID, Integer feedId) throws Exception;
+	List<Feed> findFeeds(int start, int pageSize, Integer currentUserID, Integer feedId, String tagName) throws Exception;
 
 	/**
 	 * 添加说说接口

@@ -17,6 +17,7 @@ define(['jquery'],function($){
         feedTemplate : $('#feedTemplate').html(),
         feedCommentMore : $('#eir-feed-comments-more').html(),
         feedComment : $('#eir-feed-comments').html(),
-        feedCommentItem : $('#eir-feed-comments-item').html()
+        feedCommentItem : $('#eir-feed-comments-item').html(),
+        tagsButtons:$('#eir-tag-buttons').html()
     };
 });
