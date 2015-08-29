@@ -223,7 +223,6 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
             _currentTag = _tagName;
             if($.trim(_tagName) == "全部"){
                 _tagName = "";
-                _currentTag = _tagName;
             }
             FeedFuns.initFirstPage({ startIndex:0,pageSize:5,tagName:_tagName});
             /*
@@ -588,7 +587,6 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
             window.location.href = API.meInfoCenter;
         },
         showTags:function(){
-            if($('.tag-container .tag').length > 0) return;
             $.ajax({
                 type:"POST",
                 url:API.tags,
@@ -634,8 +632,9 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
     $('.link-page-content-title .close').click(HANDLERS.closeAbstractDivHandler);//重新获取网页摘要
     $('.meinfo').click(HANDLERS.meinfoOnClickHandler);//个人中心
     $('.dropdown-toggle').focusout(HANDLERS.meinfoHide);//隐藏个人中心
-    $('.main-textarea').focusin(HANDLERS.showTags);//展示标签信息
     //################################事件配置END#######################################
+
+    HANDLERS.showTags();//初始化标签
 
     window.goOut = HANDLERS.logOutHandler;
     window.goMeInfoCenter = HANDLERS.goMeInfoCenter;//个人中心

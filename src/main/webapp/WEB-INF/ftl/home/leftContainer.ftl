@@ -20,19 +20,19 @@
                 </div>
                 <textarea class="eir-form-control main-textarea" rows="3"></textarea>
                 <div class="col-md-12 col-xs-12 eir-box1">
-                   <!-- <li class="icon-tags icon-grey">
+                   <li class="icon-tags icon-grey">
                         <label class="eir-label">标签</label>
-                    </li>-->
-                    <span class="tags">
+                    </li>
+                    <span class="tags tag-container">
                     </span>
                     <a class="btn btn-default pull-right eir-comments-btn" type="submit">发表</a>
                 </div>
             </div>
         </form>
     </div>
-    <div class="row tag-container eir-hide">
-        <!--<input value="O2O" type="button" class="tag active">-->
-    </div>
+<#--    <div class="row tag-container eir-hide">
+        <!--<input value="O2O" type="button" class="tag active">&ndash;&gt;
+    </div>-->
     <div class="feed-container">
     </div>
     <!--place feed here-->
