@@ -11,7 +11,7 @@
         <form>
             <div class="form-group">
                 <div class="for-recommend-link eir-hide">
-                    <input type="text" class="eir-recommend-link">
+                    <input type="text" class="eir-recommend-link" placeholder="输入网址...">
                   <#--  <a class="btn btn-default eir-noradius eir-input-link">输入网址</a>-->
                 </div>
                 <div class="link-page-content eir-hide" style="display: none;">
