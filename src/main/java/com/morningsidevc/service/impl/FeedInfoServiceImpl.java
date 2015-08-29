@@ -178,7 +178,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		if(feedId != null && feedId != 0){
 			criteria.andFeedidEqualTo(feedId);
 		}
-		if(StringUtils.isNotBlank(tagName)){
+		if(StringUtils.isNotBlank(tagName) && !tagName.equals("全部")){
 			criteria.andTagnameLike(tagName);
 		}
 		/* retrieve feeds */
