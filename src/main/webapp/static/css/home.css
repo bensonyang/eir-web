@@ -320,21 +320,29 @@ a {
   margin-top: 20px;
   padding: 5px;
   border: 1px solid #efefef;
+  position: relative;
 }
 .eir-feed .feed-tag {
   position: absolute;
-  right: 0px;
+  right: -5px;
   font-size: 12px;
-  background-color: #f9f3e7;
-  padding: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
-  color: #888888;
-  border: 1px solid #f9f3e8;
-  opacity: 0.5;
+  background-color: #f91b15;
+  padding: 2px 5px 2px 0px;
+  border: 1px solid #f91b15;
+  color: #FFFFFF;
+  font-style: italic;
+  line-height: 16px;
+  height: 22px;
 }
-.eir-feed .feed-tag:hover {
-  opacity: 1;
+.eir-feed .feed-tag .arrow {
+  position: absolute;
+  left: -11px;
+  width: 0;
+  height: 0;
+  border-top: 11px solid transparent;
+  border-right: 10px solid #f91b15;
+  border-bottom: 11px solid transparent;
+  top: -1px;
 }
 .eir-feed .eir-feed-pic img {
   width: 50px;
@@ -349,6 +357,16 @@ a {
   width: 40px;
   height: 40px;
   border-radius: 20px;
+}
+.eir-feed .eir-feed-pic01 img .arrow {
+  position: absolute;
+  left: -11px;
+  width: 0;
+  height: 0;
+  border-top: 11px solid transparent;
+  border-right: 10px solid red;
+  border-bottom: 11px solid transparent;
+  top: -1px;
 }
 .eir-feed .eir-feed-pic01 {
   display: inline-block;
@@ -461,6 +479,7 @@ a {
   margin-top: 20px;
   padding: 5px;
   border: 1px solid #efefef;
+  position: relative;
   background: #f6f6f6;
   box-shadow: none;
   -webkit-transition: 0.2s;
@@ -472,18 +491,25 @@ a {
 }
 .eir-feed:hover .feed-tag {
   position: absolute;
-  right: 0px;
+  right: -5px;
   font-size: 12px;
-  background-color: #f9f3e7;
-  padding: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
-  color: #888888;
-  border: 1px solid #f9f3e8;
-  opacity: 0.5;
+  background-color: #f91b15;
+  padding: 2px 5px 2px 0px;
+  border: 1px solid #f91b15;
+  color: #FFFFFF;
+  font-style: italic;
+  line-height: 16px;
+  height: 22px;
 }
-.eir-feed:hover .feed-tag:hover {
-  opacity: 1;
+.eir-feed:hover .feed-tag .arrow {
+  position: absolute;
+  left: -11px;
+  width: 0;
+  height: 0;
+  border-top: 11px solid transparent;
+  border-right: 10px solid #f91b15;
+  border-bottom: 11px solid transparent;
+  top: -1px;
 }
 .eir-feed:hover .eir-feed-pic img {
   width: 50px;
@@ -498,6 +524,16 @@ a {
   width: 40px;
   height: 40px;
   border-radius: 20px;
+}
+.eir-feed:hover .eir-feed-pic01 img .arrow {
+  position: absolute;
+  left: -11px;
+  width: 0;
+  height: 0;
+  border-top: 11px solid transparent;
+  border-right: 10px solid red;
+  border-bottom: 11px solid transparent;
+  top: -1px;
 }
 .eir-feed:hover .eir-feed-pic01 {
   display: inline-block;

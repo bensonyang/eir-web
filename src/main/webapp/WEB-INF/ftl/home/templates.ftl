@@ -1,6 +1,8 @@
 <script type="text/template" id="feedTemplate">
     <div class="row eir-feed eir-hide" data-feedId="<%= feedId %>" data-feedtype="<%= feedType %>">
-        <span class="feed-tag icon-tag"><%= tag %></span>
+        <% if(!_.isEmpty(tag)){ %>
+        <span class="feed-tag icon-tag"><span class="arrow"></span><%= tag %></span>
+        <% } %>
         <div class="row eir-feed-head" data-userid="<%= author.userId %>">
             <div class="eir-feed-pic">
                 <img src="<%= author.avatarUrl %>">
