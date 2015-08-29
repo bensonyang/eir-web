@@ -132,7 +132,7 @@ a {
 .eir-options .active:after {
   content: "";
   position: absolute;
-  bottom: -8px;
+  bottom: -14px;
   left: 30px;
   height: 10px;
   width: 10px;
@@ -756,6 +756,7 @@ a {
 }
 .eir-options {
   padding-top: 10px;
+  padding-bottom: 5px;
   padding-right: 5px;
   font-size: 14px;
 }
