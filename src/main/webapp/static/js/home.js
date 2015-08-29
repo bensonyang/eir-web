@@ -221,9 +221,6 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
             $(this).find('label').addClass('active');
             var _tagName = $(this).find('label').text();
             _currentTag = _tagName;
-            if($.trim(_tagName) == "全部"){
-                _tagName = "";
-            }
             FeedFuns.initFirstPage({ startIndex:0,pageSize:5,tagName:_tagName});
             /*
             $('.tags').find('a[data-index]').remove();
