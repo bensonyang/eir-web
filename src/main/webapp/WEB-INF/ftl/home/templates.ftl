@@ -94,7 +94,7 @@
     <div class="row eir-feed-comments-more">
         <div class="form-group">
             <!--<label class="eir-feed-comments-label">我也说一句</label>-->
-            <textarea <%= type %> class="col-md-12 col-xs-12 eir-feed-comments-textarea" rows="3"></textarea>
+            <textarea placeholder="输入评论..." <%= type %> class="col-md-12 col-xs-12 eir-feed-comments-textarea" rows="3"></textarea>
             <a <%= type %> data-touserid="<%= touserid %>" class="btn btn-default pull-right eir-feed-comments-comments eir-noradius">评论</a>
         </div>
     </div>
