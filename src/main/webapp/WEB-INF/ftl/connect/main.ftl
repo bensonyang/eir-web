@@ -8,9 +8,9 @@
         注册成功!
     </div>
     <div class="row eir-reg text-center">
-        <div class="eir-reg-form eir-hide haveno-form">
+        <div class="eir-reg-form haveno-form">
             <div class="eir-reg-title">
-                <span>完善填写个人信息</span>
+                <span>完善填写个人信息</span>&nbsp;<a class="haveno">已有账号？</a>
             </div>
             <form action="/community" method="post" id="loginForm">
                 <div class="input-prepend">
@@ -49,11 +49,11 @@
                     <input id="reg" class="btn btn-success eir-noradius" value="连接">
                 </div>
             </form>
-            <a class="haveno">已有账号？</a>
+
         </div>
-        <div class="eir-reg-form have-form">
+        <div class="eir-reg-form eir-hide have-form">
             <div class="eir-reg-title">
-                <span>连接已有账号</span>
+                <span>连接已有账号</span>&nbsp;<a class="have">还没有账号？</a>
             </div>
             <form action="/community" method="post" id="loginForm">
                 <div class="input-prepend">
@@ -66,7 +66,7 @@
                     <input id="connect-reg" class="btn btn-success eir-noradius" value="连接">
                 </div>
             </form>
-            <a class="have">还没有账号？</a>
+
         </div>
     </div>
     <div class="text-center eir-alert">
