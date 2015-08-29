@@ -220,6 +220,7 @@ a {
     font-weight: bold;
 }
 .list-wapper .div-li {
+    font-size: 13px;
     cursor: pointer;
     height: 2.5em;
     line-height: 2.5em;
