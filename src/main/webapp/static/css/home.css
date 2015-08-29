@@ -320,7 +320,6 @@ a {
   margin-top: 20px;
   padding: 5px;
   border: 1px solid #efefef;
-  cursor: pointer;
 }
 .eir-feed .eir-feed-pic img {
   width: 50px;
@@ -442,7 +441,6 @@ a {
   margin-top: 20px;
   padding: 5px;
   border: 1px solid #efefef;
-  cursor: pointer;
   background: #f6f6f6;
   box-shadow: none;
   -webkit-transition: 0.2s;
