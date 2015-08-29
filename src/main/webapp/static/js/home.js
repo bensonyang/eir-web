@@ -508,6 +508,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
             $(this).closest('.eir-feed-comments-item').after(compiled({type:"actBackComment",touserid:_touserid})).fadeIn(1000);
             _feed.find('textarea[actBackComment]').focus()
             _feed.find('a[actBackComment]').click(HANDLERS.commentToFeedHandler);
+            _feed.find('textarea[actBackComment]').focusout(HANDLERS.backMouseMoveOut);//注册失焦事件
         },
         loginHandler:function(){
             var _uid = $('#uid').val();
@@ -616,6 +617,11 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                 _this.closest('.eir-feed-comments-more').replaceWith(compiled({})).fadeIn(1000);
                 _feed.find('.eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
             }
+        },
+        backMouseMoveOut:function(){
+            if($.trim($(this).val()) != "") return;
+            var _block = $(this).closest('.eir-feed-comments-more');
+            _block.remove();
         }
     };
     //################################事件处理器配置END#######################################

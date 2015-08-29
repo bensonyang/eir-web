@@ -132,10 +132,10 @@ a {
 .eir-options .active:after {
   content: "";
   position: absolute;
-  bottom: -7px;
+  bottom: -8px;
   left: 30px;
-  height: 7px;
-  width: 7px;
+  height: 10px;
+  width: 10px;
   border: 1px solid #efefef;
   border-width: 1px 1px 0 0;
   background: #fff;
@@ -326,9 +326,7 @@ a {
   position: absolute;
   right: -5px;
   font-size: 12px;
-  background-color: #f91b15;
   padding: 2px 5px 2px 0px;
-  border: 1px solid #f91b15;
   color: #FFFFFF;
   font-style: italic;
   line-height: 16px;
@@ -340,7 +338,6 @@ a {
   width: 0;
   height: 0;
   border-top: 11px solid transparent;
-  border-right: 10px solid #f91b15;
   border-bottom: 11px solid transparent;
   top: -1px;
 }
@@ -401,6 +398,7 @@ a {
   margin: 2px;
 }
 .eir-feed .eir-feed-content-title {
+  font-size: 18px;
   padding-left: 15px;
   padding-bottom: 5px;
   border-top-left-radius: 5px;
@@ -493,9 +491,7 @@ a {
   position: absolute;
   right: -5px;
   font-size: 12px;
-  background-color: #f91b15;
   padding: 2px 5px 2px 0px;
-  border: 1px solid #f91b15;
   color: #FFFFFF;
   font-style: italic;
   line-height: 16px;
@@ -507,7 +503,6 @@ a {
   width: 0;
   height: 0;
   border-top: 11px solid transparent;
-  border-right: 10px solid #f91b15;
   border-bottom: 11px solid transparent;
   top: -1px;
 }
@@ -568,6 +563,7 @@ a {
   margin: 2px;
 }
 .eir-feed:hover .eir-feed-content-title {
+  font-size: 18px;
   padding-left: 15px;
   padding-bottom: 5px;
   border-top-left-radius: 5px;
@@ -761,7 +757,7 @@ a {
 .eir-options {
   padding-top: 10px;
   padding-right: 5px;
-  font-size: 13px;
+  font-size: 14px;
 }
 .eir-options a {
   text-decoration: none;

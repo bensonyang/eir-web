@@ -1,7 +1,16 @@
 <script type="text/template" id="feedTemplate">
     <div class="row eir-feed eir-hide" data-feedId="<%= feedId %>" data-feedtype="<%= feedType %>">
-        <% if(!_.isEmpty(tag)){ %>
-        <span class="feed-tag icon-tag"><span class="arrow"></span><%= tag %></span>
+        <% if(!_.isEmpty(tag)){
+        var color = undefined;
+        if(feedId%3 == 0){
+            color = "#f91b15";
+        }else if(feedId%3 == 1){
+            color = "#ecf924";
+        }else{
+            color = "#13f913";
+        }
+        %>
+        <span class="feed-tag icon-tag" style="background-color:<%= color %>;border:1px solid <%= color %>;"><span class="arrow" style="border-right: 10px solid <%= color %>;"></span><%= tag %></span>
         <% } %>
         <div class="row eir-feed-head" data-userid="<%= author.userId %>">
             <div class="eir-feed-pic">
