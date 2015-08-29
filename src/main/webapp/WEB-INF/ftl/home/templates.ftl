@@ -37,6 +37,10 @@
                 <a deleteFeed data-toggle="popover" data-placement="bottom" data-container="body" >删除</a>
             </li>
             <% } %>
+            <li class="icon-time icon-grey pull-right">
+                <d><%= addTime %></d>
+            </li>
+
         </div>
         <div class="eir-feed-item-container">
             <%
