@@ -373,6 +373,7 @@ a {
 }
 .eir-feed .eir-feed-content-content {
   padding-left: 15px;
+  padding-right: 15px;
   font-size: 12px;
 }
 .eir-feed .eir-feed-content-link {
@@ -502,6 +503,7 @@ a {
 }
 .eir-feed:hover .eir-feed-content-content {
   padding-left: 15px;
+  padding-right: 15px;
   font-size: 12px;
 }
 .eir-feed:hover .eir-feed-content-link {
@@ -668,6 +670,7 @@ a {
   border-top: 0px;
 }
 .tag-container .tag {
+  border-radius: 3px;
   border: 1px solid #eeeeee;
   background-color: #FFFFFF;
   color: #9e9e9e;

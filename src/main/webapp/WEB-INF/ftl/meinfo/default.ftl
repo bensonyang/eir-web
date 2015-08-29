@@ -4,6 +4,7 @@
             <div class="div-li div-li-title">账号设置</div>
             <div class="div-li active"><a href="/meinfo/default">我的信息</a></div>
             <div class="div-li"><a href="/meinfo/pic">头像</a></div>
+            <div class="div-li"><a href="/community">返回首页</a></div>
             <div class="div-li-padding"></div>
         </div>
     </div>
