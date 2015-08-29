@@ -321,6 +321,21 @@ a {
   padding: 5px;
   border: 1px solid #efefef;
 }
+.eir-feed .feed-tag {
+  position: absolute;
+  right: 0px;
+  font-size: 12px;
+  background-color: #f9f3e7;
+  padding: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  color: #888888;
+  border: 1px solid #f9f3e8;
+  opacity: 0.5;
+}
+.eir-feed .feed-tag:hover {
+  opacity: 1;
+}
 .eir-feed .eir-feed-pic img {
   width: 50px;
   height: 50px;
@@ -370,6 +385,9 @@ a {
 .eir-feed .eir-feed-content-title {
   padding-left: 15px;
   padding-bottom: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  opacity: 0.5;
 }
 .eir-feed .eir-feed-content-content {
   padding-left: 15px;
@@ -451,6 +469,21 @@ a {
   transition: 0.2s;
   box-shadow: 1px 1px 1px #e5e5e5;
 }
+.eir-feed:hover .feed-tag {
+  position: absolute;
+  right: 0px;
+  font-size: 12px;
+  background-color: #f9f3e7;
+  padding: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  color: #888888;
+  border: 1px solid #f9f3e8;
+  opacity: 0.5;
+}
+.eir-feed:hover .feed-tag:hover {
+  opacity: 1;
+}
 .eir-feed:hover .eir-feed-pic img {
   width: 50px;
   height: 50px;
@@ -500,6 +533,9 @@ a {
 .eir-feed:hover .eir-feed-content-title {
   padding-left: 15px;
   padding-bottom: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  opacity: 0.5;
 }
 .eir-feed:hover .eir-feed-content-content {
   padding-left: 15px;
