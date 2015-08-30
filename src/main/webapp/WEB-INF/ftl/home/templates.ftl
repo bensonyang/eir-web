@@ -2,9 +2,9 @@
     <div class="row eir-feed eir-hide" data-feedId="<%= feedId %>" data-feedtype="<%= feedType %>">
         <% if(!_.isEmpty(tag)){
         var color = undefined;
-        if(feedId%3 == 0){
+        if(_.isEqual(tag,"互联网金融")){
             color = "#f91b15";
-        }else if(feedId%3 == 1){
+        }else if(_.isEqual(tag,"智能硬件")){
             color = "#ecf924";
         }else{
             color = "#13f913";
