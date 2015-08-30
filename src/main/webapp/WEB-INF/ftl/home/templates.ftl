@@ -5,7 +5,7 @@
         if(_.isEqual(tag,"互联网金融")){
             color = "#f91b15";
         }else if(_.isEqual(tag,"智能硬件")){
-            color = "#ecf924";
+            color = "#f9d43c";
         }else{
             color = "#13f913";
         }
