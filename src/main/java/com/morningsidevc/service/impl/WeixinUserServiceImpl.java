@@ -2,6 +2,7 @@ package com.morningsidevc.service.impl;
 
 import com.morningsidevc.dao.gen.WeixinUserInfoMapper;
 import com.morningsidevc.dao.gen.WeixinUserMappingMapper;
+import com.morningsidevc.enums.WeiXinType;
 import com.morningsidevc.po.WeixinUser;
 import com.morningsidevc.po.WeixinUserToken;
 import com.morningsidevc.po.gen.WeixinUserInfo;
@@ -40,12 +41,12 @@ public class WeixinUserServiceImpl implements WeixinUserService {
 
     @Override
     @Transactional(rollbackFor = Throwable.class)
-    public WeixinUser authWeixinUserInfo(String authcode) {
+    public WeixinUser authWeixinUserInfo(String authcode, WeiXinType weiXinType) {
         if (StringUtils.isBlank(authcode)) {
             return null;
         }
 
-        WeixinUserToken weixinUserToken = WeixinOAuthClient.getWeixinUserToken(authcode);
+        WeixinUserToken weixinUserToken = WeixinOAuthClient.getWeixinUserToken(authcode, weiXinType);
         if (weixinUserToken == null) {
             LOGGER.warn("weixinUserToken is null!");
             return null;

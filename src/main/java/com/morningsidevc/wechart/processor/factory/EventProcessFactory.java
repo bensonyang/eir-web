@@ -1,5 +1,6 @@
 package com.morningsidevc.wechart.processor.factory;
 
+import com.morningsidevc.wechart.enums.EventTypeEnum;
 import com.morningsidevc.wechart.processor.WeChartProcessor;
 
 import java.util.Map;
@@ -11,29 +12,10 @@ public class EventProcessFactory extends ProcessorFactory {
 
     @Override
     public WeChartProcessor loadWeiXinProcessor(Map<String, String> requestMap) {
-        /*
         String eventType = requestMap.get("Event");
         String eventKey = requestMap.get("EventKey");
 
         StringBuffer processorKey = new StringBuffer(eventType.toLowerCase());
-
-        if (EventTypeEnum.SCAN.getValue().equalsIgnoreCase(eventType)) {
-
-            int sceneId = Integer.parseInt(eventKey);
-
-            //-- for Test JiShi
-            if (sceneId > JiShiCodeBO.JISHI_SCENEID_THRESHOLD) {
-                return ServiceLocator.getBean("simpleScanEventProcessor");
-            }
-            //-- end Test JiShi
-
-            QRCodeDTO codeDTO = QRCodeBO.loadQRCodeDTO(sceneId, WeixinTypeEnum.getWeixinTypeEnumByName(weixinType));
-            if (codeDTO == null) {
-                return null;
-            }
-            processorKey.append("_");
-            processorKey.append(codeDTO.getSceneType());
-        }
 
         if (EventTypeEnum.CLICK.getValue().equalsIgnoreCase(eventType)) {
             processorKey.append("_");
@@ -41,9 +23,6 @@ public class EventProcessFactory extends ProcessorFactory {
         }
 
         return processors.get(processorKey.toString());
-         */
-
-        return null;
     }
 
 }

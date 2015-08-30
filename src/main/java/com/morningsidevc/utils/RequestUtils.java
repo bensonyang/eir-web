@@ -1,12 +1,19 @@
 package com.morningsidevc.utils;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * User: liang.liu
@@ -115,6 +122,19 @@ public class RequestUtils {
             reader = null;
         }
         return sb.toString();
+    }
+
+    public   static String generateQueryParam(Map<String, String> paramMap) {
+        if (CollectionUtils.isEmpty(paramMap)) {
+            return "";
+        }
+
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        for (Map.Entry<String, String> entry : paramMap.entrySet()) {
+            params.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+        }
+
+        return URLEncodedUtils.format(params, "UTF-8");
     }
 
 

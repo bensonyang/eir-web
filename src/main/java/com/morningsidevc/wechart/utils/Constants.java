@@ -7,9 +7,6 @@ package com.morningsidevc.wechart.utils;
  */
 public class Constants {
 
-    public static final String WEIXIN_WECHAT_APPID = "appid";
-
-    public static final String WEIXIN_WECHAT_SECRET = "secret";
 
 
 }

@@ -22,6 +22,7 @@
     <bean id="eventProcessFactory" class="com.morningsidevc.wechart.processor.factory.EventProcessFactory">
         <property name="processors">
             <map>
+                <entry key="click_latest_feed" value-ref="latestFeedClickEventProcessor" />
             </map>
         </property>
     </bean>
@@ -34,6 +35,10 @@
 
     <bean id="linkMsgProcessor" class="com.morningsidevc.wechart.processor.message.LinkMsgProcessor">
     </bean>
+
+    <bean id="latestFeedClickEventProcessor" class="com.morningsidevc.wechart.processor.event.LatestFeedClickEventProcessor">
+    </bean>
+
 
 
 </beans>

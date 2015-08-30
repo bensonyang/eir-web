@@ -4,6 +4,7 @@
 package com.morningsidevc.web.controller;
 
 import com.google.gson.Gson;
+import com.morningsidevc.enums.WeiXinType;
 import com.morningsidevc.po.WeixinUser;
 import com.morningsidevc.po.gen.UserInfo;
 import com.morningsidevc.po.gen.WeixinUserInfo;
@@ -44,9 +45,9 @@ public class WeixinLoginController extends BaseController {
 
 
     @RequestMapping(value = "/weixinlogin", method = RequestMethod.GET)
-    public String weixinlogin(Model model, String code, HttpServletRequest request, HttpServletResponse response) {
+    public String weixinlogin(Model model, String code, String weiXinType, String redir, HttpServletRequest request, HttpServletResponse response) {
         if (StringUtils.isNotBlank(code)) {
-            WeixinUser weixinUser = weixinUserService.authWeixinUserInfo(code);
+            WeixinUser weixinUser = weixinUserService.authWeixinUserInfo(code, WeiXinType.fromName(weiXinType));
             if (weixinUser == null || StringUtils.isBlank(weixinUser.getUnionId())) {
                 return "redirect:/community";
             }
@@ -55,6 +56,7 @@ public class WeixinLoginController extends BaseController {
             if (weixinUserInfo == null) {
                 Gson gson = new Gson();
                 model.addAttribute("weixinInfo", EncryptionUtils.encrypt(gson.toJson(weixinUser)));
+                model.addAttribute("redirectUrl", StringUtils.isBlank(redir) ? "http://www.msvcplus.com/community" : redir);
                 return "connect";
             }
 

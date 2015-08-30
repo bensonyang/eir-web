@@ -1,20 +1,15 @@
 package com.morningsidevc.utils;
 
+import com.morningsidevc.enums.WeiXinType;
 import com.morningsidevc.po.WeixinUser;
 import com.morningsidevc.po.WeixinUserToken;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,19 +32,19 @@ public class WeixinOAuthClient {
      *
      * @return
      */
-    public static WeixinUserToken getWeixinUserToken(String authcode) {
+    public static WeixinUserToken getWeixinUserToken(String authcode, WeiXinType weiXinType) {
 
         if (StringUtils.isBlank(authcode)) {
             return null;
         }
 
         Map<String ,String> paramMap = new HashMap<String, String>();
-        paramMap.put("appid", Constants.WEIXIN_WEB_APPID);
-        paramMap.put("secret", Constants.WEIXIN_WEB_SECRET);
+        paramMap.put("appid", weiXinType.getAppid());
+        paramMap.put("secret", weiXinType.getSecret());
         paramMap.put("grant_type", "authorization_code");
         paramMap.put("code", authcode);
 
-        String queryString = generateQueryParam(paramMap);
+        String queryString = RequestUtils.generateQueryParam(paramMap);
 
         String result = RequestUtils.doPost(ACCESS_TOKEN_URL, queryString);
 
@@ -96,7 +91,7 @@ public class WeixinOAuthClient {
         paramMap.put("access_token", accessToken);
         paramMap.put("openid", openId);
 
-        String queryString = generateQueryParam(paramMap);
+        String queryString = RequestUtils.generateQueryParam(paramMap);
 
         String result = RequestUtils.doGet(GET_USER_INFO_URL, queryString);
 
@@ -131,19 +126,6 @@ public class WeixinOAuthClient {
         }
 
         return weixinUser;
-    }
-
-    private static String generateQueryParam(Map<String, String> paramMap) {
-        if (CollectionUtils.isEmpty(paramMap)) {
-            return "";
-        }
-
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        for (Map.Entry<String, String> entry : paramMap.entrySet()) {
-            params.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
-        }
-
-        return URLEncodedUtils.format(params, "UTF-8");
     }
 
 }
