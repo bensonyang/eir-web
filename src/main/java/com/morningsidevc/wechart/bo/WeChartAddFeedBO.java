@@ -2,14 +2,15 @@ package com.morningsidevc.wechart.bo;
 
 import com.morningsidevc.crawler.HTMLBean;
 import com.morningsidevc.crawler.HTMLCrawlerUtils;
-import com.morningsidevc.enums.WeiXinType;
 import com.morningsidevc.po.gen.WeixinUserInfo;
 import com.morningsidevc.service.FeedInfoService;
 import com.morningsidevc.service.WeixinUserService;
 import com.morningsidevc.utils.SpringLocator;
 import com.morningsidevc.wechart.enums.MsgTypeEnum;
+import com.morningsidevc.wechart.po.WeChartUser;
 import com.morningsidevc.wechart.replymessage.util.MsgConvertUtil;
 import com.morningsidevc.wechart.replymessage.xml.XmlText;
+import com.morningsidevc.wechart.service.WeChartUserService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,8 @@ public class WeChartAddFeedBO {
     private static FeedInfoService feedInfoService = SpringLocator.getBean("feedInfoService");
 
     private static WeixinUserService weixinUserService = SpringLocator.getBean("weixinUserService");
+
+    private static WeChartUserService weChartUserService = SpringLocator.getBean("weChartUserService");
 
 
     public static boolean isAddFeedMode(Map<String, String> requestMap) {
@@ -103,11 +106,11 @@ public class WeChartAddFeedBO {
             exitAddFeedMode(requestMap);
             replyMsg = "您已离开动态发布模式～～～";
         } else {
-            String unionId = weixinUserService.getWeixinUserUnionIdByOpenId(fromUser, WeiXinType.WECHAT.getChannel());
-            if (StringUtils.isBlank(unionId)) {
+            WeChartUser weChartUser = weChartUserService.getUserInfoByOpenId(fromUser);
+            if (weChartUser == null) {
                 replyMsg = "账号绑定信息异常，请确认账号绑定情况或重新绑定～～";
             }
-            WeixinUserInfo weixinUserInfo = weixinUserService.getWeixinUserInfoByUnionid(unionId);
+            WeixinUserInfo weixinUserInfo = weixinUserService.getWeixinUserInfoByUnionid(weChartUser.getUnionid());
             if (weixinUserInfo == null) {
                 replyMsg = "账号绑定信息异常，请确认账号绑定情况或重新绑定～～～";
 

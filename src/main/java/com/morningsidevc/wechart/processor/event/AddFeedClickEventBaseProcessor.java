@@ -5,12 +5,13 @@ import com.morningsidevc.po.gen.WeixinUserInfo;
 import com.morningsidevc.service.WeixinUserService;
 import com.morningsidevc.wechart.bo.RedirectBO;
 import com.morningsidevc.wechart.bo.XmlMessageBO;
+import com.morningsidevc.wechart.po.WeChartUser;
 import com.morningsidevc.wechart.processor.WeChartBaseProcessor;
 import com.morningsidevc.wechart.replymessage.util.MsgConvertUtil;
 import com.morningsidevc.wechart.replymessage.xml.Article;
 import com.morningsidevc.wechart.replymessage.xml.XmlNews;
 import com.morningsidevc.wechart.replymessage.xml.XmlText;
-import org.apache.commons.lang.StringUtils;
+import com.morningsidevc.wechart.service.WeChartUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,16 +32,18 @@ public abstract class AddFeedClickEventBaseProcessor extends WeChartBaseProcesso
 
     @Resource
     private WeixinUserService weixinUserService;
+    @Resource
+    private WeChartUserService weChartUserService;
 
     @Override
     public String processRequest(Map<String, String> requestMap) {
 
         String openId = requestMap.get("FromUserName");
-        String unionId = weixinUserService.getWeixinUserUnionIdByOpenId(openId, WeiXinType.WECHAT.getChannel());
-        if (StringUtils.isBlank(unionId)) {
+        WeChartUser weChartUser = weChartUserService.getUserInfoByOpenId(openId);
+        if (weChartUser == null) {
             return MsgConvertUtil.parseMsg2XMLStr(generateNoBandMessage(requestMap));
         }
-        WeixinUserInfo weixinUserInfo = weixinUserService.getWeixinUserInfoByUnionid(unionId);
+        WeixinUserInfo weixinUserInfo = weixinUserService.getWeixinUserInfoByUnionid(weChartUser.getUnionid());
         if (weixinUserInfo == null) {
             return MsgConvertUtil.parseMsg2XMLStr(generateNoBandMessage(requestMap));
         }
