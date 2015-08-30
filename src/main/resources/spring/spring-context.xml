@@ -13,6 +13,7 @@
 
        	<!--这边配置spring context beans-->
         <context:component-scan base-package="com.morningsidevc.service.impl"/>
+        <context:component-scan base-package="com.morningsidevc.wechart.service.impl"/>
         <context:component-scan base-package="com.morningsidevc.dao"/>
 
         <bean class="com.morningsidevc.utils.SpringLocator"/>
