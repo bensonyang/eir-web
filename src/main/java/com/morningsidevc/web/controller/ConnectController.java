@@ -7,11 +7,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author float.lu
  */
 @Controller
-@RequestMapping("connect")
 public class ConnectController {
 
-    @RequestMapping("")
+    @RequestMapping("connect")
     public String index(){
         return "connect";
     }
+
+    @RequestMapping("connectsuccess")
+    public String success(){
+        return "connectsuccess";
+    }
+
+
+
 }
