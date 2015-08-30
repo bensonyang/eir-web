@@ -18,6 +18,8 @@ require(["API","jquery","toast"], function(API, $, toast) {
 
 
     var _weixinInfo = $('#weixinInfo');
+    var _connect = $('#channel');
+    var _redirectUrl = $('#redirectUrl');
 
     $('#reg').click(regConnect);//注册连接
     $('#connect-reg').click(loginConnect);//登录连接
@@ -50,7 +52,8 @@ require(["API","jquery","toast"], function(API, $, toast) {
             data:{
                 account     :   $.trim(_connectAccount.val()),
                 password    :   $.trim(_connectPwd.val()),
-                weixinInfo  :   $.trim(_weixinInfo.val())
+                weixinInfo  :   $.trim(_weixinInfo.val()),
+                connect     :   $.trim(_connect.val())
             },
             success:function(data){
                 if(data.code != 200){
@@ -59,7 +62,7 @@ require(["API","jquery","toast"], function(API, $, toast) {
                 }
                 toast("连接成功");
                 setTimeout(function(){
-                    window.location.href = API.home;
+                    window.location.href = $.trim(_redirectUrl.val());
                 },2000);
             }
         });
@@ -176,14 +179,15 @@ require(["API","jquery","toast"], function(API, $, toast) {
                         jobtitle    :   $.trim(_jobtitle.val()),
                         company     :   $.trim(_company.val()),
                         gender      :   $.trim(_gender.val()),
-                        weixinInfo  :   $.trim(_weixinInfo.val())
+                        weixinInfo  :   $.trim(_weixinInfo.val()),
+                        connect     :   $.trim(_connect.val())
                     },
                     success :function(data){
                         if(data.code == 200){
                             $('.eir-reg').hide();
                             $('.eir-reg-success').fadeIn(500);
                             setTimeout(function(){
-                                window.location.href = API.home;
+                                window.location.href = $.trim(_redirectUrl.val());
                             },1500);
                         }else{
                             _reg.attr('disabled', '');
