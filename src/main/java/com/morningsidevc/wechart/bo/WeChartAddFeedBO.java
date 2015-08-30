@@ -108,36 +108,36 @@ public class WeChartAddFeedBO {
             WeChartUser weChartUser = weChartUserService.getUserInfoByOpenId(fromUser);
             if (weChartUser == null) {
                 replyMsg = "账号绑定信息异常，请确认账号绑定情况或重新绑定～～";
-            }
-            WeixinUserInfo weixinUserInfo = weixinUserService.getWeixinUserInfoByUnionid(weChartUser.getUnionid());
-            if (weixinUserInfo == null) {
-                replyMsg = "账号绑定信息异常，请确认账号绑定情况或重新绑定～～～";
-
             } else {
-                if (content.startsWith("http://") || content.startsWith("https://")) {
-                    HTMLBean html = HTMLCrawlerUtils.get(content);
-                    if (html == null || StringUtils.isBlank(html.getUrl()) || StringUtils.isBlank(html.getPageTitle()) || StringUtils.isBlank(html.getPageAbstract())) {
-                        replyMsg = "获取推荐网址信息失败！";
+                WeixinUserInfo weixinUserInfo = weixinUserService.getWeixinUserInfoByUnionid(weChartUser.getUnionid());
+                if (weixinUserInfo == null) {
+                    replyMsg = "账号绑定信息异常，请确认账号绑定情况或重新绑定～～～";
+                } else {
+                    if (content.startsWith("http://") || content.startsWith("https://")) {
+                        HTMLBean html = HTMLCrawlerUtils.get(content);
+                        if (html == null || StringUtils.isBlank(html.getUrl()) || StringUtils.isBlank(html.getPageTitle()) || StringUtils.isBlank(html.getPageAbstract())) {
+                            replyMsg = "获取推荐网址信息失败！";
+                        } else {
+                            try {
+                                feedInfoService.addFeed(weixinUserInfo.getUserid(), html.getUrl(), html.getPageTitle(), html.getPageAbstract(), "");
+                            } catch (Exception e) {
+                                replyMsg = "抱歉，服务器添加推荐链接异常！";
+                                logger.error("feedInfoService add link error!", e);
+                            }
+                        }
                     } else {
                         try {
-                            feedInfoService.addFeed(weixinUserInfo.getUserid(), html.getUrl(), html.getPageTitle(), html.getPageAbstract(), "");
+                            feedInfoService.addFeed(weixinUserInfo.getUserid(), content, "");
                         } catch (Exception e) {
-                            replyMsg = "抱歉，服务器添加推荐链接异常！";
-                            logger.error("feedInfoService add link error!", e);
+                            replyMsg = "抱歉，服务器添加说说异常！";
+                            logger.error("feedInfoService add message error!", e);
                         }
-                    }
-                } else {
-                    try {
-                        feedInfoService.addFeed(weixinUserInfo.getUserid(), content, "");
-                    } catch (Exception e) {
-                        replyMsg = "抱歉，服务器添加说说异常！";
-                        logger.error("feedInfoService add message error!", e);
                     }
                 }
             }
         }
 
-        if (StringUtils.isNotEmpty(replyMsg)) {
+        if (StringUtils.isEmpty(replyMsg)) {
             replyMsg = "发表成功～～";
         }
 
