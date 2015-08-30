@@ -93,16 +93,16 @@ public class WeChartMessageBO {
         WeChartTemplateMessageInfo template=new WeChartTemplateMessageInfo();
         template.setTouser(toOpenId);
         // TODO 确认模版ID
-        template.setTemplate_id("48MOpsMASR3dDacgTDoFz6M_xphO93KrNe9Dlny48os");
+        template.setTemplate_id("rP9MgQ0DJRjGMjfukfBsOH_P8X1ba0RDKkgUR6w7DVY");
         template.setTopcolor("#FF0000");
         template.setUrl(toUrl);
         WeChartCommentTemplateData data=new WeChartCommentTemplateData();
 
-        data.setTitle(new WeChartSendValueInfo("您好，您收到一条评论信息！", "#173177"));
-        data.setFromUser(new WeChartSendValueInfo(fromUserName, "#173177"));
+        data.setFirst(new WeChartSendValueInfo("您好，您收到一条评论信息！", "#173177"));
+        data.setKeyword1(new WeChartSendValueInfo(fromUserName, "#173177"));
         // SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        data.setCommentTime(new WeChartSendValueInfo(commentTime, "#173177"));
-        data.setCommentContent(new WeChartSendValueInfo(commentContent, "#173177"));
+        data.setKeyword2(new WeChartSendValueInfo(commentTime, "#173177"));
+        data.setKeyword3(new WeChartSendValueInfo(commentContent, "#173177"));
         data.setRemark(new WeChartSendValueInfo("点击详情可以查看或评论", "#173177"));
 
         template.setData(data);
@@ -111,13 +111,16 @@ public class WeChartMessageBO {
         return gson.toJson(template);
     }
 
+    /*
     public static void main(String[] args) {
 
-        String response = RequestUtils.doPost("https://api.weixin.qq.com/cgi-bin/template/api_add_template?access_token=2YDPSm-VRiu7Ks1Eg4iOPi2SSw2kDLrwSbpVIKQZs8vWc1IqI8cBrtD83pmdFTuhrEsIIoyeFdASc0EexsyWCE9EZwhVx1yiGRK4LDPo-ys",
-                "{\"template_id_short\":\"OPENTM203574543\"}");
+        String text = generateCommentTemplateData("oF633jnVIj8Zg0umJtp-HTuD9B5I", "http://www.msvcplus.com/community", "小鸟", "2016-06-16", "小鸟来此一游！");
+
+        boolean result = sendTemplateMessage("O0KWxUV4hJrqg_z0LE_NRRm96Y7T0T46fydW1-PyWEU6aGjfQtbayWIhHf1iaFRFcalFrdObVNWC34X6NhIqQUj-lPgidPvGjaNoSdLxcsc", text);
 
         System.out.println("###############");
-        System.out.println(response);
+        System.out.println(result);
     }
+    */
 
 }

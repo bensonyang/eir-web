@@ -6,42 +6,42 @@ public class WeChartCommentTemplateData implements Serializable{
 
     private static final long serialVersionUID = -6137822866097090611L;
 
-    private WeChartSendValueInfo title;
-	private WeChartSendValueInfo fromUser;
-	private WeChartSendValueInfo commentTime;
-	private WeChartSendValueInfo commentContent;
+    private WeChartSendValueInfo first;
+	private WeChartSendValueInfo keyword1;
+	private WeChartSendValueInfo keyword2;
+	private WeChartSendValueInfo keyword3;
 	private WeChartSendValueInfo remark;
 
-    public WeChartSendValueInfo getTitle() {
-        return title;
+    public WeChartSendValueInfo getFirst() {
+        return first;
     }
 
-    public void setTitle(WeChartSendValueInfo title) {
-        this.title = title;
+    public void setFirst(WeChartSendValueInfo first) {
+        this.first = first;
     }
 
-    public WeChartSendValueInfo getFromUser() {
-        return fromUser;
+    public WeChartSendValueInfo getKeyword1() {
+        return keyword1;
     }
 
-    public void setFromUser(WeChartSendValueInfo fromUser) {
-        this.fromUser = fromUser;
+    public void setKeyword1(WeChartSendValueInfo keyword1) {
+        this.keyword1 = keyword1;
     }
 
-    public WeChartSendValueInfo getCommentTime() {
-        return commentTime;
+    public WeChartSendValueInfo getKeyword2() {
+        return keyword2;
     }
 
-    public void setCommentTime(WeChartSendValueInfo commentTime) {
-        this.commentTime = commentTime;
+    public void setKeyword2(WeChartSendValueInfo keyword2) {
+        this.keyword2 = keyword2;
     }
 
-    public WeChartSendValueInfo getCommentContent() {
-        return commentContent;
+    public WeChartSendValueInfo getKeyword3() {
+        return keyword3;
     }
 
-    public void setCommentContent(WeChartSendValueInfo commentContent) {
-        this.commentContent = commentContent;
+    public void setKeyword3(WeChartSendValueInfo keyword3) {
+        this.keyword3 = keyword3;
     }
 
     public WeChartSendValueInfo getRemark() {
