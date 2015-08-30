@@ -75,7 +75,6 @@ public class WeChartFeedServiceImpl implements WeChartFeedService {
                 // TODO 换默认头像
                 feedArticle.setPicUrl("http://i2.dpfile.com/s/img/uc/default-avatar120c120.png");
             }
-            feedArticle.setPicUrl(feed.getAuthor().getAvatarUrl());
             try {
                 feedArticle.setUrl(RedirectBO.generateUserAuthorizeUrl("http://www.msvcplus.com/mfeed?feedId=" + feed.getFeedId(), WeiXinType.WECHAT));
             } catch (UnsupportedEncodingException e) {
@@ -105,7 +104,7 @@ public class WeChartFeedServiceImpl implements WeChartFeedService {
     private String generateArticleTitle(Feed feed) {
         StringBuilder titleBuilder = new StringBuilder();
         // int limit = StringUtils.isBlank(feed.getAuthor().getAvatarUrl()) ? 30 : 25;
-        int limit = 25;
+        int limit = 26;
         if (feed.getFeedType() == 0) {
             WeiboMsgBody weiboMsgBody = (WeiboMsgBody) feed.getMsgBody();
             if (weiboMsgBody != null && StringUtils.isNotBlank(weiboMsgBody.getContent())) {

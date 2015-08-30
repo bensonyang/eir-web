@@ -76,3 +76,5 @@
     </div>
 </div>
 <input type="hidden" value="${weixinInfo!}" id="weixinInfo">
+<input type="hidden" value="${channel!}" id="channel">
+<input type="hidden" value="${redirectUrl!}" id="redirectUrl">

@@ -26,6 +26,6 @@ public class WeChartUserServiceImpl implements WeChartUserService {
         if (StringUtils.isBlank(accessToken)) {
             return null;
         }
-        return WeChartUserInfoBO.getUserInfo(openId, accessToken);
+        return WeChartUserInfoBO.getUserInfo(accessToken, openId);
     }
 }

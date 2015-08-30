@@ -163,4 +163,25 @@ public class WeChartUser implements Serializable {
     public void setErrmsg(String errmsg) {
         this.errmsg = errmsg;
     }
+
+    @Override
+    public String toString() {
+        return "WeChartUser{" +
+                "subscribe='" + subscribe + '\'' +
+                ", openid='" + openid + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", sex='" + sex + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", province='" + province + '\'' +
+                ", language='" + language + '\'' +
+                ", headimgurl='" + headimgurl + '\'' +
+                ", subscribe_time='" + subscribe_time + '\'' +
+                ", unionid='" + unionid + '\'' +
+                ", remark='" + remark + '\'' +
+                ", groupid='" + groupid + '\'' +
+                ", errcode='" + errcode + '\'' +
+                ", errmsg='" + errmsg + '\'' +
+                '}';
+    }
 }

@@ -10,7 +10,6 @@ import com.morningsidevc.wechart.processor.WeChartBaseProcessor;
 import com.morningsidevc.wechart.replymessage.util.MsgConvertUtil;
 import com.morningsidevc.wechart.replymessage.xml.Article;
 import com.morningsidevc.wechart.replymessage.xml.XmlNews;
-import com.morningsidevc.wechart.replymessage.xml.XmlText;
 import com.morningsidevc.wechart.service.WeChartUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,17 +40,18 @@ public abstract class AddFeedClickEventBaseProcessor extends WeChartBaseProcesso
         String openId = requestMap.get("FromUserName");
         WeChartUser weChartUser = weChartUserService.getUserInfoByOpenId(openId);
         if (weChartUser == null) {
+            logger.info("weChartUser is null!");
             return MsgConvertUtil.parseMsg2XMLStr(generateNoBandMessage(requestMap));
         }
+        logger.info("weChartUser info: " + weChartUser.toString());
+
         WeixinUserInfo weixinUserInfo = weixinUserService.getWeixinUserInfoByUnionid(weChartUser.getUnionid());
         if (weixinUserInfo == null) {
+            logger.info("weixinUserInfo is null!");
             return MsgConvertUtil.parseMsg2XMLStr(generateNoBandMessage(requestMap));
         }
 
-        String replyMsg = enterAddFeedMode(requestMap);
-        XmlText xmlText = XmlMessageBO.prepareXmlText(requestMap);
-        xmlText.setContent(replyMsg);
-        return MsgConvertUtil.parseMsg2XMLStr(xmlText);
+        return enterAddFeedMode(requestMap);
     }
 
     private XmlNews generateNoBandMessage(Map<String, String> requestMap) {
