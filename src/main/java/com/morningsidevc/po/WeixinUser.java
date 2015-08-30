@@ -96,4 +96,19 @@ public class WeixinUser {
     public void setUnionId(String unionId) {
         this.unionId = unionId;
     }
+
+    @Override
+    public String toString() {
+        return "WeixinUser{" +
+                "openId='" + openId + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", sex=" + sex +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", headImgUrl='" + headImgUrl + '\'' +
+                ", privilege='" + privilege + '\'' +
+                ", unionId='" + unionId + '\'' +
+                '}';
+    }
 }

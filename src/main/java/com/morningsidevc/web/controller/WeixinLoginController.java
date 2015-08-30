@@ -50,11 +50,13 @@ public class WeixinLoginController extends BaseController {
         if (StringUtils.isNotBlank(code)) {
             WeixinUser weixinUser = weixinUserService.authWeixinUserInfo(code, WeiXinType.fromChannel(channel));
             if (weixinUser == null || StringUtils.isBlank(weixinUser.getUnionId())) {
+                LOGGER.info("get weixinUser info by authcode error! code" + code + ", channel: " + channel + ", redir: " + redir);
                 return "redirect:/community";
             }
 
             WeixinUserInfo weixinUserInfo = weixinUserService.getWeixinUserInfoByUnionid(weixinUser.getUnionId());
             if (weixinUserInfo == null) {
+                LOGGER.info("no bind! unionId" + weixinUser.getUnionId());
                 Gson gson = new Gson();
                 model.addAttribute("weixinInfo", EncryptionUtils.encrypt(gson.toJson(weixinUser)));
                 model.addAttribute("channel", channel);
@@ -75,7 +77,7 @@ public class WeixinLoginController extends BaseController {
             LoginUtils.signon(weixinUserInfo.getUserid(), true, request, response);
         }
 
-        return "redirect:/community";
+        return "redirect:" + redir;
     }
 
     /* Ajax json */

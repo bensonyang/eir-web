@@ -24,7 +24,7 @@ public class TextMsgProcessor extends WeChartBaseProcessor {
             return WeChartAddFeedBO.processInAddFeedMode(requestMap);
         }
 
-        String message = "";
+        String message = "success";
         XmlText xmlText = XmlMessageBO.prepareXmlText(requestMap);
         xmlText.setContent(message);
         return MsgConvertUtil.parseMsg2XMLStr(xmlText);
