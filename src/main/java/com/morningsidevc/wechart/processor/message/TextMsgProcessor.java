@@ -1,7 +1,10 @@
 package com.morningsidevc.wechart.processor.message;
 
 import com.morningsidevc.wechart.bo.WeChartAddFeedBO;
+import com.morningsidevc.wechart.bo.XmlMessageBO;
 import com.morningsidevc.wechart.processor.WeChartBaseProcessor;
+import com.morningsidevc.wechart.replymessage.util.MsgConvertUtil;
+import com.morningsidevc.wechart.replymessage.xml.XmlText;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +24,10 @@ public class TextMsgProcessor extends WeChartBaseProcessor {
             return WeChartAddFeedBO.processInAddFeedMode(requestMap);
         }
 
-        return "";
+        String message = "";
+        XmlText xmlText = XmlMessageBO.prepareXmlText(requestMap);
+        xmlText.setContent(message);
+        return MsgConvertUtil.parseMsg2XMLStr(xmlText);
     }
 
 }
