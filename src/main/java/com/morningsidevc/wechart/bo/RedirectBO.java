@@ -25,8 +25,8 @@ public class RedirectBO {
         StringBuilder urlBuilder = new StringBuilder();
         urlBuilder.append(OAUTH2_AUTHORIZE_URL);
         urlBuilder.append("?");
-        urlBuilder.append("appid=").append( WeiXinType.WECHAT.getAppid());
-        urlBuilder.append("&redirect_uri=").append(URLEncoder.encode(WEIXIN_LOGIN_URL + "?channel=" + weiXinType.getChannel() + "redir=" + URLEncoder.encode(url, "UTF-8"), "UTF-8"));
+        urlBuilder.append("appid=").append(WeiXinType.WECHAT.getAppid());
+        urlBuilder.append("&redirect_uri=").append(URLEncoder.encode(WEIXIN_LOGIN_URL + "?channel=" + weiXinType.getChannel() + "&redir=" + URLEncoder.encode(url, "UTF-8"), "UTF-8"));
         urlBuilder.append("&response_type=code&scope=snsapi_userinfo&state=STAT#wechat_redirect");
 
         return urlBuilder.toString();

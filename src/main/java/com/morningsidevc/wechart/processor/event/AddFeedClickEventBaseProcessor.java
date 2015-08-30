@@ -46,6 +46,9 @@ public abstract class AddFeedClickEventBaseProcessor extends WeChartBaseProcesso
         logger.info("weChartUser info: " + weChartUser.toString());
 
         WeixinUserInfo weixinUserInfo = weixinUserService.getWeixinUserInfoByUnionid(weChartUser.getUnionid());
+
+        logger.info("weixinUserInfo data: " + weixinUserInfo);
+
         if (weixinUserInfo == null) {
             logger.info("weixinUserInfo is null!");
             return MsgConvertUtil.parseMsg2XMLStr(generateNoBandMessage(requestMap));
