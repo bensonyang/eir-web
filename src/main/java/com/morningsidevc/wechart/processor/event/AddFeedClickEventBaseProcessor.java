@@ -63,8 +63,7 @@ public abstract class AddFeedClickEventBaseProcessor extends WeChartBaseProcesso
         titleArticle.setDescription("请绑定账号，点击跳转绑定账号页面");
         titleArticle.setPicUrl("");
         try {
-            // TODO 绑定成功页面URL
-            String toUrl = RedirectBO.generateUserAuthorizeUrl("http://www.msvcplus.com/bindsuccess", WeiXinType.WECHAT);
+            String toUrl = RedirectBO.generateUserAuthorizeUrl("http://www.msvcplus.com/connectsuccess", WeiXinType.WECHAT);
             titleArticle.setUrl(toUrl);
         } catch (UnsupportedEncodingException e) {
             logger.error("generate bind url error!", e);
