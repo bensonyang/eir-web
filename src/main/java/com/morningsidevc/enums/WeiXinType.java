@@ -23,7 +23,10 @@ public enum WeiXinType {
         this.channel = channel;
     }
 
-    public static WeiXinType fromChannel(int channel) {
+    public static WeiXinType fromChannel(Byte channel) {
+        if (channel == null) {
+            return WEB;
+        }
         for (WeiXinType wexinType : values()) {
             if (wexinType.getChannel() == channel) {
                 return wexinType;
