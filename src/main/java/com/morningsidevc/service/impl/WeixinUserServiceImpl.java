@@ -146,7 +146,7 @@ public class WeixinUserServiceImpl implements WeixinUserService {
     }
 
     @Override
-    public String getWeixinUserOpenId(String unionId, Byte channel) {
+    public String getWeixinUserOpenIdByUnionId(String unionId, Byte channel) {
         if (StringUtils.isBlank(unionId)) {
             return "";
         }
@@ -160,4 +160,21 @@ public class WeixinUserServiceImpl implements WeixinUserService {
 
         return result.get(0).getOpenid();
     }
+
+    @Override
+    public String getWeixinUserUnionIdByOpenId(String openId, Byte channel) {
+        if (StringUtils.isBlank(openId)) {
+            return "";
+        }
+
+        WeixinUserMappingExample example = new WeixinUserMappingExample();
+        example.createCriteria().andOpenidEqualTo(openId).andChannelEqualTo(channel);
+        List<WeixinUserMapping> result = weixinUserMappingMapper.selectByExample(example);
+        if (CollectionUtils.isEmpty(result)) {
+            return "";
+        }
+
+        return result.get(0).getUnionid();
+    }
+
 }

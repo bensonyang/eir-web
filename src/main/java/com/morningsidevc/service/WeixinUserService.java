@@ -57,10 +57,10 @@ public interface WeixinUserService {
      * 更新微信用户标示映射信息
      *
      * @param unionId
-     * @param openid
+     * @param openId
      * @param channel
      */
-    void updateWeixinUserMapping(String unionId, String openid, Byte channel);
+    void updateWeixinUserMapping(String unionId, String openId, Byte channel);
 
     /**
      * 获取微信用户对应渠道的openId
@@ -69,7 +69,16 @@ public interface WeixinUserService {
      * @param channel
      * @return
      */
-    String getWeixinUserOpenId(String unionId, Byte channel);
+    String getWeixinUserOpenIdByUnionId(String unionId, Byte channel);
+
+    /**
+     * 根据不同渠道获取微信用户的unionId
+     *
+     * @param openId
+     * @param channel
+     * @return
+     */
+    String getWeixinUserUnionIdByOpenId(String openId, Byte channel);
 
 
 }

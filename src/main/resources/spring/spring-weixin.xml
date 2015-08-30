@@ -23,6 +23,8 @@
         <property name="processors">
             <map>
                 <entry key="click_latest_feed" value-ref="latestFeedClickEventProcessor" />
+                <entry key="click_add_text_feed" value-ref="addTextFeedClickEventProcessor" />
+                <entry key="click_add_link_feed" value-ref="addLinkFeedClickEventProcessor" />
             </map>
         </property>
     </bean>
@@ -37,6 +39,12 @@
     </bean>
 
     <bean id="latestFeedClickEventProcessor" class="com.morningsidevc.wechart.processor.event.LatestFeedClickEventProcessor">
+    </bean>
+
+    <bean id="addTextFeedClickEventProcessor" class="com.morningsidevc.wechart.processor.event.AddTextFeedClickEventProcessor">
+    </bean>
+
+    <bean id="addLinkFeedClickEventProcessor" class="com.morningsidevc.wechart.processor.event.AddLinkFeedClickEventProcessor">
     </bean>
 
 

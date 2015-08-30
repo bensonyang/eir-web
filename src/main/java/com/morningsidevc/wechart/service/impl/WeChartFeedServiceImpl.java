@@ -55,7 +55,7 @@ public class WeChartFeedServiceImpl implements WeChartFeedService {
         Article titleArticle = new Article();
         titleArticle.setTitle("最新动态");
         // TODO 换头图
-        titleArticle.setTitle("http://i3.s2.dpfile.com/pc/7e69ef62b29fe41977c657173b865bfb(700x700)/thumb.jpg");
+        titleArticle.setPicUrl("http://i3.s2.dpfile.com/pc/7e69ef62b29fe41977c657173b865bfb(700x700)/thumb.jpg");
         articleList.add(titleArticle);
 
         for (Feed feed : feedList) {

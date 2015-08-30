@@ -15,7 +15,7 @@ public class DefaultMsgProcessor extends WeChartBaseProcessor {
     @Override
     public String processRequest(Map<String, String> requestMap) {
 
-        String jsContent = "欢迎使用，请输入你要发表的说说或推荐的网址链接，谢谢！";
+        String jsContent = "";
         XmlText xmlText = XmlMessageBO.prepareXmlText(requestMap);
         xmlText.setContent(jsContent);
         return MsgConvertUtil.parseMsg2XMLStr(xmlText);
