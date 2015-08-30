@@ -30,7 +30,7 @@ public class WeChartFeedServiceImpl implements WeChartFeedService {
 
     private final static Logger logger = LoggerFactory.getLogger(WeChartFeedServiceImpl.class);
 
-    private final static int FEED_LIST_LENGTH_LIMIT = 5;
+    private final static int FEED_LIST_LENGTH_LIMIT = 6;
 
     @Resource
     private FeedInfoService feedInfoService;
