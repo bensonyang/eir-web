@@ -46,6 +46,7 @@ public class WeixinLoginController extends BaseController {
 
     @RequestMapping(value = "/weixinlogin", method = RequestMethod.GET)
     public String weixinlogin(Model model, String code, String weiXinType, String redir, HttpServletRequest request, HttpServletResponse response) {
+        LOGGER.info("Parameter code: " + code + ", weiXinType: " + weiXinType + ", redir: " + redir);
         if (StringUtils.isNotBlank(code)) {
             WeixinUser weixinUser = weixinUserService.authWeixinUserInfo(code, WeiXinType.fromName(weiXinType));
             if (weixinUser == null || StringUtils.isBlank(weixinUser.getUnionId())) {
