@@ -1,20 +1,21 @@
 package com.morningsidevc.web.controller;
 
-import java.util.Map;
-
 import com.morningsidevc.service.TagInfoService;
 import com.morningsidevc.service.UserFeedCounterService;
 import com.morningsidevc.service.UserInfoService;
+import com.morningsidevc.vo.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import com.morningsidevc.vo.User;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * @author float.lu
@@ -45,7 +46,7 @@ public class HomeController extends BaseController {
 		LOG.info("home");
     	ModelAndView mav = new ModelAndView();
      	mav.setViewName("home");
-    	
+
      	// UserInfo retrieved from cookie and the number of feed and comment
      	int userId = super.getUserId();
      	if (userId != 0) {

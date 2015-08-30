@@ -30,11 +30,9 @@ public class WeChartAddFeedBO {
 
     private static Map<String, Date> AddFeedModeStateMap = new ConcurrentHashMap<String, Date>();
 
-    private static FeedInfoService feedInfoService = SpringLocator.getBean("feedInfoService");
-
-    private static WeixinUserService weixinUserService = SpringLocator.getBean("weixinUserService");
-
-    private static WeChartUserService weChartUserService = SpringLocator.getBean("weChartUserService");
+    private static FeedInfoService feedInfoService = SpringLocator.getBean(FeedInfoService.class);
+    private static WeixinUserService weixinUserService = SpringLocator.getBean(WeixinUserService.class);
+    private static WeChartUserService weChartUserService = SpringLocator.getBean(WeChartUserService.class);
 
 
     public static boolean isAddFeedMode(Map<String, String> requestMap) {
@@ -62,15 +60,16 @@ public class WeChartAddFeedBO {
             }
         }
 
-        String message = "您好，现在您可以发布动态了（如需退出动态发布模式，请回复Q）";
+        String message = "您好，现在您可以发布动态了（如需退出动态发布模式，请回复Q！）";
         XmlText xmlText = XmlMessageBO.prepareXmlText(requestMap);
         xmlText.setContent(message);
+
         return MsgConvertUtil.parseMsg2XMLStr(xmlText);
     }
 
     private static void cleanOldUser() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.HOUR_OF_DAY, -2);
+        calendar.add(Calendar.HOUR_OF_DAY, -1);
         Date oldTime = calendar.getTime();
         Iterator<String> keyIterator = AddFeedModeStateMap.keySet().iterator();
         while (keyIterator.hasNext()) {
