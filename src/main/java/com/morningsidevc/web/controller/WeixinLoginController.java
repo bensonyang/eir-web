@@ -45,7 +45,7 @@ public class WeixinLoginController extends BaseController {
 
 
     @RequestMapping(value = "/weixinlogin", method = RequestMethod.GET)
-    public String weixinlogin(Model model, String code, byte channel, String redir, HttpServletRequest request, HttpServletResponse response) {
+    public String weixinlogin(Model model, String code, Byte channel, String redir, HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("Parameter code: " + code + ", channel: " + channel + ", redir: " + redir);
         if (StringUtils.isNotBlank(code)) {
             WeixinUser weixinUser = weixinUserService.authWeixinUserInfo(code, WeiXinType.fromChannel(channel));
@@ -81,7 +81,7 @@ public class WeixinLoginController extends BaseController {
     /* Ajax json */
     @RequestMapping(value = "/ajax/regbind", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public JsonResponse regBind(String email, String password, UserInfo userInfo, String weixinInfo, byte channel, HttpServletRequest request, HttpServletResponse response) {
+    public JsonResponse regBind(String email, String password, UserInfo userInfo, String weixinInfo, Byte channel, HttpServletRequest request, HttpServletResponse response) {
         JsonResponse jsonResponse = new JsonResponse();
         try {
             int userId = userAccountService.create(email, password);
@@ -116,7 +116,7 @@ public class WeixinLoginController extends BaseController {
     /* Ajax json */
     @RequestMapping(value = "/ajax/loginbind", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public JsonResponse loginBind(String account, String password, String weixinInfo, byte channel, HttpServletRequest request, HttpServletResponse response) {
+    public JsonResponse loginBind(String account, String password, String weixinInfo, Byte channel, HttpServletRequest request, HttpServletResponse response) {
         int userId = userAccountService.validate(account, password);
         JsonResponse jsonResponse = new JsonResponse();
         if (userId <= 0) {
