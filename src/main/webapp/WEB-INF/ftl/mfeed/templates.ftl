@@ -14,7 +14,10 @@
                 <%= msgBody.title %>
             </div>
             <div class="row eir-feed-content-content">
-                <%= msgBody.content %><a href="<%= msgBody.link %>" class="btn btn-default eir-feed-content-link">网址链接</a>
+                <%= msgBody.content %>
+                <% if(msgBody.link != undefined && msgBody.link != ""){ %>
+                <a href="<%= msgBody.link %>" target="_blank" class="btn btn-default eir-feed-content-link">网址链接</a>
+                <% } %>
             </div>
         </div>
         <div class="feed-time"> <d class="icon-grey">发表时间：<%= addTime %></d></div>
