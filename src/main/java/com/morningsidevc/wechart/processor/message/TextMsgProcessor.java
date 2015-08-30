@@ -18,7 +18,7 @@ public class TextMsgProcessor extends WeChartBaseProcessor {
     public String processRequest(Map<String, String> requestMap) {
 
         if (WeChartAddFeedBO.isAddFeedMode(requestMap)) {
-            WeChartAddFeedBO.processInAddFeedMode(requestMap);
+            return WeChartAddFeedBO.processInAddFeedMode(requestMap);
         }
 
         return "";

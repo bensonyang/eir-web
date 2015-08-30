@@ -49,6 +49,7 @@ public class WeChartMsgHandler {
         }
 
         String result = processor.process(requestData);
+        logger.info("WeChartMsgHandler handle result: " + result);
 
         return result;
     }
