@@ -83,7 +83,7 @@ public class WeixinUserServiceImpl implements WeixinUserService {
     }
 
     @Override
-    public WeixinUserInfo getWeixinUserInfoByUserId(int userId) {
+    public WeixinUserInfo getWeixinUserInfoByUserId(Integer userId) {
         if (userId <= 0) {
             return null;
         }

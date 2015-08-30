@@ -68,7 +68,7 @@ public class WeixinLoginController extends BaseController {
             weixinInfo.setId(weixinUserInfo.getId());
             weixinInfo.setUserid(weixinUserInfo.getUserid());
             weixinUserService.updateWeixinUserInfo(weixinInfo);
-            weixinUserService.updateWeixinUserMapping(weixinInfo.getUnionid(), weixinInfo.getOpenid(), (byte) 1);
+            weixinUserService.updateWeixinUserMapping(weixinInfo.getUnionid(), weixinInfo.getOpenid(), WeiXinType.fromChannel(channel).getChannel());
 
             UserInfo userInfo = userInfoService.loadUserInfoById(weixinUserInfo.getUserid());
             userInfo.setAvatarurl(weixinUserInfo.getAvatarurl());

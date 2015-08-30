@@ -27,7 +27,7 @@ public interface WeixinUserService {
      * @param userId
      * @return
      */
-    WeixinUserInfo getWeixinUserInfoByUserId(int userId);
+    WeixinUserInfo getWeixinUserInfoByUserId(Integer userId);
 
 
     /**
