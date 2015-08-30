@@ -45,10 +45,10 @@ public class WeixinLoginController extends BaseController {
 
 
     @RequestMapping(value = "/weixinlogin", method = RequestMethod.GET)
-    public String weixinlogin(Model model, String code, String weiXinType, String redir, HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.info("Parameter code: " + code + ", weiXinType: " + weiXinType + ", redir: " + redir);
+    public String weixinlogin(Model model, String code, byte channel, String redir, HttpServletRequest request, HttpServletResponse response) {
+        LOGGER.info("Parameter code: " + code + ", channel: " + channel + ", redir: " + redir);
         if (StringUtils.isNotBlank(code)) {
-            WeixinUser weixinUser = weixinUserService.authWeixinUserInfo(code, WeiXinType.fromName(weiXinType));
+            WeixinUser weixinUser = weixinUserService.authWeixinUserInfo(code, WeiXinType.fromChannel(channel));
             if (weixinUser == null || StringUtils.isBlank(weixinUser.getUnionId())) {
                 return "redirect:/community";
             }
@@ -57,6 +57,7 @@ public class WeixinLoginController extends BaseController {
             if (weixinUserInfo == null) {
                 Gson gson = new Gson();
                 model.addAttribute("weixinInfo", EncryptionUtils.encrypt(gson.toJson(weixinUser)));
+                model.addAttribute("channel", channel);
                 model.addAttribute("redirectUrl", StringUtils.isBlank(redir) ? "http://www.msvcplus.com/community" : redir);
                 return "connect";
             }
@@ -80,7 +81,7 @@ public class WeixinLoginController extends BaseController {
     /* Ajax json */
     @RequestMapping(value = "/ajax/regbind", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public JsonResponse regBind(String email, String password, UserInfo userInfo, String weixinInfo, HttpServletRequest request, HttpServletResponse response) {
+    public JsonResponse regBind(String email, String password, UserInfo userInfo, String weixinInfo, byte channel, HttpServletRequest request, HttpServletResponse response) {
         JsonResponse jsonResponse = new JsonResponse();
         try {
             int userId = userAccountService.create(email, password);
@@ -96,7 +97,7 @@ public class WeixinLoginController extends BaseController {
                 WeixinUserInfo weixinUserInfo = generateWeixinUserInfo(weixinUser);
                 weixinUserInfo.setUserid(userId);
                 weixinUserService.insertWeixinUserInfo(weixinUserInfo);
-                weixinUserService.updateWeixinUserMapping(weixinUserInfo.getUnionid(), weixinUserInfo.getOpenid(), (byte) 1);
+                weixinUserService.updateWeixinUserMapping(weixinUserInfo.getUnionid(), weixinUserInfo.getOpenid(), WeiXinType.fromChannel(channel).getChannel());
 
                 userInfo.setAvatarurl(weixinUserInfo.getAvatarurl());
             }
@@ -115,7 +116,7 @@ public class WeixinLoginController extends BaseController {
     /* Ajax json */
     @RequestMapping(value = "/ajax/loginbind", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public JsonResponse loginBind(String account, String password, String weixinInfo, HttpServletRequest request, HttpServletResponse response) {
+    public JsonResponse loginBind(String account, String password, String weixinInfo, byte channel, HttpServletRequest request, HttpServletResponse response) {
         int userId = userAccountService.validate(account, password);
         JsonResponse jsonResponse = new JsonResponse();
         if (userId <= 0) {
@@ -129,7 +130,7 @@ public class WeixinLoginController extends BaseController {
             WeixinUserInfo weixinUserInfo = generateWeixinUserInfo(weixinUser);
             weixinUserInfo.setUserid(userId);
             weixinUserService.insertWeixinUserInfo(weixinUserInfo);
-            weixinUserService.updateWeixinUserMapping(weixinUserInfo.getUnionid(), weixinUserInfo.getOpenid(), (byte) 1);
+            weixinUserService.updateWeixinUserMapping(weixinUserInfo.getUnionid(), weixinUserInfo.getOpenid(), WeiXinType.fromChannel(channel).getChannel());
 
             UserInfo userInfo = userInfoService.loadUserInfoById(userId);
             userInfo.setAvatarurl(weixinUserInfo.getAvatarurl());

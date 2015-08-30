@@ -7,23 +7,26 @@ package com.morningsidevc.enums;
  */
 public enum WeiXinType {
 
-    WEB("wx512439f72ac23d42", "d98f6f8d669bac1a668927316c2f2135"),
+    WEB("wx512439f72ac23d42", "d98f6f8d669bac1a668927316c2f2135", (byte) 1),
 
-    WECHAT("wx92cb9b591ce7861d", "37bbc3404390eccbd53a466a399b593f");
+    WECHAT("wx92cb9b591ce7861d", "37bbc3404390eccbd53a466a399b593f", (byte) 2);
 
     private String appid;
 
     private String secret;
 
-    private WeiXinType(String appid, String secret) {
+    private byte channel;
+
+    private WeiXinType(String appid, String secret, byte channel) {
         this.appid = appid;
         this.secret = secret;
+        this.channel = channel;
     }
 
-    public static WeiXinType fromName(String name) {
-        for (WeiXinType type : values()) {
-            if (type.name().equals(name)) {
-                return type;
+    public static WeiXinType fromChannel(int channel) {
+        for (WeiXinType wexinType : values()) {
+            if (wexinType.getChannel() == channel) {
+                return wexinType;
             }
         }
         return WEB;
@@ -35,5 +38,9 @@ public enum WeiXinType {
 
     public String getSecret() {
         return secret;
+    }
+
+    public byte getChannel() {
+        return channel;
     }
 }

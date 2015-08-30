@@ -27,7 +27,7 @@ public class RedirectBO {
 
         Map<String, String> paramMap = new HashMap<String, String>();
         paramMap.put("appid", WeiXinType.WECHAT.getAppid());
-        paramMap.put("redirect_uri", URLEncoder.encode(WEIXIN_LOGIN_URL + "?weiXinType=" + weiXinType.name() + "redir=" + URLEncoder.encode(url, "UTF-8"), "UTF-8"));
+        paramMap.put("redirect_uri", URLEncoder.encode(WEIXIN_LOGIN_URL + "?channel=" + weiXinType.getChannel() + "redir=" + URLEncoder.encode(url, "UTF-8"), "UTF-8"));
         paramMap.put("response_type", "code");
         paramMap.put("scope", "snsapi_userinfo");
         paramMap.put("state", "STATE");

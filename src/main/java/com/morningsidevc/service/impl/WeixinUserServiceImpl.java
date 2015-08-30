@@ -145,16 +145,19 @@ public class WeixinUserServiceImpl implements WeixinUserService {
         weixinUserMappingMapper.updateByPrimaryKeySelective(weixinUserMapping);
     }
 
+    @Override
+    public String getWeixinUserOpenId(String unionId, Byte channel) {
+        if (StringUtils.isBlank(unionId)) {
+            return "";
+        }
 
+        WeixinUserMappingExample example = new WeixinUserMappingExample();
+        example.createCriteria().andUnionidEqualTo(unionId).andChannelEqualTo(channel);
+        List<WeixinUserMapping> result = weixinUserMappingMapper.selectByExample(example);
+        if (CollectionUtils.isEmpty(result)) {
+            return "";
+        }
 
-    private void convertWeixinUserInfo(WeixinUser weixinUser, WeixinUserInfo weixinUserInfo) {
-        weixinUserInfo.setAvatarurl(weixinUser.getHeadImgUrl());
-        weixinUserInfo.setWeixinusername(weixinUser.getNickName());
-        weixinUserInfo.setGender((byte) weixinUser.getSex());
-        weixinUserInfo.setProvince(weixinUser.getProvince());
-        weixinUserInfo.setCity(weixinUser.getCity());
-        weixinUserInfo.setCountry(weixinUser.getCountry());
-        weixinUserInfo.setPrivilege(weixinUser.getPrivilege());
-        weixinUserInfo.setUnionid(weixinUserInfo.getUnionid());
+        return result.get(0).getOpenid();
     }
 }

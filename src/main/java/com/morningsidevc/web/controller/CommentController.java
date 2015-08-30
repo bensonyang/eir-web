@@ -4,14 +4,20 @@
 package com.morningsidevc.web.controller;
 
 import com.morningsidevc.enums.HttpResponseStatus;
+import com.morningsidevc.enums.WeiXinType;
+import com.morningsidevc.po.gen.WeixinUserInfo;
 import com.morningsidevc.service.FeedCommentService;
 import com.morningsidevc.service.UserInfoService;
+import com.morningsidevc.service.WeixinUserService;
 import com.morningsidevc.vo.Comment;
 import com.morningsidevc.vo.User;
 import com.morningsidevc.web.request.AddCommentRequest;
 import com.morningsidevc.web.response.DeleteCommentResponse;
 import com.morningsidevc.web.response.JsonResponse;
 import com.morningsidevc.web.response.MoreCommentResponse;
+import com.morningsidevc.wechart.bo.RedirectBO;
+import com.morningsidevc.wechart.service.WeChartMessageService;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -22,10 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author yangna
@@ -41,6 +44,10 @@ public class CommentController extends BaseController{
     FeedCommentService feedCommentService;
     @Resource
     UserInfoService userInfoService;
+    @Resource
+    WeChartMessageService weChartMessageService;
+    @Resource
+    WeixinUserService weixinUserService;
 
     @ResponseBody
     @RequestMapping(value = "addcomment", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -63,6 +70,15 @@ public class CommentController extends BaseController{
             comment.setCanDelete(true);
             response.setCode(200);
             response.setMsg(comment);
+
+            // 绑定微信用户发送模版消息通知有新的评论
+            WeixinUserInfo toUserWeixinInfo = weixinUserService.getWeixinUserInfoByUserId(request.getToUserId());
+            if (toUserWeixinInfo != null && StringUtils.isNotBlank(toUserWeixinInfo.getUnionid())) {
+                String toOpenId = weixinUserService.getWeixinUserOpenId(toUserWeixinInfo.getUnionid(), WeiXinType.WECHAT.getChannel());
+                String toUrl = RedirectBO.generateUserAuthorizeUrl("http://www.msvcplus.com/mfeed?feedId=" + request.getFeedId(), WeiXinType.WECHAT);
+                weChartMessageService.sendCommentTemplateMessage(toOpenId, toUrl, user.getRealName(), comment.getCommentTime(), comment.getContent());
+            }
+
         }catch (Exception e){
             response.setCode(500);
             response.setMsg("服务器错误");

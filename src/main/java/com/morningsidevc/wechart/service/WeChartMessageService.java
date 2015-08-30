@@ -8,10 +8,9 @@ package com.morningsidevc.wechart.service;
 public interface WeChartMessageService {
 
     /**
-     * 向对应公众号下的用户发送模板消息
+     * 向对应公众号下的用户发送评论模板消息
      *
-     * @param message 信息主体以及收发人等信息都包含其中
      * @return
      */
-    public int sendTemplateMessage(String message);
+    public boolean sendCommentTemplateMessage(String toOpenId, String toUrl, String fromUserName, String commentTime, String commentContent);
 }
