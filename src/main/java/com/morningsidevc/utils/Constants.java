@@ -17,4 +17,7 @@ public class Constants {
 
     public static final String ENCRYPT_IV = "nv926fjl,dv6yuia";
 
+    public static final String DOMAIN = "http://www.msvcplus.com";
+
+
 }

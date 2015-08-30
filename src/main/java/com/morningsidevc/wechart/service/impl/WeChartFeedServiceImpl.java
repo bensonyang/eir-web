@@ -2,6 +2,7 @@ package com.morningsidevc.wechart.service.impl;
 
 import com.morningsidevc.enums.WeiXinType;
 import com.morningsidevc.service.FeedInfoService;
+import com.morningsidevc.utils.Constants;
 import com.morningsidevc.vo.Feed;
 import com.morningsidevc.vo.WebPageMsgBody;
 import com.morningsidevc.vo.WeiboMsgBody;
@@ -70,7 +71,11 @@ public class WeChartFeedServiceImpl implements WeChartFeedService {
             Article feedArticle = new Article();
             feedArticle.setTitle(title);
             if (StringUtils.isNotBlank(feed.getAuthor().getAvatarUrl())) {
-                feedArticle.setPicUrl(feed.getAuthor().getAvatarUrl());
+                if (feed.getAuthor().getAvatarUrl().startsWith("http://")) {
+                    feedArticle.setPicUrl(feed.getAuthor().getAvatarUrl());
+                } else {
+                    feedArticle.setPicUrl(Constants.DOMAIN + feed.getAuthor().getAvatarUrl());
+                }
             } else {
                 // TODO 换默认头像
                 feedArticle.setPicUrl("http://i2.dpfile.com/s/img/uc/default-avatar120c120.png");

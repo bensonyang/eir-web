@@ -51,6 +51,8 @@ public abstract class AddFeedClickEventBaseProcessor extends WeChartBaseProcesso
             return MsgConvertUtil.parseMsg2XMLStr(generateNoBandMessage(requestMap));
         }
 
+        logger.info("click add feed response: " + enterAddFeedMode(requestMap));
+
         return enterAddFeedMode(requestMap);
     }
 

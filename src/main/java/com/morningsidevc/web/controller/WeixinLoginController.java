@@ -58,7 +58,7 @@ public class WeixinLoginController extends BaseController {
                 Gson gson = new Gson();
                 model.addAttribute("weixinInfo", EncryptionUtils.encrypt(gson.toJson(weixinUser)));
                 model.addAttribute("channel", channel);
-                model.addAttribute("redirectUrl", StringUtils.isBlank(redir) ? "http://www.msvcplus.com/community" : redir);
+                model.addAttribute("redir", StringUtils.isBlank(redir) ? "http://www.msvcplus.com/community" : redir);
                 return "connect";
             }
 
