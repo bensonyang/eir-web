@@ -72,9 +72,13 @@ public class CommentController extends BaseController{
             response.setMsg(comment);
 
             // 绑定微信用户发送模版消息通知有新的评论
+            LOG.info("----toUserId: " + comment.getToUserId());
             WeixinUserInfo toUserWeixinInfo = weixinUserService.getWeixinUserInfoByUserId(comment.getToUserId());
+            LOG.info("----toUserWeixinInfo: " + toUserWeixinInfo);
+
             if (toUserWeixinInfo != null && StringUtils.isNotBlank(toUserWeixinInfo.getUnionid())) {
                 String toOpenId = weixinUserService.getWeixinUserOpenIdByUnionId(toUserWeixinInfo.getUnionid(), WeiXinType.WECHAT.getChannel());
+                LOG.info("----toOpenId: " + toOpenId);
                 String toUrl = RedirectBO.generateUserAuthorizeUrl("http://www.msvcplus.com/mfeed?feedId=" + request.getFeedId(), WeiXinType.WECHAT);
                 weChartMessageService.sendCommentTemplateMessage(toOpenId, toUrl, user.getRealName(), comment.getCommentTime(), comment.getContent());
             }
