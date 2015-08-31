@@ -148,7 +148,7 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 	public Comment addComment(AddCommentRequest request, Integer currentUserId) throws Exception{
 		FeedInfo feedInfo = feedInfoService.loadFeedInfo(request.getFeedId());
 		UserInfo currentUser = userInfoService.loadUserInfoById(currentUserId);
-		UserInfo toUser = userInfoService.loadUserInfoById(request.getToUserId());
+		UserInfo toUser = userInfoService.loadUserInfoById(feedInfo.getUserid());
 		feedInfoService.addFeedCommentCountByOne(request.getFeedId());
 		userFeedCounterService.increaseCounterByOffset(currentUserId,CounterType.CommentCounter.getValue(),1);
 		FeedCommentMsg feedCommentMsg = buildNewFeedCommentMsg(feedInfo, request, currentUserId);
