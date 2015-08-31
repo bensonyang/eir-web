@@ -56,8 +56,8 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                                     $('.feed-container').append(compiled(data));
                                     $('div[data-feedId='+ data.feedId +']').slideDown(500);
                                     $('div[data-feedId='+ data.feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
-                                    $('div[data-feedId='+ data.feedId +'] .eir-feed-options .icon-thumbs-up.unliked a').click(HANDLERS.likeFeedHandler);
-                                    $('div[data-feedId='+ data.feedId +'] .eir-feed-options .icon-thumbs-up.liked a').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
+                                    $('div[data-feedId='+ data.feedId +'] .eir-feed-options .icon-thumbs-up .unliked').click(HANDLERS.likeFeedHandler);
+                                    $('div[data-feedId='+ data.feedId +'] .eir-feed-options .icon-thumbs-up .liked').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
                                     $('div[data-feedId='+ data.feedId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
                                     $('div[data-feedId='+ data.feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
                                     $('div[data-feedId='+ data.feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler());//删除Feed事件注册
