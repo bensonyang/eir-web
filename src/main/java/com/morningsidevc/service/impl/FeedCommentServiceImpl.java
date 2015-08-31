@@ -149,25 +149,24 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		FeedInfo feedInfo = feedInfoService.loadFeedInfo(request.getFeedId());
 		UserInfo currentUser = userInfoService.loadUserInfoById(currentUserId);
 		UserInfo toUser = null;
-		if(request.getToUserId() == 0){
-			userInfoService.loadUserInfoById(feedInfo.getUserid());
+		Comment comment = new Comment();
+		if(request.getToUserId() == null){
+			toUser = userInfoService.loadUserInfoById(feedInfo.getUserid());
+			comment.setToUserId(0);
+			comment.setToUserName("");
 		}else{
-			userInfoService.loadUserInfoById(request.getToUserId());
+			toUser = userInfoService.loadUserInfoById(request.getToUserId());
+			if(toUser != null){
+				comment.setToUserId(feedInfo.getUserid());
+				comment.setToUserName(toUser.getRealname());
+			}
 		}
 		feedInfoService.addFeedCommentCountByOne(request.getFeedId());
 		userFeedCounterService.increaseCounterByOffset(currentUserId,CounterType.CommentCounter.getValue(),1);
 		FeedCommentMsg feedCommentMsg = buildNewFeedCommentMsg(feedInfo, request, currentUserId);
 		Integer ret = feedCommentMsgMapper.insert(feedCommentMsg);//插入评论内容
-		Comment comment = new Comment();
 		comment.setContent(request.getContent());
 		comment.setCommentId(feedCommentMsg.getCommentid());
-		if(toUser != null){
-			comment.setToUserId(feedInfo.getUserid());
-			comment.setToUserName(toUser.getRealname());
-		}else{
-			comment.setToUserId(0);
-			comment.setToUserName("");
-		}
 		comment.setUserId(currentUserId);
 		comment.setUserName(currentUser.getRealname());
 		
