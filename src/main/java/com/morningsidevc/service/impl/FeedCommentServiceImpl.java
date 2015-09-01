@@ -216,8 +216,8 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 				comment.setUserName(userInfoMap.get(feedCommentMsg.getUserid()).getNickname());
 				if(feedCommentMsg.getTouserid() != null){
 					comment.setToUserName(userInfoMap.get(feedCommentMsg.getTouserid()).getNickname());
-					comment.setUserPic(userInfoMap.get(feedCommentMsg.getTouserid()).getAvatarurl());
 				}
+				comment.setUserPic(userInfoMap.get(feedCommentMsg.getUserid()).getAvatarurl());
 				comment.setToUserPic("");
 
 				if(feedCommentMsg.getUserid() == currentUserId){
