@@ -478,6 +478,10 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                             setTimeout(function(){
                                 _this.closest('.eir-feed-comments-more').remove();
                             },1000);
+                        }else{
+                            var compiled =  _.template(templates.feedComment);
+                            _this.closest('.eir-feed-comments-more').replaceWith(compiled({})).fadeIn(1000);
+                            _feed.find('.eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
                         }
                         var compiled =  _.template(templates.feedCommentItem);
                         _feed.find('.eir-feed-item-container').prepend(compiled(data.msg));

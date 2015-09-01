@@ -82,7 +82,10 @@ public class CommentController extends BaseController{
                 String toUrl = RedirectBO.generateUserAuthorizeUrl("http://www.msvcplus.com/mfeed?feedId=" + request.getFeedId(), WeiXinType.WECHAT);
                 weChartMessageService.sendCommentTemplateMessage(toOpenId, toUrl, user.getRealName(), comment.getCommentTime(), comment.getContent());
             }
-
+            if(request.getToUserId() == null){
+                comment.setToUserName("");
+                comment.setToUserId(0);
+            }
         }catch (Exception e){
             response.setCode(500);
             response.setMsg("服务器错误");

@@ -152,14 +152,12 @@ public class FeedCommentServiceImpl implements FeedCommentService {
 		Comment comment = new Comment();
 		if(request.getToUserId() == null){
 			toUser = userInfoService.loadUserInfoById(feedInfo.getUserid());
-			comment.setToUserId(0);
-			comment.setToUserName("");
 		}else{
 			toUser = userInfoService.loadUserInfoById(request.getToUserId());
-			if(toUser != null){
-				comment.setToUserId(feedInfo.getUserid());
-				comment.setToUserName(toUser.getRealname());
-			}
+		}
+		if(toUser != null){
+			comment.setToUserId(feedInfo.getUserid());
+			comment.setToUserName(toUser.getRealname());
 		}
 		feedInfoService.addFeedCommentCountByOne(request.getFeedId());
 		userFeedCounterService.increaseCounterByOffset(currentUserId,CounterType.CommentCounter.getValue(),1);
