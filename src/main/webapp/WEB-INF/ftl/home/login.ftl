@@ -16,7 +16,7 @@
             <div class="go-reg"><a href="/reg">还没有账号？</a></div>
             <div class="input-prepend">
                 <input class="btn btn-primary login" id="login" value="登录">
-                <img onclick="javascript:window.location.href='https://open.weixin.qq.com/connect/qrconnect?appid=wx512439f72ac23d42&redirect_uri=http%3a%2f%2fwww.msvcplus.com%2fweixinlogin&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect'"  src="https://open.weixin.qq.com/zh_CN/htmledition/res/assets/res-design-download/icon24_appwx_logo.png" alt="" class="design_icon" style="vertical-align: bottom; margin-bottom: 5px;">
+                <img onclick="javascript:window.location.href='https://open.weixin.qq.com/connect/qrconnect?appid=wx512439f72ac23d42&redirect_uri=http%3a%2f%2fwww.msvcplus.com%2fweixinlogin%3fchannel%3d1&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect'"  src="https://open.weixin.qq.com/zh_CN/htmledition/res/assets/res-design-download/icon24_appwx_logo.png" alt="" class="design_icon" style="vertical-align: bottom; margin-bottom: 5px;">
             </div>
             <input id="userId" type="hidden" name="userId">
         </form>

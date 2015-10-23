@@ -77,6 +77,10 @@ public class WeixinLoginController extends BaseController {
             LoginUtils.signon(weixinUserInfo.getUserid(), true, request, response);
         }
 
+        if (StringUtils.isBlank(redir)) {
+            redir = "/community";
+        }
+
         return "redirect:" + redir;
     }
 
