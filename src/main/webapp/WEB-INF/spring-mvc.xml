@@ -20,6 +20,11 @@
 	                    	<value>application/json;charset=UTF-8</value>  
 	                	</list>
 	                </property>
+					  <property name="features">
+						  <array>
+							  <value>WriteMapNullValue</value>
+						  </array>
+					  </property>
 			      </bean>
 					<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter">
 						<property name="supportedMediaTypes">
