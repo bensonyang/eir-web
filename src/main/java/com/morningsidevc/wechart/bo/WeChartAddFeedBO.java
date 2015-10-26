@@ -2,6 +2,7 @@ package com.morningsidevc.wechart.bo;
 
 import com.morningsidevc.crawler.HTMLBean;
 import com.morningsidevc.crawler.HTMLCrawlerUtils;
+import com.morningsidevc.enums.WeiXinType;
 import com.morningsidevc.po.gen.FeedInfo;
 import com.morningsidevc.po.gen.WeixinUserInfo;
 import com.morningsidevc.service.FeedInfoService;
@@ -122,7 +123,7 @@ public class WeChartAddFeedBO {
                             try {
                                 FeedInfo linkFeed = feedInfoService.addFeed(weixinUserInfo.getUserid(), html.getUrl(), html.getPageTitle(), html.getPageAbstract(), "");
                                 if (linkFeed != null) {
-                                    replyMsg = "<a href=\"http://www.msvcplus.com/mfeed?feedId=" + linkFeed.getFeedid() +"\" >发表成功～～～</a>";
+                                    replyMsg = "<a href=\"" + RedirectBO.generateUserAuthorizeUrl("http://www.msvcplus.com/mfeed?feedId=" + linkFeed.getFeedid(), WeiXinType.WECHAT) +"\" >发表成功，请输入该链接的评论</a>";
                                 }
                             } catch (Exception e) {
                                 replyMsg = "抱歉，服务器添加推荐链接异常！";
