@@ -1,4 +1,4 @@
-<#include "common/document.ftl"/>
+<#include "common/homedoc.ftl"/>
 <@html mainCss="static/css/meinfo.css" mainJs="static/js/meinfo" page="meinfo">
 <!--<div class="container eir-reg-container">-->
 <div class="container eir-reg-container">

@@ -1,4 +1,4 @@
-<div class="col-md-offset-1 col-md-7 col-sm-7">
+<div class="col-md-offset-1 col-md-10 col-sm-10">
     <div class="row">
         <div class="row eir-options">
             <div class="col-md-4">

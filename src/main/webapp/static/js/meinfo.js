@@ -6,13 +6,19 @@ require.config({
     baseUrl : "../../",
     paths:{
         "jquery" : "/static/components/jquery/jquery.min",
+        "tooltip" : "/static/components/bootstrap/js/tooltip",
+        "popover" : "/static/components/bootstrap/js/popover",
+        "dropdown" : "/static/components/bootstrap/js/dropdown",
         "API" : "/static/js/API",
         "toast" : "/static/js/toast"
     },
     shim:{
         "jquery":{
             exports : "$"
-        }
+        },
+        "tooltip" : ["jquery"],
+        "popover" : ["tooltip"],
+        "dropdown" : ["tooltip"]
     }
 });
 

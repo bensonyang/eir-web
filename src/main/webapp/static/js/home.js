@@ -5,6 +5,7 @@ require.config({
         "jquery" : "/static/components/jquery/jquery.min",
         "tooltip" : "/static/components/bootstrap/js/tooltip",
         "popover" : "/static/components/bootstrap/js/popover",
+        "dropdown" : "/static/components/bootstrap/js/dropdown",
         "underscore" : "/static/components/underscore/underscore-min",
         "API" : "/static/js/API",
         "templates" : "/static/js/templates",
@@ -15,18 +16,34 @@ require.config({
             exports : "$"
         },
         "tooltip" : ["jquery"],
-        "popover" : ["tooltip"]
+        "popover" : ["tooltip"],
+        "dropdown" : ["tooltip"]
     }
 });
 
 //模块入口
-require(["API","jquery","underscore","templates","toast","tooltip","popover"], function(API, $, _, templates,toast){
+require(["API","jquery","underscore","templates","toast","tooltip","popover","dropdown"], function(API, $, _, templates,toast){
     var _lastFeedIndex = undefined;
     var _pageSize = 5;
     var _canMore = true;
     var _currentTag = "";
+    var isLogin = $('.eir-notlogin').length > 0 ? false : true;
     //加载更多的内容需要注册点击事件
     $(window).scroll(function(){
+        if(isLogin){
+            if($(this).scrollTop() >= 95){
+                $('.eir-home-header').addClass('eir-home-header-fix');
+                $('.nav-fix-pad').addClass('nav-fix-pad-height150');
+            }else{
+                $('.eir-home-header').removeClass('eir-home-header-fix');
+                $('.nav-fix-pad').removeClass('nav-fix-pad-height150');
+            }
+        }
+        if($(this).scrollTop() > 300){
+            $('.back-to-top').removeClass('eir-hide');
+        }else{
+            $('.back-to-top').addClass('eir-hide');
+        }
         if($.trim($('.feed-end').text()) == "") return;
         if (($(document).height() - $(this).scrollTop() - $(this).height()) < 50){
             if(_canMore){
@@ -215,12 +232,22 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
             $('.eir-recommend-link').val('');
         },
         clickTagHandler    :   function clickTag(){//单选tag
-            $(this).siblings().find('li').removeClass('icon-tag');
-            $(this).siblings().find('label').removeClass('icon-tag');
-            $(this).find('li').addClass('icon-tag');
-            $(this).find('label').addClass('active');
-            var _tagName = $(this).find('label').text();
+            var _tagName = $(this).text();
             _currentTag = _tagName;
+            if(_tagName == '全部'){
+                _currentTag = "";
+                _tagName = "";
+            }
+            var drop_down_i = $('.filter .dropdown-toggle i');
+            $(this).addClass('eir-active');
+            var parent = $(this).closest('.dropdown-menu');
+            if(parent.length == 0){
+                drop_down_i.text("更多");
+                drop_down_i.removeClass('eir-active');
+            }else{
+                drop_down_i.text(_currentTag);
+                drop_down_i.addClass('eir-active');
+            }
             FeedFuns.initFirstPage({ startIndex:0,pageSize:5,tagName:_tagName});
             /*
             $('.tags').find('a[data-index]').remove();
@@ -626,6 +653,9 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
             if($.trim($(this).val()) != "") return;
             var _block = $(this).closest('.eir-feed-comments-more');
             _block.remove();
+        },
+        backToTop:function(){
+            document.scrollingElement.scrollTop = 0;
         }
     };
     //################################事件处理器配置END#######################################
@@ -635,7 +665,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
     $('.eir-nav-collapsed').click(HANDLERS.popoverInitHandler);
     $('#write-feed').click(HANDLERS.writeFeedOnClickHandler);
     $('#recommend-link').click(HANDLERS.recommendLinkOnClickHandler);
-    $('.eir-mytags .eir-li').click(HANDLERS.clickTagHandler);
+    $('.filter .tag').click(HANDLERS.clickTagHandler);//过滤Feed
     $('.eir-comments-btn').click(HANDLERS.commentsOnClickHandler);//发表说说
     $('.eir-feed a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除按钮事件
     $('.eir-feed a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除按钮事件
@@ -650,6 +680,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
     $('.link-page-content-title .close').click(HANDLERS.closeAbstractDivHandler);//重新获取网页摘要
     $('.meinfo').click(HANDLERS.meinfoOnClickHandler);//个人中心
     $('.dropdown-toggle').focusout(HANDLERS.meinfoHide);//隐藏个人中心
+    $('.back-to-top').click(HANDLERS.backToTop);//返回最顶端
     //################################事件配置END#######################################
 
     HANDLERS.showTags();//初始化标签
