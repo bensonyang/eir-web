@@ -62,7 +62,7 @@ public class WeChartAddFeedBO {
             }
         }
 
-        String message = "您好，现在您可以发布动态了（如需退出动态发布模式，请回复Q！）";
+        String message = "您好，现在您可以发布动态了（如需退出动态发布模式，请回复Q或q）";
         XmlText xmlText = XmlMessageBO.prepareXmlText(requestMap);
         xmlText.setContent(message);
 
@@ -102,8 +102,8 @@ public class WeChartAddFeedBO {
         String replyMsg = "";
         String content = requestMap.get("Content");
         if (!MsgTypeEnum.TEXT.getValue().equals(requestMap.get("MsgType")) || StringUtils.isBlank(content)) {
-            replyMsg = "目前动态发布模式紧支持文本和链接信息，如需退出动态发布模式请输入：Q";
-        } else if ("Q".equals(content)) {
+            replyMsg = "目前动态发布模式紧支持文本和链接信息，如需退出动态发布模式请输入：Q或q";
+        } else if ("Q".equalsIgnoreCase(content)) {
             exitAddFeedMode(requestMap);
             replyMsg = "您已离开动态发布模式～～～";
         } else {
@@ -123,7 +123,7 @@ public class WeChartAddFeedBO {
                             try {
                                 FeedInfo linkFeed = feedInfoService.addFeed(weixinUserInfo.getUserid(), html.getUrl(), html.getPageTitle(), html.getPageAbstract(), "");
                                 if (linkFeed != null) {
-                                    replyMsg = "<a href=\"" + RedirectBO.generateUserAuthorizeUrl("http://www.msvcplus.com/mfeed?feedId=" + linkFeed.getFeedid(), WeiXinType.WECHAT) +"\" >发表成功，请输入该链接的评论～～</a>";
+                                    replyMsg = "发表成功!\n" + "<a href=\"" + RedirectBO.generateUserAuthorizeUrl("http://www.msvcplus.com/mfeed?feedId=" + linkFeed.getFeedid(), WeiXinType.WECHAT) +"\" >请\"点击此处评论\"</a>";
                                 }
                             } catch (Exception e) {
                                 replyMsg = "抱歉，服务器添加推荐链接异常！";
