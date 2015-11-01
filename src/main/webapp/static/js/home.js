@@ -300,7 +300,8 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
                             tagName : _tag,
                             title   : $.trim(_title),
                             content : $.trim(_abstract),
-                            link : _link
+                            link    : _link,
+                            comment : $.trim($('.form-group .main-textarea').val())//评论
                         },
                         success : linkFeedCallback,
                         error : errorCallback
@@ -340,6 +341,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
                     $('.link-page-content-title span').text("");
                     $('.link-page-content-abstract').text("");
                     $('.eir-recommend-link').val("");
+                    $('.form-group .main-textarea').val("");
                     $('.main-textarea').show();
                     $('.link-page-content').hide();
                     $('.for-recommend-link').show();
@@ -591,7 +593,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
                             $('.link-page-content-abstract').text(_abstract);
                             _linkIptDiv.hide();
                             _abstractDiv.show();
-                            _mainTextArea.hide();
+                            //_mainTextArea.hide();
                         }
                     }else{
                         toast("服务器错误");
@@ -679,11 +681,12 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
     $('.eir-feed .eir-feed-comments-comments').click(HANDLERS.commentToFeedHandler);//Feed下面添加评论
     $('.eir-feef a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
     $('#login').click(HANDLERS.loginHandler);//登陆按钮
-    $('.for-recommend-link .eir-recommend-link').focusout(HANDLERS.inputLinkOnClickHandler);//获取网页内容
+    //$('.for-recommend-link .eir-recommend-link').focusout(HANDLERS.inputLinkOnClickHandler);//获取网页内容
     $('.link-page-content-title .close').click(HANDLERS.closeAbstractDivHandler);//重新获取网页摘要
     $('.meinfo').click(HANDLERS.meinfoOnClickHandler);//个人中心
     $('.dropdown-toggle').focusout(HANDLERS.meinfoHide);//隐藏个人中心
     $('.back-to-top').click(HANDLERS.backToTop);//返回最顶端
+    $('.for-recommend-link .eir-input-link').click(HANDLERS.inputLinkOnClickHandler);//爬取网页
     //################################事件配置END#######################################
 
     HANDLERS.showTags();//初始化标签

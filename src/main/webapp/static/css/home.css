@@ -165,16 +165,19 @@ a {
   transform: rotate(-45deg);
 }
 .eir-recommend-link {
-  width: 100%;
+  width: 85%;
   border: 1px solid #efefef;
   margin-bottom: 5px;
   float: left;
 }
 .eir-input-link {
+  position: absolute;
+  width: 115px;
+  margin-bottom: 5px;
+  right: 0px;
   line-height: 9px;
   font-size: 13px;
-  height: 21px;
-  margin-bottom: 3px;
+  height: 23px;
   border: 1px solid #efefef;
 }
 @media (min-width: 950px) {
@@ -202,7 +205,7 @@ a {
 }
 @media (min-width: 1024px) {
   .eir-recommend-link {
-    width: 100%;
+    width: 85%;
   }
 }
 @media (max-width: 768px) {

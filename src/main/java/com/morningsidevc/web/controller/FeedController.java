@@ -14,11 +14,10 @@ import com.morningsidevc.enums.HttpResponseStatus;
 import com.morningsidevc.enums.MsgType;
 import com.morningsidevc.po.gen.FeedInfo;
 import com.morningsidevc.po.gen.WebPageMsg;
-import com.morningsidevc.service.UserInfoService;
-import com.morningsidevc.service.WebPageMsgService;
-import com.morningsidevc.service.WeiboMsgService;
+import com.morningsidevc.service.*;
 import com.morningsidevc.utils.DateTimeUtils;
 import com.morningsidevc.vo.*;
+import com.morningsidevc.web.request.AddCommentRequest;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.morningsidevc.po.gen.UserInfo;
-import com.morningsidevc.service.FeedInfoService;
 import com.morningsidevc.web.response.FeedResponse;
 import com.morningsidevc.web.response.JsonResponse;
 
@@ -51,6 +49,8 @@ public class FeedController extends BaseController{
 	private WeiboMsgService weiboMsgService;
 	@Resource
 	private WebPageMsgService webPageMsgService;
+	@Resource
+	FeedCommentService feedCommentService;
 
 	/* Ajax json */
 	@RequestMapping(value = "morefeed", produces = "application/json;charset=UTF-8")
@@ -153,7 +153,7 @@ public class FeedController extends BaseController{
 
 	@RequestMapping(value = "linkfeed", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public JsonResponse linkfeed(String tagName, String title, String content, String link){
+	public JsonResponse linkfeed(String tagName, String title, String content, String link, String comment){
 		JsonResponse response = new JsonResponse();
 
 		if (!super.isLogin()) {
@@ -162,7 +162,7 @@ public class FeedController extends BaseController{
 
 		try{
 			Assert.state(StringUtils.isNotBlank(content));
-			if(StringUtils.isNotBlank(tagName)){
+			if(StringUtils.isBlank(tagName)){
 				tagName = "无";
 			}
 			if(getUserId() == 0){
@@ -171,6 +171,13 @@ public class FeedController extends BaseController{
 			}
 			FeedInfo feedInfo = feedInfoService.addFeed(getUserId(),link,title,content,tagName);
 			Assert.notNull(feedInfo);
+			Comment commentInfo = null;
+			if(StringUtils.isNotBlank(comment)){//添加第一条评论
+				AddCommentRequest request = new AddCommentRequest();
+				request.setContent(comment);
+				request.setFeedId(feedInfo.getFeedid());
+				commentInfo = feedCommentService.addComment(request, getUserId());
+			}
 			FeedResponse feedResponse = new FeedResponse();
 			Feed feed = new Feed();
 			feed.setAddTime(DateTimeUtils.date2SmartFormat(feedInfo.getAddtime()));
@@ -188,6 +195,11 @@ public class FeedController extends BaseController{
 			feed.setCanDelete(true);
 			feed.setComment(new ArrayList<Comment>());
 			feed.setLastCommentIndex(0);
+			if(commentInfo != null){
+				commentInfo.setToUserName("");
+				feed.setCommentCount(1);
+				feed.setComment(Arrays.asList(new Comment[]{commentInfo}));
+			}
 			feedResponse.setFeeds(Arrays.asList(new Feed[]{feed}));
 			response.setCode(200);
 			response.setMsg(feedResponse);
