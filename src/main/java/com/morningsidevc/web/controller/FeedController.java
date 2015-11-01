@@ -197,6 +197,7 @@ public class FeedController extends BaseController{
 			feed.setLastCommentIndex(0);
 			if(commentInfo != null){
 				commentInfo.setToUserName("");
+				commentInfo.setUserPic(user.getAvatarUrl());
 				feed.setCommentCount(1);
 				feed.setComment(Arrays.asList(new Comment[]{commentInfo}));
 			}

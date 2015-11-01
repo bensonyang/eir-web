@@ -3,7 +3,7 @@
 -->
 <#if tagList??>
 <div class="row filter">
-    <div class=" col-md-offset-2 col-md-10 col-sm-10 ">
+    <div class=" col-md-offset-2 col-md-10 col-sm-10 filter-inside">
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <#if tagList?size gt 2>
