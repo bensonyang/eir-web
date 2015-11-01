@@ -224,12 +224,14 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
             $('.main-textarea').show();
             $('.for-recommend-link').hide();
             $('.link-page-content').hide();
+            $('.eir-comments-btn').attr('disabled',false);
         },
         recommendLinkOnClickHandler   :   function recommendLink(){
             $(this).siblings().removeClass('active');
             $(this).addClass('active');
             $('.for-recommend-link').show();
             $('.eir-recommend-link').val('');
+            $('.eir-comments-btn').attr('disabled','disabled');
         },
         clickTagHandler    :   function clickTag(){//单选tag
             var drop_down_i = $('.filter .dropdown-toggle i');
@@ -588,15 +590,18 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
                         var _abstract = data.msg.pageAbstract;
                         if($.trim(_title) == ""){
                             toast("当前输入没有获取到内容");
+                            $('.eir-comments-btn').attr('disabled',false);
                         }else{
                             $('.link-page-content-title span').text(_title);
                             $('.link-page-content-abstract').text(_abstract);
                             _linkIptDiv.hide();
                             _abstractDiv.show();
                             //_mainTextArea.hide();
+                            $('.eir-comments-btn').attr('disabled',false);
                         }
                     }else{
                         toast("服务器错误");
+                        $('.eir-comments-btn').attr('disabled',false);
                     }
                 }
             });

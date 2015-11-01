@@ -99,6 +99,25 @@ a {
     -khtml-opacity: 0.3;
     opacity: 0.3;
 }
+.eir-home-header .head-pic a {
+    padding: 5px;
+}
+.eir-home-header .head-pic img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: 1px solid #FFFFFF;
+}
+.nav-fix-pad-height150 {
+    height: 150px;
+}
+.eir-home-header-fix {
+    margin-left: 0px;
+    position: fixed;
+    z-index: 10000;
+    width: 100%;
+    top: -100px;
+}
 .eir-brand {
     width: 70%;
     margin: auto;
@@ -132,10 +151,10 @@ a {
 .eir-options .active:after {
     content: "";
     position: absolute;
-    bottom: -7px;
+    bottom: -14px;
     left: 30px;
-    height: 7px;
-    width: 7px;
+    height: 10px;
+    width: 10px;
     border: 1px solid #efefef;
     border-width: 1px 1px 0 0;
     background: #fff;
@@ -146,16 +165,19 @@ a {
     transform: rotate(-45deg);
 }
 .eir-recommend-link {
-    width: 100%;
+    width: 85%;
     border: 1px solid #efefef;
     margin-bottom: 5px;
     float: left;
 }
 .eir-input-link {
+    position: absolute;
+    width: 115px;
+    margin-bottom: 5px;
+    right: 0px;
     line-height: 9px;
     font-size: 13px;
-    height: 21px;
-    margin-bottom: 3px;
+    height: 23px;
     border: 1px solid #efefef;
 }
 @media (min-width: 950px) {
@@ -183,7 +205,7 @@ a {
 }
 @media (min-width: 1024px) {
     .eir-recommend-link {
-        width: 100%;
+        width: 85%;
     }
 }
 @media (max-width: 768px) {
@@ -205,10 +227,16 @@ a {
         width: 100%;
     }
 }
+.dropdown-menu {
+    border-radius: 0px;
+}
 .eir-feed {
     padding: 5px;
     border: 1px solid #efefef;
     cursor: pointer;
+}
+.eir-feed .eir-feed-comments-texta {
+    padding-left: 5px;
 }
 .eir-feed .eir-feed-pic img {
     width: 50px;
@@ -262,6 +290,7 @@ a {
 }
 .eir-feed .eir-feed-content-content {
     padding-left: 15px;
+    padding-right: 15px;
     font-size: 12px;
 }
 .eir-feed .eir-feed-content-link {
@@ -339,6 +368,9 @@ a {
     transition: 0.2s;
     box-shadow: 1px 1px 1px #e5e5e5;
 }
+.eir-feed:hover .eir-feed-comments-texta {
+    padding-left: 5px;
+}
 .eir-feed:hover .eir-feed-pic img {
     width: 50px;
     height: 50px;
@@ -391,6 +423,7 @@ a {
 }
 .eir-feed:hover .eir-feed-content-content {
     padding-left: 15px;
+    padding-right: 15px;
     font-size: 12px;
 }
 .eir-feed:hover .eir-feed-content-link {
@@ -483,27 +516,21 @@ a {
     font-family: FontAwesome;
 }
 .eir-feed-comments {
-    height: 30px;
+    height: 40px;
     position: fixed;
-    z-index: 100;
+    z-index: 1000;
     margin: 5px;
     left: 0px;
     bottom: 0px;
     width: 100%;
 }
-.eir-feed-comments input[type=text] {
-    font-size: 12px;
-    width: 70%;
-    height: 30px;
-    padding-left: 5px;
-    border: 1px solid #e2e2e2;
-}
 .eir-feed-comments .comment {
-    width: 28%;
-    height: 30px;
+    line-height: 40px;
+    width: 100%;
     margin-right: 5px;
-    font-size: 12px;
+    font-size: 14px;
     border: 1px solid #e2e2e2;
+    padding: 0px;
 }
 .feed-end {
     text-align: center;
@@ -512,18 +539,48 @@ a {
     font-size: 13px;
     color: #cccccc;
 }
-@media (min-width: 950px) {
-    .eir-feed-comments-item-content {
-        max-width: 90%;
-    }
+.comment-input {
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    z-index: 1000;
+    bottom: 45px;
 }
-@media (max-width: 950px) {
-    .eir-feed-comments-item-content {
-        max-width: 86%;
-    }
+.comment-input textarea {
+    width: 100%;
+    height: 100%;
+    display: block;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #555555;
+    vertical-align: middle;
+    border: 1px solid #efefef;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    min-height: 100px;
+    resize: none;
+    border-bottom: 0px;
 }
-@media (max-width: 320px) {
-    .eir-feed-comments-item-content-name {
-        width: 157px;
-    }
+.comment-input .close {
+    position: fixed;
+    z-index: 1000;
+    bottom: 145px;
+    right: 0px;
+    height: 40px;
+    width: 45px;
+    line-height: 40px;
+    color: #FFFFFF;
+}
+.alpha-bk {
+    background-color: #000000;
+    opacity: 0.3;
+    z-index: 500;
+    position: fixed;
+    left: -100px;
+    top: -100px;
+    width: 10000px;
+    height: 10000px;
 }

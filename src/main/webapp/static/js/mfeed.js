@@ -400,10 +400,16 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
             });
         },
         commentToFeedHandler : function(){
+            if($('.comment-content').data('flag') == undefined || $('.comment-content').data('flag') == '0'){
+                $('.on-comment').removeClass('eir-hide');
+                $('.comment-content').data('flag','1');
+                $('.comment-content').focus();
+                return;
+            }
             var _feed = $('.eir-feed');
             var _feedId = $('.eir-feed').data('feedid');
-            var _comment_area = $(this).parent().find('.comment-content');
-            var _content = $(this).parent().find('.comment-content').val();
+            var _comment_area = $(this).closest('.feed-container').find('.comment-content');
+            var _content = _comment_area.val();
             var _toUserId = $('.eir-feed-head').data('touserid');
             if($.trim(_content) == ""){
                 toast("评论内容不能为空");
@@ -427,6 +433,8 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                         $('div[data-commentid='+ data.msg.commentId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除按钮事件
                         $('div[data-commentid='+ data.msg.commentId +'] a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
                         _comment_area.val('');
+                        $('.on-comment').addClass('eir-hide');
+                        $('.comment-content').data('flag','0')
                     }else if(data.code == 300){
                         toast(data.msg);
                     }else{
@@ -516,8 +524,12 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                 $('.meinfo').toggleClass('open');
             }
         },
-        goMeInfoCenter:function(){
+        goMeInfoCenter:function() {
             window.location.href = API.meInfoCenter;
+        },
+        closeComment:function(){
+            $('.on-comment').addClass('eir-hide');
+            $('.comment-content').data('flag','0')
         }
     };
     //################################事件处理器配置END#######################################
@@ -540,8 +552,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
     $('#login').click(HANDLERS.loginHandler);//登陆按钮
     $('.for-recommend-link .eir-recommend-link').focusout(HANDLERS.inputLinkOnClickHandler);//获取网页内容
     $('.link-page-content-title .close').click(HANDLERS.closeAbstractDivHandler);//重新获取网页摘要
-    $('.meinfo').click(HANDLERS.meinfoOnClickHandler);//个人中心
-    $('.dropdown-toggle').focusout(HANDLERS.meinfoHide);//隐藏个人中心
+    $('.feed-container .close').click(HANDLERS.closeComment);//隐藏评论框
     //################################事件配置END#######################################
 
     window.goOut = HANDLERS.logOutHandler;
