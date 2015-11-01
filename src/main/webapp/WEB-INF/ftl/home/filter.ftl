@@ -6,6 +6,10 @@
     <div class=" col-md-offset-2 col-md-10 col-sm-10 filter-inside">
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
+                <#list tagList as tag>
+                    <li><a href="javascript:void(0)" class="tag">${tag.tagName!}</a></li>
+                </#list>
+                <#--
                 <#if tagList?size gt 2>
                     <#assign size=tagList?size - 1>
                     <li class="dropdown">
@@ -24,11 +28,12 @@
                             <li><a href="javascript:void(0)" class="tag">${tag.tagName!}</a></li>
                         </#if>
                     </#list>
-                <#else><#--标签小于等于3的时候简单遍历样式-->
+                <#else>
                     <#list tagList as tag>
                         <li><a href="javascript:void(0)" class="tag">${tag.tagName!}</a></li>
                     </#list>
                 </#if>
+-->
                 <li><a href="javascript:void(0)" class="tag">全部</a></li>
             </ul>
         </div>
