@@ -712,6 +712,9 @@ a {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
+.filter .filter-inside {
+  padding-left: 24px;
+}
 .filter .nav {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAAA3NCSVQICAjb4U/gAAAABlBMVEX////k5ORmXLuLAAAAAnRSTlMA/1uRIrUAAAAJcEhZcwAAFf0AABX9Ac1wUWEAAAAXdEVYdENyZWF0aW9uIFRpbWUAMjAxNC4xMi40hE/IegAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAMSURBVAiZY3BgcAAAAQQAgT0QLxkAAAAASUVORK5CYII=);
   background-repeat: repeat-y;

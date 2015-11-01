@@ -232,13 +232,16 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
             $('.eir-recommend-link').val('');
         },
         clickTagHandler    :   function clickTag(){//单选tag
+            var drop_down_i = $('.filter .dropdown-toggle i');
+            $('.filter .tag').removeClass('eir-active');
+            drop_down_i.removeClass('eir-active');
             var _tagName = $(this).text();
             _currentTag = _tagName;
             if(_tagName == '全部'){
                 _currentTag = "";
                 _tagName = "";
             }
-            var drop_down_i = $('.filter .dropdown-toggle i');
+
             $(this).addClass('eir-active');
             var parent = $(this).closest('.dropdown-menu');
             if(parent.length == 0){

@@ -9,11 +9,11 @@
                 <#if tagList?size gt 2>
                     <#assign size=tagList?size - 1>
                     <li class="dropdown">
-                        <a href="javascript:void();" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i>更多</i><span class="caret"></span></a>
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i>更多</i><span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <#list tagList as tag>
                                 <#if tag_index lt size>
-                                    <li><a href="javascript:void();" class="tag">${tag.tagName!}</a></li>
+                                    <li><a href="javascript:void(0)" class="tag">${tag.tagName!}</a></li>
                                 <#else>
                                 </#if>
                             </#list>
@@ -21,15 +21,15 @@
                     </li>
                     <#list tagList as tag>
                         <#if tag_index gt size - 1>
-                            <li><a href="javascript:void();" class="tag">${tag.tagName!}</a></li>
+                            <li><a href="javascript:void(0)" class="tag">${tag.tagName!}</a></li>
                         </#if>
                     </#list>
                 <#else><#--标签小于等于3的时候简单遍历样式-->
                     <#list tagList as tag>
-                        <li><a href="javascript:void();" class="tag">${tag.tagName!}</a></li>
+                        <li><a href="javascript:void(0)" class="tag">${tag.tagName!}</a></li>
                     </#list>
                 </#if>
-                <li><a href="javascript:void();" class="tag">全部</a></li>
+                <li><a href="javascript:void(0)" class="tag">全部</a></li>
             </ul>
         </div>
     </div>
