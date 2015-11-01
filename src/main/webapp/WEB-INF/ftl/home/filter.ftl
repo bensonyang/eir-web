@@ -34,7 +34,7 @@
                     </#list>
                 </#if>
 -->
-                <li><a href="javascript:void(0)" class="tag">全部</a></li>
+                <li><a href="javascript:void(0)" class="tag eir-active">全部</a></li>
             </ul>
         </div>
     </div>
