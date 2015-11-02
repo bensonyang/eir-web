@@ -647,6 +647,11 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
             });
         },
         onTagClick:function(){
+            _this = $(this);
+            if(_this.hasClass('active')){
+                _this.removeClass('active');
+                return;
+            }
             $('.tag-container .tag').removeClass('active');//clear all tags active class
             $(this).addClass('active');
         },
