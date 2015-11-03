@@ -399,18 +399,21 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                 }
             });
         },
-        commentToFeedHandler : function(){
-            if($('.comment-content').data('flag') == undefined || $('.comment-content').data('flag') == '0'){
+        commentToFeedHandler : function(backFlag){
+            var _toUserId = $('.eir-feed-head').attr('data-touserid');
+            if($('.on-comment').hasClass('eir-hide')){
                 $('.on-comment').removeClass('eir-hide');
-                $('.comment-content').data('flag','1');
                 $('.comment-content').focus();
+                if(backFlag == 'back'){
+                   return;
+                }
+                $('.comment-input-head l').text("回复:"+$('.eir-feed-name').text());
                 return;
             }
             var _feed = $('.eir-feed');
             var _feedId = $('.eir-feed').data('feedid');
             var _comment_area = $(this).closest('.feed-container').find('.comment-content');
             var _content = _comment_area.val();
-            var _toUserId = $('.eir-feed-head').data('touserid');
             if($.trim(_content) == ""){
                 toast("评论内容不能为空");
                 return;
@@ -434,7 +437,6 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
                         $('div[data-commentid='+ data.msg.commentId +'] a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
                         _comment_area.val('');
                         $('.on-comment').addClass('eir-hide');
-                        $('.comment-content').data('flag','0')
                     }else if(data.code == 300){
                         toast(data.msg);
                     }else{
@@ -448,8 +450,9 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
         },
         backOnClickHandler : function(){
             var _touserid = $(this).data('userid');
-            $('.eir-feed-head').attr('data-userid',_touserid);
-            $('.comment-content').attr('placeholder',"回复:"+$(this).data('user'));
+            $('.eir-feed-head').attr('data-touserid',_touserid);
+            $('.comment-input-head l').text("回复:"+$(this).data('user'));
+            HANDLERS.commentToFeedHandler('back');
         },
         loginHandler:function(){
             var _uid = $('#uid').val();
@@ -529,7 +532,6 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover"], f
         },
         closeComment:function(){
             $('.on-comment').addClass('eir-hide');
-            $('.comment-content').data('flag','0')
         }
     };
     //################################事件处理器配置END#######################################

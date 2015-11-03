@@ -5,8 +5,11 @@
                 <div class="feed-container">
                     <div class="alpha-bk on-comment eir-hide"></div>
                     <div class="row comment-input on-comment eir-hide">
-                        <div class="close">取消</div>
-                        <textarea rows="3" class="comment-content">
+                        <div class="comment-input-head">
+                            <l></l>
+                            <div class="close">返回</div>
+                        </div>
+                        <textarea rows="3"class="comment-content">
                         </textarea>
                     </div>
                     <div class="row eir-feed-comments">

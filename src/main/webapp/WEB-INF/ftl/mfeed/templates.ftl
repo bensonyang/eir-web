@@ -80,6 +80,7 @@
                 </div>
                 <% } %>
             </div>
+            <div class="bottom-padding"></div>
         </div>
     </div>
 </script>
