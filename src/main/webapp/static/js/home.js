@@ -234,6 +234,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
             $('.eir-comments-btn').attr('disabled','disabled');
         },
         clickTagHandler    :   function clickTag(){//单选tag
+            var m_tag = $('.m-tag l');
             var drop_down_i = $('.filter .dropdown-toggle i');
             $('.filter .tag').removeClass('eir-active');
             drop_down_i.removeClass('eir-active');
@@ -245,6 +246,8 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
             }
 
             $(this).addClass('eir-active');
+            m_tag.text($(this).text());
+            $('.filter .m-hide').css('display','none');
             var parent = $(this).closest('.dropdown-menu');
             if(parent.length == 0){
                 drop_down_i.text("更多");
@@ -671,6 +674,9 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
         },
         backToTop:function(){
             document.scrollingElement.scrollTop = 0;
+        },
+        mTagClick:function(){
+            $('.filter .m-hide').css('display','block');
         }
     };
     //################################事件处理器配置END#######################################
@@ -697,6 +703,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
     $('.dropdown-toggle').focusout(HANDLERS.meinfoHide);//隐藏个人中心
     $('.back-to-top').click(HANDLERS.backToTop);//返回最顶端
     $('.for-recommend-link .eir-input-link').click(HANDLERS.inputLinkOnClickHandler);//爬取网页
+    $('.m-tag').click(HANDLERS.mTagClick);//手机端tag展开
     //################################事件配置END#######################################
 
     HANDLERS.showTags();//初始化标签

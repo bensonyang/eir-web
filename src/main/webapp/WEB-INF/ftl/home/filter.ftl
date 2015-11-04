@@ -7,10 +7,11 @@
         <div class="row">
             <div class="col-md-offset-1 col-md-10 col-sm-10 filter-inside">
                 <ul class="nav navbar-nav">
+                    <li class="m-tag"><a href="javascript:void(0)"><l>全部</l><span class="caret"></span></a></li>
                     <#list tagList as tag>
-                        <li><a href="javascript:void(0)" class="tag">${tag.tagName!}</a></li>
+                        <li class="m-hide"><a href="javascript:void(0)" class="tag">${tag.tagName!}</a></li>
                     </#list>
-                    <li><a href="javascript:void(0)" class="tag eir-active">全部</a></li>
+                    <li class="m-hide"><a href="javascript:void(0)" class="tag eir-active">全部</a></li>
                 </ul>
             </div>
         </div>
