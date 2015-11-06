@@ -22,7 +22,7 @@ public class HTMLCrawlerUtils {
     private static String LAST = "...";
     private static String HTTP = "http://";
     private static String HTTPS = "https://";
-    private static int RETRYTIMES = 3;//重试3次、减少报500概率
+    private static int RETRYTIMES = 1;//重试1次，减少用户等待时间（/**重试3次、减少报500概率**/）
 
     public static HTMLBean get(String url){
         url = adaptUrl(url);

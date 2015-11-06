@@ -20,4 +20,8 @@ public class Constants {
     public static final String DOMAIN = "http://www.msvcplus.com";
 
 
+    public static final String CACHE_KEY_LAST_FEED = "lastFeed";
+
+    public static final long CACHE_TIME_LAST_FEED = 60 * 60 * 1000;
+
 }

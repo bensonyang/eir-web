@@ -3,12 +3,7 @@
  */
 package com.morningsidevc.service.impl;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import javax.annotation.Resource;
-
+import com.morningsidevc.dao.gen.FeedInfoMapper;
 import com.morningsidevc.enums.CounterType;
 import com.morningsidevc.enums.FeedStatus;
 import com.morningsidevc.enums.FeedType;
@@ -16,17 +11,18 @@ import com.morningsidevc.enums.MsgType;
 import com.morningsidevc.po.FeedCommentCount;
 import com.morningsidevc.po.gen.*;
 import com.morningsidevc.service.*;
+import com.morningsidevc.utils.Constants;
+import com.morningsidevc.utils.MapCacheUtils;
+import com.morningsidevc.vo.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
-
-import com.morningsidevc.dao.gen.FeedInfoMapper;
-import com.morningsidevc.vo.Comment;
-import com.morningsidevc.vo.Feed;
-import com.morningsidevc.vo.User;
-import com.morningsidevc.vo.WebPageMsgBody;
-import com.morningsidevc.vo.WeiboMsgBody;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+
+import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author yangna
@@ -83,7 +79,10 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		feedInfo.setStatus(FeedStatus.NORMAL);
 		feedInfo.setMsgtype(MsgType.SHUOFEED);
 		Integer feedId = feedInfoMapper.insert(feedInfo);
-		return feedInfoMapper.selectByPrimaryKey(feedInfo.getFeedid());
+
+		MapCacheUtils.getInstance().remove(Constants.CACHE_KEY_LAST_FEED);
+
+		return feedInfoMapper.selectByPrimaryKey(feedId);
 	}
 
 	/* (non-Javadoc)
@@ -119,7 +118,10 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 		feedInfo.setStatus(FeedStatus.NORMAL);
 		feedInfo.setMsgtype(MsgType.LINK);
 		Integer feedId = feedInfoMapper.insert(feedInfo);
-		return feedInfoMapper.selectByPrimaryKey(feedInfo.getFeedid());
+
+		MapCacheUtils.getInstance().remove(Constants.CACHE_KEY_LAST_FEED);
+
+		return feedInfoMapper.selectByPrimaryKey(feedId);
 	}
 
 	@Override
@@ -130,6 +132,8 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 			feedInfoMapper.deleteByPrimaryKey(feedId);
 			userFeedCounterService.decreaseCounterByOffset(feedInfo.getUserid(), CounterType.FeedCounter.getValue(), 1);
 			feedCommentService.deleteCommentOfFeed(feedId, feedInfo.getUserid());
+
+			MapCacheUtils.getInstance().remove(Constants.CACHE_KEY_LAST_FEED);
 		}
 	}
 

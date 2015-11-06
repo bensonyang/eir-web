@@ -3,6 +3,7 @@ package com.morningsidevc.wechart.service.impl;
 import com.morningsidevc.enums.WeiXinType;
 import com.morningsidevc.service.FeedInfoService;
 import com.morningsidevc.utils.Constants;
+import com.morningsidevc.utils.MapCacheUtils;
 import com.morningsidevc.vo.Feed;
 import com.morningsidevc.vo.WebPageMsgBody;
 import com.morningsidevc.vo.WeiboMsgBody;
@@ -38,6 +39,27 @@ public class WeChartFeedServiceImpl implements WeChartFeedService {
 
     @Override
     public List<Article> getLastFeedInfo() {
+        List<Article> articleList = MapCacheUtils.getInstance().get(Constants.CACHE_KEY_LAST_FEED);
+        if (!CollectionUtils.isEmpty(articleList)) {
+            return articleList;
+        }
+
+        synchronized (WeChartFeedServiceImpl.class) {
+            articleList = MapCacheUtils.getInstance().get(Constants.CACHE_KEY_LAST_FEED);
+            if (!CollectionUtils.isEmpty(articleList)) {
+                return articleList;
+            }
+            articleList = generateLastFeedInfo();
+            if (!CollectionUtils.isEmpty(articleList)) {
+                MapCacheUtils.getInstance().add(Constants.CACHE_KEY_LAST_FEED, articleList, Constants.CACHE_TIME_LAST_FEED);
+            }
+        }
+
+        return articleList;
+    }
+
+    private List<Article> generateLastFeedInfo() {
+        logger.info("load last feed info !");
 
         List<Article> articleList = new ArrayList<Article>();
 
@@ -50,6 +72,7 @@ public class WeChartFeedServiceImpl implements WeChartFeedService {
         }
 
         if (CollectionUtils.isEmpty(feedList)) {
+            logger.info("load last feed info is empty !");
             return articleList;
         }
 
