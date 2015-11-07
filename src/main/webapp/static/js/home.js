@@ -247,7 +247,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
 
             $(this).addClass('eir-active');
             m_tag.text($(this).text());
-            $('.filter .m-hide').css('display','none');
+            $('.filter .m-hide').css('display','');
             var parent = $(this).closest('.dropdown-menu');
             if(parent.length == 0){
                 drop_down_i.text("更多");
@@ -677,6 +677,13 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
         },
         mTagClick:function(){
             $('.filter .m-hide').css('display','block');
+        },
+        mMeInfoClick:function(){
+            if($('.menu-for-m').hasClass('eir-hide')){
+                $('.menu-for-m').removeClass('eir-hide');
+            }else{
+                $('.menu-for-m').addClass('eir-hide');
+            }
         }
     };
     //################################事件处理器配置END#######################################
@@ -704,6 +711,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
     $('.back-to-top').click(HANDLERS.backToTop);//返回最顶端
     $('.for-recommend-link .eir-input-link').click(HANDLERS.inputLinkOnClickHandler);//爬取网页
     $('.m-tag').click(HANDLERS.mTagClick);//手机端tag展开
+    $('.eir-home-header .navbar-header button').click(HANDLERS.mMeInfoClick);//手机端展开退出
     //################################事件配置END#######################################
 
     HANDLERS.showTags();//初始化标签

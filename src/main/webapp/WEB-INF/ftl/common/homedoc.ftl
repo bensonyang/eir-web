@@ -31,6 +31,26 @@ page:页面名
         <#if loginUser?? || page != "home"> <#--如果已经登陆-->
             <nav class="navbar navbar-default navbar-fixed-top">
                 <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="menu-for-m eir-hide">
+                      <a href="javascript:void(0)" onclick="goMeInfoCenter();" gomeinfocenter="">个人中心</a>
+                        <a href="javascript:void(0)" onclick="goOut();">退出</a>
+                        <#--<#if tagList??>
+                            <a href="javascript:void(0)">全部</a>
+                        </#if>
+                        <#if tagList??>
+                            <#list tagList as tag>
+                                <a href="javascript:void(0)">${tag.tagName!}</a>
+                            </#list>
+                        </#if>-->
+                    </div>
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="head-pic"><a href="#"><img src="${loginUser.avatarUrl}"></a></li>
