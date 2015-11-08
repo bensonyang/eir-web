@@ -27,9 +27,9 @@ page:页面名
 <div class="container-fluid">
     <div class="row eir-home-header">
         <div class="eir-brand">
-            <h1>
+        <#--    <h1>
                 Morningside Community
-            </h1>
+            </h1>-->
         </div>
         <nav class="navbar navbar-default eir-nav" >
             <div class="container-fluid">
