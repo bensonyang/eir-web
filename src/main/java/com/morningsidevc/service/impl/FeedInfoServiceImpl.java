@@ -248,7 +248,7 @@ public class FeedInfoServiceImpl implements FeedInfoService {
 				}else{
 					element.setIsLiked(false);
 				}
-				if(element.getAuthor().getUserId() == currentUserId){
+				if(element.getAuthor() != null && element.getAuthor().getUserId() == currentUserId){
 					element.setCanDelete(true);
 				}else{
 					element.setCanDelete(false);
