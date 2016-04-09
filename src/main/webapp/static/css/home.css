@@ -815,7 +815,7 @@ a {
 }
 .eir-notlogin {
   height: 610px;
-  background: url("../images/notlogin.png") center center;
+  background: url("../images/notlogin.jpg") center center;
   -webkit-background-size: cover;
   background-size: cover;
   position: relative;
