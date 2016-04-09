@@ -70,16 +70,21 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
                                     if(data.msgBody == undefined){
                                         data.msgBody = new Object();
                                     }
-                                    $('.feed-container').append(compiled(data));
-                                    $('div[data-feedId='+ data.feedId +']').slideDown(500);
-                                    $('div[data-feedId='+ data.feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
-                                    $('div[data-feedId='+ data.feedId +'] .eir-feed-options .icon-thumbs-up .unliked').click(HANDLERS.likeFeedHandler);
-                                    $('div[data-feedId='+ data.feedId +'] .eir-feed-options .icon-thumbs-up .liked').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
-                                    $('div[data-feedId='+ data.feedId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
-                                    $('div[data-feedId='+ data.feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
-                                    $('div[data-feedId='+ data.feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler());//删除Feed事件注册
-                                    $('div[data-feedId='+ data.feedId +'] a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
-                                    $('div[data-feedId='+ data.feedId +'] .eir-get-more-comments .a-more-comments').click(HANDLERS.getMoreFeedCommentsHandler);//获取更多Comments
+                                    try {
+                                        $('.feed-container').append(compiled(data));
+                                        $('div[data-feedId='+ data.feedId +']').slideDown(500);
+                                        $('div[data-feedId='+ data.feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
+                                        $('div[data-feedId='+ data.feedId +'] .eir-feed-options .icon-thumbs-up .unliked').click(HANDLERS.likeFeedHandler);
+                                        $('div[data-feedId='+ data.feedId +'] .eir-feed-options .icon-thumbs-up .liked').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
+                                        $('div[data-feedId='+ data.feedId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
+                                        $('div[data-feedId='+ data.feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
+                                        $('div[data-feedId='+ data.feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler());//删除Feed事件注册
+                                        $('div[data-feedId='+ data.feedId +'] a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
+                                        $('div[data-feedId='+ data.feedId +'] .eir-get-more-comments .a-more-comments').click(HANDLERS.getMoreFeedCommentsHandler);//获取更多Comments
+                                    } catch (e){
+                                        console.dir(e);
+                                        console.log(JSON.stringify(data));
+                                    }
                                 });
                             }else{
                                 $('.feed-end').text("已经没有更多啦");
@@ -116,9 +121,13 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
                         }
                         _lastFeedIndex = data.msg.lastFeedIndex;
                         _.each(data.msg.feeds, function(data){
-                            var compiled =  _.template(templates.feedTemplate);
-                            $('.feed-container').append(compiled(data));
-                            $('div[data-feedId='+ data.feedId +']').slideDown(500);
+                            try {
+                                var compiled =  _.template(templates.feedTemplate);
+                                $('.feed-container').append(compiled(data));
+                                $('div[data-feedId='+ data.feedId +']').slideDown(500);
+                            } catch (e) {
+                                console.dir(e);
+                            }
                         });
                         $('.eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
                         $('.eir-feed .eir-feed-options .icon-thumbs-up .unliked').click(HANDLERS.likeFeedHandler);//Feed点赞
@@ -315,17 +324,22 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
             }
             function shuoFeedCallback(data){
                 if(data.code == 200){
-                    var compiled =  _.template(templates.feedTemplate);
-                    $('.feed-container').prepend(compiled(data.msg.feeds[0]));
-                    $('div[data-feedId='+ data.msg.feeds[0].feedId +']').slideDown(500);
-                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//新内容绑定评论框聚焦事件
-                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up .unliked').click(HANDLERS.likeFeedHandler);
-                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up .liked').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
-                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
-                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
-                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
-                    $('.form-group .main-textarea').val("");
-                    $('.tag-container .tag').removeClass('active');
+                    try {
+                        var compiled =  _.template(templates.feedTemplate);
+                        $('.feed-container').prepend(compiled(data.msg.feeds[0]));
+                        $('div[data-feedId='+ data.msg.feeds[0].feedId +']').slideDown(500);
+                        $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//新内容绑定评论框聚焦事件
+                        $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up .unliked').click(HANDLERS.likeFeedHandler);
+                        $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up .liked').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
+                        $('div[data-feedId='+ data.msg.feeds[0].feedId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
+                        $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
+                        $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
+                        $('.form-group .main-textarea').val("");
+                        $('.tag-container .tag').removeClass('active');
+                    } catch (e) {
+                        console.dir(e);
+                        toast(data.msg);
+                    }
                 }else if(data.code == 300){
                     toast(data.msg);
                 }else{
@@ -334,23 +348,28 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
             }
             function linkFeedCallback(data){
                 if(data.code == 200){
-                    var compiled =  _.template(templates.feedTemplate);
-                    $('.feed-container').prepend(compiled(data.msg.feeds[0]));
-                    $('div[data-feedId='+ data.msg.feeds[0].feedId +']').slideDown(500);
-                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//新内容绑定评论框聚焦事件
-                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up .unliked').click(HANDLERS.likeFeedHandler);
-                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up .liked').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
-                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
-                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
-                    $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
-                    $('.link-page-content-title span').text("");
-                    $('.link-page-content-abstract').text("");
-                    $('.eir-recommend-link').val("");
-                    $('.form-group .main-textarea').val("");
-                    $('.main-textarea').show();
-                    $('.link-page-content').hide();
-                    $('.for-recommend-link').show();
-                    $('.tag-container .tag').removeClass('active');
+                    try {
+                        var compiled =  _.template(templates.feedTemplate);
+                        $('.feed-container').prepend(compiled(data.msg.feeds[0]));
+                        $('div[data-feedId='+ data.msg.feeds[0].feedId +']').slideDown(500);
+                        $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//新内容绑定评论框聚焦事件
+                        $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up .unliked').click(HANDLERS.likeFeedHandler);
+                        $('div[data-feedId='+ data.msg.feeds[0].feedId +'] .eir-feed-options .icon-thumbs-up .liked').click(HANDLERS.dellikeFeedHandler);//取消Feed点赞
+                        $('div[data-feedId='+ data.msg.feeds[0].feedId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
+                        $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteFeed]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
+                        $('div[data-feedId='+ data.msg.feeds[0].feedId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除Feed事件注册
+                        $('.link-page-content-title span').text("");
+                        $('.link-page-content-abstract').text("");
+                        $('.eir-recommend-link').val("");
+                        $('.form-group .main-textarea').val("");
+                        $('.main-textarea').show();
+                        $('.link-page-content').hide();
+                        $('.for-recommend-link').show();
+                        $('.tag-container .tag').removeClass('active');
+                    } catch (e) {
+                        console.dir(e);
+                        toast(data.msg);
+                    }
                 }else if(data.code == 300){
                     toast(data.msg);
                 }else{
@@ -435,14 +454,18 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
             });
         },
         feedCommentFocusInHandler : function(){
-            var _feed = $(this).closest('.eir-feed');
-            var _touserid = $(this).data('userid');
-            var compiled =  _.template(templates.feedCommentMore);
-            $(this).closest('.eir-feed-comments').replaceWith(compiled({type:"goComment",touserid:_touserid})).fadeIn(1000);
-            _feed.find('textarea').focus();
-            _feed.find('textarea[backComment]').focus();
-            _feed.find('a[goComment]').click(HANDLERS.commentToFeedHandler);
-            _feed.find('.eir-feed-comments-textarea').focusout(HANDLERS.feedCommentFocusOutHandler);//注册失焦事件
+            try {
+                var _feed = $(this).closest('.eir-feed');
+                var _touserid = $(this).data('userid');
+                var compiled =  _.template(templates.feedCommentMore);
+                $(this).closest('.eir-feed-comments').replaceWith(compiled({type:"goComment",touserid:_touserid})).fadeIn(1000);
+                _feed.find('textarea').focus();
+                _feed.find('textarea[backComment]').focus();
+                _feed.find('a[goComment]').click(HANDLERS.commentToFeedHandler);
+                _feed.find('.eir-feed-comments-textarea').focusout(HANDLERS.feedCommentFocusOutHandler);//注册失焦事件
+            } catch (e) {
+                console.dir(e);
+            }
         },
         getMoreFeedCommentsHandler  : function(){
             var _this = $(this);
@@ -521,12 +544,16 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
                             _feed.find('.eir-feed-comments').focusin(HANDLERS.feedCommentFocusInHandler);//评论数据框聚焦
                         }
                         var compiled =  _.template(templates.feedCommentItem);
-                        _feed.find('.eir-feed-item-container').prepend(compiled(data.msg));
-                        $('div[data-commentid='+ data.msg.commentId +']').slideDown();
-                        _feed.find('.eir-feed-comments-textarea').val("");
-                        $('div[data-commentid='+ data.msg.commentId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
-                        $('div[data-commentid='+ data.msg.commentId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除按钮事件
-                        $('div[data-commentid='+ data.msg.commentId +'] a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
+                        try {
+                            _feed.find('.eir-feed-item-container').prepend(compiled(data.msg));
+                            $('div[data-commentid='+ data.msg.commentId +']').slideDown();
+                            _feed.find('.eir-feed-comments-textarea').val("");
+                            $('div[data-commentid='+ data.msg.commentId +'] [data-toggle="popover"]').popover(popoverOps);//初始化删除Feed组件
+                            $('div[data-commentid='+ data.msg.commentId +'] a[deleteComment]').click(HANDLERS.deletebtnHandler);//删除按钮事件
+                            $('div[data-commentid='+ data.msg.commentId +'] a[backComment]').click(HANDLERS.backOnClickHandler); //回复按钮注册事件
+                        } catch(e) {
+                            console.dir(e);
+                        }
                     }else if(data.code == 300){
                     	toast(data.msg);
                     }else{
