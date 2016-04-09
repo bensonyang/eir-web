@@ -359,6 +359,7 @@ a {
   font-style: italic;
   line-height: 16px;
   height: 22px;
+  color: #3c2415;
 }
 .eir-feed .feed-tag .arrow {
   position: absolute;
@@ -367,6 +368,7 @@ a {
   height: 0;
   border-top: 11px solid transparent;
   border-bottom: 11px solid transparent;
+  color: #3c2415;
   top: -1px;
 }
 .eir-feed .eir-feed-pic img {
@@ -409,6 +411,7 @@ a {
   font-weight: 500;
   line-height: 1.1;
   padding: 3px;
+  color: #3c2415;
 }
 .eir-feed .eir-feed-name:hover {
   font-weight: bold;
@@ -437,6 +440,7 @@ a {
   padding-left: 15px;
   padding-right: 15px;
   font-size: 12px;
+  color: #3c2415;
 }
 .eir-feed .eir-feed-content-link {
   padding: 1px;
@@ -486,6 +490,7 @@ a {
 }
 .eir-feed .eir-feed-comments-item-content .eir-feed-comments-item-content-name {
   font-size: 12px;
+  color: #3c2415;
 }
 .eir-feed .eir-feed-comments-item-content .eir-feed-comments-item-content-name span {
   display: inline-block;
@@ -524,6 +529,7 @@ a {
   font-style: italic;
   line-height: 16px;
   height: 22px;
+  color: #3c2415;
 }
 .eir-feed:hover .feed-tag .arrow {
   position: absolute;
@@ -532,6 +538,7 @@ a {
   height: 0;
   border-top: 11px solid transparent;
   border-bottom: 11px solid transparent;
+  color: #3c2415;
   top: -1px;
 }
 .eir-feed:hover .eir-feed-pic img {
@@ -574,6 +581,7 @@ a {
   font-weight: 500;
   line-height: 1.1;
   padding: 3px;
+  color: #3c2415;
 }
 .eir-feed:hover .eir-feed-name:hover {
   font-weight: bold;
@@ -602,6 +610,7 @@ a {
   padding-left: 15px;
   padding-right: 15px;
   font-size: 12px;
+  color: #3c2415;
 }
 .eir-feed:hover .eir-feed-content-link {
   padding: 1px;
@@ -651,6 +660,7 @@ a {
 }
 .eir-feed:hover .eir-feed-comments-item-content .eir-feed-comments-item-content-name {
   font-size: 12px;
+  color: #3c2415;
 }
 .eir-feed:hover .eir-feed-comments-item-content .eir-feed-comments-item-content-name span {
   display: inline-block;
@@ -978,6 +988,7 @@ a {
 .eir-comments-btn {
   width: 70px;
   border: 1px solid #efefef;
+  color: #3c2415;
 }
 .eir-home-right {
   margin-left: 20px;

@@ -1,14 +1,7 @@
 <script type="text/template" id="feedTemplate">
     <div class="row eir-feed eir-hide" data-feedId="<%= feedId %>" data-feedtype="<%= feedType %>">
         <% if(!_.isUndefined(tag) && !_.isEmpty(tag)){
-        var color = undefined;
-        if(_.isEqual(tag,"互联网金融")){
-            color = "#f91b15";
-        }else if(_.isEqual(tag,"智能硬件")){
-            color = "#f9c233";
-        }else{
-            color = "#13f913";
-        }
+        var color = '#3c2415';
         %>
         <span class="feed-tag" style="color:<%= color %>;border:1px solid <%= color %>;"><span class="arrow" style="border-right: 10px solid <%= color %>;"></span><%= tag %></span>
         <% } %>
