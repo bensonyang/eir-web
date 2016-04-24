@@ -14,15 +14,23 @@ import java.io.IOException;
  */
 public class PicConvertServlet extends HttpServlet {
 
+    private static final String USER_AGENT_HEADER = "User-Agent";
+    private static final String ORIGIN_PATH = "images";
+    private static final String PC = "pc";
+    private static final String M = "m";
+
+    private static final String IPHONE = "iphone";
+    private static final String ANDROID = "android";
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String ua = req.getHeader("User-Agent");
+        String ua = req.getHeader(USER_AGENT_HEADER);
         String forwardPath = req.getRequestURI();
         if (isMobile(ua)) {
-            forwardPath = forwardPath.replace("images", "m");
+            forwardPath = forwardPath.replace(ORIGIN_PATH, M);
             req.getRequestDispatcher(forwardPath).forward(req, resp);
         } else {
-            forwardPath = forwardPath.replace("images", "pc");
+            forwardPath = forwardPath.replace(ORIGIN_PATH, PC);
             req.getRequestDispatcher(forwardPath).forward(req, resp);
         }
     }
@@ -32,8 +40,8 @@ public class PicConvertServlet extends HttpServlet {
         if (StringUtils.isEmpty(ua)) {
             return false;
         }
-        if (StringUtils.containsIgnoreCase(ua, "iphone") ||
-                StringUtils.containsIgnoreCase(ua, "android")) {
+        if (StringUtils.containsIgnoreCase(ua, IPHONE) ||
+                StringUtils.containsIgnoreCase(ua, ANDROID)) {
             return true;
         }
         return false;

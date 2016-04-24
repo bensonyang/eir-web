@@ -13,38 +13,39 @@
                 <span>完善填写个人信息</span>&nbsp;<a class="haveno">已有账号？</a>
             </div>
             <form action="/community" method="post" id="loginForm">
-                <div class="input-prepend">
-                    <input id="uid" class="span2" type="text" name="account" placeholder="会员账号">
-                </div>
-                <div class="input-prepend">
-                    <input id="pwd" class="span2" type="password" placeholder="密码">
-                </div>
-                <div class="input-prepend">
-                    <input id="ppwd" class="span2" type="password" placeholder="确认密码">
-                </div>
+            <#--
+           <div class="input-prepend">
+               <input id="uid" class="span2" type="text" name="account" placeholder="会员账号">
+           </div>
+         <div class="input-prepend">
+               <input id="pwd" class="span2" type="password" placeholder="密码">
+           </div>
+           <div class="input-prepend">
+               <input id="ppwd" class="span2" type="password" placeholder="确认密码">
+           </div>
                 <div class="input-prepend">
                     <input id="nickname" class="span2" type="text" name="nickname" placeholder="昵称">
                 </div>
                 <div class="input-prepend">
-                    <input id="realname" class="span2" type="text" name="realname" placeholder="真实姓名">
+                    <input id="realname" class="span2" type="text" name="realname" placeholder="真实姓名" >
                 </div>
+                <div class="input-prepend">
+                    <input id="jobtitle" class="span2" type="text" name="jobtitle" placeholder="公司职位">
+                </div>-->
                 <div class="input-prepend">
                     <input id="mobilenum" class="span2" type="text" name="mobilenum" placeholder="手机号码">
                 </div>
                 <div class="input-prepend">
-                    <input id="jobtitle" class="span2" type="text" name="jobtitle" placeholder="公司职位">
-                </div>
-                <div class="input-prepend">
                     <input id="company" class="span2" type="text" name="company" placeholder="公司名称">
                 </div>
-                <div class="input-prepend">
+          <#--      <div class="input-prepend">
                     <div class="radio-box">
-                        <input type="radio" name="gender" value="1"/><label class="radio-label">男</label>
+                        <input type="radio" name="gender" value="1" /><label class="radio-label">男</label>
                     </div>
                     <div class="radio-box">
                         <input type="radio" name="gender" value="2" /><label class="radio-label">女</label>
                     </div>
-                </div>
+                </div>-->
                 <div class="input-prepend">
                     <input id="reg" class="btn btn-success eir-noradius" value="连接">
                 </div>
