@@ -8,7 +8,7 @@
         <input type="password" name="password" id="pwd" placeholder="请输入密码">
     </div>
     <div class="login-mid">
-        <a href="/reg" class="new">新用户注册</a>
+      <#--  <a href="/reg" class="new">新用户注册</a>-->
         <a href="#" class="we" onclick="javascript:window.location.href='https://open.weixin.qq.com/connect/qrconnect?appid=wx512439f72ac23d42&redirect_uri=http%3a%2f%2fwww.msvcplus.com%2fweixinlogin%3fchannel%3d1&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect'" >微信登陆</a>
     </div>
     <div class="login-div">

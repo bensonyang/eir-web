@@ -711,6 +711,16 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
             }else{
                 $('.menu-for-m').addClass('eir-hide');
             }
+        },
+        myClick:function() {
+            var _this = $(this);
+            if (_this.data('flag') != '1') {
+                _this.find('.my-dropdown').slideDown();
+                _this.data('flag', '1');
+            } else {
+                _this.data('flag', '0');
+                _this.find('.my-dropdown').slideUp();
+            }
         }
     };
     //################################事件处理器配置END#######################################
@@ -739,6 +749,7 @@ require(["API","jquery","underscore","templates","toast","tooltip","popover","dr
     $('.for-recommend-link .eir-input-link').click(HANDLERS.inputLinkOnClickHandler);//爬取网页
     $('.m-tag').click(HANDLERS.mTagClick);//手机端tag展开
     $('.eir-home-header .navbar-header button').click(HANDLERS.mMeInfoClick);//手机端展开退出
+    $('.eir-home-header .my').click(HANDLERS.myClick);//个人中心
     //################################事件配置END#######################################
 
     HANDLERS.showTags();//初始化标签

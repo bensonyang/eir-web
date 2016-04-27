@@ -58,6 +58,7 @@ public class WeixinLoginController extends BaseController {
             if (weixinUserInfo == null) {
                 LOGGER.info("no bind! unionId" + weixinUser.getUnionId());
                 Gson gson = new Gson();
+                model.addAttribute("sex", weixinUser.getSex());
                 model.addAttribute("weixinInfo", EncryptionUtils.encrypt(gson.toJson(weixinUser)));
                 model.addAttribute("channel", channel);
                 model.addAttribute("redir", StringUtils.isBlank(redir) ? "http://www.msvcplus.com/community" : redir);
@@ -87,19 +88,20 @@ public class WeixinLoginController extends BaseController {
     /* Ajax json */
     @RequestMapping(value = "/ajax/regbind", produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public JsonResponse regBind(String email, String password, UserInfo userInfo, String weixinInfo, Byte channel, HttpServletRequest request, HttpServletResponse response) {
+    public JsonResponse regBind(UserInfo userInfo, String weixinInfo, Byte channel, HttpServletRequest request, HttpServletResponse response) {
         JsonResponse jsonResponse = new JsonResponse();
         try {
-            int userId = userAccountService.create(email, password);
+            int userId = userAccountService.create(userInfo.getMobilenum(), userInfo.getMobilenum());
             if (userId <= 0) {
                 jsonResponse.setCode(400);
                 return jsonResponse;
             }
             userInfo.setUserid(userId);
 
+            WeixinUser weixinUser = null;
             if (StringUtils.isNotBlank(weixinInfo)) {
                 Gson gson = new Gson();
-                WeixinUser weixinUser = gson.fromJson(EncryptionUtils.decrypt(weixinInfo), WeixinUser.class);
+                weixinUser = gson.fromJson(EncryptionUtils.decrypt(weixinInfo), WeixinUser.class);
                 WeixinUserInfo weixinUserInfo = generateWeixinUserInfo(weixinUser);
                 weixinUserInfo.setUserid(userId);
                 weixinUserService.insertWeixinUserInfo(weixinUserInfo);
@@ -107,6 +109,11 @@ public class WeixinLoginController extends BaseController {
 
                 userInfo.setAvatarurl(weixinUserInfo.getAvatarurl());
             }
+
+            userInfo.setNickname(weixinUser.getNickName());
+            userInfo.setGender(weixinUser.getSex() == 1 ? Byte.parseByte("1") : Byte.parseByte("2"));
+            userInfo.setRealname(weixinUser.getNickName());
+            userInfo.setJobtitle(userInfo.getCompany() + "员工");
 
             UserInfo newUser = userInfoService.createUser(userInfo);
             Assert.notNull(newUser);
@@ -162,5 +169,6 @@ public class WeixinLoginController extends BaseController {
 
         return weixinUserInfo;
     }
+
 
 }

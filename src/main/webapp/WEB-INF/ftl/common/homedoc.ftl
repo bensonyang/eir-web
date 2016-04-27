@@ -54,6 +54,21 @@ page:页面名
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="head-pic"><a href="#"><img src="${loginUser.avatarUrl}"></a></li>
+                            <li class="icon-user my">
+                                <ul class="my-dropdown" style="display: none;">
+                                    <li>
+                                        <a href="#" onclick="goMeInfoCenter();">个人中心</a>
+                                    </li>
+                                    <li>
+                                        <a class=""  onclick="goOut();">退出</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                   <#-- <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="head-pic"><a href="#"><img src="${loginUser.avatarUrl}"></a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     我的
@@ -61,13 +76,13 @@ page:页面名
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#" onclick="goMeInfoCenter();" goMeInfoCenter>个人中心</a></li>
-                                <#--<li role="separator" class="divider"></li>
-                                <li><a href="#" onclick="goOut();" goOut>退出</a></li>-->
+                                &lt;#&ndash;<li role="separator" class="divider"></li>
+                                <li><a href="#" onclick="goOut();" goOut>退出</a></li>&ndash;&gt;
                                 </ul>
                             </li>
                             <li><a href="#" onclick="goOut();">退出</a></li>
                         </ul>
-                    </div>
+                    </div>-->
                 </div>
             </nav>
         <#else> <#--如果未登陆-->

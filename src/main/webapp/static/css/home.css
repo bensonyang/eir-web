@@ -111,6 +111,38 @@ a {
 .eir-home-header .collapse {
   border: 0px;
 }
+.eir-home-header .collapse .my {
+  margin-left: 10px;
+  width: 60px;
+  line-height: 45px;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  position: relative;
+}
+.eir-home-header .my-dropdown {
+  list-style: none;
+  background-color: white;
+  font-size: 12px;
+  padding: 0px;
+  position: absolute;
+  width: 70px;
+  left: -23px;
+  border-radius: 3px;
+}
+.eir-home-header .my-dropdown li {
+  border-radius: 3px;
+  line-height: 35px;
+  text-align: center;
+}
+.eir-home-header .my-dropdown li a {
+  color: #3c2415;
+  text-decoration: none;
+}
+.eir-home-header .my-dropdown li:hover {
+  border-radius: 3px;
+  background-color: #f5f5f5;
+}
 .nav-fix-pad-height150 {
   height: 150px;
 }

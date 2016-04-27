@@ -1,0 +1,11 @@
+package com.morningsidevc.utils;
+
+/**
+ * @author float.lu
+ */
+public class WeiXin {
+    public static void main (String ...s) {
+        String str = "f91749de9fbe9acbf2e31c2210e30a176ad28570e5d3f41ca8b82fdcb4257dafa7fbacfbd3c4e65a9eb993cad4fbb38f1957c1d044d14e22e6671d94f394aa32cdc0bedf7d3ad8587d89b79ed3875509d2560c10be69974c4f1213f4e7da2ca7ba4bf65610a6d8e7527ce71be98acd0af0f764eed2c81a3551a33bae26c971efcde9500ec44f404b8063db37074b76341419cf9d50a16315c1f66dbc9f254cb3eeeb4e82992bd8f1d1d2ffe72c56b04b440ee67f1bf925c42007fbdf28d50c5a953f6ae6083363c533d16d32766f1c5c810e2e3ace088f3146aa7937ead6d271625a5b8157326dde6e4f479cbf4faa17aa274f8f929e086d7aa6d244d2c59bdd7abcce2a5e5263a16a1fa337bf0aa37d99770a9ab1c13943803035bca165184a2b5fbeeb361748beb4a4a4b90dbee5494c3ea8b95dcdb2db6b1b00f54cc57f5c";
+        System.out.println(EncryptionUtils.decrypt(str));
+    }
+}

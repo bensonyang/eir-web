@@ -89,7 +89,8 @@ require(["API","jquery","toast"], function(API, $, toast) {
         realNameNull    :   "真是姓名不能为空",
         jobtitleNull    :   "公司职位不能为空",
         companyNull     :   "公司不能为空",
-        genderNull      :   "性别必须选择哦"
+        genderNull      :   "性别必须选择哦",
+        phoneNo         :   "手机号码不能为空"
     };
 
 
@@ -128,18 +129,21 @@ require(["API","jquery","toast"], function(API, $, toast) {
             }
         },
         reg : function(){
+            /*
             var _uid = $('#uid');//注册账号
             var _pwd = $('#pwd');//注册密码
             var _ppwd = $('#ppwd');//重复密码
             var _nickname = $('#nickname');//昵称
             var _realname = $('#realname');//真是姓名
             var _jobtitle = $('#jobtitle');//公司职位
-            var _company = $('#company');//公司
-            var _gender = $('input[type=radio]:checked');//性别
+            */
+            var _phoneno = $('#mobilenum');//手机号码
+            var _company =  $('#company');//公司
+            //var _gender = $('input[type=radio]:checked');//性别
             var _reg = $('#reg');//注册按钮
 
             var _alert  =   $('.alert');
-            if($.trim(_uid.val()) == ""){
+       /*     if($.trim(_uid.val()) == ""){
                 _alert.text(TIPS.uidNotNull);
                 _alert.fadeIn(500);
             }else if($.trim(_pwd) == "" || $.trim(_ppwd) == ""){
@@ -157,13 +161,18 @@ require(["API","jquery","toast"], function(API, $, toast) {
             }else if($.trim(_jobtitle.val()) == ""){
                 _alert.text(TIPS.jobtitleNull);
                 _alert.fadeIn(500);
-            }else if($.trim(_company.val()) == ""){
+            }else */
+            if ($.trim(_phoneno.val()) == "") {
+                _alert.text(TIPS.phoneNo);
+                _alert.fadeIn(500);
+            } else if ($.trim(_company.val()) == ""){
                 _alert.text(TIPS.companyNull);
                 _alert.fadeIn(500);
-            }else if(_gender == undefined || $.trim(_gender.val()) == ""){
+            }
+            /*else if(_gender == undefined || $.trim(_gender.val()) == ""){
                 _alert.text(TIPS.genderNull);
                 _alert.fadeIn(500);
-            }else{
+            }*/else{
                 _alert.hide();
             }
             if(_alert.css('display') == 'none'){
@@ -172,13 +181,14 @@ require(["API","jquery","toast"], function(API, $, toast) {
                     type    :"POST",
                     url     :API.regConnect,
                     data    :{
-                        email       :   $.trim(_uid.val()),
-                        password    :   $.trim(_pwd.val()),
-                        nickname    :   $.trim(_nickname.val()),
-                        realname    :   $.trim(_realname.val()),
-                        jobtitle    :   $.trim(_jobtitle.val()),
+                        //email       :   $.trim(_uid.val()),
+                        //password    :   $.trim(_pwd.val()),
+                        //nickname    :   $.trim(_nickname.val()),
+                        //realname    :   $.trim(_realname.val()),
+                        //jobtitle    :   $.trim(_jobtitle.val()),
+                        mobilenum   : $.trim(_phoneno.val()),
                         company     :   $.trim(_company.val()),
-                        gender      :   $.trim(_gender.val()),
+                        //gender      :   $.trim(_gender.val()),
                         weixinInfo  :   $.trim(_weixinInfo.val()),
                         connect     :   $.trim(_connect.val())
                     },
@@ -202,9 +212,9 @@ require(["API","jquery","toast"], function(API, $, toast) {
     };
 
     //事件注册
-    $('#uid').focusout(HANDLERS.uidFocusOut);
-    $('#ppwd').focusout(HANDLERS.pwdFocusOut);
-    $('#pwd').focusout(HANDLERS.pwdFocusOut);
+    //$('#uid').focusout(HANDLERS.uidFocusOut);
+    //$('#ppwd').focusout(HANDLERS.pwdFocusOut);
+    //$('#pwd').focusout(HANDLERS.pwdFocusOut);
     $('#reg').click(HANDLERS.reg);
 
 });
